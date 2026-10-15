@@ -132,17 +132,20 @@ class HTTPSRedirect(urllib.request.HTTPRedirectHandler):
 
 def bundle_info(root, override_url=None):
     info = json.loads((root / "dependencies.lock.json").read_text(encoding="utf-8")).get("bundle", {})
-    url = override_url or info.get("url", "")
-    parsed = urllib.parse.urlparse(url)
-    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
-        raise ValueError("Dependency bundle needs a public HTTPS URL without credentials")
+    urls = [override_url] if override_url else [info.get("url", ""), *info.get("mirrors", [])]
+    if not urls or len(urls) > 8:
+        raise ValueError("Invalid dependency endpoint list")
+    for url in urls:
+        parsed = urllib.parse.urlparse(url)
+        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError("Dependency bundle needs a public HTTPS URL without credentials")
     digest = info.get("sha256", "")
     size = info.get("size")
     if len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
         raise ValueError("Dependency bundle needs a pinned SHA-256")
     if not isinstance(size, int) or not 0 < size <= 1024**3:
         raise ValueError("Invalid pinned dependency bundle size")
-    return {"url": url, "size": size, "sha256": digest}
+    return {"url": urls[0], "urls": urls, "size": size, "sha256": digest}
 
 
 def fetch_bundle(root, override_url=None):
@@ -164,26 +167,35 @@ def fetch_bundle(root, override_url=None):
         except ValueError:
             pass  # Replace a corrupt cache only after a new download validates.
     opener = urllib.request.build_opener(HTTPSRedirect())
-    request = urllib.request.Request(info["url"], headers={"User-Agent": "arg-tool-dependency-setup/1"})
     print(f"Downloading pinned dependencies ({info['size']:,} bytes)...", flush=True)
     for attempt in range(3):
         temporary = None
+        request = urllib.request.Request(info["urls"][min(attempt, len(info["urls"])-1)], headers={"User-Agent": "arg-tool-dependency-setup/1", "Accept": "application/octet-stream"})
         try:
             with tempfile.NamedTemporaryFile(dir=cache, suffix=".part", delete=False) as outgoing:
                 temporary = Path(outgoing.name)
-                with opener.open(request, timeout=60) as incoming:
+                with opener.open(request, timeout=30) as incoming:
                     total = 0
-                    while block := incoming.read(1024 * 1024):
+                    started = time.monotonic()
+                    read_chunk = getattr(incoming, "read1", incoming.read)
+                    next_progress = 16 * 1024 * 1024
+                    while block := read_chunk(64 * 1024):
                         total += len(block)
                         if total > info["size"]:
                             raise ValueError("Downloaded dependency bundle exceeds pinned size")
+                        if time.monotonic() - started > 900:
+                            raise OSError("Dependency download exceeded 15 minutes")
                         outgoing.write(block)
+                        if total >= next_progress:
+                            print(f"Downloaded {total:,} / {info['size']:,} bytes", flush=True)
+                            next_progress += 16 * 1024 * 1024
             validate_file(temporary, row)
             temporary.replace(target)
             return target
         except (OSError, urllib.error.URLError):
             if attempt == 2:
                 raise RuntimeError("Dependency download failed. Check network access or use --archive FILE.zip for offline installation.") from None
+            print("Download connection failed; retrying a verified HTTPS endpoint...", flush=True)
             time.sleep(1)
         finally:
             if temporary is not None:

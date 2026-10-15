@@ -113,16 +113,20 @@ class DependenciesTest(unittest.TestCase):
 
     def test_download_retries_then_recovers(self):
         payload = self.bundle()
+        lock = json.loads((self.root / "dependencies.lock.json").read_text())
+        lock["bundle"]["mirrors"] = ["https://api.example.org/fixed.zip"]
+        (self.root / "dependencies.lock.json").write_text(json.dumps(lock))
         class Opener:
-            calls = 0
+            urls = []
             def open(self, request, timeout):
-                self.calls += 1
-                if self.calls == 1:raise urllib.error.URLError("offline")
+                self.urls.append(request.full_url)
+                if len(self.urls) == 1:raise urllib.error.URLError("offline")
                 return io.BytesIO(payload)
         opener = Opener()
         with patch.object(deps.urllib.request, "build_opener", return_value=opener), patch.object(deps.time, "sleep"):
             self.assertEqual(deps.fetch_bundle(self.root).read_bytes(), payload)
-        self.assertEqual(opener.calls, 2)
+        self.assertEqual(opener.urls, ["https://example.org/fixed.zip", "https://api.example.org/fixed.zip"])
+        self.assertEqual(deps.bundle_info(self.root, "https://mirror.example.org/file.zip")["urls"], ["https://mirror.example.org/file.zip"])
 
     def test_download_failure_has_no_install_side_effect(self):
         self.bundle()

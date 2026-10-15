@@ -16465,8 +16465,11 @@
     }
   ],
   "bundle": {
-    "url": "https://github.com/tenrim/arg-tool/releases/download/dependencies-6ab6aea/arg-tool-dependencies.zip",
+    "url": "https://api.github.com/repos/tenrim/arg-tool/releases/assets/643926060",
     "size": 168572397,
-    "sha256": "bdb3d76ca3b745084ade7edc6aa3c5c2c9cc180d4646bf3fee81f486a49ab0f6"
+    "sha256": "bdb3d76ca3b745084ade7edc6aa3c5c2c9cc180d4646bf3fee81f486a49ab0f6",
+    "mirrors": [
+      "https://github.com/tenrim/arg-tool/releases/download/dependencies-6ab6aea/arg-tool-dependencies.zip"
+    ]
   }
 }
