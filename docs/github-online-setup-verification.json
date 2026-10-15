@@ -1,0 +1,21 @@
+{
+  "source_commit": "bb310736bf524bfc78583569a3a99c3d646e11a1",
+  "ci_url": "https://github.com/tenrim/arg-tool/actions/runs/38743110330",
+  "runner": "ubuntu-latest",
+  "conclusion": "success",
+  "anonymous_dependency_install": true,
+  "runtime_file_count": 3292,
+  "http_scenarios_passed": 4,
+  "dependency_sha256": "bdb3d76ca3b745084ade7edc6aa3c5c2c9cc180d4646bf3fee81f486a49ab0f6",
+  "log_summary": [
+    "2026-10-15T13:29:38.1543295Z PASS: install; 3292 pinned dependency files",
+    "2026-10-15T13:30:08.3152748Z Static site built in dist/.",
+    "2026-10-15T13:30:08.9221601Z RUN browser:deployment",
+    "2026-10-15T13:30:15.2023808Z PASS real HTTP /, 1440px, no-preference: local fonts, Chef output, country data/flag, python WASM, FFmpeg frame, local report; no missing/external resources or page errors.",
+    "2026-10-15T13:30:17.3568182Z PASS real HTTP /, 390px, reduce: local fonts, Chef output, country data/flag, javascript WASM, local report; no missing/external resources or page errors.",
+    "2026-10-15T13:30:21.6854607Z PASS real HTTP /toolbox/, 1440px, reduce: local fonts, Chef output, country data/flag, python WASM, FFmpeg frame, local report; no missing/external resources or page errors.",
+    "2026-10-15T13:30:24.5338411Z PASS real HTTP /toolbox/, 390px, no-preference: local fonts, Chef output, country data/flag, javascript WASM, local report; no missing/external resources or page errors.",
+    "2026-10-15T13:30:24.6294254Z 2/2 selected checks passed."
+  ],
+  "windows_anonymous_download": "started from empty source and cache; slow local network, full-flow acceptance uses completed independent Ubuntu run"
+}
