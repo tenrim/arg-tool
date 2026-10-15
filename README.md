@@ -4,6 +4,10 @@
 
 此分支只分发原创实现、适配与构建脚本、测试、来源和许可记录。第三方引擎、原始源码、字典、数据和字体单独放在依赖包中，不进入源码 Git 历史。原创程序代码为 **GPL-3.0-or-later**；第三方各自许可不变。详见 [LICENSE](LICENSE)、[开源范围](OPEN_SOURCE.md)、[第三方说明](THIRD_PARTY.md)。
 
+## 支持项目
+
+如果这个工具箱对你有帮助，欢迎通过 [爱发电赞助 musicraft](https://afdian.com/a/musicraft)，支持后续开发与维护。
+
 ## 本地运行
 
 需要 **Node.js 24+、Python 3.12+**。正常部署不需要 Rust，也不需要 npm 安装生产依赖。
