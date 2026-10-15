@@ -23,6 +23,6 @@
 
 ## 交付与限制
 
-本地交付为 arg-tool-source.zip、arg-tool-dependencies.zip 和 SHA256SUMS；它们不进入源码 Git。尚未配置公共依赖下载地址，尚未推送分支、上传发布附件或部署服务器。完整 GPL/LGPL 对应源码交付审查仍须在公开发布时完成，当前依赖包与已有来源记录不被宣称为完整合规认证。
+本地交付为 arg-tool-source.zip、arg-tool-dependencies.zip 和 SHA256SUMS；它们不进入源码 Git。源码分支已推送到 GitHub 的 main，但仓库仍为私有；尚未配置公共依赖下载地址、上传发布附件或部署服务器。后续真实 HTTP 测试见 [GitHub 部署记录](GITHUB_DEPLOYMENT_VERIFICATION.md)。完整 GPL/LGPL 对应源码交付审查仍须在公开发布时完成，当前依赖包与已有来源记录不被宣称为完整合规认证。
 
 CI 未配置 DEPENDENCY_BUNDLE_URL 时明确只运行源码安装测试；配置匹配的 HTTPS 发布附件后才运行工具检查。首次独立根提交采用完整初始验证，后续提交按范围验证。

@@ -52,6 +52,8 @@ npm run test:plan -- --files public/site-pages.js
 npm run verify -- --files public/site-pages.js
 ```
 
+构建产物的真实 HTTP 部署回归：`npm run verify -- --files scripts/browser-deployment.mjs`（先构建并安装 test-tools）。实测范围与公开下载缺口见 [GitHub 独立部署记录](docs/GITHUB_DEPLOYMENT_VERIFICATION.md)。
+
 浏览器检查使用 Playwright，可用 `CHROMIUM_PATH` 指定 Chrome/Chromium。按 [测试策略](docs/TESTING_POLICY.md) 选择范围；完整验证是 `npm run verify:all`。组件规范见 [UI 开发规则](docs/UI_DEVELOPMENT_RULES.md)、[组件文档](docs/UI_COMPONENTS.md) 和 [模块边界](docs/MODULE_BOUNDARIES.md)。
 
 `main` 用于原站部署。本分支采用独立源码历史，后续从 main 按需迁移原创功能及相关测试，不直接合并完整部署分支。依赖更新需要重新固定清单、导出依赖包并验证；普通构建不升级上游。

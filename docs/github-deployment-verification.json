@@ -1,0 +1,46 @@
+{
+  "run_at": "2026-10-15T13:08:04.923Z",
+  "mode": "affected",
+  "files": [
+    "scripts/browser-deployment.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "scripts/browser-deployment.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-deployment.mjs"
+      ]
+    },
+    {
+      "id": "browser:deployment",
+      "command": [
+        "node",
+        "scripts/browser-deployment.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-deployment.mjs"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 187
+    },
+    {
+      "id": "browser:deployment",
+      "exit_code": 0,
+      "duration_ms": 15918
+    }
+  ]
+}

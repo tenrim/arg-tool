@@ -1,6 +1,6 @@
 // Test ownership follows behavior, not the app.js/UI barrel import closure.
 // A shared visual change exercises component/layout contracts, not all engines.
-export const browserSuites = ['handoff-feedback','site-pages','ui-components','ui-layout','ui-motion','workspace','sidebar-routing','knowledge-pairs','capabilities','capability-resilience','task-lifecycle','reference','discovery','turing','basics','hex-it','science','project-licenses','privacy','metadata','image-loading','resilience','smoke','responsive-smoke','chef-categories','chef-corrections','chef-tools','round-one','round-two','round-three','round-four','release-layout','hunt-smoke','hunt-media-smoke','paper-removal','coderunner'];
+export const browserSuites = ['deployment','handoff-feedback','site-pages','ui-components','ui-layout','ui-motion','workspace','sidebar-routing','knowledge-pairs','capabilities','capability-resilience','task-lifecycle','reference','discovery','turing','basics','hex-it','science','project-licenses','privacy','metadata','image-loading','resilience','smoke','responsive-smoke','chef-categories','chef-corrections','chef-tools','round-one','round-two','round-three','round-four','release-layout','hunt-smoke','hunt-media-smoke','paper-removal','coderunner'];
 export const browserFile = name => name==='capabilities'?'tests/browser-capabilities.mjs':`scripts/browser-${name}.mjs`;
 // First matching rule owns a file. Narrow rules precede folder defaults.
 // Unit test import dependencies are added automatically, including re-exports.
