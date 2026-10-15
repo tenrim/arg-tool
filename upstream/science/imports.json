@@ -1,0 +1,93 @@
+[
+  {
+    "name": "astronomy-engine",
+    "version": "2.1.19",
+    "license": "MIT",
+    "repository": {
+      "url": "git+https://github.com/cosinekitty/astronomy.git",
+      "type": "git"
+    },
+    "dist": {
+      "shasum": "41b9fd2afb7eba3485e3803cbd9033011f8557af",
+      "tarball": "https://registry.npmjs.org/astronomy-engine/-/astronomy-engine-2.1.19.tgz",
+      "fileCount": 8,
+      "integrity": "sha512-8yWKNf7UeNbH458h3sAJ6ZgAjE5jTXp/mNNRFoC20j2SHwZIjAQeEsBB2Q3uCFRaTCCJRv33K2XhkhZQMXoX6w==",
+      "signatures": [
+        {
+          "sig": "MEYCIQCd++J2RtzAE5Pi54uMPGRs1KGrBtCTYcMg2SQnkRWa8gIhANsXa4DhhNGdY2ZbVxhyLd48B0CtgYPaY0lVtrFNluEy",
+          "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+        }
+      ],
+      "unpackedSize": 1838627
+    },
+    "source_directory": "upstream/science/sources/astronomy-engine-2.1.19"
+  },
+  {
+    "name": "lunar-javascript",
+    "version": "1.7.7",
+    "license": "MIT",
+    "repository": {
+      "url": "git+https://github.com/6tail/lunar-javascript.git",
+      "type": "git"
+    },
+    "dist": {
+      "shasum": "2c7a359f2ffc414ce2b0214f59148ff7a823851f",
+      "tarball": "https://registry.npmjs.org/lunar-javascript/-/lunar-javascript-1.7.7.tgz",
+      "fileCount": 30,
+      "integrity": "sha512-u/KYiwPIBo/0bT+WWfU7qO1d+aqeB90Tuy4ErXenr2Gam0QcWeezUvtiOIyXR7HbVnW2I1DKfU0NBvzMZhbVQw==",
+      "signatures": [
+        {
+          "sig": "MEUCID3weZ1ScaGXi0iU2s3uhlO7GIW9NfQ6Uwt0WcyjP/nmAiEAxxSd7WP8uich41Va1ueBDCALypm/Suh4Ia6lnh1+g4Y=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "unpackedSize": 511830
+    },
+    "source_directory": "upstream/science/sources/lunar-javascript-1.7.7"
+  },
+  {
+    "name": "@rdkit/rdkit",
+    "version": "2026.9.1",
+    "license": "BSD-3-Clause",
+    "repository": {
+      "url": "git+https://github.com/rdkit/rdkit.git",
+      "type": "git"
+    },
+    "dist": {
+      "shasum": "2d630a07ade4865a22f9b7e18f5af399dbe4218a",
+      "tarball": "https://registry.npmjs.org/@rdkit/rdkit/-/rdkit-2026.9.1.tgz",
+      "fileCount": 5,
+      "integrity": "sha512-nbdi5yEw+mG2kIxFvgVMGulS5fjNMzzocx9nKs01NAjNpFAEQVb6RDl3pd9AWEa7m5D8DR4QAS6CDzu+5xjzEA==",
+      "signatures": [
+        {
+          "sig": "MEQCIHFIJk+KejJKAAVKrxBbLqdBgA+/VC04VSsgh3KDehIVAiB9InXz5U8li6XkN+WyQfEldnJnaM9rukFWujwa5lRrPw==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEUCIAIQs5Om8wCrbnpYrfOFUo1a4RKvDymPU3teF8RnfC5rAiEAvckcHMAqFSsyNdOTvhauJ+GQ+mhlqw572mjRi9VcQ1E=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "attestations": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rdkit%2frdkit@2026.9.1",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "unpackedSize": 7500381
+    },
+    "source_directory": "upstream/science/sources/@rdkit-rdkit-2026.9.1"
+  },
+  {
+    "name": "periodic-table",
+    "repository": "https://github.com/Bowserinator/Periodic-Table-JSON",
+    "commit": "9090b1c472a1e68f7295e77280f374f8d125cefc",
+    "source_directory": "upstream/science/sources/periodic-table"
+  },
+  {
+    "name": "seqviz",
+    "repository": "https://github.com/Lattice-Automation/seqviz",
+    "commit": "7a0e8f4c45ad5f4d076178f54f08f071e91d7b6a",
+    "source_directory": "upstream/science/sources/seqviz"
+  }
+]

@@ -1,0 +1,4 @@
+import {CHEF_OPERATION_PAIRS} from '../capabilities/registry.js';
+// Both discovery and explicit result reversal use the same declared real pairs.
+export const INVERSES = Object.freeze(Object.fromEntries(CHEF_OPERATION_PAIRS.flatMap(([a,b])=>[[a,b],[b,a]])));
+export function inverseArgs(source,target,args,schemas,defaults){const result=defaults(target);const previous=schemas(source);schemas(target).forEach((arg,i)=>{const n=previous.findIndex(a=>a.name===arg.name&&a.type===arg.type);if(n<0)return;const value=args[n];if(['option','argSelector','populateOption','populateMultiOption'].includes(arg.type)&&Array.isArray(arg.value)&&!arg.value.some(option=>(typeof option==='object'?option.name:option)===value))return;if(arg.type==='number'&&(!Number.isFinite(value)||arg.min!==undefined&&value<arg.min||arg.max!==undefined&&value>arg.max||arg.integer&&!Number.isInteger(value)))return;result[i]=structuredClone(value);});return result;}

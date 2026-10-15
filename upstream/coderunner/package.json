@@ -1,0 +1,1 @@
+{"private":true,"dependencies":{"pyodide":"0.29.3","quickjs-emscripten":"0.32.0","wasmoon":"1.16.0","sql.js":"1.14.2","@susisu/whitespace-js":"0.0.8","malbolge-vm":"1.0.4","esbuild":"0.28.2"}}

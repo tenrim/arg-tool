@@ -1,0 +1,4257 @@
+{
+  "verifiedOn": "2026-10-13",
+  "count": 101,
+  "coveredIds": [
+    "native:audio-music",
+    "native:audio-play",
+    "native:audio-spectrum",
+    "native:audio-sstv",
+    "native:coordinates",
+    "native:cyberchef",
+    "native:sequence-processing",
+    "native:video",
+    "native:video-audio",
+    "native:video-frames",
+    "native:video-gif",
+    "native:video-reverse",
+    "op:ADD",
+    "op:AND",
+    "op:Analyse%20UUID",
+    "op:Bit%20shift%20left",
+    "op:Bit%20shift%20right",
+    "op:Cartesian%20Product",
+    "op:Change%20IP%20format",
+    "op:Comment",
+    "op:Conditional%20Jump",
+    "op:Convert%20area",
+    "op:Convert%20co-ordinate%20format",
+    "op:Convert%20data%20units",
+    "op:Convert%20distance",
+    "op:Convert%20mass",
+    "op:Convert%20speed",
+    "op:DNS%20over%20HTTPS",
+    "op:DateTime%20Delta",
+    "op:Dechunk%20HTTP%20response",
+    "op:Defang%20IP%20Addresses",
+    "op:Defang%20URL",
+    "op:Divide",
+    "op:Extended%20GCD",
+    "op:Extract%20Audio%20Metadata",
+    "op:Extract%20ID3",
+    "op:Fang%20URL",
+    "op:Fork",
+    "op:Format%20MAC%20addresses",
+    "op:Generate%20De%20Bruijn%20Sequence",
+    "op:Generate%20Lorem%20Ipsum",
+    "op:Generate%20UUID",
+    "op:Get%20Time",
+    "op:Group%20IP%20addresses",
+    "op:HASSH%20Client%20Fingerprint",
+    "op:HASSH%20Server%20Fingerprint",
+    "op:HTTP%20request",
+    "op:Haversine%20distance",
+    "op:IPv6%20Transition%20Addresses",
+    "op:JA3%20Fingerprint",
+    "op:JA3S%20Fingerprint",
+    "op:JA4%20Fingerprint",
+    "op:JA4Server%20Fingerprint",
+    "op:Jump",
+    "op:Label",
+    "op:MOD",
+    "op:Mean",
+    "op:Median",
+    "op:Merge",
+    "op:Modular%20Exponentiation",
+    "op:Modular%20Inverse",
+    "op:Multiply",
+    "op:NOT",
+    "op:OR",
+    "op:Parse%20DateTime",
+    "op:Parse%20Ethernet%20frame",
+    "op:Parse%20IP%20range",
+    "op:Parse%20IPv4%20header",
+    "op:Parse%20IPv6%20address",
+    "op:Parse%20ObjectID%20timestamp",
+    "op:Parse%20TCP",
+    "op:Parse%20TLS%20record",
+    "op:Parse%20UDP",
+    "op:Parse%20URI",
+    "op:Parse%20User%20Agent",
+    "op:Play%20Media",
+    "op:Power%20Set",
+    "op:Pseudo-Random%20Integer%20Generator",
+    "op:Pseudo-Random%20Number%20Generator",
+    "op:Pseudo-Random%20Prime%20Generator",
+    "op:Register",
+    "op:Return",
+    "op:Rotate%20left",
+    "op:Rotate%20right",
+    "op:SUB",
+    "op:Set%20Difference",
+    "op:Set%20Intersection",
+    "op:Set%20Union",
+    "op:Sleep",
+    "op:Standard%20Deviation",
+    "op:Strip%20HTTP%20headers",
+    "op:Strip%20IPv4%20header",
+    "op:Strip%20TCP%20header",
+    "op:Strip%20UDP%20header",
+    "op:Subsection",
+    "op:Subtract",
+    "op:Sum",
+    "op:Symmetric%20Difference",
+    "op:Translate%20DateTime%20Format",
+    "pair:To%20UNIX%20Timestamp",
+    "pair:UNIX%20Timestamp%20to%20Windows%20Filetime"
+  ],
+  "accessStatement": "来源通过本次网络浏览器查询/打开及本地官方引擎定义核对；没有实际中国三网连通测试，不将可打开等同于中国所有网络必定可达。RFC 使用南京大学镜像。",
+  "sourcePolicy": "优先国内官方页面或官方中文文档；少见项目规则明确使用原作者英文资料和随站正式实现，不杜撰中文标准。解释是据所列规则的简明释义，例子自行计算，没有整篇搬运。",
+  "specialChecks": [
+    "SSTV 的 BATC pp.15–19、22、94 核对扫描、颜色通道、1500–2300 Hz 像素音调、1200 Hz 同步、7 数据位与奇偶校验；本站 spec.js 核对 7 个模式及 VIS，不支持 PD120。",
+    "ADD/SUB catalogue 的 MOD 255 是上游描述错误；原作者 BitwiseOp.mjs 实际 %256 与负数加256，文章按实际规则。",
+    "UNIX 时间戳不复制上游旧描述的32位固定宽度说法；按纪元和明确单位解释。",
+    "JA3/JA3S/HASSH 哈希例子以 hashlib 独立核算；不是声称仅输入那段字符串就能被握手解析器直接使用。",
+    "HASSH/JA4S 没有找到可替代原方法的权威中文全文；明确原始英文出处，不以泛泛国内新闻替代算法证据。",
+    "IPv6 RFC4291 HTML 镜像未能打开，TXT 镜像已全文打开；未引用访问失败的旧华为VLAN链接。"
+  ],
+  "articles": [
+    {
+      "capabilityId": "op:Modular%20Inverse",
+      "title": "模逆元：什么时候除法可以变成乘法",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "内置函数 pow、sum",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/functions.html",
+          "locator": "pow / sum",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Modular Inverse",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Modular Inverse\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Set%20Intersection",
+      "title": "集合交集：怎样理解 ∩",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "集合类型与集合运算",
+          "publisher": "Python 官方文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/stdtypes.html#set-types-set-frozenset",
+          "locator": "intersection / union / difference / symmetric_difference",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Set Intersection",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Set Intersection\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Set%20Union",
+      "title": "集合并集：怎样理解 ∪",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "集合类型与集合运算",
+          "publisher": "Python 官方文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/stdtypes.html#set-types-set-frozenset",
+          "locator": "intersection / union / difference / symmetric_difference",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Set Union",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Set Union\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Set%20Difference",
+      "title": "集合差集：怎样理解 −",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "集合类型与集合运算",
+          "publisher": "Python 官方文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/stdtypes.html#set-types-set-frozenset",
+          "locator": "intersection / union / difference / symmetric_difference",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Set Difference",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Set Difference\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Symmetric%20Difference",
+      "title": "集合对称差：怎样理解 △",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "集合类型与集合运算",
+          "publisher": "Python 官方文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/stdtypes.html#set-types-set-frozenset",
+          "locator": "intersection / union / difference / symmetric_difference",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Symmetric Difference",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Symmetric Difference\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Cartesian%20Product",
+      "title": "笛卡尔积：如何列举所有配对",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "itertools.product 笛卡尔积",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/itertools.html#itertools.product",
+          "locator": "product",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Cartesian Product",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Cartesian Product\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Power%20Set",
+      "title": "幂集：为什么 n 个成员有 2ⁿ 个子集",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "powerset 配方",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/itertools.html#itertools-recipes",
+          "locator": "powerset",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Power Set",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Power Set\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Sum",
+      "title": "求和：列表中的数怎样累加",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "表达式与运算符",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_operators",
+          "locator": "算术与按位运算",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Sum",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Sum\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Subtract",
+      "title": "减法：减法为什么有顺序",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "表达式与运算符",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_operators",
+          "locator": "算术与按位运算",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Subtract",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Subtract\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Multiply",
+      "title": "乘法：乘积如何由列表计算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "表达式与运算符",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_operators",
+          "locator": "算术与按位运算",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Multiply",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Multiply\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Divide",
+      "title": "除法：连续除法如何计算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "表达式与运算符",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_operators",
+          "locator": "算术与按位运算",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Divide",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Divide\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:MOD",
+      "title": "取模：取余与循环编号是什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "表达式与运算符",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_operators",
+          "locator": "算术与按位运算",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · MOD",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"MOD\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Mean",
+      "title": "平均值：平均值怎样算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "数字统计函数",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/statistics.html",
+          "locator": "mean / median / pstdev",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Mean",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Mean\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Median",
+      "title": "中位数：中位数为什么先排序",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "数字统计函数",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/statistics.html",
+          "locator": "mean / median / pstdev",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Median",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Median\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Standard%20Deviation",
+      "title": "标准差：数字分散程度怎么量化",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "数字统计函数",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/statistics.html",
+          "locator": "mean / median / pstdev",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Standard Deviation",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Standard Deviation\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Extended%20GCD",
+      "title": "扩展欧几里得算法：如何把最大公约数写成整数线性组合",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "整数最大公约数 gcd",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/math.html#math.gcd",
+          "locator": "gcd",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Extended GCD",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Extended GCD\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Modular%20Exponentiation",
+      "title": "模幂运算：大幂如何只算余数",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "内置函数 pow、sum",
+          "publisher": "Python 官方中文文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/functions.html",
+          "locator": "pow / sum",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Modular Exponentiation",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Modular Exponentiation\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:OR",
+      "title": "按位或：按位或怎样合并置位",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "按位或怎样合并置位",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_OR",
+          "locator": "描述、规则与示例",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "8 位按位运算、加减法实际实现",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef/blob/master/src/core/lib/BitwiseOp.mjs",
+          "locator": "bitOp / and / or / not / add / sub",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · OR",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"OR\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:AND",
+      "title": "按位与：按位与怎样选择位",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "按位与怎样选择位",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_AND",
+          "locator": "描述、规则与示例",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "8 位按位运算、加减法实际实现",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef/blob/master/src/core/lib/BitwiseOp.mjs",
+          "locator": "bitOp / and / or / not / add / sub",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · AND",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"AND\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:NOT",
+      "title": "按位取反：为什么取反需要确定位宽",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "为什么取反需要确定位宽",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT",
+          "locator": "描述、规则与示例",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "8 位按位运算、加减法实际实现",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef/blob/master/src/core/lib/BitwiseOp.mjs",
+          "locator": "bitOp / and / or / not / add / sub",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · NOT",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"NOT\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Bit%20shift%20left",
+      "title": "位左移：移左后哪些位会丢失",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "左移运算",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Left_shift",
+          "locator": "描述、规则与示例",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Bit shift left",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Bit shift left\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Bit%20shift%20right",
+      "title": "位右移：移右后哪些位会丢失",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "右移运算",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Unsigned_right_shift",
+          "locator": "描述、规则与示例",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Bit shift right",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Bit shift right\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Rotate%20left",
+      "title": "循环左移：移出字节的位怎样转回来",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Rotate left",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Rotate left\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Rotate%20right",
+      "title": "循环右移：移出字节的位怎样转回来",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Rotate right",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Rotate right\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:ADD",
+      "title": "逐字节加法：字节溢出时怎样回绕",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "8 位按位运算、加减法实际实现",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef/blob/master/src/core/lib/BitwiseOp.mjs",
+          "locator": "bitOp / and / or / not / add / sub",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · ADD",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"ADD\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:SUB",
+      "title": "逐字节减法：字节溢出时怎样回绕",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "8 位按位运算、加减法实际实现",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef/blob/master/src/core/lib/BitwiseOp.mjs",
+          "locator": "bitOp / and / or / not / add / sub",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · SUB",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"SUB\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Pseudo-Random%20Number%20Generator",
+      "title": "生成伪随机数：“随机”输出如何理解",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "密码学随机值 getRandomValues",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/Crypto/getRandomValues",
+          "locator": "安全随机整数数组",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Pseudo-Random Number Generator",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Pseudo-Random Number Generator\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Pseudo-Random%20Integer%20Generator",
+      "title": "生成伪随机整数：“随机”输出如何理解",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "密码学随机值 getRandomValues",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/Crypto/getRandomValues",
+          "locator": "安全随机整数数组",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Pseudo-Random Integer Generator",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Pseudo-Random Integer Generator\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Pseudo-Random%20Prime%20Generator",
+      "title": "生成伪随机素数：为什么结果叫可能素数",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Miller–Rabin 素性检验",
+          "publisher": "美国国家标准与技术研究院 NIST",
+          "url": "https://xlinux.nist.gov/dads/HTML/millerRabin.html",
+          "locator": "Definition",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Pseudo-Random Prime Generator",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Pseudo-Random Prime Generator\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Convert%20distance",
+      "title": "距离单位换算：距离单位怎样按量纲换算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "国际单位制中文定义",
+          "publisher": "中国计量科学研究院",
+          "url": "https://www.nim.ac.cn/520/si.html",
+          "locator": "米、千克、秒",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "SI 词头",
+          "publisher": "国际计量局 BIPM",
+          "url": "https://www.bipm.org/en/measurement-units/si-prefixes",
+          "locator": "kilo / centi / milli",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Convert distance",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Convert distance\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Convert%20area",
+      "title": "面积单位换算：面积单位怎样按量纲换算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "国际单位制中文定义",
+          "publisher": "中国计量科学研究院",
+          "url": "https://www.nim.ac.cn/520/si.html",
+          "locator": "米、千克、秒",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "SI 词头",
+          "publisher": "国际计量局 BIPM",
+          "url": "https://www.bipm.org/en/measurement-units/si-prefixes",
+          "locator": "kilo / centi / milli",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Convert area",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Convert area\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Convert%20mass",
+      "title": "质量单位换算：质量单位怎样按量纲换算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "国际单位制中文定义",
+          "publisher": "中国计量科学研究院",
+          "url": "https://www.nim.ac.cn/520/si.html",
+          "locator": "米、千克、秒",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "SI 词头",
+          "publisher": "国际计量局 BIPM",
+          "url": "https://www.bipm.org/en/measurement-units/si-prefixes",
+          "locator": "kilo / centi / milli",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Convert mass",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Convert mass\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Convert%20speed",
+      "title": "速度单位换算：速度单位怎样按量纲换算",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "国际单位制中文定义",
+          "publisher": "中国计量科学研究院",
+          "url": "https://www.nim.ac.cn/520/si.html",
+          "locator": "米、千克、秒",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "SI 词头",
+          "publisher": "国际计量局 BIPM",
+          "url": "https://www.bipm.org/en/measurement-units/si-prefixes",
+          "locator": "kilo / centi / milli",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Convert speed",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Convert speed\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Convert%20data%20units",
+      "title": "数据单位换算：KB 与 KiB 为什么不同",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "二进制词头与数据单位",
+          "publisher": "NIST",
+          "url": "https://physics.nist.gov/cuu/Units/binary.html",
+          "locator": "Examples and comparisons",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Convert data units",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Convert data units\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Generate%20UUID",
+      "title": "生成 UUID：128 位标识符如何生成",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "UUID 中文文档",
+          "publisher": "Python 官方文档",
+          "url": "https://docs.python.org/zh-cn/3.13/library/uuid.html",
+          "locator": "uuid3 / uuid4 / uuid5",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "RFC 9562 · UUID（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9562.html",
+          "locator": "§4、§5.4、§5.5、§5.7",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Generate UUID",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Generate UUID\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Analyse%20UUID",
+      "title": "分析 UUID：版本号在 UUID 的哪里",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 9562 · UUID（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9562.html",
+          "locator": "§4、§5.4、§5.5、§5.7",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Analyse UUID",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Analyse UUID\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Generate%20De%20Bruijn%20Sequence",
+      "title": "生成德布鲁因序列：一条短序列怎样覆盖全部窗口",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "A combinatorial problem，1946 原始论文",
+          "publisher": "N. G. de Bruijn / 埃因霍温理工大学存档",
+          "url": "https://pure.tue.nl/ws/portalfiles/portal/4442708/597473.pdf",
+          "locator": "原论文 pp. 461–467",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Generate De Bruijn Sequence",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Generate De Bruijn Sequence\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Generate%20Lorem%20Ipsum",
+      "title": "生成占位文本：占位文本是什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Generate Lorem Ipsum",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Generate Lorem Ipsum\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:audio-spectrum",
+      "title": "声音频谱与线索分析：声谱图为什么能显示声音中的图案",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "频域分析与 FFT 窗口",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/AnalyserNode",
+          "locator": "fftSize / frequencyBinCount",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站声谱图的窗函数与频率坐标",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/media.js",
+          "locator": "spectrogram",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:audio-sstv",
+      "title": "SSTV 声音还原图片：一幅图片怎样变成可听见的声音",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CRAC SSTV 图像传送演练规则",
+          "publisher": "中国无线电协会业余无线电分会",
+          "url": "https://www.crac.org.cn/?p=1088",
+          "locator": "SSTV 通信成绩与制式选择",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "Slow Scan Television Explained",
+          "publisher": "英国业余电视俱乐部 BATC",
+          "url": "https://batc.org.uk/wp-content/uploads/Slow-Scan-Television-Explained.pdf",
+          "locator": "Modes and Systems；印刷 pp. 15–19、22、94",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s3",
+          "title": "随站 SSTV 模式时序表",
+          "publisher": "Mathieu Renaud / Equinoxis",
+          "url": "/vendor/hunt/sstv/spec.js",
+          "locator": "VIS_MAP；M1、M2、S1、S2、SDX、R36、R72",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "模式与 VIS：为什么选错会出现斜图",
+          "sourceIds": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s2"
+          ]
+        },
+        {
+          "title": "本站能处理的模式",
+          "sourceIds": [
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:audio-music",
+      "title": "音高与乐理：音高怎样对应音名与和弦",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "音名、MIDI 编号与频率的关系",
+          "publisher": "新南威尔士大学物理学院",
+          "url": "https://www.phys.unsw.edu.au/jw/notes.html",
+          "locator": "MIDI number and equal-tempered semitone conversion",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站音高、音符与和弦分析",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/round2/music-engine.js",
+          "locator": "detectPitch / theory",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:audio-play",
+      "title": "乐器弹奏与 MIDI：音符、拍数与 MIDI 各表示什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "MIDI 1.0 消息总表",
+          "publisher": "MIDI Association",
+          "url": "https://midi.org/summary-of-midi-1-0-messages",
+          "locator": "Note On / Note Off",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "本站旋律解析与弹奏时序",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/round1/instruments.js",
+          "locator": "parseMelody / music-play",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Extract%20Audio%20Metadata",
+      "title": "提取音频元数据：元数据怎样描述声音文件",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "音频信息提取与媒体流字段",
+          "publisher": "阿里云官方文档",
+          "url": "https://help.aliyun.com/zh/oss/user-guide/audio-information-extraction",
+          "locator": "格式、音频流信息",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Extract Audio Metadata",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Extract Audio Metadata\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Extract%20ID3",
+      "title": "提取 ID3 标签：歌曲标题标签怎样存进 MP3",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "ID3v2.4.0 标签结构规范",
+          "publisher": "ID3.org",
+          "url": "https://id3.org/id3v2.4.0-structure",
+          "locator": "§3 tag header；§4 frames",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Extract ID3",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Extract ID3\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:video",
+      "title": "指定时刻视频帧：指定秒数为什么不等于指定帧号",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "媒体时间轴 currentTime",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/currentTime",
+          "locator": "以秒表示的媒体位置",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站视频处理与 FFmpeg 参数",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/hunt-media.js",
+          "locator": "video-run；frame / frames / reverse / gif / audio 分支",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Play%20Media",
+      "title": "播放媒体：容器、编码与浏览器支持如何区分",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "媒体播放接口与播放失败",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/play",
+          "locator": "play() Promise / NotSupportedError",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Play Media",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Play Media\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:video-frames",
+      "title": "视频连续帧提取：连续抽帧怎样控制间隔",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "视频截图及帧率参数",
+          "publisher": "阿里云官方文档",
+          "url": "https://help.aliyun.com/zh/vod/user-guide/frame-animation/",
+          "locator": "帧率与片段范围",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站视频处理与 FFmpeg 参数",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/hunt-media.js",
+          "locator": "video-run；frame / frames / reverse / gif / audio 分支",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:video-reverse",
+      "title": "视频片段倒放：倒放为什么要重新组织帧",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "reverse / areverse 滤镜",
+          "publisher": "FFmpeg 官方文档",
+          "url": "https://www.ffmpeg.org/ffmpeg-filters.html#reverse_002c-areverse",
+          "locator": "reverse / areverse",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站视频处理与 FFmpeg 参数",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/hunt-media.js",
+          "locator": "video-run；frame / frames / reverse / gif / audio 分支",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:video-gif",
+      "title": "视频片段转 GIF：视频转 GIF 丢掉了哪些信息",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "视频截取动图",
+          "publisher": "阿里云官方文档",
+          "url": "https://help.aliyun.com/zh/vod/user-guide/frame-animation/",
+          "locator": "动图、帧率、时长",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站视频处理与 FFmpeg 参数",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/hunt-media.js",
+          "locator": "video-run；frame / frames / reverse / gif / audio 分支",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:video-audio",
+      "title": "视频音轨提取：提取音轨与录制声音有何不同",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "音频信息提取与媒体流字段",
+          "publisher": "阿里云官方文档",
+          "url": "https://help.aliyun.com/zh/oss/user-guide/audio-information-extraction",
+          "locator": "格式、音频流信息",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站视频处理与 FFmpeg 参数",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/hunt-media.js",
+          "locator": "video-run；frame / frames / reverse / gif / audio 分支",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:sequence-processing",
+      "title": "蛋白质与核酸序列转换：DNA 的字母如何换成氨基酸",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "密码子的三个核苷酸与重编码研究",
+          "publisher": "中国科学院",
+          "url": "https://www.cas.cn/kj/202502/t20250214_5047103.shtml",
+          "locator": "密码子和终止密码子",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "标准遗传密码表",
+          "publisher": "NCBI",
+          "url": "https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi",
+          "locator": "The Standard Code (transl_table=1)",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "本站核酸、蛋白质转换",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/science/core.js",
+          "locator": "sequence 转换函数",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:coordinates",
+      "title": "坐标与时间：度分秒、网格与时间戳怎么读",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "本站经纬度、UTM、时间转换公式",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/round2/coordinates-engine.js",
+          "locator": "coordinate / convertPoint / timeValue / formatTime",
+          "language": "zh-CN",
+          "kind": "implementation"
+        },
+        {
+          "id": "s2",
+          "title": "时间点、UTC 与毫秒纪元",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date",
+          "locator": "时间值与时间戳",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "pair:To%20UNIX%20Timestamp",
+      "title": "UNIX 时间戳 编码与解码：同一个时间戳为什么有 10 位和 13 位",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Unix 时间戳（秒）",
+          "publisher": "Day.js 官方中文文档",
+          "url": "https://day.js.org/docs/zh-CN/parse/unix-timestamp",
+          "locator": "Unix timestamp",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "时间点、UTC 与毫秒纪元",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date",
+          "locator": "时间值与时间戳",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · To UNIX Timestamp",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"To UNIX Timestamp\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Haversine%20distance",
+      "title": "球面距离：地球表面两点为何不能直接勾股",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "HaversineDistance 官方实现",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef/blob/master/src/core/operations/HaversineDistance.mjs",
+          "locator": "run / distanceTo",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s2",
+          "title": "本站经纬度、UTM、时间转换公式",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/round2/coordinates-engine.js",
+          "locator": "coordinate / convertPoint / timeValue / formatTime",
+          "language": "zh-CN",
+          "kind": "implementation"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Haversine distance",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Haversine distance\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Get%20Time",
+      "title": "获取时间：“获取时间”取的是哪里的时钟",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "时间点、UTC 与毫秒纪元",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date",
+          "locator": "时间值与时间戳",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Get Time",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Get Time\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20ObjectID%20timestamp",
+      "title": "解析 ObjectID 时间戳：MongoDB ID 的开头为什么像时间",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "BSON ObjectId 的字段结构",
+          "publisher": "MongoDB 官方中文文档",
+          "url": "https://www.mongodb.com/zh-cn/docs/manual/reference/bson-types/#objectid",
+          "locator": "ObjectId",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse ObjectID timestamp",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse ObjectID timestamp\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20DateTime",
+      "title": "解析日期时间：日期怎样根据格式被读成时间点",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "日期格式的大小写标记",
+          "publisher": "Day.js 官方中文文档",
+          "url": "https://day.js.org/docs/zh-CN/display/format",
+          "locator": "YYYY / MM / DD / HH / mm / ss / Z",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "日期解析、格式标记与时长运算",
+          "publisher": "Moment.js 官方文档",
+          "url": "https://momentjs.com/docs/",
+          "locator": "Parsing / Displaying / Manipulating",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Parse DateTime",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse DateTime\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:DateTime%20Delta",
+      "title": "日期时间加减：日期加减怎样跨过午夜",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "日期加法",
+          "publisher": "Day.js 官方中文文档",
+          "url": "https://day.js.org/docs/zh-CN/manipulate/add",
+          "locator": "Add",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "日期解析、格式标记与时长运算",
+          "publisher": "Moment.js 官方文档",
+          "url": "https://momentjs.com/docs/",
+          "locator": "Parsing / Displaying / Manipulating",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · DateTime Delta",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"DateTime Delta\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Translate%20DateTime%20Format",
+      "title": "转换日期时间格式：换显示格式会不会改变时刻",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "日期格式的大小写标记",
+          "publisher": "Day.js 官方中文文档",
+          "url": "https://day.js.org/docs/zh-CN/display/format",
+          "locator": "YYYY / MM / DD / HH / mm / ss / Z",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "日期解析、格式标记与时长运算",
+          "publisher": "Moment.js 官方文档",
+          "url": "https://momentjs.com/docs/",
+          "locator": "Parsing / Displaying / Manipulating",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Translate DateTime Format",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Translate DateTime Format\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Convert%20co-ordinate%20format",
+      "title": "坐标格式转换：坐标换写法与坐标系转换有什么不同",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Convert co-ordinate format",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Convert co-ordinate format\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s2",
+          "title": "本站经纬度、UTM、时间转换公式",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/round2/coordinates-engine.js",
+          "locator": "coordinate / convertPoint / timeValue / formatTime",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "pair:UNIX%20Timestamp%20to%20Windows%20Filetime",
+      "title": "UNIX 时间戳转 Windows 文件时间 ⇄ Windows 文件时间转 UNIX 时间戳：两个纪元和单位怎样互换",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Windows 文件时间",
+          "publisher": "Microsoft 官方中文文档",
+          "url": "https://learn.microsoft.com/zh-cn/windows/win32/sysinfo/file-times",
+          "locator": "64 位 FILETIME 与 100 纳秒间隔",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · UNIX Timestamp to Windows Filetime",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"UNIX Timestamp to Windows Filetime\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20URI",
+      "title": "解析 URI：网址中的每一段是什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 3986 · URI 通用语法（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc3986.html",
+          "locator": "§3 Components",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse URI",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse URI\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Change%20IP%20format",
+      "title": "转换 IP 地址格式：点分地址如何变成一个整数",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "IPv4 地址与报文结构",
+          "publisher": "华为官方文档",
+          "url": "https://info.support.huawei.com/info-finder/encyclopedia/zh/IPv4.html",
+          "locator": "报头、地址与分片",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Change IP format",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Change IP format\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Format%20MAC%20addresses",
+      "title": "格式化 MAC 地址：短横线和冒号会改变地址吗",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 7042 · IANA 与 IEEE 802 参数（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc7042.html",
+          "locator": "§2 48-bit MAC identifiers",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Format MAC addresses",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Format MAC addresses\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Group%20IP%20addresses",
+      "title": "归并 IP 地址：按网段归组怎样做",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CIDR、前缀与地址范围",
+          "publisher": "阿里云官方文档",
+          "url": "https://help.aliyun.com/zh/ecs/user-guide/overview-32",
+          "locator": "CIDR 格式换算为 IP 地址网段",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Group IP addresses",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Group IP addresses\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20IP%20range",
+      "title": "解析 IP 地址范围：一条 CIDR 包含多少地址",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CIDR、前缀与地址范围",
+          "publisher": "阿里云官方文档",
+          "url": "https://help.aliyun.com/zh/ecs/user-guide/overview-32",
+          "locator": "CIDR 格式换算为 IP 地址网段",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse IP range",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse IP range\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20IPv6%20address",
+      "title": "解析 IPv6 地址：双冒号究竟省略了几组",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "IPv6 地址的书写与压缩",
+          "publisher": "华为官方文档",
+          "url": "https://info.support.huawei.com/info-finder/encyclopedia/zh/IPv6.html",
+          "locator": "128 位地址、零压缩",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "RFC 4291 · IPv6 地址体系（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc4291.txt",
+          "locator": "§2.2 Text Representation",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Parse IPv6 address",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse IPv6 address\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:IPv6%20Transition%20Addresses",
+      "title": "解析 IPv6 过渡地址：IPv4 怎么嵌入 IPv6 写法",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 4291 · IPv6 地址体系（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc4291.txt",
+          "locator": "§2.2 Text Representation",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "RFC 3056 · 6to4 过渡机制（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc3056.html",
+          "locator": "§2",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · IPv6 Transition Addresses",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"IPv6 Transition Addresses\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20TCP",
+      "title": "解析 TCP：TCP 数据从哪一个字节开始",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 9293 · TCP（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9293.html",
+          "locator": "§3.1 Header Format",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse TCP",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse TCP\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Strip%20TCP%20header",
+      "title": "移除 TCP 头部：TCP 数据从哪一个字节开始",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 9293 · TCP（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9293.html",
+          "locator": "§3.1 Header Format",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Strip TCP header",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Strip TCP header\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20UDP",
+      "title": "解析 UDP：UDP 的八个首部字节是什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 768 · UDP（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc768.html",
+          "locator": "Format / Fields",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse UDP",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse UDP\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Strip%20UDP%20header",
+      "title": "移除 UDP 头部：UDP 的八个首部字节是什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 768 · UDP（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc768.html",
+          "locator": "Format / Fields",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Strip UDP header",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Strip UDP header\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20IPv4%20header",
+      "title": "解析 IPv4 头部：IPv4 首部为什么可能超过 20 字节",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 791 · Internet Protocol（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc791.html",
+          "locator": "§3.1 Internet Header Format",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "IPv4 地址与报文结构",
+          "publisher": "华为官方文档",
+          "url": "https://info.support.huawei.com/info-finder/encyclopedia/zh/IPv4.html",
+          "locator": "报头、地址与分片",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Parse IPv4 header",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse IPv4 header\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Strip%20IPv4%20header",
+      "title": "移除 IPv4 头部：IPv4 首部为什么可能超过 20 字节",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 791 · Internet Protocol（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc791.html",
+          "locator": "§3.1 Internet Header Format",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "IPv4 地址与报文结构",
+          "publisher": "华为官方文档",
+          "url": "https://info.support.huawei.com/info-finder/encyclopedia/zh/IPv4.html",
+          "locator": "报头、地址与分片",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Strip IPv4 header",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Strip IPv4 header\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20Ethernet%20frame",
+      "title": "解析以太网帧：二层帧怎样包住 IP 数据",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 7042 · IEEE 802 参数（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc7042.html",
+          "locator": "EtherType values",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "VLAN 的以太网帧字段",
+          "publisher": "华为官方文档",
+          "url": "https://info.support.huawei.com/info-finder/encyclopedia/zh/VLAN.html",
+          "locator": "VLAN Tag 和 VLAN ID；以太网帧增加 4 字节标签",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · Parse Ethernet frame",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse Ethernet frame\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20TLS%20record",
+      "title": "解析 TLS 记录：加密连接的数据怎样分成记录",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 8446 · TLS 1.3（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc8446.html",
+          "locator": "§5 Record Protocol",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse TLS record",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse TLS record\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Parse%20User%20Agent",
+      "title": "解析用户代理：浏览器字符串为什么包含多个产品名",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "User-Agent 请求头",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/User-Agent",
+          "locator": "Syntax / browser compatibility",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Parse User Agent",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Parse User Agent\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:DNS%20over%20HTTPS",
+      "title": "通过 HTTPS 查询 DNS：域名查询为什么可以走 HTTPS",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 8484 · DNS Queries over HTTPS（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc8484.html",
+          "locator": "§4 HTTP Exchange",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "DoH 接入与加密地址",
+          "publisher": "阿里云官方文档",
+          "url": "https://www.alibabacloud.com/help/zh/dns/httpdns-access-configuration",
+          "locator": "DoT/DoH 接入",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · DNS over HTTPS",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"DNS over HTTPS\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:HTTP%20request",
+      "title": "HTTP 请求：请求方法、头部与响应各表示什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "使用 Fetch 与 CORS 响应",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch",
+          "locator": "Request method / mode / opaque responses",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · HTTP request",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"HTTP request\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Strip%20HTTP%20headers",
+      "title": "移除 HTTP 头部：空行为什么划分头部与正文",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 9112 · HTTP/1.1（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9112.html",
+          "locator": "§2 Message；§7.1 Chunked Transfer Coding",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Strip HTTP headers",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Strip HTTP headers\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Dechunk%20HTTP%20response",
+      "title": "解码 HTTP 分块响应：分块正文怎样拼回连续字节",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "RFC 9112 · HTTP/1.1（南京大学镜像）",
+          "publisher": "IETF / 南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9112.html",
+          "locator": "§2 Message；§7.1 Chunked Transfer Coding",
+          "language": "en",
+          "kind": "standard"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Dechunk HTTP response",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Dechunk HTTP response\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Defang%20IP%20Addresses",
+      "title": "解除 IP 地址可点击性：为什么把点写成 [.]",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Defang all the things：指标去可点击化",
+          "publisher": "SANS Internet Storm Center",
+          "url": "https://isc.sans.edu/diary/Defang%2Ball%2Bthe%2Bthings/22744",
+          "locator": "域名、网址的 defang 写法",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · Defang IP Addresses",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Defang IP Addresses\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Defang%20URL",
+      "title": "解除网址可点击性：为什么线索里的网址写 hxxp",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Defang URL",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Defang URL\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Fang%20URL",
+      "title": "恢复网址可点击性：如何把 hxxp 还原成标准写法",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Fang URL",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Fang URL\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:JA3%20Fingerprint",
+      "title": "JA3 指纹：TLS 客户端指纹究竟在哈希什么",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "JA3 与 JA3S 原始方法说明",
+          "publisher": "Salesforce 原始作者",
+          "url": "https://github.com/salesforce/ja3",
+          "locator": "How JA3 works / JA3S",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "TLS 客户端 JA3、JA4 字段",
+          "publisher": "阿里云官方中文文档",
+          "url": "https://help.aliyun.com/zh/edge-security-acceleration/esa/user-guide/rules-match-fields-available-for-bots",
+          "locator": "JA3/JA4 fingerprint",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · JA3 Fingerprint",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"JA3 Fingerprint\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:JA3S%20Fingerprint",
+      "title": "JA3S 指纹：服务端指纹为何不等同客户端指纹",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "JA3 与 JA3S 原始方法说明",
+          "publisher": "Salesforce 原始作者",
+          "url": "https://github.com/salesforce/ja3",
+          "locator": "How JA3 works / JA3S",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · JA3S Fingerprint",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"JA3S Fingerprint\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:JA4%20Fingerprint",
+      "title": "JA4 指纹：现代 TLS 指纹为什么拆成多段",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "JA4 客户端指纹原始规范",
+          "publisher": "FoxIO",
+          "url": "https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/JA4.md",
+          "locator": "JA4 Algorithm / Cipher hash / Extension hash",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "TLS 客户端 JA3、JA4 字段",
+          "publisher": "阿里云官方中文文档",
+          "url": "https://help.aliyun.com/zh/edge-security-acceleration/esa/user-guide/rules-match-fields-available-for-bots",
+          "locator": "JA3/JA4 fingerprint",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s3",
+          "title": "CyberChef 官方操作定义 · JA4 Fingerprint",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"JA4 Fingerprint\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:JA4Server%20Fingerprint",
+      "title": "JA4 服务端指纹：JA4S 如何记录服务端响应",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "JA4S 原始参考实现",
+          "publisher": "FoxIO",
+          "url": "https://github.com/FoxIO-LLC/ja4/blob/main/python/ja4.py",
+          "locator": "to_ja4s",
+          "language": "en",
+          "kind": "implementation"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · JA4Server Fingerprint",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"JA4Server Fingerprint\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:HASSH%20Client%20Fingerprint",
+      "title": "HASSH 客户端指纹：SSH 算法列表怎样变成指纹",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "HASSH 与 hasshServer 原始方法说明",
+          "publisher": "Salesforce 原始作者",
+          "url": "https://github.com/salesforce/hassh",
+          "locator": "How does HASSH work / Examples",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · HASSH Client Fingerprint",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"HASSH Client Fingerprint\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:HASSH%20Server%20Fingerprint",
+      "title": "HASSH 服务端指纹：SSH 算法列表怎样变成指纹",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "HASSH 与 hasshServer 原始方法说明",
+          "publisher": "Salesforce 原始作者",
+          "url": "https://github.com/salesforce/hassh",
+          "locator": "How does HASSH work / Examples",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s2",
+          "title": "CyberChef 官方操作定义 · HASSH Server Fingerprint",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"HASSH Server Fingerprint\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "native:cyberchef",
+      "title": "完整 CyberChef 配方工作区：配方为何是一条可组合的数据处理链",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方项目介绍与操作组合",
+          "publisher": "GCHQ / CyberChef",
+          "url": "https://github.com/gchq/CyberChef",
+          "locator": "README / How it works",
+          "language": "en",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "本站配方任务与字节输入约定",
+          "publisher": "迷雾工具箱随站实现",
+          "url": "/cyberchef.js",
+          "locator": "initCyberChef / checkedRecipe / run",
+          "language": "zh-CN",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Fork",
+      "title": "分支处理：如何对每一行分别运行同一配方",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Fork",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Fork\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Merge",
+      "title": "合并分支：怎样结束逐分支处理",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Merge",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Merge\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Subsection",
+      "title": "截取片段：怎样只处理匹配的部分",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Subsection",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Subsection\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Register",
+      "title": "寄存器：正则捕获怎样变成后续参数",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Register",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Register\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Conditional%20Jump",
+      "title": "条件跳转：什么时候进入另一段配方",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Conditional Jump",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Conditional Jump\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Label",
+      "title": "标签：标签怎样标出跳转目标",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Label",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Label\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Jump",
+      "title": "跳转：跳转如何改变操作顺序",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Jump",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Jump\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Sleep",
+      "title": "等待：等待会不会改变输入",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Sleep",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Sleep\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Return",
+      "title": "返回：怎样提前结束整条配方",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Return",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Return\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "op:Comment",
+      "title": "注释：注释是否参与数据变换",
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CyberChef 官方操作定义 · Comment",
+          "publisher": "GCHQ / CyberChef",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "locator": "operations[\"Comment\"]；随站提供的 Apache-2.0 操作描述与参数",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ],
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1"
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "projects": {
+    "cryptii": {
+      "repo": "cryptii/cryptii",
+      "commit": "c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642",
+      "files": [
+        "LICENSE.txt",
+        "README.md",
+        "package.json",
+        "src/ArrayUtil.js",
+        "src/Encoder/PolybiusSquare.js",
+        "src/Encoder/TapCode.js"
+      ]
+    },
+    "romanice": {
+      "repo": "dkin-om/romanice",
+      "commit": "8923e049da2558b2c23c7d1b4c2fe806afbcc494",
+      "files": [
+        "LICENSE",
+        "README.md",
+        "package.json",
+        "src/index.js",
+        "src/converter.js",
+        "src/symbols.js"
+      ]
+    },
+    "invisibles": {
+      "repo": "cig13zs/invisibles",
+      "commit": "5ab9e06817539817830caafe0f652a582a9258e9",
+      "files": [
+        "LICENSE",
+        "README.md",
+        "core.js"
+      ]
+    },
+    "baudot": {
+      "repo": "zenoamaro/baudot.js",
+      "commit": "5f1a01d7d774f5c5583bc9591d09cb09e74c2140",
+      "files": [
+        "LICENSE.md",
+        "README.md",
+        "package.json",
+        "src/baudot.ts",
+        "src/baudot.test.ts"
+      ]
+    }
+  },
+  "files": [
+    {
+      "path": "upstream/basics/sources/cryptii/LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/cryptii/cryptii/c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642/LICENSE.txt",
+      "sha256": "661ebb99242194d980f5ff879b2ce851b02a191762dd0ec7388849c72150cb94"
+    },
+    {
+      "path": "upstream/basics/sources/cryptii/README.md",
+      "url": "https://raw.githubusercontent.com/cryptii/cryptii/c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642/README.md",
+      "sha256": "edce3bcac0333e8e0677511202ac2157eefdca0955c5edd1272a23732d951ae4"
+    },
+    {
+      "path": "upstream/basics/sources/cryptii/package.json",
+      "url": "https://raw.githubusercontent.com/cryptii/cryptii/c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642/package.json",
+      "sha256": "c8b1d811f386b0a44a16a516ca14fdb55ba050451a7c8b9d114adfc2edacb400"
+    },
+    {
+      "path": "upstream/basics/sources/cryptii/src/ArrayUtil.js",
+      "url": "https://raw.githubusercontent.com/cryptii/cryptii/c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642/src/ArrayUtil.js",
+      "sha256": "c2cd1b9f646f0bbc6d42724be15dca57fb25ea442a07f8659548b30aaa13aa20"
+    },
+    {
+      "path": "upstream/basics/sources/cryptii/src/Encoder/PolybiusSquare.js",
+      "url": "https://raw.githubusercontent.com/cryptii/cryptii/c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642/src/Encoder/PolybiusSquare.js",
+      "sha256": "e0d151a524b980bb88dba5818d85c3a6188523f094bce28a1b393a8518c5c0b2"
+    },
+    {
+      "path": "upstream/basics/sources/cryptii/src/Encoder/TapCode.js",
+      "url": "https://raw.githubusercontent.com/cryptii/cryptii/c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642/src/Encoder/TapCode.js",
+      "sha256": "4c15ac5cae363572a6854ee0bef6d4ddf2902a8b92e92ea499f497ef89016f7f"
+    },
+    {
+      "path": "upstream/basics/sources/romanice/LICENSE",
+      "url": "https://raw.githubusercontent.com/dkin-om/romanice/8923e049da2558b2c23c7d1b4c2fe806afbcc494/LICENSE",
+      "sha256": "84ab63cff5d225a50047e9f8cd890d24c8c42a3548e42ee57b41360387517e97"
+    },
+    {
+      "path": "upstream/basics/sources/romanice/README.md",
+      "url": "https://raw.githubusercontent.com/dkin-om/romanice/8923e049da2558b2c23c7d1b4c2fe806afbcc494/README.md",
+      "sha256": "729129855511bc459eee621e47141b91491f396f78f4fd162c3b01aa66dfc884"
+    },
+    {
+      "path": "upstream/basics/sources/romanice/package.json",
+      "url": "https://raw.githubusercontent.com/dkin-om/romanice/8923e049da2558b2c23c7d1b4c2fe806afbcc494/package.json",
+      "sha256": "aef16bd52cdca594542b0cb994eaf1b1769bde5ad20534e46443d97d2818e16b"
+    },
+    {
+      "path": "upstream/basics/sources/romanice/src/index.js",
+      "url": "https://raw.githubusercontent.com/dkin-om/romanice/8923e049da2558b2c23c7d1b4c2fe806afbcc494/src/index.js",
+      "sha256": "7c2f531a9e2a4e17c7aac8ec50f622bb135a213859916b508ced447baaded48d"
+    },
+    {
+      "path": "upstream/basics/sources/romanice/src/converter.js",
+      "url": "https://raw.githubusercontent.com/dkin-om/romanice/8923e049da2558b2c23c7d1b4c2fe806afbcc494/src/converter.js",
+      "sha256": "bb1aebf247b8bcf19e30c17baf900e7da4de4cfa26741867e0cb5dcafe362ac9"
+    },
+    {
+      "path": "upstream/basics/sources/romanice/src/symbols.js",
+      "url": "https://raw.githubusercontent.com/dkin-om/romanice/8923e049da2558b2c23c7d1b4c2fe806afbcc494/src/symbols.js",
+      "sha256": "0d3e475515e67d42785245c43d92eb37e0f89b599dc724b19e133ee4cddf9d3d"
+    },
+    {
+      "path": "upstream/basics/sources/invisibles/LICENSE",
+      "url": "https://raw.githubusercontent.com/cig13zs/invisibles/5ab9e06817539817830caafe0f652a582a9258e9/LICENSE",
+      "sha256": "705b3d96c77d11a725607b9fd7a55bdc3b803405cd8fa8849c5d06d3b090220b"
+    },
+    {
+      "path": "upstream/basics/sources/invisibles/README.md",
+      "url": "https://raw.githubusercontent.com/cig13zs/invisibles/5ab9e06817539817830caafe0f652a582a9258e9/README.md",
+      "sha256": "fca59f686e07dbf2c52080fc478dd8ec51760b5d1fbed88ad5bd7f2f4d57d0aa"
+    },
+    {
+      "path": "upstream/basics/sources/invisibles/core.js",
+      "url": "https://raw.githubusercontent.com/cig13zs/invisibles/5ab9e06817539817830caafe0f652a582a9258e9/core.js",
+      "sha256": "94c1be10706b751843eda1b64a1de0c4d0b2f4ec62b59a481360741af55d8a93"
+    },
+    {
+      "path": "upstream/basics/sources/baudot/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/zenoamaro/baudot.js/5f1a01d7d774f5c5583bc9591d09cb09e74c2140/LICENSE.md",
+      "sha256": "e9af7e759e22eaa1f94ca817c36f6cd869208913f0402f02f79fe8e1d1479fb0"
+    },
+    {
+      "path": "upstream/basics/sources/baudot/README.md",
+      "url": "https://raw.githubusercontent.com/zenoamaro/baudot.js/5f1a01d7d774f5c5583bc9591d09cb09e74c2140/README.md",
+      "sha256": "b6defeed5e6f6421b221d681971af31390f85e053c30ece5648d0caf7fa57616"
+    },
+    {
+      "path": "upstream/basics/sources/baudot/package.json",
+      "url": "https://raw.githubusercontent.com/zenoamaro/baudot.js/5f1a01d7d774f5c5583bc9591d09cb09e74c2140/package.json",
+      "sha256": "04a6c36ad59a4231d81b74ac18a3f1ca8ee14e2cba3abb14cf630c2bbcbbd894"
+    },
+    {
+      "path": "upstream/basics/sources/baudot/src/baudot.ts",
+      "url": "https://raw.githubusercontent.com/zenoamaro/baudot.js/5f1a01d7d774f5c5583bc9591d09cb09e74c2140/src/baudot.ts",
+      "sha256": "2ac34e54f6e6ad1544bb03dfc081dae20c0dabef42e18f051cedd13473428669"
+    },
+    {
+      "path": "upstream/basics/sources/baudot/src/baudot.test.ts",
+      "url": "https://raw.githubusercontent.com/zenoamaro/baudot.js/5f1a01d7d774f5c5583bc9591d09cb09e74c2140/src/baudot.test.ts",
+      "sha256": "f0e20ea974b8884714dd8142c5dffec65084cd7f054bcb019a0f0d4d4b05cff5"
+    }
+  ]
+}

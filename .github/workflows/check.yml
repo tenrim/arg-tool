@@ -1,0 +1,80 @@
+name: Check ARG tools
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Run all release regressions
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+      FULL_VERIFY: ${{ github.event_name == 'workflow_dispatch' && inputs.full }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test source distribution without bundled engines
+        run: node --test tests/source-distribution.test.mjs
+      - name: Install matching dependency release attachment
+        id: dependencies
+        env:
+          BUNDLE_URL: ${{ vars.DEPENDENCY_BUNDLE_URL }}
+        run: |
+          if [ -z "$BUNDLE_URL" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Only source-installer tests ran. Configure DEPENDENCY_BUNDLE_URL to verify tools and builds." >> "$GITHUB_STEP_SUMMARY"
+          else
+            case "$BUNDLE_URL" in https://*) ;; *) echo "HTTPS required"; exit 1;; esac
+            curl --fail --location --proto '=https' --proto-redir '=https' "$BUNDLE_URL" -o /tmp/arg-dependencies.zip
+            npm run deps:install -- --archive /tmp/arg-dependencies.zip
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.dependencies.outputs.ready == 'true'
+        run: npm ci --ignore-scripts
+      - name: Select checks from actual changes
+        if: steps.dependencies.outputs.ready == 'true'
+        id: plan
+        run: |
+          if [ "$FULL_VERIFY" = true ] || ! git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            echo "full=true" >> "$GITHUB_OUTPUT"
+            echo "browser=true" >> "$GITHUB_OUTPUT"
+          else
+            npm run test:plan -- --base "${BASE_REF:-$(git rev-parse HEAD^ 2>/dev/null || echo 0000000000000000000000000000000000000000)}" --report /tmp/arg-plan.json
+            node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync('/tmp/arg-plan.json')); fs.appendFileSync(process.env.GITHUB_OUTPUT,'browser='+p.checks.some(c=>c.id.startsWith('browser:'))+'\n');"
+          fi
+      - if: steps.plan.outputs.browser == 'true'
+        run: |
+          npm ci --ignore-scripts --prefix test-tools
+          npx --prefix test-tools playwright install --with-deps chromium
+          echo "CHROMIUM_PATH=$(node -e "console.log(require('./test-tools/node_modules/playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
+      - name: Run selected checks (full only when explicitly requested)
+        if: steps.dependencies.outputs.ready == 'true'
+        run: |
+          if [ "${{ steps.plan.outputs.full }}" = true ]; then
+            npm run verify:all -- --report /tmp/arg-verification.json
+          else
+            npm run verify -- --base "${BASE_REF:-$(git rev-parse HEAD^ 2>/dev/null || echo 0000000000000000000000000000000000000000)}" --report /tmp/arg-verification.json
+          fi
+      - name: Preserve scope and result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-result
+          path: |
+            /tmp/arg-plan.json
+            /tmp/arg-verification.json
+          retention-days: 14

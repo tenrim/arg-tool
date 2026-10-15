@@ -1,0 +1,88 @@
+{
+  "run_at": "2026-10-13T08:25:25.578Z",
+  "mode": "affected",
+  "files": [
+    "scripts/affected-plan.mjs",
+    "scripts/test-map.mjs",
+    "tests/testing-policy.test.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "scripts/affected-plan.mjs",
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "scripts/affected-plan.mjs",
+        "scripts/test-map.mjs",
+        "tests/testing-policy.test.mjs"
+      ],
+      "reasons": [
+        "scripts/affected-plan.mjs, scripts/test-map.mjs, tests/testing-policy.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/testing-policy.test.mjs"
+      ],
+      "reasons": [
+        "scripts/affected-plan.mjs",
+        "scripts/test-map.mjs",
+        "tests/testing-policy.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/architecture.test.mjs"
+      ],
+      "reasons": [
+        "scripts/affected-plan.mjs",
+        "scripts/test-map.mjs"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 136
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 299
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 1377
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 207
+    }
+  ]
+}

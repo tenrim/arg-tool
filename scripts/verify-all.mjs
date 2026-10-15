@@ -1,0 +1,9 @@
+import {spawn} from 'node:child_process';
+import {writeFile} from 'node:fs/promises';
+import {resolve,delimiter} from 'node:path';
+import {browserSuites,browserFile} from './test-map.mjs';
+const suites=[['node','scripts/audit-integrity.mjs'],['node','scripts/audit-architecture.mjs'],['npm','run','test:all'],['npm','run','check:all'],['npm','run','build'],...browserSuites.map(name=>['node',browserFile(name)])];
+const report=[],env={...process.env,NODE_PATH:[resolve('test-tools/node_modules'),process.env.NODE_PATH].filter(Boolean).join(delimiter)};
+for(const [command,...args]of suites){const start=Date.now(),name=[command,...args].join(' ');console.log('\nRUN '+name);const code=await new Promise(resolveCode=>{const executable=command==='node'||command==='npm'&&process.env.npm_execpath?process.execPath:command;const launchArgs=command==='npm'&&process.env.npm_execpath?[process.env.npm_execpath,...args]:args;const child=spawn(executable,launchArgs,{env,stdio:'inherit'});let timedOut=false;const timer=setTimeout(()=>{timedOut=true;child.kill('SIGTERM');},300000);child.once('error',()=>{clearTimeout(timer);resolveCode(1);});child.once('exit',code=>{clearTimeout(timer);resolveCode(timedOut?124:code??1);});});report.push({command:name,exit_code:code,duration_ms:Date.now()-start});if(code)console.error('FAIL '+name);else console.log('PASS '+name);}
+const reportIndex=process.argv.indexOf('--report');if(reportIndex>=0){if(!process.argv[reportIndex+1])throw Error('--report needs a path');await writeFile(process.argv[reportIndex+1],JSON.stringify({run_at:new Date().toISOString(),passed:report.every(r=>r.exit_code===0),checks:report},null,2)+'\n');}
+console.log(`\n${report.filter(r=>!r.exit_code).length}/${report.length} suites passed.`);process.exitCode=report.some(r=>r.exit_code)?1:0;

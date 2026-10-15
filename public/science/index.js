@@ -1,0 +1,58 @@
+import {element as uiElement, render as uiRender, DataList, Option, setState, updateStatus, onDisconnect} from '../ui/index.js';
+import {drawAstronomy} from './visuals.js';
+import {$,mount,field,area,button,status,download,copy,esc} from '../round1/common.js';
+import {openReference} from '../discovery/bridge.js';
+import {mountTaskLifecycle} from '../capabilities/task-lifecycle.js';
+const select=(id,items)=>`<select id="${id}">${items.map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select>`;
+const number=(id,value,min,max,step='any')=>`<input id="${id}" type="number" value="${value}" min="${min}" max="${max}" step="${step}" required>`;
+const source=(name,repo,role)=>[name,'https://github.com/'+repo,role];
+const names={astronomy:'天文线索',chemistry:'元素与化学线索',sequence:'蛋白质与核酸序列',calendar:'传统历法'};
+const sources={astronomy:[source('Astronomy Engine','cosinekitty/astronomy','天体方位、升落与月相计算'),source('HYG Star Database','astronexus/HYG-Database','从天体目录送入的精选恒星 J2000 方向'),source('OpenNGC','mattiaverga/OpenNGC','从天体目录送入的深空天体 J2000 方向')],chemistry:[source('Periodic-Table-JSON','Bowserinator/Periodic-Table-JSON','元素属性数据；本站筛选字段并添加中文名称'),source('RDKit / MinimalLib','rdkit/rdkit','本地分子结构解析、绘制及分子量计算')],sequence:[source('SeqViz','Lattice-Automation/seqviz','复用互补链、反向互补和密码子转译算法；未嵌入上游界面'),source('NtSeq','keithwhor/NtSeq','SeqViz 上游采用的标准密码子映射来源')],calendar:[source('lunar-javascript','6tail/lunar-javascript','公历、农历、闰月、干支与节气换算')]};
+function form(id){
+ const today=new Date(Date.now()+8*3600000).toISOString();
+ if(id==='astronomy')return `<div class="science-fields">${field('查询时间',`<input id="astro-date" type="datetime-local" value="${today.slice(0,16)}" min="1900-01-01T00:00" max="2100-12-31T23:59" required>`)}${field('UTC 时差（小时）',number('astro-offset',8,-12,14,.25))}${field('纬度（°）',number('astro-lat',39.9042,-90,90))}${field('经度（°）',number('astro-lon',116.4074,-180,180))}${field('天体',select('astro-body',[['Sun','太阳'],['Moon','月亮'],['Mercury','水星'],['Venus','金星'],['Mars','火星'],['Jupiter','木星'],['Saturn','土星'],['Uranus','天王星'],['Neptune','海王星']]))}</div>`;
+ if(id==='chemistry')return `${field('处理方式',select('chem-mode',[['split','文字拆为元素符号'],['formula','分子式与原子计数'],['molecule','SMILES 分子结构']]))}${field('输入',area('chem-input','例如 BaCoN；分子式 Ca(OH)2；SMILES CCO',5))}`;
+ if(id==='sequence')return `${field('序列类型',select('seq-type',[['aa','蛋白质：单字母代码'],['aa3','蛋白质：三字母代码'],['dna','DNA：六个阅读框'],['rna','RNA：六个阅读框']]))}${field('序列 / 单条 FASTA',area('seq-input','蛋白质如 MAG；三字母如 Met Ala Gly；DNA 如 ATGGCTGGT',8))}${field('读取本机文本（最多 256 KB）','<input id="seq-file" type="file" accept=".txt,.fa,.fasta,.fna,.faa,text/plain">')}`;
+ return `${field('换算方向',select('cal-mode',[['solar','公历查询农历'],['lunar','农历反查公历']]))}<div id="cal-solar">${field('公历日期',`<input id="cal-date" type="date" value="${today.slice(0,10)}" min="1900-01-01" max="2100-12-31" required>`)}</div><div id="cal-lunar" hidden><div class="science-fields">${field('农历年份',number('cal-year',2026,1900,2100,1))}${field('农历月份',number('cal-month',1,1,12,1))}${field('农历日期',number('cal-day',1,1,30,1))}</div><label class="science-check"><input id="cal-leap" type="checkbox">所选月份是闰月</label></div>`;
+}
+function params(id){if(id==='astronomy')return{date:$('astro-date').value,offset:$('astro-offset').value,lat:$('astro-lat').value,lon:$('astro-lon').value,body:$('astro-body').value};if(id==='chemistry')return{mode:$('chem-mode').value,input:$('chem-input').value};if(id==='sequence')return{type:$('seq-type').value,input:$('seq-input').value};return{mode:$('cal-mode').value,date:$('cal-date').value,year:$('cal-year').value,month:$('cal-month').value,day:$('cal-day').value,leap:$('cal-leap').checked};}
+export function initScience(){
+ for(const [id,title]of Object.entries(names)){
+  const panel=mount(id,title,`<div class="science-layout"><form id="${id}-form" class="science-card"><h2>查询与输入</h2>${form(id)}<div class="science-actions"><button class="primary-button" id="${id}-run" type="submit">${id==='astronomy'||id==='calendar'?'查询':'分析'}</button><button class="secondary-button" id="${id}-stop" type="button" disabled>停止</button><button class="secondary-button" id="${id}-clear" type="button">清空结果</button></div>${status(id+'-status')}</form><section class="science-card science-result" aria-labelledby="${id}-result-title"><div class="science-result-head"><h2 id="${id}-result-title">结果</h2><div class="science-actions">${button(id+'-copy','复制')}${button(id+'-download','下载文本')}</div></div><p id="${id}-empty" class="science-note">填写条件后开始查询。</p><div id="${id}-output"></div></section></div>${id==='chemistry'?'<section class="science-card"><h2>元素周期表</h2><label class="r1-field"><span>按名称、符号或原子序数查找</span><input id="element-search" type="search" placeholder="例如 氧、O、8 或 Oxygen"></label><p id="elements-status" role="status"></p><div id="element-grid" class="element-grid"></div><button id="elements-retry" class="secondary-button" hidden>重新加载元素表</button></section>':''}`,sources[id]);
+  panel.classList.add('science-panel');let worker=null,timer=null,revision=0,text='',imageUrl=null,reading=false,catalogue=null;
+  const control=$(id+'-form'),output=$(id+'-output'),message=$(id+'-status');
+  function buttons(busy=false){setState($(id+'-run'),{busy:busy||reading});$(id+'-run').disabled=busy||reading;$(id+'-stop').disabled=!busy&&!reading;$(id+'-copy').disabled=!text;$(id+'-download').disabled=!text;}
+  function stop(){worker?.terminate();worker=null;clearTimeout(timer);}
+  function invalidate(note='输入已修改，请重新查询。'){revision++;stop();reading=false;text='';if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=null;output.replaceChildren();$(id+'-empty').hidden=false;updateStatus(message,note);buttons();}
+  const lifecycle=mountTaskLifecycle(panel,{isBusy:()=>Boolean(worker)||reading,invalidate:reason=>invalidate(reason==='task-change'?'已切换任务，输入保留。':'已离开工作区，计算已停止。'),dispose(){revision++;stop();reading=false;if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=null;}});
+  function render(result){text=[result.title,...result.rows.map(r=>r.join('\t')),result.note||''].join('\n');$(id+'-empty').hidden=true;output.replaceChildren();if(result.visual)drawAstronomy(output,result.visual);if(result.svg){imageUrl=URL.createObjectURL(new Blob([result.svg],{type:'image/svg+xml'}));const img=uiElement('img');img.src=imageUrl;img.alt='由输入结构式生成的二维分子结构';img.className='molecule-image';output.append(img);}const dl=DataList({className:'science-data',items:result.rows.map(([key,value])=>[key,String(value).length>20000?String(value).slice(0,20000)+'\n…界面仅预览前 20,000 字符，复制和下载保留完整内容。':value])});output.append(dl);if(result.note){const note=uiElement('p');note.className='science-note';note.textContent=result.note;output.append(note);}updateStatus(message,'处理完成','success');buttons();}
+  control.addEventListener('input',e=>{if(e.target.type!=='file')invalidate();});control.addEventListener('change',e=>{if(e.target.type==='file')return;invalidate();if(id==='calendar'){const lunar=$('cal-mode').value==='lunar';$('cal-solar').hidden=lunar;$('cal-lunar').hidden=!lunar;for(const node of $('cal-solar').querySelectorAll('input'))node.disabled=lunar;for(const node of $('cal-lunar').querySelectorAll('input'))node.disabled=!lunar;}});
+  if(id==='calendar')for(const node of $('cal-lunar').querySelectorAll('input'))node.disabled=true;
+  control.onsubmit=e=>{
+   e.preventDefault();invalidate('正在本地计算…');const current=revision;
+   const fail=note=>{if(current!==revision)return;stop();updateStatus(message,note,'error');buttons();};
+   try{
+    worker=new Worker(new URL('./worker.js',import.meta.url));buttons(true);
+    timer=setTimeout(()=>{if(current===revision)invalidate('计算超过 30 秒，已停止。请缩短输入或调整条件。');},30000);
+    worker.onmessage=({data})=>{if(current!==revision)return;if(data.error)fail(data.error);else{stop();render(data.result);}};
+    worker.onerror=e=>{e.preventDefault();fail('组件执行失败，请刷新页面后重试或检查浏览器是否支持本地运算。');};
+    worker.postMessage({kind:id,params:{...params(id),...(id==='astronomy'?{catalogue}:{})},resourceBase:new URL('../',import.meta.url).href});
+   }catch{fail('无法启动本地计算，请刷新页面后重试或检查浏览器是否支持后台运算。');}
+  };
+  $(id+'-stop').onclick=()=>invalidate('已停止，输入仍保留。');$(id+'-clear').onclick=()=>invalidate('结果已清空。');$(id+'-copy').onclick=async()=>{try{await copy(text);message.textContent='已复制完整结果。';}catch(e){message.textContent=e.message;}};$(id+'-download').onclick=()=>download(text,id+'-result.txt');buttons();
+  if(id==='astronomy'){
+   const option=Option('从目录选择天体','Star1');option.disabled=true;$('astro-body').append(option);
+   const browse=uiElement('button','浏览恒星与深空目录','secondary-button');browse.type='button';browse.id='astro-catalog';browse.onclick=()=>openReference('sky',{query:'',mode:'',filter:'',region:''});control.querySelector('.science-actions').before(browse);
+   const receive=e=>{const object=e.detail;if(!object||object.ra===null||object.dec===null||!Number.isFinite(object.ra)||!Number.isFinite(object.dec)||object.ra<0||object.ra>24||object.dec< -90||object.dec>90||typeof object.id!=='string'||typeof object.name!=='string')return;
+    catalogue={id:object.id,name:object.name,ra:object.ra,dec:object.dec};option.textContent=object.name+' · '+object.id;option.disabled=false;$('astro-body').value='Star1';invalidate('已选中目录天体。');lifecycle.whenActive(()=>control.requestSubmit());};
+   document.addEventListener('arg:astronomy-object',receive);onDisconnect(panel,()=>{revision++;stop();document.removeEventListener('arg:astronomy-object',receive);});
+  }
+  if(id==='sequence')$('seq-file').addEventListener('change',async()=>{invalidate('正在读取文件…');const rev=revision,file=$('seq-file').files[0];if(!file)return;reading=true;buttons();try{if(file.size>256*1024)throw Error('文件超过 256 KB。');const value=await file.text();if(rev!==revision)return;$('seq-input').value=value;message.textContent='文件已读取，请选择序列类型后分析。';}catch(e){if(rev===revision)message.textContent=e.message;}finally{if(rev===revision){reading=false;buttons(Boolean(worker));$('seq-file').value='';}}});
+  if(id==='chemistry'){
+   let elements=null,loading=false;
+   const draw=()=>{const q=$('element-search').value.trim().toLowerCase(),grid=$('element-grid');grid.replaceChildren();const shown=elements.filter(el=>!q||[el.symbol,el.name,el.zh,String(el.number)].some(s=>s.toLowerCase().includes(q)));grid.classList.toggle('filtered',Boolean(q));$('elements-status').textContent=`显示 ${shown.length} / 118 个元素`;for(const el of shown){const b=uiElement('button');b.type='button';b.className='element';b.style.setProperty('--x',el.xpos);b.style.setProperty('--y',el.ypos);b.setAttribute('aria-label',`${el.number} ${el.zh} ${el.symbol}`);uiRender(b, `<span>${el.number}</span><strong>${esc(el.symbol)}</strong><span>${esc(el.zh)}</span>`);b.onclick=()=>{invalidate('');render({title:'元素属性',rows:[['原子序数',el.number],['中文名称',el.zh],['元素符号',el.symbol],['英文名称',el.name],['原子量（数据表值）',el.atomic_mass],['周期',el.period],['族',el.group??'未指定'],['电子排布',el.electron_configuration||'未收录']],note:'放射性元素的数据表质量值可能为代表性同位素质量；不作为精密测量标准。'});if(matchMedia('(max-width:800px)').matches)output.closest('section').scrollIntoView({block:'start',behavior:'smooth'});};grid.append(b);}};
+   async function load(){if(elements||loading)return;loading=true;$('elements-retry').hidden=true;try{const response=await fetch(new URL('../vendor/science/elements.json',import.meta.url));if(!response.ok)throw Error();elements=await response.json();draw();}catch{$('elements-status').textContent='元素表载入失败。';$('elements-retry').hidden=false;}finally{loading=false;}}
+   $('element-search').oninput=()=>elements&&draw();$('elements-retry').onclick=load;document.addEventListener('arg:panelchange',e=>{if(e.detail.name==='chemistry')load();});
+  }
+ }
+}

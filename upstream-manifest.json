@@ -1,0 +1,1177 @@
+{
+  "created": "2026-10-07",
+  "components": [
+    {
+      "name": "CyberChef",
+      "repository": "https://github.com/gchq/CyberChef",
+      "version": "11.5.0",
+      "commit": "8cd426dd4f40f1423912d5fad91b578a86a65112",
+      "source_url": "https://github.com/gchq/CyberChef/releases/download/v11.5.0/CyberChef_8cd426dd4f40f1423912d5fad91b578a86a65112.zip",
+      "archive_sha256": "f6478925d3eaa16ec08626a85f5b85eed10d531a5e18700615fed7ecb024cccf",
+      "license": "Apache-2.0 with bundled dependency notices",
+      "license_source_url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/LICENSE",
+      "license_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "license_path": "public/vendor/cyberchef/LICENSE.txt",
+      "local_directory": "public/vendor/cyberchef",
+      "file_manifest": "public/vendor/cyberchef/UPSTREAM.json",
+      "adaptation": "Unchanged official runtime; native site UI using official ChefWorker bytes and operation metadata extracted from the verified bundle",
+      "import_script": "scripts/install-cyberchef.py",
+      "engine_extraction_script": "scripts/extract-cyberchef.mjs",
+      "engine_file_manifest": "public/vendor/cyberchef/ENGINE.json",
+      "task_adaptation": "public/chef-tools/",
+      "task_map": "upstream/cyberchef/task-map.json",
+      "task_audit_script": "scripts/audit-cyberchef.mjs",
+      "knowledge_source_manifest": "public/vendor/knowledge/UPSTREAM.json",
+      "knowledge_source_import_script": "scripts/import-knowledge-sources.py"
+    },
+    {
+      "name": "puzzle-lib",
+      "repository": "https://github.com/kfarnung/puzzle-lib",
+      "version": "1.7.0",
+      "git_tree": "232b5eb5feaac4673dfa3af3551c81bdb4cd1d01",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "src/Braille/BrailleCharacter.ts",
+          "git_blob": "63746c84d5eabbc687d761fcfe04809f30142e78"
+        },
+        {
+          "path": "src/Braille/BrailleData.ts",
+          "git_blob": "7356a1fc1c40db32f663d484347f830c8550b4b2"
+        },
+        {
+          "path": "src/Braille/BrailleDot.ts",
+          "git_blob": "d48e9e277b6940760db00a59b20b3b0499020f97"
+        },
+        {
+          "path": "src/Braille/BrailleEncoding.ts",
+          "git_blob": "eb4cc0377788d36117c454521c7be81d026da80c"
+        },
+        {
+          "path": "src/Braille/BrailleStream.ts",
+          "git_blob": "56145d6d72a71ef6752bb834786fe8527f0a65e4"
+        },
+        {
+          "path": "src/Cipher/AutoKeyString.ts",
+          "git_blob": "289a094c7adf8efaaf56314a91a65065dfe28fcc"
+        },
+        {
+          "path": "src/Cipher/CaesarString.ts",
+          "git_blob": "a46d8e97bb27e56a1432d577e7eb5bdd262fc639"
+        },
+        {
+          "path": "src/Cipher/CaesarUtils.ts",
+          "git_blob": "b7d3debb25eadeb0259265e40eee92ab7f96ed5c"
+        },
+        {
+          "path": "src/Cipher/KeyedCipherStringBase.ts",
+          "git_blob": "768a66a44f4edcb443b36dc6105110bd0be34daa"
+        },
+        {
+          "path": "src/Cipher/VigenereString.ts",
+          "git_blob": "1072fdedcdd8f70cb976d449c0a5adb6d161440e"
+        },
+        {
+          "path": "src/Common/CharacterImage.ts",
+          "git_blob": "5ee123f187d2c2f2a6bf88c44f3effefa8356df5"
+        },
+        {
+          "path": "src/Common/EncodingCategory.ts",
+          "git_blob": "5ff58dcb41908617267c184ce6955209ad98ed35"
+        },
+        {
+          "path": "src/Common/EncodingCharacterBase.ts",
+          "git_blob": "c98b3b027b5f9f8106f564d6591c725c73b3868c"
+        },
+        {
+          "path": "src/Common/EncodingDataBase.ts",
+          "git_blob": "fb395f3dd0993d3544f41093f9519af63f3f498b"
+        },
+        {
+          "path": "src/Common/EncodingEntry.ts",
+          "git_blob": "a256b3d1b80bbdb30f6c2083ca22f684955f7aba"
+        },
+        {
+          "path": "src/Common/EncodingLookupResult.ts",
+          "git_blob": "979353090010b7e2f134428d68e16c07487edd7b"
+        },
+        {
+          "path": "src/Common/Helpers.ts",
+          "git_blob": "27adcfb3253b8ce7e2017eb86b5b7fd2b3f31fa7"
+        },
+        {
+          "path": "src/Common/InlineSvg.ts",
+          "git_blob": "2c1702156442e22d32fed49e19381b3c3e28498d"
+        },
+        {
+          "path": "src/Conversion/CharacterAutoConvert.ts",
+          "git_blob": "d1c88061d67c2a5ce073e023eb588e6c8c5d78aa"
+        },
+        {
+          "path": "src/Conversion/CharacterConversion.ts",
+          "git_blob": "b1a173521dcea9c6b20ce7f9bd3fa8624ab1e9c8"
+        },
+        {
+          "path": "src/Conversion/CharacterEncoding.ts",
+          "git_blob": "4b1e1a378cfc6ed84b3cb00921c9d2723a652319"
+        },
+        {
+          "path": "src/Conversion/CharacterTableEntry.ts",
+          "git_blob": "dbd604beaa1dc8919c6aec3a922c4fb6980631a2"
+        },
+        {
+          "path": "src/Conversion/SignificantFigures.ts",
+          "git_blob": "339ba4e21b1ad6c993d599f9687af062bed14577"
+        },
+        {
+          "path": "src/Conversion/StringAutoConvert.ts",
+          "git_blob": "9d8658621175cc5317539dbdf2dac9cc9400b225"
+        },
+        {
+          "path": "src/Morse/MorseCharacter.ts",
+          "git_blob": "9e5adcbb24a331380775166cc9d04d7d83e8ac7a"
+        },
+        {
+          "path": "src/Morse/MorseData.ts",
+          "git_blob": "56b7f69b69ce3882278960c8f83f21fb6689658d"
+        },
+        {
+          "path": "src/Morse/MorseEncoding.ts",
+          "git_blob": "5efee10759e517dab3e28145f9e5b7fa692ba640"
+        },
+        {
+          "path": "src/Morse/MorseString.ts",
+          "git_blob": "fb31af0bce58869841577fc3df84c8cba1f378bd"
+        },
+        {
+          "path": "src/Semaphore/SemaphoreCharacter.ts",
+          "git_blob": "676bb2ba2fee52ad631f2fd8e6501d679d0fd0bc"
+        },
+        {
+          "path": "src/Semaphore/SemaphoreData.ts",
+          "git_blob": "c0522d45602f6dc1efd88ec0ac1049f0804ffcc9"
+        },
+        {
+          "path": "src/Semaphore/SemaphoreDegrees.ts",
+          "git_blob": "f85d6cb7214926c079b924e0bfb0cc054d866ea5"
+        },
+        {
+          "path": "src/Semaphore/SemaphoreDirection.ts",
+          "git_blob": "b92e5934108a769e2b95ff1533632e5f93000cf7"
+        },
+        {
+          "path": "src/Semaphore/SemaphoreEncoding.ts",
+          "git_blob": "c87a4e671260211a600435a8ac038eac1b107ab3"
+        },
+        {
+          "path": "src/Semaphore/SemaphoreStream.ts",
+          "git_blob": "7da636142f10cc5fca3a0dda353809e1626a3648"
+        }
+      ]
+    },
+    {
+      "name": "jsQR",
+      "repository": "https://github.com/cozmo/jsQR",
+      "version": "1.4.0",
+      "path": "dist/jsQR.js",
+      "git_blob": "99ea9df26907009e5553233ffe03c529c1521739",
+      "license": "Apache-2.0",
+      "current_image_ui": true
+    },
+    {
+      "name": "fft.js",
+      "repository": "https://github.com/indutny/fft.js",
+      "version": "4.0.4",
+      "path": "lib/fft.js",
+      "git_blob": "c13b408614877ffbcf1f9a25b8a525f5445394ce",
+      "license": "MIT"
+    },
+    {
+      "name": "exifr",
+      "version": "7.1.3",
+      "mode": "pinned local runtime",
+      "license": "MIT",
+      "current_image_ui": true,
+      "repository": "https://github.com/MikeKovarik/exifr",
+      "license_path": "public/licenses/exifr-7.1.3-MIT.txt",
+      "license_source": "https://cdn.jsdelivr.net/npm/exifr@7.1.3/LICENSE",
+      "license_sha256": "e32a745bc4816c774d8e26bb9f04acde451b54669079e8b728d22fe9805c1225",
+      "source_url": "https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js",
+      "local_path": "public/vendor/exifr.js",
+      "sha256": "2bd05117781c12ddd965dee846de3b3f986b5ecb4c7f6a78f2d2ec1db7c65ae7"
+    },
+    {
+      "name": "Noto Serif SC",
+      "repository": "https://github.com/google/fonts",
+      "path": "ofl/notoserifsc/NotoSerifSC[wght].ttf",
+      "git_blob": "eab063faf229160a52d3760f5555150e4eb9e5bf",
+      "source_sha256": "050080d9255a86808f2945bffac582b31ef32bc36411ce29563b4961670c66f9",
+      "local_path": "public/fonts/noto-serif-sc-ui.woff2",
+      "sha256": "a18ff1f664d8851207590330015ac4c2e143823439eab29e787a6bd2a0ca90d3",
+      "adaptation": "UI glyph subset, variable weight, WOFF2; scripts/subset-ui-font.py",
+      "license": "OFL-1.1",
+      "license_path": "public/fonts/NotoSerifSC-OFL.txt"
+    },
+    {
+      "name": "Noto Sans SC",
+      "repository": "https://github.com/google/fonts/tree/main/ofl/notosanssc",
+      "commit": "2894aab31764f10f29c421bdfd2340d3b382d384",
+      "path": "ofl/notosanssc/NotoSansSC[wght].ttf",
+      "git_blob": "fb0637bafbcd804fe32152370a1225990745b4bc",
+      "source_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/2894aab31764f10f29c421bdfd2340d3b382d384/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+      "local_path": "public/fonts/noto-sans-sc-ui.woff2",
+      "sha256": "734b46a26bcaf1b2261e48d36187fefff2fe2d5cf7e838c70ad98578e0c76645",
+      "adaptation": "Native UI glyph subset, variable weight, WOFF2; scripts/subset-ui-sans.py",
+      "license": "OFL-1.1",
+      "license_path": "public/fonts/NotoSansSC-OFL.txt",
+      "license_sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    {
+      "name": "Inter",
+      "repository": "https://github.com/rsms/inter",
+      "version": "4.1",
+      "source_url": "https://raw.githubusercontent.com/rsms/inter/v4.1/docs/font-files/InterVariable.woff2",
+      "git_blob": "5a8d3e72ad7ffb62af3b146e1b1f54ab5813a212",
+      "local_path": "public/fonts/inter-variable.woff2",
+      "sha256": "693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3",
+      "adaptation": "Unchanged official 4.1 variable WOFF2, upright",
+      "license": "OFL-1.1",
+      "license_path": "public/fonts/Inter-OFL.txt",
+      "license_sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+    },
+    {
+      "name": "JetBrains Mono",
+      "repository": "https://github.com/JetBrains/JetBrainsMono",
+      "package": "@fontsource-variable/jetbrains-mono",
+      "version": "5.2.8",
+      "source_url": "https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.2.8/files/jetbrains-mono-latin-wght-normal.woff2",
+      "local_path": "public/fonts/jetbrains-mono-latin.woff2",
+      "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e",
+      "adaptation": "Unchanged Latin variable WOFF2 distribution",
+      "license": "OFL-1.1",
+      "license_path": "public/fonts/JetBrainsMono-OFL.txt"
+    },
+    {
+      "name": "AperiSolve",
+      "repository": "https://github.com/Zeecka/AperiSolve",
+      "commit": "2a675c206cf7a4108682d6d96459c03680c9b2c4",
+      "license": "MIT",
+      "source_directory": "upstream/aperisolve",
+      "local_directory": "public/vendor/aperisolve",
+      "file_manifest": "public/vendor/aperisolve/UPSTREAM.json",
+      "generator": "scripts/build-image-vendor.mjs"
+    },
+    {
+      "name": "StegOnline",
+      "repository": "https://github.com/Ge0rg3/StegOnline",
+      "commit": "b9996d5e4830f3bd0e229b82f8b1b987adcce6a2",
+      "license": "WTFPL declaration; bundled PngToy MIT",
+      "source_directory": "upstream/stegonline",
+      "local_directory": "public/vendor/stegonline",
+      "file_manifest": "public/vendor/stegonline/UPSTREAM.json",
+      "generator": "scripts/build-image-vendor.mjs"
+    },
+    {
+      "name": "cipher-machine",
+      "repository": "https://github.com/philippica/cipher_machine",
+      "commit": "29fa4ee1c60873484688c250b37c87d93f54cae4",
+      "license": "BSD-3-Clause",
+      "local_directory": "public/vendor/hunt/cipher-machine"
+    },
+    {
+      "name": "chinese-puzzle",
+      "repository": "https://github.com/philippica/ChinesePuzzleTool",
+      "commit": "8b4ebec728138981a94b4ff743026084e9e37ef5",
+      "license": "BSD-2-Clause",
+      "local_directory": "public/vendor/hunt/chinese-puzzle"
+    },
+    {
+      "name": "stereogram",
+      "repository": "https://github.com/piellardj/stereogram-solver",
+      "commit": "ef4e8251dde6d7ecd4856bc43be70fe3ec5484f3",
+      "license": "MIT",
+      "local_directory": "public/vendor/hunt/stereogram"
+    },
+    {
+      "name": "sstv",
+      "repository": "https://github.com/Equinoxis/sstv-decoder",
+      "commit": "2b1f236a394faad784b273f5aeeb3ec637ac8749",
+      "license": "MIT declaration in README; no standalone LICENSE upstream",
+      "local_directory": "public/vendor/hunt/sstv"
+    },
+    {
+      "name": "ffmpeg",
+      "package": "@ffmpeg/ffmpeg",
+      "version": "0.12.15",
+      "license": "MIT",
+      "repository": "git+https://github.com/ffmpegwasm/ffmpeg.wasm.git",
+      "local_directory": "public/vendor/hunt/ffmpeg"
+    },
+    {
+      "name": "ffmpeg-core",
+      "package": "@ffmpeg/core",
+      "version": "0.12.10",
+      "license": "GPL-2.0-or-later",
+      "repository": "git+https://github.com/ffmpegwasm/ffmpeg.wasm.git",
+      "local_directory": "public/vendor/hunt/ffmpeg-core",
+      "source_commit": "71aa99d37c02a7b4c435275ca9ef50e612f6efa1",
+      "source_url": "https://github.com/ffmpegwasm/ffmpeg.wasm/tree/71aa99d37c02a7b4c435275ca9ef50e612f6efa1",
+      "ffmpeg_source": "https://github.com/FFmpeg/FFmpeg/tree/n5.1.4",
+      "build_configuration": "upstream/hunt/ffmpeg-build"
+    },
+    {
+      "name": "zxing",
+      "package": "zxing-wasm",
+      "version": "2.2.4",
+      "license": "MIT",
+      "repository": "git+https://github.com/Sec-ant/zxing-wasm.git",
+      "local_directory": "public/vendor/hunt/zxing"
+    },
+    {
+      "name": "cnchar",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar/-/cnchar-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-order",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-order/-/cnchar-order-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-order",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-radical",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-radical/-/cnchar-radical-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-radical",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-code",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-code/-/cnchar-code-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-code",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-input",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-input/-/cnchar-input-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-input",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-idiom",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-idiom/-/cnchar-idiom-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-idiom",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-xhy",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-xhy/-/cnchar-xhy-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-xhy",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cnchar-trad",
+      "version": "3.2.6",
+      "repository": "https://github.com/theajack/cnchar",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cnchar-trad/-/cnchar-trad-3.2.6.tgz",
+      "local_directory": "public/vendor/round1/cnchar-trad",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "pinyin-pro",
+      "version": "3.29.4",
+      "repository": "https://github.com/zh-lx/pinyin-pro",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/pinyin-pro/-/pinyin-pro-3.29.4.tgz",
+      "local_directory": "public/vendor/round1/pinyin-pro",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "opencc-js",
+      "version": "1.4.2",
+      "repository": "https://github.com/nk2028/opencc-js",
+      "license": "MIT AND Apache-2.0",
+      "source_url": "https://registry.npmjs.org/opencc-js/-/opencc-js-1.4.2.tgz",
+      "local_directory": "public/vendor/round1/opencc-js",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "tone",
+      "version": "15.1.22",
+      "repository": "https://github.com/Tonejs/Tone.js",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/tone/-/tone-15.1.22.tgz",
+      "local_directory": "public/vendor/round1/tone",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cubejs",
+      "version": "1.3.2",
+      "repository": "https://github.com/ldez/cubejs",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/cubejs/-/cubejs-1.3.2.tgz",
+      "local_directory": "public/vendor/round1/cubejs",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "cubing",
+      "version": "0.63.8",
+      "repository": "https://github.com/cubing/cubing.js",
+      "license": "MPL-2.0 OR GPL-3.0-or-later",
+      "source_url": "https://registry.npmjs.org/cubing/-/cubing-0.63.8.tgz",
+      "local_directory": "public/vendor/round1/cubing",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py",
+      "source_commit": "d02c02fc90f3410e612315141072a47af03feb97",
+      "adaptation": "Local ESM dependency paths; MPL-2.0 option selected; original upstream npm package and corresponding repository retained as source references."
+    },
+    {
+      "name": "three",
+      "version": "0.170.0",
+      "license": "MIT",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/mrdoob/three.js"
+      },
+      "source_url": "https://registry.npmjs.org/three/-/three-0.170.0.tgz",
+      "local_directory": "public/vendor/round1/three",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "random-uint-below",
+      "version": "3.3.0",
+      "license": "Unlicense",
+      "repository": "github:lgarron/random-uint-below.js",
+      "source_url": "https://registry.npmjs.org/random-uint-below/-/random-uint-below-3.3.0.tgz",
+      "local_directory": "public/vendor/round1/random-uint-below",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "substitution",
+      "repository": "https://github.com/cateyelow/substitution-cipher-solver",
+      "commit": "c4acfdec7e33ab58885c248142a2d34ed68233f6",
+      "license": "MIT",
+      "local_directory": "public/vendor/round1/substitution",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py",
+      "adaptation": "TypeScript to JavaScript with fixed mapping support; original TS retained; transformations in scripts/build-round-one.mjs."
+    },
+    {
+      "name": "qrazybox",
+      "repository": "https://github.com/Merricx/qrazybox",
+      "commit": "72a0b00717c8bdebb6932174274c981e2c78fdaa",
+      "license": "MIT",
+      "local_directory": "public/vendor/round1/qrazybox",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py",
+      "adaptation": "Only structural QR templates and tables; ESM wrapper from retained originals. No sqrd or Reed-Solomon port copied."
+    },
+    {
+      "name": "telegraph",
+      "repository": "https://github.com/kirklin/chinese-telegraph-code",
+      "commit": "3f71155805e6905992c630ccb90119dde6877cfe",
+      "license": "MIT; Unicode data license",
+      "local_directory": "public/vendor/round1/telegraph",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "makemeahanzi",
+      "repository": "https://github.com/skishore/makemeahanzi",
+      "commit": "bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+      "license": "LGPL-3.0-or-later (dictionary only)",
+      "source_url": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/dictionary.txt",
+      "local_directory": "public/vendor/round1/makemeahanzi",
+      "file_manifest": "public/vendor/round1/INTEGRITY.json",
+      "import_script": "scripts/import-round-one.py"
+    },
+    {
+      "name": "Pitchy",
+      "package": "pitchy",
+      "version": "4.1.0",
+      "repository": "https://github.com/ianprime0509/pitchy",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/pitchy-4.1.0",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "Tonal",
+      "package": "tonal",
+      "version": "6.5.0",
+      "repository": "https://github.com/tonaljs/tonal",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/tonal-6.5.0",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "Tonejs/Midi",
+      "package": "@tonejs/midi",
+      "version": "2.0.28",
+      "repository": "https://github.com/Tonejs/Midi",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/@tonejs/midi-2.0.28",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "Pixelmatch",
+      "package": "pixelmatch",
+      "version": "8.0.0",
+      "repository": "https://github.com/mapbox/pixelmatch",
+      "license": "ISC",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/pixelmatch-8.0.0",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "Chroma.js",
+      "package": "chroma-js",
+      "version": "3.2.0",
+      "repository": "https://github.com/gka/chroma.js",
+      "license": "BSD-3-Clause AND Apache-2.0",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/chroma-js-3.2.0",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "fflate",
+      "package": "fflate",
+      "version": "0.8.3",
+      "repository": "https://github.com/101arrowz/fflate",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/fflate-0.8.3",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "Proj4js",
+      "package": "proj4",
+      "version": "2.22.0",
+      "repository": "https://github.com/proj4js/proj4js",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/proj4-2.22.0",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "MGRS",
+      "package": "mgrs",
+      "version": "2.2.0",
+      "repository": "https://github.com/proj4js/mgrs",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/mgrs-2.2.0",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "node-geohash",
+      "package": "ngeohash",
+      "version": "0.6.4",
+      "repository": "https://github.com/sunng87/node-geohash",
+      "license": "MIT",
+      "local_directory": "public/vendor/round2",
+      "source_directory": "upstream/round2/sources/ngeohash-0.6.4",
+      "lockfile": "upstream/round2/package-lock.json",
+      "file_manifest": "public/vendor/round2/UPSTREAM.json",
+      "license_path": "public/vendor/round2/LICENSES.txt",
+      "import_script": "scripts/import-round-two.mjs"
+    },
+    {
+      "name": "cspuz_core direct-grid solver",
+      "repository": "https://github.com/semiexp/cspuz_core",
+      "commit": "d88f99c8c7872d400d2f0d2456860f50f3d1f1f6",
+      "license": "MIT main project; bundled Glucose/MiniSat and runtime notices apply",
+      "local_directory": "public/vendor/round3",
+      "file_manifest": "public/vendor/round3/UPSTREAM.json",
+      "source_archive": "upstream/round3/cspuz-core-source.tar.gz",
+      "build_script": "scripts/build-round-three.py",
+      "adaptation": "Direct integer-grid ABI for sudoku/slitherlink/nurikabe/akari; nonempty-loop constraint for Slitherlink; native UI, no URL or external editor integration"
+    },
+    {
+      "name": "Code runner runtimes",
+      "local_directory": "public/vendor/coderunner",
+      "source_directory": "upstream/coderunner",
+      "file_manifest": "public/vendor/coderunner/UPSTREAM.json",
+      "import_script": "scripts/import-coderunner.mjs",
+      "license_path": "public/vendor/coderunner/LICENSES.txt",
+      "adaptation": "Native same-page Chinese runner and isolated Workers; pinned Esolang Park Brainfuck/Befunge-93/Deadfish cores, Ook syntax adapter, Whitespace-JS, Malbolge VM, QuickJS, Pyodide, Wasmoon and sql.js. No remote code-execution API.",
+      "components": [
+        {
+          "name": "Esolang Park",
+          "repository": "https://github.com/nilaymaj/esolang-park",
+          "commit": "d84b21c333dc4ce417e0841145d69f04de1a4e2e",
+          "license": "MIT"
+        },
+        {
+          "name": "Whitespace-JS",
+          "version": "0.0.8",
+          "repository": "https://github.com/susisu/Whitespace-JS",
+          "license": "MIT"
+        },
+        {
+          "name": "malbolge-vm",
+          "version": "1.0.4",
+          "repository": "https://github.com/zb3/malbolge-vm",
+          "license": "MIT"
+        },
+        {
+          "name": "Pyodide",
+          "version": "0.29.3",
+          "repository": "https://github.com/pyodide/pyodide",
+          "license": "MPL-2.0; CPython PSF license and bundled notices"
+        },
+        {
+          "name": "quickjs-emscripten",
+          "version": "0.32.0",
+          "repository": "https://github.com/justjake/quickjs-emscripten",
+          "license": "MIT including QuickJS notices"
+        },
+        {
+          "name": "Wasmoon",
+          "version": "1.16.0",
+          "repository": "https://github.com/ceifa/wasmoon",
+          "license": "MIT including Lua notices"
+        },
+        {
+          "name": "sql.js",
+          "version": "1.14.2",
+          "repository": "https://github.com/sql-js/sql.js",
+          "license": "MIT; SQLite public domain"
+        }
+      ]
+    },
+    {
+      "name": "空间与模拟工具",
+      "version": "2026-10-08",
+      "local_directory": "public/vendor/round4",
+      "file_manifest": "public/vendor/round4/UPSTREAM.json",
+      "import_script": "scripts/import-round-four.mjs",
+      "components": [
+        {
+          "name": "chess.js",
+          "version": "1.4.0",
+          "repository": "https://github.com/jhlywa/chess.js",
+          "license": "BSD-2-Clause"
+        },
+        {
+          "name": "konva",
+          "version": "10.7.1",
+          "repository": "https://github.com/konvajs/konva",
+          "license": "MIT"
+        },
+        {
+          "name": "three",
+          "version": "0.170.0",
+          "repository": "https://github.com/mrdoob/three.js",
+          "license": "MIT"
+        },
+        {
+          "name": "copy/life",
+          "version": "924c90afb529ad5d417f11d795bc1b400fff8d18",
+          "repository": "https://github.com/copy/life",
+          "license": "BSD-2-Clause"
+        }
+      ]
+    },
+    {
+      "name": "Science and traditional calendars",
+      "components": [
+        {
+          "name": "astronomy-engine",
+          "repository": {
+            "url": "git+https://github.com/cosinekitty/astronomy.git",
+            "type": "git"
+          },
+          "version": "2.1.19",
+          "commit": null,
+          "source_directory": "upstream/science/sources/astronomy-engine-2.1.19"
+        },
+        {
+          "name": "lunar-javascript",
+          "repository": {
+            "url": "git+https://github.com/6tail/lunar-javascript.git",
+            "type": "git"
+          },
+          "version": "1.7.7",
+          "commit": null,
+          "source_directory": "upstream/science/sources/lunar-javascript-1.7.7"
+        },
+        {
+          "name": "@rdkit/rdkit",
+          "repository": "https://github.com/rdkit/rdkit",
+          "version": "2026.9.1",
+          "commit": "fece8caa860bdf6c9c82bdb9253f22a0cf87150c",
+          "source_directory": "upstream/science/sources/@rdkit-rdkit-2026.9.1"
+        },
+        {
+          "name": "periodic-table",
+          "repository": "https://github.com/Bowserinator/Periodic-Table-JSON",
+          "version": null,
+          "commit": "9090b1c472a1e68f7295e77280f374f8d125cefc",
+          "source_directory": "upstream/science/sources/periodic-table"
+        },
+        {
+          "name": "seqviz",
+          "repository": "https://github.com/Lattice-Automation/seqviz",
+          "version": null,
+          "commit": "7a0e8f4c45ad5f4d076178f54f08f071e91d7b6a",
+          "source_directory": "upstream/science/sources/seqviz"
+        },
+        {
+          "name": "NtSeq codon map attribution",
+          "repository": "https://github.com/keithwhor/NtSeq",
+          "commit": "e8a3f87f5f2086a9bb54eac63d0018c6071a8c37",
+          "license": "MIT"
+        }
+      ],
+      "file_manifest": "public/vendor/science/UPSTREAM.json",
+      "adaptation": "public/science; fixed offline engines; native Chinese UI; SeqViz sequence algorithms adapted without upstream UI or webfont loading"
+    },
+    {
+      "name": "TarotCards / 1909 RWS artwork",
+      "repository": "https://github.com/mixvlad/TarotCards",
+      "commit": "840b84d012c6b74dc1634fa2d00d1b21f5b28093",
+      "license": "Public Domain (1909 RWS artwork); MIT (source documentation)",
+      "license_path": "public/vendor/reference/tarot-art-LICENSE.txt",
+      "license_sha256": "af32465348eb0ee29685cd02660a19fac6c5d2e33cf0070d6929c68740fae0cf",
+      "local_directory": "public/vendor/reference/tarot-art",
+      "source_directory": "upstream/reference/sources/tarot-art",
+      "file_manifest": "public/vendor/reference/UPSTREAM.json",
+      "import_script": "scripts/import-reference.py",
+      "adaptation": "78 unmodified 720x1200 JPEGs from rider-waite/720px; artist Pamela Colman Smith, scan restoration Steve P.; per-image pinned URLs and hashes retained. Chinese names and deck UI authored locally."
+    },
+    {
+      "name": "Gearberry / Tarot Cards WebP Collection",
+      "repository": "https://github.com/reginanka/tarot-cards",
+      "commit": "83a25b0d4caeb24fa7d556796cf6244d8a55fd81",
+      "license": "CC-BY-4.0 (artwork; upstream declaration)",
+      "license_path": "public/vendor/reference/tarot-gearberry-LICENSE.txt",
+      "license_sha256": "8ed026759da2f87fed7c244e0378342c7245cb5e5ab343291907cfe813f611fc",
+      "local_directory": "public/vendor/reference/tarot-gearberry",
+      "source_directory": "upstream/reference/sources/tarot-gearberry",
+      "file_manifest": "public/vendor/reference/UPSTREAM.json",
+      "import_script": "scripts/import-reference.py",
+      "adaptation": "78 unmodified 848x1264 WebP images; explicit image license and required Gearberry credit retained. Original illustrator and creation method are not identified by upstream. Match by card name; Justice VIII / Strength XI, with independent classic RWS fallback and selected-deck numeric queries. cards.json retained as original source only; upstream interpretation text is not used."
+    },
+    {
+      "name": "currency-codes",
+      "repository": "https://github.com/datasets/currency-codes",
+      "commit": "7cdc784a3090d253721a1f00cfd5843b46a4dc64",
+      "license": "PDDL-1.0 (data)",
+      "local_directory": "public/vendor/discovery",
+      "source_directory": "upstream/discovery",
+      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
+      "import_script": "scripts/import-discovery.py",
+      "build_script": "scripts/build-discovery.py"
+    },
+    {
+      "name": "HYG-Database",
+      "repository": "https://github.com/astronexus/HYG-Database",
+      "commit": "c7f7f883fe678cc7680169a50ccd7dcc49b060ce",
+      "license": "CC-BY-SA-4.0 (original and derived data)",
+      "local_directory": "public/vendor/discovery",
+      "source_directory": "upstream/discovery",
+      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
+      "import_script": "scripts/import-discovery.py",
+      "build_script": "scripts/build-discovery.py"
+    },
+    {
+      "name": "OpenNGC",
+      "repository": "https://github.com/mattiaverga/OpenNGC",
+      "commit": "75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06",
+      "license": "CC-BY-SA-4.0 (original and derived data)",
+      "local_directory": "public/vendor/discovery",
+      "source_directory": "upstream/discovery",
+      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
+      "import_script": "scripts/import-discovery.py",
+      "build_script": "scripts/build-discovery.py"
+    },
+    {
+      "name": "marine-signal-flags",
+      "repository": "https://github.com/dzangolab/marine-signal-flags",
+      "commit": "ce7c4c5a6db900ce25be34b37dca522a9bf7434a",
+      "license": "MIT",
+      "local_directory": "public/vendor/discovery",
+      "source_directory": "upstream/discovery",
+      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
+      "import_script": "scripts/import-discovery.py",
+      "build_script": "scripts/build-discovery.py"
+    },
+    {
+      "name": "sgf",
+      "repository": "https://github.com/SabakiHQ/sgf",
+      "commit": "7533e7d46d90e4e82dcc269c9af71e89e8cc33bf",
+      "license": "MIT",
+      "local_directory": "public/vendor/discovery",
+      "source_directory": "upstream/discovery",
+      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
+      "import_script": "scripts/import-discovery.py",
+      "build_script": "scripts/build-discovery.py"
+    },
+    {
+      "name": "doken",
+      "repository": "https://github.com/yishn/doken",
+      "version": "1.0.0",
+      "license": "MIT",
+      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
+      "license_path": "public/vendor/discovery/doken-LICENSE.txt"
+    },
+    {
+      "name": "Turing Machine Viz",
+      "repository": "https://github.com/aepsilon/turing-machine-viz",
+      "commit": "b4dab9e4a649051ada94cb352c48ec177da5952e",
+      "license": "BSD-3-Clause",
+      "license_path": "public/vendor/turing/LICENSE.txt",
+      "license_sha256": "2c3bb1f63994bc8581f5ab2228f5e933767d68dcf09c367196e79602eb2a1831",
+      "local_directory": "public/vendor/turing",
+      "source_directory": "upstream/turing",
+      "file_manifest": "public/vendor/turing/UPSTREAM.json",
+      "import_script": "scripts/import-turing.mjs",
+      "build_script": "scripts/build-turing.mjs"
+    },
+    {
+      "name": "js-yaml",
+      "repository": "https://github.com/nodeca/js-yaml",
+      "version": "4.3.2",
+      "package_integrity": "sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==",
+      "license": "MIT",
+      "license_path": "public/vendor/turing/js-yaml-LICENSE.txt",
+      "license_sha256": "a07bc24468b9654ce76a547d47a2db282d07733b715db4c73a98bd63961f9550",
+      "local_directory": "public/vendor/turing",
+      "source_directory": "upstream/turing",
+      "file_manifest": "public/vendor/turing/UPSTREAM.json",
+      "import_script": "scripts/import-turing.mjs",
+      "build_script": "scripts/build-turing.mjs"
+    },
+    {
+      "name": "cryptii",
+      "repository": "https://github.com/cryptii/cryptii",
+      "commit": "c04a823b5f3f0c8dfc9d8a4bd10e35ef8177d642",
+      "license": "MIT",
+      "license_path": "public/vendor/basics/cryptii-LICENSE.txt",
+      "license_sha256": "661ebb99242194d980f5ff879b2ce851b02a191762dd0ec7388849c72150cb94",
+      "local_directory": "public/vendor/basics",
+      "file_manifest": "public/vendor/basics/UPSTREAM.json",
+      "source_directory": "upstream/basics/sources/cryptii",
+      "import_script": "scripts/import-basics.mjs",
+      "build_script": "scripts/build-basics.mjs",
+      "adaptation": "Pinned source algorithms with offline ESM adapters; strict input validation and native shared UI. See NOTICE.txt."
+    },
+    {
+      "name": "romanice",
+      "repository": "https://github.com/dkin-om/romanice",
+      "commit": "8923e049da2558b2c23c7d1b4c2fe806afbcc494",
+      "license": "MIT",
+      "license_path": "public/vendor/basics/romanice-LICENSE.txt",
+      "license_sha256": "84ab63cff5d225a50047e9f8cd890d24c8c42a3548e42ee57b41360387517e97",
+      "local_directory": "public/vendor/basics",
+      "file_manifest": "public/vendor/basics/UPSTREAM.json",
+      "source_directory": "upstream/basics/sources/romanice",
+      "import_script": "scripts/import-basics.mjs",
+      "build_script": "scripts/build-basics.mjs",
+      "adaptation": "Pinned source algorithms with offline ESM adapters; strict input validation and native shared UI. See NOTICE.txt."
+    },
+    {
+      "name": "invisibles",
+      "repository": "https://github.com/cig13zs/invisibles",
+      "commit": "5ab9e06817539817830caafe0f652a582a9258e9",
+      "license": "MIT",
+      "license_path": "public/vendor/basics/invisibles-LICENSE.txt",
+      "license_sha256": "705b3d96c77d11a725607b9fd7a55bdc3b803405cd8fa8849c5d06d3b090220b",
+      "local_directory": "public/vendor/basics",
+      "file_manifest": "public/vendor/basics/UPSTREAM.json",
+      "source_directory": "upstream/basics/sources/invisibles",
+      "import_script": "scripts/import-basics.mjs",
+      "build_script": "scripts/build-basics.mjs",
+      "adaptation": "Pinned source algorithms with offline ESM adapters; strict input validation and native shared UI. See NOTICE.txt."
+    },
+    {
+      "name": "baudot",
+      "repository": "https://github.com/zenoamaro/baudot.js",
+      "commit": "5f1a01d7d774f5c5583bc9591d09cb09e74c2140",
+      "license": "MIT",
+      "license_path": "public/vendor/basics/baudot-LICENSE.txt",
+      "license_sha256": "e9af7e759e22eaa1f94ca817c36f6cd869208913f0402f02f79fe8e1d1479fb0",
+      "local_directory": "public/vendor/basics",
+      "file_manifest": "public/vendor/basics/UPSTREAM.json",
+      "source_directory": "upstream/basics/sources/baudot",
+      "import_script": "scripts/import-basics.mjs",
+      "build_script": "scripts/build-basics.mjs",
+      "adaptation": "Pinned source algorithms with offline ESM adapters; strict input validation and native shared UI. See NOTICE.txt."
+    },
+    {
+      "name": "IANA Protocol Registries",
+      "repository": "https://www.iana.org/protocols",
+      "license": "CC0 1.0（协议注册表数据；不含引用的RFC文档）",
+      "license_path": "public/vendor/it-reference/IANA-CC0-1.0.txt",
+      "license_sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "local_directory": "public/vendor/it-reference",
+      "source_directory": "upstream/it-reference",
+      "file_manifest": "public/vendor/it-reference/UPSTREAM.json",
+      "import_script": "scripts/import-it-reference.py",
+      "build_script": "scripts/build-it-reference.mjs",
+      "adaptation": "固定服务端口、IP协议号、HTTP状态与字段、字符集名称和别名；派生JSON加入本站中文科普。",
+      "commit": "a3cbd401df5dd06cf60f7376fa0601bd5f426aec",
+      "source_url": "https://github.com/larseggert/iana-assignments/tree/a3cbd401df5dd06cf60f7376fa0601bd5f426aec",
+      "license_source_url": "https://www.iana.org/help/licensing-terms"
+    },
+    {
+      "name": "mime-db",
+      "repository": "https://github.com/jshttp/mime-db",
+      "license": "MIT",
+      "license_path": "public/vendor/it-reference/mime-db-LICENSE.txt",
+      "license_sha256": "cc1dfd4dafa27271e8212cd3b274eeb3f262e40a6fdab36ddc3f9696f706f58b",
+      "local_directory": "public/vendor/it-reference",
+      "source_directory": "upstream/it-reference",
+      "file_manifest": "public/vendor/it-reference/UPSTREAM.json",
+      "import_script": "scripts/import-it-reference.py",
+      "build_script": "scripts/build-it-reference.mjs",
+      "adaptation": "固定1.54.0媒体类型、扩展名、默认字符集、来源标记与可压缩性资料。",
+      "version": "1.54.0",
+      "source_url": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "archive_sha256": "2b21054e65d0eabd58c5002d2713e968dd47b15700bfed4b7281a344ded1c420",
+      "license_source_url": "https://github.com/jshttp/mime-db/blob/v1.54.0/LICENSE"
+    },
+    {
+      "name": "Public Suffix List",
+      "repository": "https://github.com/publicsuffix/list",
+      "license": "MPL-2.0（原始和派生公共后缀数据）",
+      "license_path": "public/vendor/it-reference/PSL-LICENSE.txt",
+      "license_sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+      "local_directory": "public/vendor/it-reference",
+      "source_directory": "upstream/it-reference",
+      "file_manifest": "public/vendor/it-reference/UPSTREAM.json",
+      "import_script": "scripts/import-it-reference.py",
+      "build_script": "scripts/build-it-reference.mjs",
+      "adaptation": "完整ICANN/PRIVATE公共后缀规则；含通配、例外和IDN。原生匹配实现，不使用tldts。",
+      "commit": "3929462652695bad04f0a27afb600974014a3c8b",
+      "source_url": "https://raw.githubusercontent.com/publicsuffix/list/3929462652695bad04f0a27afb600974014a3c8b/public_suffix_list.dat",
+      "license_source_url": "https://raw.githubusercontent.com/publicsuffix/list/3929462652695bad04f0a27afb600974014a3c8b/LICENSE"
+    },
+    {
+      "name": "RFC Editor Index",
+      "repository": "https://www.rfc-editor.org/rfc-index/",
+      "license": "RFC索引事实元数据；RFC文档原许可另行适用（未引入正文）",
+      "license_path": "public/vendor/it-reference/RFC-NOTICE.txt",
+      "license_sha256": "0f956c03caa7834c60a22668dd0114277344156d11b1c6a9ef4c6abf6c85fe0a",
+      "local_directory": "public/vendor/it-reference",
+      "source_directory": "upstream/it-reference",
+      "file_manifest": "public/vendor/it-reference/UPSTREAM.json",
+      "import_script": "scripts/import-it-reference.py",
+      "build_script": "scripts/build-it-reference.mjs",
+      "adaptation": "2026-07-31索引中精选56项编号、短标题、状态与更新关系；中文摘要为本站原创。",
+      "commit": "4a9672c79e71f0816cffb4968f50da279d7bf910",
+      "source_url": "https://raw.githubusercontent.com/AlexMelanFromRingo/rfc-library/4a9672c79e71f0816cffb4968f50da279d7bf910/indexes/rfc-index.txt",
+      "license_source_url": "https://www.rfc-editor.org/series/rfc-use/"
+    },
+    {
+      "name": "Nodemailer (feedback service)",
+      "repository": "https://github.com/nodemailer/nodemailer",
+      "version": "10.1.1",
+      "license": "MIT-0",
+      "license_path": "public/licenses/nodemailer-MIT-0.txt",
+      "license_sha256": "4f814dcacd2da618d62829ea1f6238701cf421f18a6b36c91c5d8212245e2c78",
+      "dependency_lock": "services/feedback/package-lock.json",
+      "adaptation": "Server-only SMTP transport. No code bundled in public. Installed from pinned lock with npm ci --ignore-scripts."
+    }
+  ],
+  "retired_components": [
+    {
+      "name": "pzprjs",
+      "repository": "https://github.com/robx/pzprjs",
+      "commit": "8d3415a0336a5032bb650b6aa831705c33fe47d2",
+      "license": "MIT; emoji OFL-1.1",
+      "local_directory": "public/vendor/hunt/pzprjs",
+      "status": "removed",
+      "removed_on": "2026-10-08",
+      "reason": "User requested removal of all pencil-puzzle tools; historical code and licenses remain in Git history."
+    },
+    {
+      "name": "penpa",
+      "repository": "https://github.com/swaroopg92/penpa-edit",
+      "commit": "34e3fe97804e518288870b70d919e7e76ee18b4d",
+      "license": "MIT; bundled dependency notices",
+      "local_directory": "public/vendor/hunt/penpa",
+      "status": "removed",
+      "removed_on": "2026-10-08",
+      "reason": "User requested removal of all pencil-puzzle tools; historical code and licenses remain in Git history."
+    },
+    {
+      "name": "noqx",
+      "repository": "https://github.com/T0nyX1ang/noqx",
+      "commit": "706540dfb4c7d67919bb5029e4741838c5981501",
+      "license": "Apache-2.0 (selected); Penpa+ MIT; bundled runtime notices",
+      "local_directory": "public/vendor/hunt/noqx",
+      "merged_ui": "Penpa+ single-board UI; all solver parameters and shape presets; scripts/build-solver-data.mjs extracts fixed presetData from app/js/param.js. Original Noqx source and licenses retained.",
+      "status": "removed",
+      "removed_on": "2026-10-08",
+      "reason": "User requested removal of all pencil-puzzle tools; historical code and licenses remain in Git history."
+    },
+    {
+      "name": "sudoku",
+      "repository": "https://github.com/sigh/Interactive-Sudoku-Solver",
+      "commit": "5ae66740ad2634312e9ea48781893fbbb842a0e3",
+      "license": "MIT",
+      "local_directory": "public/vendor/hunt/sudoku",
+      "status": "removed",
+      "removed_on": "2026-10-08",
+      "reason": "User requested removal of all pencil-puzzle tools; historical code and licenses remain in Git history."
+    },
+    {
+      "name": "exolve",
+      "repository": "https://github.com/viresh-ratnakar/exolve",
+      "commit": "d0be2ed636afdb1542964d9e59f0590351521b0d",
+      "license": "MIT",
+      "local_directory": "public/vendor/hunt/exolve",
+      "status": "removed",
+      "removed_on": "2026-10-08",
+      "reason": "User requested removal of all pencil-puzzle tools; historical code and licenses remain in Git history."
+    },
+    {
+      "name": "exet",
+      "repository": "https://github.com/viresh-ratnakar/exet",
+      "commit": "ea5711805d7733ebd5350d5a49f082b10389dd40",
+      "license": "MIT; lexicon notices in source",
+      "local_directory": "public/vendor/hunt/exet",
+      "status": "removed",
+      "removed_on": "2026-10-08",
+      "reason": "User requested removal of all pencil-puzzle tools; historical code and licenses remain in Git history."
+    },
+    {
+      "name": "图论路径、几何作图、数字电路",
+      "retired_on": "2026-10-08",
+      "reason": "用户要求移除三项工具及其专用引擎和运行资源；原始来源和许可保留于 Git 历史。",
+      "components": [
+        {
+          "name": "3vl",
+          "version": "1.0.1",
+          "repository": "https://github.com/tilk/js_3vl",
+          "license": "BSD-2-Clause"
+        },
+        {
+          "name": "@dagrejs/dagre",
+          "version": "1.0.4",
+          "repository": "https://github.com/dagrejs/dagre",
+          "license": "MIT"
+        },
+        {
+          "name": "@dagrejs/graphlib",
+          "version": "2.1.13",
+          "repository": "https://github.com/dagrejs/graphlib",
+          "license": "MIT"
+        },
+        {
+          "name": "@joint/core",
+          "version": "4.1.3",
+          "repository": "https://github.com/clientIO/joint",
+          "license": "MPL-2.0"
+        },
+        {
+          "name": "@joint/layout-directed-graph",
+          "version": "4.1.4",
+          "repository": "https://github.com/clientIO/joint",
+          "license": "MPL-2.0"
+        },
+        {
+          "name": "cytoscape",
+          "version": "3.33.1",
+          "repository": "https://github.com/cytoscape/cytoscape.js",
+          "license": "MIT"
+        },
+        {
+          "name": "digitaljs",
+          "version": "0.14.2",
+          "repository": "https://github.com/tilk/digitaljs",
+          "license": "BSD-2-Clause"
+        },
+        {
+          "name": "fastpriorityqueue",
+          "version": "0.7.5",
+          "repository": "https://github.com/lemire/FastPriorityQueue.js",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "jquery",
+          "version": "3.7.1",
+          "repository": "https://github.com/jquery/jquery",
+          "license": "MIT"
+        },
+        {
+          "name": "jsxgraph",
+          "version": "1.11.1",
+          "repository": "https://github.com/jsxgraph/jsxgraph",
+          "license": "MIT"
+        },
+        {
+          "name": "web-worker",
+          "version": "1.5.0",
+          "repository": "https://github.com/developit/web-worker",
+          "license": "Apache-2.0"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "reviewedAt": "2026-10-13",
+  "mode": "冻结后的独立只读源码审计；只写本临时报告，没有修改应用/回归文件，没有重跑长回归。",
+  "sourceHashes": {
+    "public/cyberchef-operation-corrections.js": "6b204af9058a70836c0cefe1829e7818a1d543a51b8c48149d6f51e783412453",
+    "public/cyberchef-worker.js": "307444521ef2415aabf3d4976a9064a82959a87ab85737379123078776c16fbe",
+    "public/cyberchef-client.js": "d46a2aeea1e2b7737d53bfed066482e0cd12f9aac2aeb7db204b15d6c756cfce",
+    "scripts/browser-chef-corrections.mjs": "e37ec3dc062650c63f45ec8c552dcc6ceeccd9b9c28b07de05a6834a72319c40"
+  },
+  "releaseBlockingFindings": [],
+  "conclusion": "在本次指定范围内没有发现可证实的发布阻断、安全边界或语义错误。此前 LSB Column 和 TCP checksum 的错误已在共用实际 Worker 操作层修复，而非更改显示结果。",
+  "checks": [
+    {
+      "area": "同步模块捕获与finally恢复",
+      "evidence": "importEncodings 先保存原 Object.defineProperty，仅在同步 importModule 期间捕获 ownVariants；Reflect.apply 保留调用行为；finally 将 active=false 并恢复原函数。检查与原型修改都在恢复后进行，抛出的 import 错误不会进入 patch 阶段。"
+    },
+    {
+      "area": "AMF归属与失败保护",
+      "evidence": "AMF0/3 roots 的 factory 自有属性、互斥 number/int、唯一候选、ownVariants 个数、marker、instanceof、原型直接继承关系、getter/setter/configurable、syntax字段顺序/宽度/类型/serializer 都被核对；形状不符返回 null。NUL修复额外要求四个field分别归属各自containingType及同一 serializer constructor。"
+    },
+    {
+      "area": "AMF最小修改范围",
+      "evidence": "AMF3 字面节点保留原 getter，只接受与getter常量相同的setter赋值；Array setter 复用 Value.array，不重写编码器。AMF0 复用原setter和factory类，测量UTF8字节长度及65535短/长串分界。NUL只给四个AMF字段设置 nullTerminated=false，不改变全局Reader。"
+    },
+    {
+      "area": "特殊属性名",
+      "evidence": "AMF3 Array getter 用 Object.defineProperty 给结果增加 own data properties，__proto__ 不会变成原型赋值；现有真 Worker 回归含 __proto__ 与 constructor。"
+    },
+    {
+      "area": "LSB数据完整性",
+      "evidence": "Column 路径调用原 Row 解码器，复制args而不在调用方原数组上pop；通道顺序和重复通道由原decoder保留。转换逻辑按(row*width+column)*channels+channel 定位bit，尾部按实际partial位数而非假设左对齐读取，最后残片再次右对齐输出。"
+    },
+    {
+      "area": "LSB尺寸与格式",
+      "evidence": "PNG检查签名、IHDR长度13与标识，读取无符号32位宽高，拒绝0和不安全乘积；rowBytes长度必须等于ceil(width*height*channels/8)。其它格式复用原ConvertImageFormat转PNG来取尺寸，未改成支持面更窄或会预乘透明颜色的浏览器Canvas。"
+    },
+    {
+      "area": "Checksum数值",
+      "evidence": "按网络字节序组合每16位字，奇数末尾字节作为高8位；每字折叠进位且最后while继续折叠，累加器不达 signed32 边界。输出保留上游小写Hex和最少两位惯例（FFFF结果为00而非强制0000），没有用显示层替换值。"
+    },
+    {
+      "area": "Pearson数值",
+      "evidence": "256类别全部由sum(O_i^2)/E−N计入，E=N/256；N≤32MiB时sum(O_i²)≤N²=2^50，低于2^53的整数精度限；Uint32计数也够。空输入保留0兼容哨兵，代码注释明确非有效统计样本。"
+    },
+    {
+      "area": "幂等与操作一致性",
+      "evidence": "WeakSet跟踪实际Operation.prototype，不重复包裹；模块导入后apply作用于实际OpModules，任务与完整recipe共用同一Worker类，未另设展示路径。"
+    },
+    {
+      "area": "资源初始化",
+      "evidence": "client从自己的import.meta.url推导资源目录，不从blob worker location猜路径；worker初始化只接受http/https同源且无userinfo URL。原Jimp docURL保持root-relative path，fetch边界再解绝对URL。"
+    },
+    {
+      "area": "加载失败",
+      "evidence": "本地vendor请求网络错误或非ok响应会发resourceError；importScripts错误同样显式通知；bootstrapError避免重复报告已标记资源错误。客户端bootstrap/resource/bake/onerror/onmessageerror都进入fail→close，清计时器、terminate Worker、拒绝ready和pending并清response。"
+    },
+    {
+      "area": "取消与旧结果",
+      "evidence": "close会terminate并清pending/response；bakeComplete在没有pending时直接返回。等待ready后也检查closed，超时也走同一close。上层取消通过关闭这一实际Worker中止同步或异步工作。"
+    }
+  ],
+  "existingRegressionEvidence": {
+    "script": "scripts/browser-chef-corrections.mjs",
+    "readOnlyInspection": "确认脚本包括独立PNG fixtures、跨通道/重复通道/bit0/1/2/7/尾位/2x2与3x2、JPEG/TIFF、独立AMF NUL字节向量、Unicode短长边界、hook缺失/抛错/shape拒绝、资源503与新Worker重试、native/blob/blob-subpath。没有在此子任务重跑这些用例。",
+    "reportedByRoot": "795个真Worker案例此前已通过；该数字不是本子任务重新执行的结果。"
+  },
+  "nonBlockingLimitations": [
+    "全局Object.defineProperty临时钩子依赖当前同步classic importScripts机制；将来若模块改为异步import，需要重新设计。现实现没有跨await保留钩子。",
+    "合法AMF3 associative数组如果命名键为length，JavaScript Array无法同时无冲突地暴露数组length和该关联键；新Array.value getter用defineProperty时可能受此保留属性约束。当前AMF Decode返回原节点树、测试语义读取fields，未证实该getter边界可影响部署用户工作流，因此不列发布阻断，也未扩展测试或改源码。",
+    "PNG头尺寸检查是补丁的数据一致性检查；真正图片解码、格式合法性仍先由原Jimp Row操作处理。没有假称替代完整PNG CRC/数据块验证。",
+    "本审计没有证明所有浏览器平台的资源调度；现有脚本覆盖的native/blob/subpath和资源503证据之外不扩张结论。"
+  ]
+}

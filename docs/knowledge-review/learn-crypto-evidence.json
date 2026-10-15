@@ -1,0 +1,815 @@
+{
+  "date": "2026-10-13",
+  "capabilityCount": 95,
+  "groups": {
+    "classical": 21,
+    "modern": 32,
+    "authentication": 42
+  },
+  "engine": {
+    "version": "11.5.0",
+    "commit": "8cd426dd4f40f1423912d5fad91b578a86a65112"
+  },
+  "sourceRecords": [
+    {
+      "id": "rot13",
+      "title": "ROT13 中文算法说明",
+      "publisher": "DenCode（该转换器作者文档）",
+      "url": "https://dencode.com/zh-cn/cipher/rot13",
+      "language": "zh-CN",
+      "kind": "author-spec",
+      "locator": "关于该算法"
+    },
+    {
+      "id": "engine",
+      "title": "CyberChef 随站附带的操作说明与参数",
+      "publisher": "GCHQ CyberChef（Apache-2.0）",
+      "url": "/vendor/cyberchef/catalogue.json",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "Scrypt"
+    },
+    {
+      "id": "pku",
+      "title": "密码学课件：置换密码与维吉尼亚密码",
+      "publisher": "北京大学信息科学技术学院",
+      "url": "https://www.icst.pku.edu.cn/zlian/docs/20181023161806486415.pdf",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "第 2–6 页"
+    },
+    {
+      "id": "rail-fence",
+      "title": "Rail Fence 中文算法说明",
+      "publisher": "DenCode（该转换器作者文档）",
+      "url": "https://dencode.com/zh-cn/cipher/rail-fence",
+      "language": "zh-CN",
+      "kind": "author-spec",
+      "locator": "关于该算法"
+    },
+    {
+      "id": "enigma",
+      "title": "Enigma working principle",
+      "publisher": "Crypto Museum（设备复原研究）",
+      "url": "https://www.cryptomuseum.com/crypto/enigma/working.htm",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Working principle / cipher wheels"
+    },
+    {
+      "id": "bombe-guide",
+      "title": "Enigma, the Bombe, and Typex",
+      "publisher": "GCHQ CyberChef 操作作者",
+      "url": "https://github.com/gchq/CyberChef/wiki/Enigma,-the-Bombe,-and-Typex/ed7ab8b92789111139fb98d23a9bf2249311b6a7",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Cribs / menus / loops / checking machine"
+    },
+    {
+      "id": "atbash",
+      "title": "Atbash 中文算法说明",
+      "publisher": "DenCode（该转换器作者文档）",
+      "url": "https://dencode.com/zh-cn/cipher/atbash",
+      "language": "zh-CN",
+      "kind": "author-spec",
+      "locator": "关于该算法"
+    },
+    {
+      "id": "bombe",
+      "title": "Bombe: Breaking the Enigma cipher",
+      "publisher": "Crypto Museum（设备复原研究）",
+      "url": "https://www.cryptomuseum.com/crypto/bombe/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Working principle / cipher wheels"
+    },
+    {
+      "id": "affine",
+      "title": "Affine 中文算法说明",
+      "publisher": "DenCode（该转换器作者文档）",
+      "url": "https://dencode.com/zh-cn/cipher/affine",
+      "language": "zh-CN",
+      "kind": "author-spec",
+      "locator": "关于该算法"
+    },
+    {
+      "id": "colossus",
+      "title": "Colossus",
+      "publisher": "Crypto Museum（设备复原研究）",
+      "url": "https://www.cryptomuseum.com/crypto/colossus/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Working principle / cipher wheels"
+    },
+    {
+      "id": "colossus-guide",
+      "title": "Colossus",
+      "publisher": "GCHQ CyberChef / VirtualColossus 作者",
+      "url": "https://github.com/gchq/CyberChef/wiki/Colossus",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Setting Colossus inputs / delta / Q bus"
+    },
+    {
+      "id": "box-source",
+      "title": "CyberChef 11.5.0 固定源码 — CaesarBoxCipher",
+      "publisher": "GCHQ CyberChef",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/CaesarBoxCipher.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run(): stride tableHeight"
+    },
+    {
+      "id": "rot47",
+      "title": "ROT47 中文算法说明",
+      "publisher": "DenCode（该转换器作者文档）",
+      "url": "https://dencode.com/zh-cn/cipher/rot47",
+      "language": "zh-CN",
+      "kind": "author-spec",
+      "locator": "关于该算法"
+    },
+    {
+      "id": "lorenz",
+      "title": "Lorenz SZ-40/42",
+      "publisher": "Crypto Museum（设备复原研究）",
+      "url": "https://www.cryptomuseum.com/crypto/lorenz/sz40/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Working principle / cipher wheels"
+    },
+    {
+      "id": "lorenz-guide",
+      "title": "Lorenz SZ",
+      "publisher": "GCHQ CyberChef / VirtualColossus 作者",
+      "url": "https://github.com/gchq/CyberChef/wiki/Lorenz-SZ",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Chi/Psi/Motor wheels / ITA2 / enciphering"
+    },
+    {
+      "id": "bacon-source",
+      "title": "CyberChef 11.5.0 固定源码 — BaconCipherEncode",
+      "publisher": "GCHQ CyberChef / Karsten Silkenbäumer",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/BaconCipherEncode.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "Alphabet / Translation / 5-bit groups"
+    },
+    {
+      "id": "bifid-source",
+      "title": "CyberChef 11.5.0 固定源码 — BifidCipherEncode",
+      "publisher": "GCHQ CyberChef / Matt C",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/BifidCipherEncode.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run(): yCo+xCo / polybius"
+    },
+    {
+      "id": "ls47",
+      "title": "LS47 hand-computable cipher",
+      "publisher": "LS47 作者 exaexa",
+      "url": "https://github.com/exaexa/ls47",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "7×7 字符表 / 状态更新 / nonce"
+    },
+    {
+      "id": "sigaba",
+      "title": "SIGABA ECM II",
+      "publisher": "Crypto Museum（设备复原研究）",
+      "url": "https://www.cryptomuseum.com/crypto/usa/sigaba/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Working principle / cipher wheels"
+    },
+    {
+      "id": "typex",
+      "title": "Typex",
+      "publisher": "Crypto Museum（设备复原研究）",
+      "url": "https://www.cryptomuseum.com/crypto/uk/typex/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Working principle / cipher wheels"
+    },
+    {
+      "id": "rot8000-source",
+      "title": "CyberChef 11.5.0 固定源码 — ROT8000 operation",
+      "publisher": "GCHQ CyberChef / Daniel Temkin / Thomas Leplus",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/ROT8000.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run(): validIntList / rotateNum"
+    },
+    {
+      "id": "aes",
+      "title": "FIPS 197 — Advanced Encryption Standard (AES)",
+      "publisher": "美国国家标准与技术研究院 NIST",
+      "url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§3 / §5 / Appendix B"
+    },
+    {
+      "id": "aliyun",
+      "title": "边缘脚本加解密与摘要函数",
+      "publisher": "阿里云",
+      "url": "https://help.aliyun.com/zh/cdn/user-guide/cipher-algorithm-functions",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "aes_new / hmac"
+    },
+    {
+      "id": "r8017",
+      "title": "RFC 8017 — PKCS #1: RSA Cryptography Specifications Version 2.2",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc8017.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§3–8"
+    },
+    {
+      "id": "r8439",
+      "title": "RFC 8439 — ChaCha20 and Poly1305 for IETF Protocols",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc8439.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2.1–2.4"
+    },
+    {
+      "id": "r9580",
+      "title": "RFC 9580 — OpenPGP",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc9580.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§5 / §6 / §13"
+    },
+    {
+      "id": "ror13-source",
+      "title": "CyberChef 11.5.0 固定源码 — ROR13",
+      "publisher": "GCHQ CyberChef / fufu_btw",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/ROR13.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run(): ror(hash,13)+byte"
+    },
+    {
+      "id": "r3394",
+      "title": "RFC 3394 — Advanced Encryption Standard (AES) Key Wrap Algorithm",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc3394.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2.2–2.3 / §4"
+    },
+    {
+      "id": "ascon",
+      "title": "Ascon — Specification",
+      "publisher": "Ascon 设计团队 / 格拉茨技术大学",
+      "url": "https://ascon.isec.tugraz.at/specification.html",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Permutation / Ascon-AEAD128 / CT-RSA 2024 MAC 文献说明"
+    },
+    {
+      "id": "blowfish",
+      "title": "Description of a New Variable-Length Key, 64-Bit Block Cipher (Blowfish)",
+      "publisher": "Bruce Schneier",
+      "url": "https://www.schneier.com/academic/archives/1994/09/description_of_a_new.html",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Algorithm description"
+    },
+    {
+      "id": "cs2-source",
+      "title": "CyberChef 11.5.0 固定源码 — CipherSaber2Encrypt",
+      "publisher": "GCHQ CyberChef",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/CipherSaber2Encrypt.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run(): 10-byte random IV prefix"
+    },
+    {
+      "id": "r6229",
+      "title": "RFC 6229 — Test Vectors for the Stream Cipher RC4",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6229.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2"
+    },
+    {
+      "id": "des",
+      "title": "FIPS 46-3 — Data Encryption Standard (DES)（已撤销）",
+      "publisher": "美国国家标准与技术研究院 NIST",
+      "url": "https://csrc.nist.gov/pubs/fips/46-3/final",
+      "language": "en",
+      "kind": "standard",
+      "locator": "DES / TDEA"
+    },
+    {
+      "id": "r8891",
+      "title": "RFC 8891 — GOST R 34.12-2015: Block Cipher Magma",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc8891.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4"
+    },
+    {
+      "id": "r7801",
+      "title": "RFC 7801 — GOST R 34.12-2015: Block Cipher Kuznyechik",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7801.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4"
+    },
+    {
+      "id": "r4357",
+      "title": "RFC 4357 — Additional Cryptographic Algorithms for Use with GOST Algorithms",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4357.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2 / §6"
+    },
+    {
+      "id": "present",
+      "title": "PRESENT: An Ultra-Lightweight Block Cipher",
+      "publisher": "Bogdanov 等设计者 / Orange Labs（作者单位）",
+      "url": "https://crypto.orange-labs.fr/papers/ches2007-450.pdf",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "§2: 31 rounds / 4-bit S-box / pLayer"
+    },
+    {
+      "id": "r4503",
+      "title": "RFC 4503 — The Rabbit Cipher",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4503.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2–4"
+    },
+    {
+      "id": "rc2",
+      "title": "RFC 2268 — A Description of the RC2 Encryption Algorithm",
+      "publisher": "R. Rivest / RFC Editor",
+      "url": "https://www.rfc-editor.org/rfc/rfc2268.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§1–3"
+    },
+    {
+      "id": "rc6",
+      "title": "The RC6 Block Cipher",
+      "publisher": "Rivest / Robshaw / Sidney / Yin（麻省理工学院）",
+      "url": "https://people.csail.mit.edu/rivest/pubs/RRSY98.pdf",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "§2: RC6-w/r/b"
+    },
+    {
+      "id": "salsa",
+      "title": "Salsa20 — stream ciphers",
+      "publisher": "libsodium 项目",
+      "url": "https://doc.libsodium.org/advanced/stream_ciphers/salsa20",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Nonce / counter / reduced-round variants"
+    },
+    {
+      "id": "sm2",
+      "title": "GM/T 0003.4 — SM2 椭圆曲线公钥密码算法 第 4 部分 公钥加密算法",
+      "publisher": "国家密码管理局",
+      "url": "https://www.oscca.gov.cn/sca/xxgk/201705/1012587.shtml",
+      "language": "zh-CN",
+      "kind": "standard",
+      "locator": "官方标准条目"
+    },
+    {
+      "id": "sm2-mechanism",
+      "title": "SM2 Public Key Algorithms — draft-shen-sm2-ecdsa-02（草案）",
+      "publisher": "Shen / Lee，IETF Datatracker",
+      "url": "https://datatracker.ietf.org/doc/html/draft-shen-sm2-ecdsa-02",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "§7.2.1: C1 / KDF / C2 / C3"
+    },
+    {
+      "id": "sm4",
+      "title": "GM/T 0002 — SM4 分组密码算法",
+      "publisher": "国家密码管理局",
+      "url": "https://www.oscca.gov.cn/sca/xxgk/201705/1012583.shtml",
+      "language": "zh-CN",
+      "kind": "standard",
+      "locator": "官方标准条目"
+    },
+    {
+      "id": "sm4-mechanism",
+      "title": "SM4 Blockcipher Algorithm — draft-ribose-cfrg-sm4-10（草案）",
+      "publisher": "Tse 等作者，IETF Datatracker",
+      "url": "https://datatracker.ietf.org/doc/html/draft-ribose-cfrg-sm4-10",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "§4 / §6 / §7: 128-bit / 32 rounds"
+    },
+    {
+      "id": "tea",
+      "title": "TEA, a Tiny Encryption Algorithm",
+      "publisher": "Wheeler / Needham（剑桥大学）",
+      "url": "https://www.cl.cam.ac.uk/ftp/papers/djw-rmn/djw-rmn-tea.html",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Encoding routine"
+    },
+    {
+      "id": "twofish",
+      "title": "The Twofish Encryption Algorithm",
+      "publisher": "Bruce Schneier 等设计者",
+      "url": "https://www.schneier.com/academic/archives/1998/12/the_twofish_encrypti.html",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "128-bit block / key lengths / 16 rounds"
+    },
+    {
+      "id": "xsalsa",
+      "title": "XSalsa20 — stream ciphers",
+      "publisher": "libsodium 项目",
+      "url": "https://doc.libsodium.org/advanced/stream_ciphers/xsalsa20",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "192-bit nonce / HSalsa20"
+    },
+    {
+      "id": "xtea-source",
+      "title": "CyberChef 固定源码 — XTEA",
+      "publisher": "GCHQ CyberChef",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/lib/TEA.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "32-bit word updates / key selection"
+    },
+    {
+      "id": "xxtea",
+      "title": "Correction to xtea",
+      "publisher": "Wheeler / Needham（剑桥大学原稿）",
+      "url": "https://www.cix.co.uk/~klockstone/xxtea.pdf",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "第 1–2 页：q=6+52/n"
+    },
+    {
+      "id": "mdn-sign",
+      "title": "SubtleCrypto.sign()",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/SubtleCrypto/sign",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "RSA / ECDSA / HMAC"
+    },
+    {
+      "id": "r7519",
+      "title": "RFC 7519 — JSON Web Token (JWT)",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7519.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§3 / §4 / §7"
+    },
+    {
+      "id": "jwt-cn",
+      "title": "微服务平台 TSF 配置 JWT 插件",
+      "publisher": "腾讯云",
+      "url": "https://cloud.tencent.com/document/product/649/54707",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "JWT 结构与签名算法"
+    },
+    {
+      "id": "r8018",
+      "title": "RFC 8018 — PKCS #5: Password-Based Cryptography Specification Version 2.1",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc8018.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§5.2"
+    },
+    {
+      "id": "r6070",
+      "title": "RFC 6070 — PKCS #5: Password-Based Key Derivation Function 2 (PBKDF2) Test Vectors",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6070.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2"
+    },
+    {
+      "id": "mdn-kdf",
+      "title": "SubtleCrypto.deriveKey()",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/SubtleCrypto/deriveKey",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "HKDF / PBKDF2"
+    },
+    {
+      "id": "r5280",
+      "title": "RFC 5280 — Internet X.509 Public Key Infrastructure Certificate and CRL Profile",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc5280.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4 / §5"
+    },
+    {
+      "id": "r4493",
+      "title": "RFC 4493 — The AES-CMAC Algorithm",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4493.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2 / §4"
+    },
+    {
+      "id": "r2104",
+      "title": "RFC 2104 — HMAC: Keyed-Hashing for Message Authentication",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc2104.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2"
+    },
+    {
+      "id": "r4231",
+      "title": "RFC 4231 — Identifiers and Test Vectors for HMAC-SHA-224/256/384/512",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4231.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4.2"
+    },
+    {
+      "id": "flask-intro",
+      "title": "Flask Quickstart — Sessions",
+      "publisher": "Pallets Flask 项目",
+      "url": "https://flask.palletsprojects.com/en/stable/quickstart/#sessions",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Sessions: signed but not encrypted"
+    },
+    {
+      "id": "itsdangerous",
+      "title": "URL Safe Serialization",
+      "publisher": "Pallets ItsDangerous 项目",
+      "url": "https://itsdangerous.palletsprojects.com/en/stable/url_safe/",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "URLSafeSerializer / URLSafeTimedSerializer"
+    },
+    {
+      "id": "asn1",
+      "title": "X.690: ASN.1 encoding rules",
+      "publisher": "国际电信联盟 ITU-T",
+      "url": "https://www.itu.int/rec/T-REC-X.690",
+      "language": "en",
+      "kind": "standard",
+      "locator": "BER / CER / DER / Object Identifier"
+    },
+    {
+      "id": "bcrypt",
+      "title": "A Future-Adaptable Password Scheme",
+      "publisher": "Niels Provos / David Mazières，USENIX 1999",
+      "url": "https://www.usenix.org/legacy/events/usenix99/provos/provos.pdf",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "§5: bcrypt / EksBlowfish"
+    },
+    {
+      "id": "r4253",
+      "title": "RFC 4253 — The Secure Shell (SSH) Transport Layer Protocol",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4253.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§6.6"
+    },
+    {
+      "id": "r2986",
+      "title": "RFC 2986 — PKCS #10: Certification Request Syntax Specification Version 1.7",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc2986.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4"
+    },
+    {
+      "id": "evp",
+      "title": "EVP_BytesToKey",
+      "publisher": "OpenSSL 项目",
+      "url": "https://docs.openssl.org/3.0/man3/EVP_BytesToKey/",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "KEY DERIVATION ALGORITHM"
+    },
+    {
+      "id": "r5869",
+      "title": "RFC 5869 — HMAC-based Extract-and-Expand Key Derivation Function (HKDF)",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc5869.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2 / Appendix A"
+    },
+    {
+      "id": "flask",
+      "title": "Flask API — SecureCookieSessionInterface",
+      "publisher": "Pallets Flask 项目",
+      "url": "https://flask.palletsprojects.com/en/stable/api/#flask.sessions.SecureCookieSessionInterface",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "cookie-session / signing / serializer"
+    },
+    {
+      "id": "r7515",
+      "title": "RFC 7515 — JSON Web Signature (JWS)",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7515.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§3 / Appendix A.3"
+    },
+    {
+      "id": "mdn-key",
+      "title": "SubtleCrypto.generateKey()",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/SubtleCrypto/generateKey",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "ECDSA / RSA"
+    },
+    {
+      "id": "r7518",
+      "title": "RFC 7518 — JSON Web Algorithms (JWA)",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7518.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§3.4 / §6"
+    },
+    {
+      "id": "r4226",
+      "title": "RFC 4226 — HOTP: An HMAC-Based One-Time Password Algorithm",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4226.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§5 / Appendix D"
+    },
+    {
+      "id": "r6238",
+      "title": "RFC 6238 — TOTP: Time-Based One-Time Password Algorithm",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6238.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4 / Appendix B"
+    },
+    {
+      "id": "r7468",
+      "title": "RFC 7468 — Textual Encodings of PKIX, PKCS, and CMS Structures",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7468.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2 / §5"
+    },
+    {
+      "id": "r9106",
+      "title": "RFC 9106 — Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc9106.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§3–4"
+    },
+    {
+      "id": "ecdsa-mechanism",
+      "title": "FIPS 186-5 — Digital Signature Standard",
+      "publisher": "美国国家标准与技术研究院 NIST",
+      "url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§6: ECDSA signature generation / verification"
+    },
+    {
+      "id": "fernet",
+      "title": "Fernet (symmetric encryption)",
+      "publisher": "PyCA cryptography 项目",
+      "url": "https://cryptography.io/en/latest/fernet/",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Key / Implementation / token timestamp"
+    },
+    {
+      "id": "gost-mac-source",
+      "title": "CyberChef 11.5.0 固定源码 — GOSTSign",
+      "publisher": "GCHQ CyberChef",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/8cd426dd4f40f1423912d5fad91b578a86a65112/src/core/operations/GOSTSign.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "mode:\"MAC\" / macLength"
+    },
+    {
+      "id": "r7517",
+      "title": "RFC 7517 — JSON Web Key (JWK)",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7517.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§4 / Appendix A"
+    },
+    {
+      "id": "r4880",
+      "title": "RFC 4880 — OpenPGP（较早规范，已由 RFC 9580 更新）",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4880.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§5 / §6 / §13"
+    },
+    {
+      "id": "r7914",
+      "title": "RFC 7914 — The scrypt Password-Based Key Derivation Function",
+      "publisher": "RFC Editor / IETF（南京大学镜像）",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7914.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "§2 / §6"
+    }
+  ],
+  "method": "Web searches and full-page opening with exact URLs; mathematical examples are calculated, random ciphertext is not fabricated. Local catalogue validates the exact UI parameters. English is labelled en; Chinese official vendor/university/regulator texts are labelled zh-CN. Mainland multi-carrier access was not measured.",
+  "verified": {
+    "rfcNanjing": "26+ RFC full texts opened at mirrors.nju.edu.cn, including 8439/8017/3394/6229/4503/7914/9106/5869/8018/2104/4493/5280/2986/7468/7517/7519/7515/7518/4226/6238/4253/9580/4880/4357/8891/7801/6070/4231.",
+    "domestic": "PKU PDF read for monoalphabetic substitution and Vigenere formula; Aliyun cipher-algorithm-functions opened in Chinese; Tencent JWT configuration opened in Chinese; OSCCA SM2 part4 and SM4 catalogue pages opened (catalogue only).",
+    "pinnedImplementations": "ROT8000/ROR13/BifidCipherEncode exact pinned commit full source read; XTEAEncrypt and TEA.mjs exact pinned source read. Other referenced operations follow the same fixed SHA and are to be mirrored/verified by root.",
+    "standards": "NIST FIPS197-upd1 and FIPS186-5 full PDFs opened. FIPS46-3 official record states withdrawn. ITU X.690 catalogue is readable but its full PDF download timed out.",
+    "creators": "Ascon specification distinguishes NIST AEAD/Hash/XOF from CT-RSA 2024 MAC/PRF extension. PRESENT paper full PDF read at author unit Orange Labs. RC6 original MIT author PDF read. TEA author page and XXTEA original author PDF read. Blowfish/Twofish author pages read. PyCA Fernet implementation section read. Crypto Museum technical device records read."
+  },
+  "claimsCorrected": [
+    {
+      "operation": "Ascon MAC",
+      "finding": "Independent Ascon-Mac is not one of the NIST SP800-232 standardized schemes. The upstream catalogue wording must not be copied as a normative statement."
+    },
+    {
+      "operation": "GOST Sign / GOST Verify",
+      "finding": "Actual operation uses mode MAC and shared symmetric Key, not GOST R34.10 elliptic-curve digital signatures. Checked GOSTSign source mode and actual parameters."
+    },
+    {
+      "operation": "ROT8000",
+      "finding": "Actual pinned implementation shifts indexes by half the allowed BMP list size; skips excluded controls/space/surrogate code units. It is not a blanket +0x8000 on all code points."
+    },
+    {
+      "operation": "ROR13",
+      "finding": "32-bit rotate-add hash per input byte; not a reversible right-rotation converter."
+    },
+    {
+      "operation": "Caesar Box Cipher",
+      "finding": "Actual code iterates index by Box Height after dropping spaces; lesson follows this exact orientation rather than an ambiguous generic row-to-column description."
+    },
+    {
+      "operation": "XTEA",
+      "finding": "Library is src/core/lib/TEA.mjs; 32 cycles contain 64 half-word updates. Do not point to nonexistent XTEA.mjs."
+    }
+  ],
+  "failedOrRejected": [
+    {
+      "url": "https://ciphersaber.gurus.org/faq.html",
+      "reason": "Redirected to unrelated chatgpt.com/faq.html. Not used."
+    },
+    {
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc2268.html",
+      "reason": "Tool access failure. RC2 article uses original RFC Editor URL instead."
+    },
+    {
+      "url": "https://iacr.org/archive/ches2007/47270450/47270450.pdf",
+      "reason": "Full open failed; replaced by successfully read author-unit Orange Labs PDF."
+    },
+    {
+      "url": "https://www.gmbz.org.cn/file/2018-01-08/7774cd2c-2347-48aa-89a0-b5d00c56bdaf.pdf",
+      "reason": "HTTPS timed out. Not used as read evidence. SM2 mechanism instead uses published IETF author draft and distinguishes it from the domestic standard identity."
+    },
+    {
+      "url": "https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.690-202102-I!!PDF-E&type=items",
+      "reason": "Full PDF timed out. Catalogue references are supplemented by actual encoding examples and local parser contract; no verbatim standard clauses copied."
+    },
+    {
+      "url": "https://rot8000.com/info",
+      "reason": "404. Replaced with exact pinned implementation."
+    }
+  ],
+  "contentNotes": "No external text is copied verbatim in passages; standards/author facts are paraphrased concisely. Enigma single-rotor illustration is not claimed as whole-machine ciphertext. Colossus difference example is not claimed as a completed break. RSA small prime example is explicitly non-production. HOTP/TOTP are RFC test vectors, not current live clock claims. Every random encryption sample is a size/field/rule example, labelled as such.",
+  "exampleValidation": "Independent Python stdlib calculations passed PBKDF2 RFC6070, HMAC RFC4231 (Hi There, not Hello There), HOTP RFC4226, TOTP RFC6238, literal Base64URL/PEM/JWK encodings, Affine IPM, ROT47 p_P, Rail Fence AGOLRTO, Scrypt memory arithmetic. Bifid AG->BB manually checked against pinned coordinate collection."
+}

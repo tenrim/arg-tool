@@ -1,0 +1,416 @@
+{
+  "run_at": "2026-10-15T07:54:56.791Z",
+  "mode": "affected",
+  "files": [
+    "AGENTS.md",
+    "README.md",
+    "VERIFICATION.md",
+    "docs/HANDOFF_FEEDBACK.md",
+    "docs/handoff-ux-verification.json",
+    "public/app.js",
+    "public/chef-tools.css",
+    "public/chef-tools/index.js",
+    "public/chef-tools/source-preview.js",
+    "public/chef-tools/task-view.js",
+    "public/coderunner/ui.js",
+    "public/handoff/button.js",
+    "public/handoff/dialog.js",
+    "public/handoff/model.js",
+    "public/image-tools.js",
+    "public/round1/analysis.js",
+    "public/tool-help.js",
+    "public/ui/components.css",
+    "scripts/browser-chef-tools.mjs",
+    "scripts/browser-chef-worker.mjs",
+    "scripts/browser-coderunner.mjs",
+    "scripts/browser-handoff-feedback.mjs",
+    "scripts/browser-round-one.mjs",
+    "tests/handoff.test.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "AGENTS.md",
+        "README.md",
+        "VERIFICATION.md",
+        "docs/HANDOFF_FEEDBACK.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/source-preview.js",
+        "public/chef-tools/task-view.js",
+        "public/coderunner/ui.js",
+        "public/handoff/button.js",
+        "public/handoff/dialog.js",
+        "public/handoff/model.js",
+        "public/image-tools.js",
+        "public/round1/analysis.js",
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/chef-tools.css",
+        "public/chef-tools/index.js",
+        "public/chef-tools/source-preview.js",
+        "public/chef-tools/task-view.js",
+        "public/coderunner/ui.js",
+        "public/handoff/button.js",
+        "public/handoff/dialog.js",
+        "public/handoff/model.js",
+        "public/image-tools.js",
+        "public/round1/analysis.js",
+        "public/tool-help.js",
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/source-preview.js",
+        "public/chef-tools/task-view.js",
+        "public/coderunner/ui.js",
+        "public/handoff/button.js",
+        "public/handoff/dialog.js",
+        "public/handoff/model.js",
+        "public/image-tools.js",
+        "public/round1/analysis.js",
+        "public/tool-help.js",
+        "scripts/browser-chef-tools.mjs",
+        "scripts/browser-chef-worker.mjs",
+        "scripts/browser-coderunner.mjs",
+        "scripts/browser-handoff-feedback.mjs",
+        "scripts/browser-round-one.mjs",
+        "tests/handoff.test.mjs"
+      ],
+      "reasons": [
+        "public/app.js, public/chef-tools/index.js, public/chef-tools/source-preview.js, public/chef-tools/task-view.js, public/coderunner/ui.js, public/handoff/button.js, public/handoff/dialog.js, public/handoff/model.js, public/image-tools.js, public/round1/analysis.js, public/tool-help.js, scripts/browser-chef-tools.mjs, scripts/browser-chef-worker.mjs, scripts/browser-coderunner.mjs, scripts/browser-handoff-feedback.mjs, scripts/browser-round-one.mjs, tests/handoff.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/handoff.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/handoff.test.mjs"
+      ],
+      "reasons": [
+        "public/handoff/button.js",
+        "public/handoff/dialog.js",
+        "public/handoff/model.js",
+        "tests/handoff.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/feedback.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/feedback.test.mjs"
+      ],
+      "reasons": [
+        "public/handoff/button.js",
+        "public/handoff/dialog.js",
+        "public/handoff/model.js"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "command": [
+        "node",
+        "scripts/browser-sidebar-routing.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "command": [
+        "node",
+        "scripts/browser-task-lifecycle.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools.css",
+        "public/tool-help.js",
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:chef-tools",
+      "command": [
+        "node",
+        "scripts/browser-chef-tools.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools/index.js",
+        "public/chef-tools/source-preview.js",
+        "public/chef-tools/task-view.js",
+        "scripts/browser-chef-tools.mjs",
+        "scripts/browser-chef-worker.mjs"
+      ]
+    },
+    {
+      "id": "browser:chef-categories",
+      "command": [
+        "node",
+        "scripts/browser-chef-categories.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools/index.js",
+        "public/chef-tools/source-preview.js",
+        "public/chef-tools/task-view.js"
+      ]
+    },
+    {
+      "id": "browser:coderunner",
+      "command": [
+        "node",
+        "scripts/browser-coderunner.mjs"
+      ],
+      "reasons": [
+        "public/coderunner/ui.js",
+        "scripts/browser-coderunner.mjs"
+      ]
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "command": [
+        "node",
+        "scripts/browser-handoff-feedback.mjs"
+      ],
+      "reasons": [
+        "public/handoff/button.js",
+        "public/handoff/dialog.js",
+        "public/handoff/model.js",
+        "scripts/browser-handoff-feedback.mjs"
+      ]
+    },
+    {
+      "id": "browser:image-loading",
+      "command": [
+        "node",
+        "scripts/browser-image-loading.mjs"
+      ],
+      "reasons": [
+        "public/image-tools.js"
+      ]
+    },
+    {
+      "id": "browser:metadata",
+      "command": [
+        "node",
+        "scripts/browser-metadata.mjs"
+      ],
+      "reasons": [
+        "public/image-tools.js"
+      ]
+    },
+    {
+      "id": "browser:round-one",
+      "command": [
+        "node",
+        "scripts/browser-round-one.mjs"
+      ],
+      "reasons": [
+        "public/round1/analysis.js",
+        "scripts/browser-round-one.mjs"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 100
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 116
+    },
+    {
+      "id": "unit:tests/handoff.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 161
+    },
+    {
+      "id": "unit:tests/feedback.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 286
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 61421
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 9084
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "exit_code": 0,
+      "duration_ms": 3807
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 127
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 1283
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "exit_code": 0,
+      "duration_ms": 13036
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 53964
+    },
+    {
+      "id": "browser:chef-tools",
+      "exit_code": 0,
+      "duration_ms": 31372
+    },
+    {
+      "id": "browser:chef-categories",
+      "exit_code": 0,
+      "duration_ms": 17031
+    },
+    {
+      "id": "browser:coderunner",
+      "exit_code": 0,
+      "duration_ms": 24033
+    },
+    {
+      "id": "browser:image-loading",
+      "exit_code": 0,
+      "duration_ms": 3769
+    },
+    {
+      "id": "browser:metadata",
+      "exit_code": 0,
+      "duration_ms": 1551
+    },
+    {
+      "id": "browser:round-one",
+      "exit_code": 0,
+      "duration_ms": 15012
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 6799
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 17753
+    }
+  ],
+  "attempts": [
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 117
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 1196
+    },
+    {
+      "id": "browser:chef-tools",
+      "exit_code": 1,
+      "duration_ms": 13689
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "exit_code": 1,
+      "duration_ms": 2452
+    },
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 88
+    }
+  ],
+  "completed_at": "2026-10-15T08:03:39.727Z"
+}

@@ -1,0 +1,333 @@
+{
+  "reviewDate": "2026-10-13",
+  "file": "/workspace/arg-tool/public/knowledge/articles/text-formats.js",
+  "scopeArticles": 119,
+  "scopeGroups": {
+    "cipher-analysis": 7,
+    "text-language": 69,
+    "formats": 43
+  },
+  "reviewMode": "Independent read-only; no project files modified. Existing content author/root owns fixes.",
+  "structuralChecks": {
+    "articleIdsUnique": true,
+    "sectionSourcesValid": true,
+    "localSourcePathsExist": true
+  },
+  "findings": [
+    {
+      "articleId": "function-pair:AMF%20Encode",
+      "severity": "high",
+      "initialProblem": "AMF3 true 的规范字节03被当作工具实例，但实际上游Value.any(true)失败。",
+      "observed": "AMF3 true: Cannot set property value of #<fc> which has only a getter；AMF0 true: 01 01 成功；AMF3 {\"a\":1}: 0a 13 01 03 61 05 3f f0 00 00 00 00 00 00 成功。",
+      "rootCause": "规范支持的类型与固定版本AMF库支持的具体输入不一致。",
+      "fix": "保留规范AMF3布尔标记知识，但标签明确格式演算；更好再给可执行AMF0 true→01 01 或已验证AMF3对象例子。不得靠变更内核掩盖文献与实现差异。",
+      "currentReview": "文章已把该例子标明AMF3规范/格式演算；不再直接声称真实Worker输出03。"
+    },
+    {
+      "articleId": "function-op:Series%20chart",
+      "severity": "high",
+      "initialProblem": "一列数值例子无法被实际系列图解析；正文未明确三字段输入和分类X轴。",
+      "observed": "1\n3\n2\n4 报 Each row must have length 3；s t1 1\ns t2 3\ns t3 2\ns t4 4 生成SVG。",
+      "rootCause": "getSeriesValues 强制 [系列名,X标签,Y数值]；同系列同X后值覆盖；scalePoint按X首次出现顺序等距排布。",
+      "fix": "用三字段实测例子，具体解释列角色、重复X覆盖、横轴并非按数值/时间比例。加 Charts.mjs 与 SeriesChart.mjs 原始实现近旁来源。",
+      "currentReview": "已改并准确描述三字段、分类轴及覆盖规则。"
+    },
+    {
+      "articleId": "function-op:Chi%20Square",
+      "severity": "high",
+      "initialProblem": "用标准Pearson全部256类公式解释固定内核只计非零类的分数。",
+      "observed": "AAB 原内核=420.69010416666663；完整256类均匀χ²=423.6666666666667。",
+      "rootCause": "ChiSquare.mjs 使用 if(distArray[i]>0) 跳过零观测类，它们原本仍有E=N/256>0并应产生贡献。",
+      "fix": "区分规范公式和固定版本实现分数，加两数对照、短样本适用性和实际源码引用。",
+      "currentReview": "已改，明确标准与固定v11.5.0差异，未擅改原内核。"
+    },
+    {
+      "articleId": "function-op:Add%20line%20numbers",
+      "severity": "medium",
+      "initialProblem": "示例用冒号分隔且Offset起点不准确。",
+      "observed": "Offset=0 输出 1 alpha\n2 beta；Offset=1 输出2 alpha\n3 beta。",
+      "rootCause": "编号为行索引+1+Offset，按总行数十进制位宽左补空格，再追加单个空格，无冒号。",
+      "fix": "给真实Offset=0输出，写清编号公式、空行也计数、固定分隔样式。",
+      "currentReview": "已改，示例与固定规则准确。"
+    },
+    {
+      "articleId": "function-op:HTML%20To%20Text",
+      "severity": "high",
+      "initialProblem": "误写从HTML提取正文，示例<strong>KEY</strong>→KEY不成立。",
+      "observed": "原输入<strong>KEY</strong>输出仍为<strong>KEY</strong>。",
+      "rootCause": "HTMLToText.run直接return input，仅将html Dish输出类型转成string，不解析DOM或删除标签。",
+      "fix": "正文改为HTML源码转普通字符串显示，保留标签。去标签引导到Strip HTML tags，加官方固定源码。",
+      "currentReview": "已改准确，源码保持原样的例子也准确。"
+    },
+    {
+      "articleId": "function-op:P-list%20Viewer",
+      "severity": "high",
+      "initialProblem": "一般plist规范与当前XML正则查看器混淆，暗示binary支持；示例缺plist根。",
+      "observed": "旧<dict>片段输出>\n。合法多行输入<?xml version=\"1.0\"?>\n<plist version=\"1.0\">\n<dict>\n<key>clue</key>\n<string>KEY</string>\n</dict>\n</plist>输出plist => {\n\tclue => \"KEY\"\n}\n/plist\n。",
+      "rootCause": "固定官方ChefWorker的同名run先slice(indexOf(\"<plist\"))，再用regex替换标签并缩进；不是完整XML或binary plist解析器。",
+      "fix": "一般plist可有XML/binary的知识保留，但工具行为明确仅XML文本、须完整根及多行；替换为实测例子。引用本地官方ChefWorker同名run，原源文件路径未确认不得编造。",
+      "currentReview": "root已收到实际成功输出与固定规则；此QA不修改分片，最后检查时尚待root落实。"
+    },
+    {
+      "articleId": "function-op:Reverse",
+      "severity": "medium",
+      "initialProblem": "每个8位单元独立反转的表述容易误读为反转每个字节内部bit。",
+      "observed": "Byte模式输入AB实际输出字节42 41，即BA；每个字节内部的位不改变。",
+      "rootCause": "Byte分支对字节数组调用reverse()，并非Reverse bits操作。",
+      "fix": "改成按八位字节单元的排列倒序，字节内部8位保持原样；字符与行单位分别解释。",
+      "currentReview": "已通知root，最后检查时该句尚待调整。"
+    }
+  ],
+  "sourceReview": [
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/ChiSquare.mjs",
+      "status": "full-code-opened",
+      "facts": "非零类别判断、N/256期望、输出number"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/AMFEncode.mjs",
+      "status": "full-code-opened",
+      "facts": "Value.any(input).serialize()及AMF0/AMF3选择"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/HTMLToText.mjs",
+      "status": "full-code-opened",
+      "facts": "html→string，run直接return input"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/HeatmapChart.mjs",
+      "status": "full-code-opened",
+      "facts": "getScatterValues、h/v分箱、颜色按d.length；X或Y无范围时报错"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/HexDensityChart.mjs",
+      "status": "full-code-opened",
+      "facts": "d3-hexbin、pack/draw radius角色、计数颜色"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/SeriesChart.mjs",
+      "status": "relevant-code-opened",
+      "facts": "getSeriesValues与scalePoint标签X轴"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/lib/Charts.mjs",
+      "status": "full-code-opened",
+      "facts": "getValues恰好字段数、Series三字段与重复标签覆盖"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/AddLineNumbers.mjs",
+      "status": "full-code-opened",
+      "facts": "编号=1+索引+Offset；空格连接；行数位宽"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/Reverse.mjs",
+      "status": "full-code-opened",
+      "facts": "Byte数组reverse、不反转字节内bit；UTF-8字符路径"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/RemoveLineNumbers.mjs",
+      "status": "full-code-opened",
+      "facts": "仅去匹配的编号前缀，冒号后原空格可能保留"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/Wrap.mjs",
+      "status": "full-code-opened",
+      "facts": "固定宽度regex分块，无像素/显示列宽概念"
+    },
+    {
+      "url": "https://support.microsoft.com/zh-cn/office/xml-for-the-uninitiated",
+      "status": "relevant-primary-chinese-page-opened",
+      "facts": "XML结构、标签与格式正确性；不能证明CyberChef会完整解析"
+    },
+    {
+      "url": "https://support.microsoft.com/zh-cn/excel/present-your-data-in-a-scatter-chart-or-a-line-chart",
+      "status": "primary-chinese-page-opened",
+      "facts": "可读中文图表科普；具体Series输入规则需实现来源"
+    },
+    {
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Guides/Syntax/Introduction",
+      "status": "primary-chinese-page-opened",
+      "facts": "CSS规则与声明结构"
+    },
+    {
+      "url": "https://echarts.apache.org/handbook/zh/how-to/chart-types/scatter/basic-scatter/",
+      "status": "primary-chinese-page-opened",
+      "facts": "二维散点；不直接证明heatmap或hexbin分箱机制"
+    },
+    {
+      "url": "https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/PropertyLists/Introduction/Introduction.html",
+      "status": "full-primary-page-opened",
+      "facts": "plist一般类型与表示；不支持当前查看器自动解析binary的断言"
+    },
+    {
+      "url": "/vendor/cyberchef/ChefWorker.js",
+      "status": "installed-official-source-read",
+      "facts": "P-list Viewer的XML正则run；HTML To Text身份转换；Add line numbers固定样式"
+    },
+    {
+      "url": "/vendor/cyberchef/catalogue.json",
+      "status": "read-all-review-scope-operation-metadata",
+      "facts": "groups formats/text-language/cipher-analysis全部操作输入/输出/参数"
+    },
+    {
+      "url": "/hunt-tools.js",
+      "status": "local-wrapper-read",
+      "facts": "五种提取的Unicode码点、去空白、空行排除及索引从1"
+    },
+    {
+      "url": "/hunt-worker.js",
+      "status": "local-wrapper-read",
+      "facts": "单词模式、小写规范化、正则worker、网格限制"
+    },
+    {
+      "url": "/round1/hanzi.js",
+      "status": "local-wrapper-read",
+      "facts": "各汉字查询模式、码前缀/完整匹配、字库选择、简繁转换配置"
+    },
+    {
+      "url": "/round1/analysis-engine.js",
+      "status": "local-wrapper-read",
+      "facts": "IC A-Z与全字符熵单位不同、移位候选排序、有限格式特征"
+    },
+    {
+      "url": "/vendor/hunt/cipher-machine/one-word/one-word.js",
+      "status": "author-source-read",
+      "facts": "onlyContains允许集合而非库存、Wildcard回引、编辑距离、regex"
+    },
+    {
+      "url": "/vendor/hunt/cipher-machine/word-search/wordSearch.js",
+      "status": "author-source-read",
+      "facts": "八方向直线、八相邻DFS、标记已使用格避免重复"
+    }
+  ],
+  "unreadOrUnreachableAttemptedSources": [
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/PListViewer.mjs",
+      "status": "404-or-tool-fetch-error",
+      "note": "仅为寻找真实文件路径；未添加为引用。P-list规则以已安装官方源码核验。"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/PlistViewer.mjs",
+      "status": "404-or-tool-fetch-error",
+      "note": "仅为寻找真实文件路径；未添加为引用。P-list规则以已安装官方源码核验。"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/P-listViewer.mjs",
+      "status": "404-or-tool-fetch-error",
+      "note": "仅为寻找真实文件路径；未添加为引用。P-list规则以已安装官方源码核验。"
+    }
+  ],
+  "articleSourceUrlsNotIndependentlyReread": [
+    "/vendor/hunt/chinese-puzzle/search.js",
+    "/vendor/knowledge/cyberchef/src/core/lib/Charts.mjs",
+    "/vendor/knowledge/cyberchef/src/core/operations/AddLineNumbers.mjs",
+    "/vendor/knowledge/cyberchef/src/core/operations/ChiSquare.mjs",
+    "/vendor/knowledge/cyberchef/src/core/operations/HTMLToText.mjs",
+    "/vendor/knowledge/cyberchef/src/core/operations/SeriesChart.mjs",
+    "/vendor/round1/cnchar/README.md",
+    "https://avro.apache.org/docs/1.11.2/specification/",
+    "https://bsonspec.org/spec.html",
+    "https://catalogimages.wiley.com/images/db/pdf/9780470749821.excerpt.pdf",
+    "https://devblogs.microsoft.com/scripting/how-can-i-encode-scripts-within-an-hta/",
+    "https://developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent",
+    "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Guides/Selectors",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_expressions",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_expressions/Character_classes",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/join",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/ignoreCase",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/Symbol.iterator",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/normalize",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padStart",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/slice",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase",
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Lexical_grammar",
+    "https://developer.mozilla.org/zh-CN/docs/Web/XML/XPath",
+    "https://docs.esprima.org/en/latest/syntactic-analysis.html",
+    "https://docs.jsonata.org/path-operators",
+    "https://github.com/gchq/CyberChef/wiki/Automatic-detection-of-encoded-data-using-CyberChef-Magic",
+    "https://github.com/w33ble/rison-node",
+    "https://goessner.net/articles/JsonPath/",
+    "https://handlebarsjs.com/zh/guide/expressions.html",
+    "https://help.aliyun.com/zh/dts/user-guide/data-formats-of-a-kafka-cluster-1",
+    "https://info.support.huawei.com/hedex/api/pages/EDOC1100210440/AZK0901G/09/resources/dc/dc_fd_eth-basic_0010.html",
+    "https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/shannon.htm",
+    "https://jqlang.org/manual/v1.6/",
+    "https://learn.microsoft.com/zh-cn/dotnet/standard/io/file-path-formats",
+    "https://learn.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences",
+    "https://mirrors.nju.edu.cn/rfc/rfc3339.html",
+    "https://mirrors.nju.edu.cn/rfc/rfc3986.html",
+    "https://mirrors.nju.edu.cn/rfc/rfc4180.html",
+    "https://mirrors.nju.edu.cn/rfc/rfc5322.html",
+    "https://msgpack.org/",
+    "https://opencc.byvoid.com/1.3.0/",
+    "https://ossrs.net/lts/en-us/assets/files/amf0_spec_121207-ac97fd4db9408706cd816b681ca3918c.pdf",
+    "https://ossrs.net/lts/en-us/assets/files/amf3_spec_121207-5ec039969edc9d9b7cd53607ec3253d9.pdf",
+    "https://pinyin-pro.cn/use/pinyin.html",
+    "https://protobuf.dev/programming-guides/encoding/",
+    "https://qspfw.moe.gov.cn/html/hotnews/20210301/17988.html",
+    "https://reference.wolfram.com/language/ref/HammingDistance.html.zh",
+    "https://spec.commonmark.org/0.31.2/",
+    "https://support.microsoft.com/zh-cn/access/access-sql-basic-concepts-vocabulary-and-syntax",
+    "https://unicode.org/reports/tr38/",
+    "https://www.caac.gov.cn/XXGK/XXGK/GFXWJ/201706/P020170601329561444305.pdf",
+    "https://www.cryptomuseum.com/people/friedman/files/NSA_TIOC_1955.pdf",
+    "https://www.elastic.co/docs/extend/kibana/key-concepts/platform-architecture/routing-navigation-and-url",
+    "https://www.itl.nist.gov/div898/handbook/eda/section3/eda35f.htm",
+    "https://www.itu.int/rec/dologin_pub.asp?id=T-REC-X.690-202102-I!!PDF-E&lang=e&type=items",
+    "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201001/t20100115_75673.html",
+    "https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/tnull_45766.html",
+    "https://www.mongodb.com/zh-cn/docs/manual/reference/bson-types/",
+    "https://www.php.net/manual/zh/function.serialize.php",
+    "https://www.php.net/manual/zh/function.unserialize.php",
+    "https://www.rfc-editor.org/rfc/rfc8949.html",
+    "https://www.tup.tsinghua.edu.cn/upload/books/yz/074387-01.pdf",
+    "https://www.unicode.org/faq/char_combmark.html",
+    "https://xuebao.neu.edu.cn/natural/article/html/2019-11-1543.htm",
+    "https://yaml.org/spec/1.2.2/"
+  ],
+  "sourceClaimLimit": "Independent QA does not claim a second full-text reading of every article reference. Author evidence and root mirror audit must cover remaining references; sources not independently reread are listed explicitly.",
+  "sourceSpecificitySuggestions": [
+    {
+      "articleIds": [
+        "function-op:Heatmap%20chart",
+        "function-op:Hex%20Density%20chart"
+      ],
+      "note": "当前ECharts散点资料可支持坐标概念，但不能独立支撑矩形/六边形分箱；推荐补已读的两个固定版本官方操作源码为精确实现旁注。此为引用精度改进，本文机制本身已核对正确。"
+    }
+  ],
+  "workerEvidenceFiles": [
+    "/tmp/knowledge-textformats-qa-worker-output.json",
+    "/tmp/knowledge-textformats-qa-worker-output-2.json",
+    "/tmp/knowledge-textformats-qa-worker-output-3.json"
+  ],
+  "workerEvidenceSummary": {
+    "records": 49,
+    "successfulExecutions": 41,
+    "realErrorExecutions": [
+      {
+        "op": "AMF Encode",
+        "error": "AMF Encode - Cannot set property value of #<fc> which has only a getter"
+      },
+      {
+        "op": "AMF Encode",
+        "error": "AMF Encode - Cannot set property value of #<fc> which has only a getter"
+      },
+      {
+        "op": "Series chart",
+        "error": "Each row must have length 3."
+      }
+    ],
+    "poisonedSessionFollowupExcluded": 5
+  },
+  "chinaReadability": "已核对国内高校RFC镜像与中文官方Microsoft/MDN/Apache页面；原代码外链由root镜像到本地。未测试中国各运营商，不能声称所有远程文献均在全国可打开。"
+}

@@ -1,0 +1,17 @@
+/* IT catalogue composition. Shared factories own controls, colour and motion. */
+.it-page,.it-workspace{display:grid;gap:16px;min-width:0}
+.it-kinds{flex-wrap:wrap}
+.it-catalogue,.it-detail-card{display:grid;gap:12px;align-content:start;min-width:0}
+.it-records{max-height:620px;overflow:auto;scrollbar-gutter:stable}
+.it-record{width:100%}
+.it-record span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.it-example-code{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;overflow:auto}
+.it-detail-card,.it-catalogue{scroll-margin-top:80px}
+.it-detail-card article{overflow-wrap:anywhere;min-width:0}
+.it-detail-card article>h2{margin-block:0 12px}
+.it-detail-card article>h3{margin-block:20px 8px}
+.it-example h4{margin-block:12px 4px}
+.it-detail-card article p{margin-block:8px}
+.it-domain-form{min-width:0}
+.it-domain-form [data-ui=result]{margin-top:12px}
+@media(max-width:699px){.it-records{max-height:420px}}

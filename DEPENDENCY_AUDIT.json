@@ -1,0 +1,382 @@
+{
+  "checked_at": "2026-10-08T10:26:26.236Z",
+  "source": "https://registry.npmjs.org/-/npm/v1/security/advisories/bulk",
+  "scope": "Pinned npm versions in bundled package.json and round2/coderunner/test-tools lockfiles. Does not cover non-npm Rust/C/C++, or all transitive code inside CyberChef.",
+  "packages": {
+    "@esbuild/aix-ppc64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/android-arm": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/android-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/android-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/darwin-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/darwin-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/freebsd-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/freebsd-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-arm": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-ia32": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-loong64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-mips64el": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-ppc64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-riscv64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-s390x": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/linux-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/netbsd-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/netbsd-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/openbsd-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/openbsd-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/openharmony-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/sunos-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/win32-arm64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/win32-ia32": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@esbuild/win32-x64": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "@ffmpeg/core": [
+      "0.12.10"
+    ],
+    "@ffmpeg/ffmpeg": [
+      "0.12.15"
+    ],
+    "@jitl/quickjs-ffi-types": [
+      "0.32.0"
+    ],
+    "@jitl/quickjs-wasmfile-debug-asyncify": [
+      "0.32.0"
+    ],
+    "@jitl/quickjs-wasmfile-debug-sync": [
+      "0.32.0"
+    ],
+    "@jitl/quickjs-wasmfile-release-asyncify": [
+      "0.32.0"
+    ],
+    "@jitl/quickjs-wasmfile-release-sync": [
+      "0.32.0"
+    ],
+    "@susisu/whitespace-js": [
+      "0.0.8"
+    ],
+    "@tonaljs/abc-notation": [
+      "4.9.2"
+    ],
+    "@tonaljs/array": [
+      "4.8.5"
+    ],
+    "@tonaljs/chord": [
+      "6.2.0"
+    ],
+    "@tonaljs/chord-detect": [
+      "4.9.2"
+    ],
+    "@tonaljs/chord-type": [
+      "5.2.0"
+    ],
+    "@tonaljs/collection": [
+      "4.9.0"
+    ],
+    "@tonaljs/core": [
+      "5.0.3"
+    ],
+    "@tonaljs/duration-value": [
+      "4.9.0"
+    ],
+    "@tonaljs/interval": [
+      "5.1.0"
+    ],
+    "@tonaljs/key": [
+      "4.11.3"
+    ],
+    "@tonaljs/midi": [
+      "4.10.3"
+    ],
+    "@tonaljs/mode": [
+      "4.9.3"
+    ],
+    "@tonaljs/note": [
+      "4.12.2"
+    ],
+    "@tonaljs/pcset": [
+      "4.10.2"
+    ],
+    "@tonaljs/pitch": [
+      "5.0.2"
+    ],
+    "@tonaljs/pitch-distance": [
+      "5.0.6"
+    ],
+    "@tonaljs/pitch-interval": [
+      "6.1.1"
+    ],
+    "@tonaljs/pitch-note": [
+      "6.1.1"
+    ],
+    "@tonaljs/progression": [
+      "4.9.3"
+    ],
+    "@tonaljs/range": [
+      "4.9.3"
+    ],
+    "@tonaljs/rhythm-pattern": [
+      "1.0.0"
+    ],
+    "@tonaljs/roman-numeral": [
+      "4.9.2"
+    ],
+    "@tonaljs/scale": [
+      "4.13.5"
+    ],
+    "@tonaljs/scale-type": [
+      "4.9.3"
+    ],
+    "@tonaljs/time-signature": [
+      "4.10.0"
+    ],
+    "@tonaljs/voice-leading": [
+      "5.1.3"
+    ],
+    "@tonaljs/voicing": [
+      "5.1.4"
+    ],
+    "@tonaljs/voicing-dictionary": [
+      "5.1.4"
+    ],
+    "@tonejs/midi": [
+      "2.0.28"
+    ],
+    "@types/emscripten": [
+      "1.39.10",
+      "1.41.6"
+    ],
+    "array-flatten": [
+      "3.0.0"
+    ],
+    "chroma-js": [
+      "3.2.0"
+    ],
+    "cnchar": [
+      "3.2.6"
+    ],
+    "cnchar-code": [
+      "3.2.6"
+    ],
+    "cnchar-idiom": [
+      "3.2.6"
+    ],
+    "cnchar-input": [
+      "3.2.6"
+    ],
+    "cnchar-order": [
+      "3.2.6"
+    ],
+    "cnchar-radical": [
+      "3.2.6"
+    ],
+    "cnchar-trad": [
+      "3.2.6"
+    ],
+    "cnchar-xhy": [
+      "3.2.6"
+    ],
+    "co": [
+      "4.6.0"
+    ],
+    "commander": [
+      "2.20.3"
+    ],
+    "cubejs": [
+      "1.3.2"
+    ],
+    "cubing": [
+      "0.63.8"
+    ],
+    "esbuild": [
+      "0.25.12",
+      "0.28.2"
+    ],
+    "fflate": [
+      "0.8.3"
+    ],
+    "fft.js": [
+      "4.0.4"
+    ],
+    "fsevents": [
+      "2.3.2"
+    ],
+    "loquat": [
+      "2.0.0"
+    ],
+    "loquat-char": [
+      "2.0.1"
+    ],
+    "loquat-combinators": [
+      "2.0.0"
+    ],
+    "loquat-core": [
+      "2.0.2"
+    ],
+    "loquat-expr": [
+      "2.0.0"
+    ],
+    "loquat-monad": [
+      "2.0.0"
+    ],
+    "loquat-prim": [
+      "2.0.1"
+    ],
+    "loquat-qo": [
+      "2.0.0"
+    ],
+    "loquat-token": [
+      "2.0.0"
+    ],
+    "malbolge-vm": [
+      "1.0.4"
+    ],
+    "mgrs": [
+      "1.0.0",
+      "2.2.0"
+    ],
+    "midi-file": [
+      "1.2.4"
+    ],
+    "ngeohash": [
+      "0.6.4"
+    ],
+    "opencc-js": [
+      "1.4.2"
+    ],
+    "pinyin-pro": [
+      "3.29.4"
+    ],
+    "pitchy": [
+      "4.1.0"
+    ],
+    "pixelmatch": [
+      "8.0.0"
+    ],
+    "playwright": [
+      "1.62.1"
+    ],
+    "playwright-core": [
+      "1.62.1"
+    ],
+    "pngjs": [
+      "7.0.0"
+    ],
+    "proj4": [
+      "2.22.0"
+    ],
+    "pyodide": [
+      "0.29.3"
+    ],
+    "quickjs-emscripten": [
+      "0.32.0"
+    ],
+    "quickjs-emscripten-core": [
+      "0.32.0"
+    ],
+    "random-uint-below": [
+      "3.3.0"
+    ],
+    "sql.js": [
+      "1.14.2"
+    ],
+    "three": [
+      "0.170.0"
+    ],
+    "tonal": [
+      "6.5.0"
+    ],
+    "tone": [
+      "15.1.22"
+    ],
+    "wasmoon": [
+      "1.16.0"
+    ],
+    "wkt-parser": [
+      "1.5.6"
+    ],
+    "ws": [
+      "8.22.0"
+    ],
+    "zxing-wasm": [
+      "2.2.4"
+    ]
+  },
+  "advisories": {}
+}

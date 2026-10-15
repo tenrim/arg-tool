@@ -1,0 +1,281 @@
+{
+  "verified_on": "2026-10-14",
+  "scope": "Task-only routing and removal of aggregate tool UI",
+  "passed": true,
+  "selected_checks": 21,
+  "initial_run": {
+    "results": [
+      {
+        "id": "docs",
+        "exit_code": 0,
+        "duration_ms": 93
+      },
+      {
+        "id": "architecture",
+        "exit_code": 0,
+        "duration_ms": 126
+      },
+      {
+        "id": "ui-policy",
+        "exit_code": 0,
+        "duration_ms": 132
+      },
+      {
+        "id": "syntax",
+        "exit_code": 0,
+        "duration_ms": 1154
+      },
+      {
+        "id": "unit:tests/testing-policy.test.mjs",
+        "exit_code": 0,
+        "duration_ms": 1171
+      },
+      {
+        "id": "unit:tests/architecture.test.mjs",
+        "exit_code": 0,
+        "duration_ms": 219
+      },
+      {
+        "id": "unit:tests/task-selection.test.mjs",
+        "exit_code": 0,
+        "duration_ms": 219
+      },
+      {
+        "id": "browser:workspace",
+        "exit_code": 0,
+        "duration_ms": 63557
+      },
+      {
+        "id": "browser:sidebar-routing",
+        "exit_code": 0,
+        "duration_ms": 10563
+      },
+      {
+        "id": "browser:task-lifecycle",
+        "exit_code": 0,
+        "duration_ms": 4102
+      },
+      {
+        "id": "browser:capabilities",
+        "exit_code": 1,
+        "duration_ms": 42760
+      }
+    ],
+    "passed": false
+  },
+  "completion": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 93
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 126
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 132
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 1171
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 219
+    },
+    {
+      "id": "unit:tests/task-selection.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 219
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 63557
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 10563
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "exit_code": 0,
+      "duration_ms": 4102
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 1298
+    },
+    {
+      "id": "browser:capabilities",
+      "exit_code": 0,
+      "duration_ms": 4980,
+      "focused": "media adapters|no extra pages"
+    },
+    {
+      "id": "browser:capability-resilience",
+      "exit_code": 0,
+      "duration_ms": 11835
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 46763
+    },
+    {
+      "id": "browser:chef-tools",
+      "exit_code": 0,
+      "duration_ms": 35801
+    },
+    {
+      "id": "browser:chef-categories",
+      "exit_code": 0,
+      "duration_ms": 17747
+    },
+    {
+      "id": "browser:responsive-smoke",
+      "exit_code": 0,
+      "duration_ms": 6294
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 6372
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 17126
+    },
+    {
+      "id": "browser:knowledge-pairs",
+      "exit_code": 0,
+      "duration_ms": 82120
+    },
+    {
+      "id": "browser:privacy",
+      "exit_code": 0,
+      "duration_ms": 8270
+    },
+    {
+      "id": "browser:release-layout",
+      "exit_code": 0,
+      "duration_ms": 66504
+    }
+  ],
+  "focused_followups": [
+    {
+      "suite": "capabilities",
+      "passed": true,
+      "scope": "Media adapters, task-only favorites/recents/page preferences at 390/1440px in normal/reduced motion; original file bytes recomputed after stale-result invalidation."
+    },
+    {
+      "suite": "ui-layout",
+      "passed": true,
+      "scope": "505 schemas / 1386 controls at four widths passed first; subsequent focused run covers workspace, real conversions, Braille, responsive controls and help."
+    },
+    {
+      "suite": "responsive-smoke",
+      "passed": true,
+      "scope": "Canonical image tasks; all toolbar controls must actually scroll into viewport, no document overflow."
+    },
+    {
+      "suite": "ui-motion",
+      "passed": true,
+      "scope": "Canonical route/task identity plus all existing shared motion behavior."
+    }
+  ],
+  "not_run": [
+    "verify:all",
+    "dist build",
+    "deployment"
+  ],
+  "files": [
+    "AGENTS.md",
+    "VERIFICATION.md",
+    "docs/CAPABILITY_ARCHITECTURE.md",
+    "docs/task-workspace-verification.json",
+    "public/app.js",
+    "public/capabilities/native-workspaces.js",
+    "public/capabilities/task-selection.js",
+    "public/chef-tools.css",
+    "public/chef-tools/index.js",
+    "public/chef-tools/task-view.js",
+    "public/desktop-layout.css",
+    "public/ui/components.css",
+    "public/workspace.css",
+    "scripts/browser-chef-categories.mjs",
+    "scripts/browser-chef-tools.mjs",
+    "scripts/browser-help-placement.mjs",
+    "scripts/browser-knowledge-pairs.mjs",
+    "scripts/browser-navigation.mjs",
+    "scripts/browser-privacy.mjs",
+    "scripts/browser-release-layout.mjs",
+    "scripts/browser-responsive-smoke.mjs",
+    "scripts/browser-ui-layout.mjs",
+    "scripts/browser-ui-motion.mjs",
+    "scripts/browser-workspace.mjs",
+    "scripts/test-map.mjs",
+    "tests/browser-capabilities.mjs",
+    "tests/task-selection.test.mjs"
+  ],
+  "final_static": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 94
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 131
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 157
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 1165
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 218
+    }
+  ],
+  "final_syntax": {
+    "passed": true,
+    "files": [
+      "public/app.js",
+      "public/capabilities/native-workspaces.js",
+      "public/capabilities/task-selection.js",
+      "public/chef-tools/index.js",
+      "public/chef-tools/task-view.js",
+      "scripts/browser-chef-categories.mjs",
+      "scripts/browser-chef-tools.mjs",
+      "scripts/browser-help-placement.mjs",
+      "scripts/browser-knowledge-pairs.mjs",
+      "scripts/browser-navigation.mjs",
+      "scripts/browser-privacy.mjs",
+      "scripts/browser-release-layout.mjs",
+      "scripts/browser-responsive-smoke.mjs",
+      "scripts/browser-ui-layout.mjs",
+      "scripts/browser-ui-motion.mjs",
+      "scripts/browser-workspace.mjs",
+      "scripts/test-map.mjs",
+      "tests/browser-capabilities.mjs",
+      "tests/task-selection.test.mjs"
+    ]
+  }
+}

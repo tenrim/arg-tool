@@ -1,0 +1,19 @@
+.go-layout {margin-block-start:1rem;align-items:start}
+.go-board-host {max-inline-size:720px;margin:1rem auto;min-inline-size:0}
+.go-board {display:block;inline-size:100%;block-size:auto;max-block-size:76vh}
+.go-comment-text {white-space:pre-wrap;overflow-wrap:anywhere}
+.marine-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:.5rem}
+.marine-choice {display:grid;justify-items:center;gap:.35rem}
+.marine-flag {inline-size:64px;block-size:52px;object-fit:contain}
+.marine-sequence {display:flex;flex-wrap:wrap;gap:.75rem;align-items:end}
+.marine-sequence figure {margin:0;display:grid;justify-items:center}
+.marine-sequence img {inline-size:72px;block-size:64px;object-fit:contain}
+.currency-links {display:flex;flex-wrap:wrap;gap:.5rem;margin-block-start:.75rem}
+.sky-chart {display:block;inline-size:100%;block-size:auto;background:#080e1c;border-radius:8px;touch-action:pan-y}
+.sky-gridline {stroke:#536076;stroke-width:1;fill:none;opacity:.45}
+.sky-gridlabel {fill:#94a3b8;font-size:13px}
+.sky-point {fill:#a9d7e3;cursor:pointer}
+.sky-point.is-selected {fill:#ffc04d;stroke:#ffc04d;stroke-width:2}
+.sky-chart-frame {position:relative;min-inline-size:0}
+.sky-stat {margin-block:.75rem;overflow-wrap:anywhere}
+@media(max-width:600px){.marine-grid{grid-template-columns:repeat(auto-fit,minmax(68px,1fr))}.marine-flag{inline-size:52px;block-size:44px}.sky-gridlabel{font-size:16px}}

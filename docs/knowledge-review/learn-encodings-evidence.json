@@ -1,0 +1,1116 @@
+{
+  "date": "2026-10-13",
+  "scope": "characters / encoding / communication",
+  "articleCount": 55,
+  "capabilityCount": 55,
+  "reviewedSources": [
+    {
+      "id": "ascii",
+      "title": "ASCIIEncoding：7 位字符范围",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.text.asciiencoding",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "注解：U+0000–U+007F",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "ASCII 是 7 位，U+0000–U+007F，超范围会丢失或回退。"
+      ],
+      "referencedBy": [
+        "function-native:ascii",
+        "function-pair:To%20Decimal"
+      ]
+    },
+    {
+      "id": "foundation",
+      "title": "ASCII／码点／字节输入的校验与操作映射",
+      "publisher": "迷雾工具箱",
+      "url": "/basics/foundation.js",
+      "language": "zh-CN",
+      "kind": "implementation",
+      "locator": "foundationRecipe、validateCodes",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "foundationRecipe、validateCodes"
+      ],
+      "referencedBy": [
+        "function-native:ascii",
+        "function-native:utf8",
+        "function-native:radix",
+        "function-native:a1z26",
+        "function-native:codepoint",
+        "function-native:escape-hex",
+        "function-native:escape-unicode"
+      ]
+    },
+    {
+      "id": "utf8",
+      "title": "RFC 3629：UTF-8",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc3629.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 3 节：UTF-8 定义",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "首/续字节模板、1–4 字节、代理区禁止独立编码。"
+      ],
+      "referencedBy": [
+        "function-native:utf8"
+      ]
+    },
+    {
+      "id": "radix",
+      "title": "parseInt：基数与数字字符",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseInt",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "参数 radix、描述",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "参数 radix、描述"
+      ],
+      "referencedBy": [
+        "function-native:radix",
+        "function-pair:To%20Octal",
+        "function-pair:To%20Binary",
+        "function-pair:To%20Base"
+      ]
+    },
+    {
+      "id": "chef",
+      "title": "CyberChef 11.5.0 官方操作定义与参数",
+      "publisher": "GCHQ（Apache-2.0）",
+      "url": "/vendor/cyberchef/catalogue.json",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "对应 operation 的 description、args、inputType、outputType",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "对应 operation 的 description、args、inputType、outputType"
+      ],
+      "referencedBy": [
+        "function-native:a1z26",
+        "function-pair:To%20Octal",
+        "function-pair:To%20Binary",
+        "function-pair:To%20Float",
+        "function-op:Text%20Encoding%20Brute%20Force",
+        "function-pair:To%20Base",
+        "function-pair:To%20Decimal",
+        "function-pair:To%20Hex",
+        "function-pair:To%20Hex%20Content",
+        "function-pair:To%20Hexdump",
+        "function-op:Text-Integer%20Conversion",
+        "function-op:Escape%20Smart%20Characters",
+        "function-pair:Encode%20text",
+        "function-pair:To%20Charcode",
+        "function-pair:To%20BCD",
+        "function-pair:To%20Base64",
+        "function-native:escape-url",
+        "function-native:escape-html",
+        "function-pair:To%20COBS",
+        "function-native:escape-hex",
+        "function-native:escape-unicode",
+        "function-pair:Encode%20NetBIOS%20Name",
+        "function-pair:To%20Quoted%20Printable",
+        "function-op:Caret%2FM-decode",
+        "function-op:Show%20Base64%20offsets",
+        "function-pair:To%20Base32",
+        "function-pair:To%20Base45",
+        "function-pair:To%20Base58",
+        "function-pair:To%20Base62",
+        "function-pair:To%20Base85",
+        "function-pair:To%20Base92",
+        "function-pair:To%20Bech32",
+        "function-pair:Citrix%20CTX1%20Encode",
+        "function-op:MIME%20Decoding",
+        "function-pair:To%20Modhex",
+        "function-pair:To%20Punycode",
+        "function-pair:VarInt%20Encode",
+        "function-native:morse",
+        "function-pair:Cetacean%20Cipher%20Encode",
+        "function-pair:To%20Braille",
+        "function-pair:To%20Morse%20Code"
+      ]
+    },
+    {
+      "id": "bidi",
+      "title": "Unicode 双向算法 UAX #9",
+      "publisher": "Unicode 联盟",
+      "url": "https://www.unicode.org/reports/tr9/",
+      "language": "en",
+      "kind": "standard",
+      "locator": "Explicit Directional Embeddings、Overrides、Isolates",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "Explicit Directional Embeddings、Overrides、Isolates"
+      ],
+      "referencedBy": [
+        "function-native:invisible",
+        "function-native:invisible-clean"
+      ]
+    },
+    {
+      "id": "invisibles",
+      "title": "隐藏字符类别、扫描及清理实现",
+      "publisher": "invisibles 项目（MIT）",
+      "url": "/vendor/basics/invisibles.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "classify、scan、cleanWith",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "classify、scan、cleanWith"
+      ],
+      "referencedBy": [
+        "function-native:invisible",
+        "function-native:invisible-clean"
+      ]
+    },
+    {
+      "id": "invisible-wrapper",
+      "title": "隐藏字符的选择性清理与 Emoji 保留",
+      "publisher": "迷雾工具箱",
+      "url": "/basics/core.js",
+      "language": "zh-CN",
+      "kind": "implementation",
+      "locator": "inspect、emojiPreserved",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "inspect、emojiPreserved"
+      ],
+      "referencedBy": [
+        "function-native:invisible",
+        "function-native:roman",
+        "function-native:invisible-clean"
+      ]
+    },
+    {
+      "id": "roman",
+      "title": "从罗马数字的书写错误说起",
+      "publisher": "北京师范大学出版科学研究院",
+      "url": "https://pub.bnu.edu.cn/jzyg1/92686.html",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "基本符号、右加左减",
+      "reviewStatus": "search-excerpt-and-page",
+      "reviewNote": "北师大官网检索摘要给出七个符号及左右加减限制；页面本体可开，正文部分为图片。",
+      "supportedFacts": [
+        "基本符号、右加左减"
+      ],
+      "referencedBy": [
+        "function-native:roman"
+      ]
+    },
+    {
+      "id": "romanimpl",
+      "title": "romanice 数值转换实现",
+      "publisher": "romanice 项目（MIT）",
+      "url": "/vendor/basics/roman-converter.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "toRoman、fromRoman",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "toRoman、fromRoman"
+      ],
+      "referencedBy": [
+        "function-native:roman"
+      ]
+    },
+    {
+      "id": "unicode",
+      "title": "Unicode 指南",
+      "publisher": "Python 软件基金会",
+      "url": "https://docs.python.org/zh-cn/3/howto/unicode.html",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "定义、编码",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "定义、编码"
+      ],
+      "referencedBy": [
+        "function-native:codepoint",
+        "function-op:Text%20Encoding%20Brute%20Force",
+        "function-op:Escape%20Smart%20Characters",
+        "function-pair:Encode%20text",
+        "function-pair:To%20Charcode",
+        "function-native:escape-unicode"
+      ]
+    },
+    {
+      "id": "float",
+      "title": "struct：二进制数值格式与字节序",
+      "publisher": "Python 软件基金会",
+      "url": "https://docs.python.org/zh-cn/3/library/struct.html",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "字节顺序、格式字符 f/d",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "字节顺序、格式字符 f/d"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Float",
+        "function-op:Text-Integer%20Conversion"
+      ]
+    },
+    {
+      "id": "float-impl",
+      "title": "ToFloat 的字节到数值转换",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/ToFloat.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run：ieee754.read、4/8 字节与有效位长度",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "run：ieee754.read、4/8 字节与有效位长度"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Float"
+      ]
+    },
+    {
+      "id": "base",
+      "title": "RFC 4648：Base16、Base32、Base64",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4648.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 4–8 节及第 10 节测试向量",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "Base64 六位分组及尾填充、Base32 五位分组、Base16 四位、RFC 测试向量。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Hex",
+        "function-pair:To%20Base64",
+        "function-op:Show%20Base64%20offsets",
+        "function-pair:To%20Base32"
+      ]
+    },
+    {
+      "id": "snort",
+      "title": "Snort 3 Rule Writing Guide：content",
+      "publisher": "Cisco Talos／Snort 官方文档",
+      "url": "https://docs.snort.org/rules/options/payload/content",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "ASCII 与 |HEX| 混合内容",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "ASCII 与 |HEX| 混合内容"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Hex%20Content"
+      ]
+    },
+    {
+      "id": "hexdump",
+      "title": "hexdump 命令手册",
+      "publisher": "Oracle Solaris 官方手册",
+      "url": "https://docs.oracle.com/cd/E75432_01/html/E71066/hexdump-1.html",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "-C：偏移、十六进制、ASCII",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "-C：偏移、十六进制、ASCII"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Hexdump"
+      ]
+    },
+    {
+      "id": "bcd",
+      "title": "SN74LS47：BCD 到七段显示译码器",
+      "publisher": "德州仪器 TI 中国官网",
+      "url": "https://www.ti.com.cn/product/zh-cn/SN74LS47",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "BCD 输入、0–9 数字显示及数据表",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "BCD 输入、0–9 数字显示及数据表"
+      ],
+      "referencedBy": [
+        "function-pair:To%20BCD",
+        "function-native:seven-segment"
+      ]
+    },
+    {
+      "id": "base64zh",
+      "title": "Base64：6 位分组和 Unicode 文本",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Base64",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "编码后大小增加、Unicode 问题",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "编码后大小增加、Unicode 问题"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base64"
+      ]
+    },
+    {
+      "id": "sls",
+      "title": "编码解码函数的语法规则",
+      "publisher": "阿里云日志服务",
+      "url": "https://help.aliyun.com/zh/sls/encoding-and-decoding-functions",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "base64、url、html、hex 函数",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "base64、url、html、hex 函数"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base64",
+        "function-native:escape-html"
+      ]
+    },
+    {
+      "id": "url",
+      "title": "RFC 3986：URI 百分号编码",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc3986.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 2.1、2.2、2.3 节",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "百分号编码、保留/非保留字符、编码层级。"
+      ],
+      "referencedBy": [
+        "function-native:escape-url"
+      ]
+    },
+    {
+      "id": "urlzh",
+      "title": "百分号编码",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Percent-encoding",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "百分号和十六进制字节",
+      "reviewStatus": "primary-search-excerpt-and-page",
+      "reviewNote": "官方中文定义 % 后两个十六进制数；另以国内 RFC 3986 镜像支持完整规则。",
+      "supportedFacts": [
+        "百分号和十六进制字节"
+      ],
+      "referencedBy": [
+        "function-native:escape-url"
+      ]
+    },
+    {
+      "id": "html",
+      "title": "HTML 字符引用（实体）",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Entity",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "命名与数字字符引用",
+      "reviewStatus": "primary-search-excerpt-and-page",
+      "reviewNote": "官方中文实体定义和保留字符的使用；正文两种数值形式以语言参考补充。",
+      "supportedFacts": [
+        "命名与数字字符引用"
+      ],
+      "referencedBy": [
+        "function-native:escape-html"
+      ]
+    },
+    {
+      "id": "cobs",
+      "title": "Consistent Overhead Byte Stuffing",
+      "publisher": "Stuart Cheshire、Mary Baker",
+      "url": "https://www.stuartcheshire.org/papers/COBSforToN/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "COBS 算法、编码块与 254 字节上限",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "COBS 算法、编码块与 254 字节上限"
+      ],
+      "referencedBy": [
+        "function-pair:To%20COBS"
+      ]
+    },
+    {
+      "id": "escape",
+      "title": "JavaScript 词法语法",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Lexical_grammar",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "字符串字面量、转义序列",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "字符串字面量、转义序列"
+      ],
+      "referencedBy": [
+        "function-native:escape-hex",
+        "function-native:escape-unicode"
+      ]
+    },
+    {
+      "id": "netbios",
+      "title": "RFC 1001：NetBIOS 名称表示",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1001.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 14.1 节 FIRST LEVEL ENCODING",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "14.1 每个半字节加 A，16 字节变 32 字符 A–P。"
+      ],
+      "referencedBy": [
+        "function-pair:Encode%20NetBIOS%20Name"
+      ]
+    },
+    {
+      "id": "qp",
+      "title": "RFC 2045：MIME 正文传输编码",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc2045.txt",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 6.7 节 Quoted-Printable",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "6.7 Quoted-Printable =HH、行长 76、软换行。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Quoted%20Printable"
+      ]
+    },
+    {
+      "id": "cat",
+      "title": "cat 的 ^ 与 M- 可视表示",
+      "publisher": "GNU Coreutils 官方手册",
+      "url": "https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "-v / --show-nonprinting",
+      "reviewStatus": "search-excerpt",
+      "reviewNote": "官网搜索摘要读到 -v 使用 ^ 和 M-；open 返回工具抓取错误，未声称读到全文。",
+      "supportedFacts": [
+        "-v / --show-nonprinting"
+      ],
+      "referencedBy": [
+        "function-op:Caret%2FM-decode"
+      ]
+    },
+    {
+      "id": "base45",
+      "title": "RFC 9285：Base45 Data Encoding",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc9285.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 4 节规则、第 4.3 节例子",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "n=256a+b=c+45d+2025e；AB→BB8；尾单字节、空格合法。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base45"
+      ]
+    },
+    {
+      "id": "base58-impl",
+      "title": "ToBase58：数位转换与前导零",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/ToBase58.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run：zeroPrefix、基数除法与字母表",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "固定版本全字节除以58，zeroPrefix 用首字符恢复前导零。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base58"
+      ]
+    },
+    {
+      "id": "base62impl",
+      "title": "ToBase62 的大端整数处理",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/ToBase62.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run：toHexFast、BigNumber、toString(62)",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "固定版本整个字节串转大端大整数，默认 0–9A–Za–z 字母表，前导零丢失。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base62"
+      ]
+    },
+    {
+      "id": "base85",
+      "title": "Base85 的字母表、分组与变体",
+      "publisher": "Python 软件基金会",
+      "url": "https://docs.python.org/zh-cn/3/library/base64.html",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "Base85 编码格式、a85encode、b85encode、z85encode",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "Base85 编码格式、a85encode、b85encode、z85encode"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base85"
+      ]
+    },
+    {
+      "id": "base92",
+      "title": "Base92 原作者的编码设计",
+      "publisher": "Nathan Hwang（thenoviceoof）",
+      "url": "https://thenoviceoof.com/blog/projects/base92/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "13 位分组与 91 字符字母表",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "13 位分组与 91 字符字母表"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base92"
+      ]
+    },
+    {
+      "id": "base92impl",
+      "title": "ToBase92：13 位分组及尾组规则",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/ToBase92.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "固定版本 13 位／91 进制数位／尾组处理；Base92 lib 数据表 !、#–_、a–}。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base92"
+      ]
+    },
+    {
+      "id": "base92alphabet",
+      "title": "Base92 的固定数据字符表",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/lib/Base92.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "base92Chr、base92Ord",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "base92Chr、base92Ord"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Base92"
+      ]
+    },
+    {
+      "id": "bech32",
+      "title": "BIP 173：Bech32 地址格式",
+      "publisher": "Pieter Wuille、Greg Maxwell／Bitcoin.org 文献镜像",
+      "url": "https://bitcoin.org/bip/173/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Bech32、checksum、test vectors",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "HRP、最后分隔符 1、五位数据、六字校验、A12UEL5L 通用向量。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Bech32"
+      ]
+    },
+    {
+      "id": "bech32m",
+      "title": "BIP 350：Bech32m format for v1+ witness addresses",
+      "publisher": "Pieter Wuille／Bitcoin.org 文献镜像",
+      "url": "https://bitcoin.org/bip/350/",
+      "language": "en",
+      "kind": "author-spec",
+      "locator": "Bech32m 常数、第 1–16 版 witness 地址",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "Bech32m 校验常数 0x2bc830a3，v0 Bech32、v1–16 Bech32m。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Bech32"
+      ]
+    },
+    {
+      "id": "ctx1",
+      "title": "CitrixCTX1Encode 的实现规则",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/CitrixCTX1Encode.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run：UTF-16LE、链式 XOR、A–P 映射",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "固定版本 UTF-16LE＋0xA5＋上一结果链式 XOR、高低半字节 A–P。"
+      ],
+      "referencedBy": [
+        "function-pair:Citrix%20CTX1%20Encode"
+      ]
+    },
+    {
+      "id": "mime",
+      "title": "RFC 2047：MIME 邮件头编码",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc2047.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 2、4 节 encoded-word、B、Q",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "encoded-word 结构、charset、B/Q、75 字符限制、Q 的下划线。"
+      ],
+      "referencedBy": [
+        "function-op:MIME%20Decoding"
+      ]
+    },
+    {
+      "id": "modhex",
+      "title": "Modified hexadecimal encoding (ModHex)",
+      "publisher": "Yubico 官方 SDK 手册",
+      "url": "https://docs.yubico.com/yesdk/users-manual/application-otp/modhex.html",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "4 位数据与 ModHex 字母表",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "4 位数据与 ModHex 字母表"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Modhex"
+      ]
+    },
+    {
+      "id": "punycode",
+      "title": "RFC 3492：Punycode",
+      "publisher": "IETF／南京大学开源镜像站",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc3492.html",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 3、6、7 节",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "基本字符保留、增量和自适应偏置的 Bootstring/Punycode。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Punycode"
+      ]
+    },
+    {
+      "id": "domain",
+      "title": "域名命名规范",
+      "publisher": "阿里云域名服务",
+      "url": "https://help.aliyun.com/zh/dws/developer-reference/domain-name-validity/",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "中文域名的 Punycode 长度",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "中文域名的 Punycode 长度"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Punycode"
+      ]
+    },
+    {
+      "id": "varint",
+      "title": "Protocol Buffers Encoding",
+      "publisher": "Protocol Buffers 官方文档",
+      "url": "https://protobuf.dev/programming-guides/encoding/",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Base 128 Varints：150 → 96 01",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "Base 128 Varints：150 → 96 01"
+      ],
+      "referencedBy": [
+        "function-pair:VarInt%20Encode"
+      ]
+    },
+    {
+      "id": "morse",
+      "title": "ITU-R M.1677-1：国际摩尔斯电码（中文）",
+      "publisher": "国际电信联盟",
+      "url": "https://www.itu.int/dms_pubrec/itu-r/rec/m/R-REC-M.1677-1-200910-I!!PDF-C.pdf",
+      "language": "zh-CN",
+      "kind": "standard",
+      "locator": "附件 1 第 1、2 节：字符表、间隔和长度",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "中文 ITU-R M.1677-1，点划 1/3；符号/字元/单词间隔 1/3/7。"
+      ],
+      "referencedBy": [
+        "function-native:morse",
+        "function-pair:To%20Morse%20Code"
+      ]
+    },
+    {
+      "id": "braille-school",
+      "title": "“指趣”小课堂：国家通用盲文（一）",
+      "publisher": "浙江特殊教育职业学院",
+      "url": "https://www.zcse.edu.cn/info/1696/40761.htm",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "三：六点位置、读面编号与 63 个非空符形",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "浙江特教学院六点读面排列及 63 非空符形；教育部 Q&A 汉语声/韵/调规则与英文语境区分。"
+      ],
+      "referencedBy": [
+        "function-native:braille",
+        "function-pair:To%20Braille"
+      ]
+    },
+    {
+      "id": "braille",
+      "title": "Unicode 17 第 21.1 节：Braille",
+      "publisher": "Unicode 联盟",
+      "url": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-21/",
+      "language": "en",
+      "kind": "standard",
+      "locator": "点位编号、六点 64 种组合、不同语言的映射差异",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "左列 1/2/3、右列 4/5/6，64 六点组合含空白，点形意义随语言。"
+      ],
+      "referencedBy": [
+        "function-native:braille",
+        "function-pair:To%20Braille"
+      ]
+    },
+    {
+      "id": "braille-native",
+      "title": "英文字母与数字的六点对应",
+      "publisher": "puzzle-lib 项目（MIT）",
+      "url": "/vendor/puzzle-lib/Braille/BrailleEncoding.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "Letter、Number、FormattingNumber",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "左列 1/2/3、右列 4/5/6，64 六点组合含空白，点形意义随语言。"
+      ],
+      "referencedBy": [
+        "function-native:braille"
+      ]
+    },
+    {
+      "id": "braille-cn",
+      "title": "《国家通用盲文方案》研制组负责人答记者问",
+      "publisher": "教育部／国家语言文字工作委员会",
+      "url": "https://qspfw.moe.gov.cn/html/hotnews/20180523/12925.html",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "第六问：声母、韵母、声调与汉盲规则",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "浙江特教学院六点读面排列及 63 非空符形；教育部 Q&A 汉语声/韵/调规则与英文语境区分。"
+      ],
+      "referencedBy": [
+        "function-native:braille",
+        "function-pair:To%20Braille"
+      ]
+    },
+    {
+      "id": "signal",
+      "title": "船舶通信语言（二）——旗语",
+      "publisher": "交通运输部海事局官方发布",
+      "url": "https://m.thepaper.cn/newsDetail_forward_7256510",
+      "language": "zh-CN",
+      "kind": "official-doc",
+      "locator": "手旗通信、航海手旗字母和数字图表",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "手旗通信、航海手旗字母和数字图表"
+      ],
+      "referencedBy": [
+        "function-native:semaphore"
+      ]
+    },
+    {
+      "id": "semaphore",
+      "title": "双旗八方向的字母组合",
+      "publisher": "puzzle-lib 项目（MIT）",
+      "url": "/vendor/puzzle-lib/Semaphore/SemaphoreEncoding.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "LetterA–LetterZ",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "LetterA–LetterZ"
+      ],
+      "referencedBy": [
+        "function-native:semaphore"
+      ]
+    },
+    {
+      "id": "tap",
+      "title": "No Such Puzzle: Tap Codes",
+      "publisher": "美国国家安全局密码谜题栏目",
+      "url": "https://www.nsa.gov/puzzles/view/article/3860720/no-such-puzzle-tap-codes/",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "Tap Codes Instructions",
+      "reviewStatus": "web-open-page",
+      "reviewNote": "NSA 正文说明逐字母敲击通信；图式细节另用 cryptii 本地实现核对。",
+      "supportedFacts": [
+        "Tap Codes Instructions"
+      ],
+      "referencedBy": [
+        "function-native:tapcode"
+      ]
+    },
+    {
+      "id": "tap-impl",
+      "title": "TapCode 的 C/K 合并方阵",
+      "publisher": "cryptii 项目（MIT）",
+      "url": "/vendor/basics/TapCode.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "5×5 方阵、两组敲击",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "5×5 方阵、两组敲击"
+      ],
+      "referencedBy": [
+        "function-native:tapcode",
+        "function-native:polybius"
+      ]
+    },
+    {
+      "id": "polybius",
+      "title": "PolybiusSquare 的行列坐标编码",
+      "publisher": "cryptii 项目（MIT）",
+      "url": "/vendor/basics/PolybiusSquare.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "alphabet、rows、columns、encode、decode",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "alphabet、rows、columns、encode、decode"
+      ],
+      "referencedBy": [
+        "function-native:tapcode",
+        "function-native:polybius"
+      ]
+    },
+    {
+      "id": "baudot",
+      "title": "ITU-T S.1：国际电报字母表第 2 号",
+      "publisher": "国际电信联盟",
+      "url": "https://www.itu.int/rec/dologin_pub.asp?id=T-REC-S.1-199303-I!!PDF-E&lang=e&type=items",
+      "language": "en",
+      "kind": "standard",
+      "locator": "第 3、4 节及表 1：五位、打孔、字母/数字移位",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "五位组合、打孔和不打孔、LTRS/FIGS 状态。"
+      ],
+      "referencedBy": [
+        "function-native:baudot"
+      ]
+    },
+    {
+      "id": "baudotimpl",
+      "title": "ITA1／ITA2／US_TTY 字母表及移位实现",
+      "publisher": "baudot.js 项目（MIT）",
+      "url": "/vendor/basics/baudot.js",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "字母表、encoder、decoder",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "字母表、encoder、decoder"
+      ],
+      "referencedBy": [
+        "function-native:baudot"
+      ]
+    },
+    {
+      "id": "symbolsimpl",
+      "title": "符号面板的七段与猪圈字母映射",
+      "publisher": "迷雾工具箱",
+      "url": "/round1/symbols.js",
+      "language": "zh-CN",
+      "kind": "implementation",
+      "locator": "patterns、pigpen-keys",
+      "reviewStatus": "local-file-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "patterns、pigpen-keys"
+      ],
+      "referencedBy": [
+        "function-native:seven-segment",
+        "function-native:pigpen"
+      ]
+    },
+    {
+      "id": "pigpen",
+      "title": "Pig Pen Cipher 教学图表",
+      "publisher": "NIST 美国国家标准与技术研究院",
+      "url": "https://www.nist.gov/system/files/documents/2021/06/25/ccaw_pig_pen_cipher.pdf",
+      "language": "en",
+      "kind": "official-doc",
+      "locator": "两组井字格与两组 X 格的字母图表",
+      "reviewStatus": "web-open-pdf-text",
+      "reviewNote": "PDF 文本可读，明确符号代表字母；screenshot 工具不可用，默认 E/N 精确表由本站符号代码核验。",
+      "supportedFacts": [
+        "两组井字格与两组 X 格的字母图表"
+      ],
+      "referencedBy": [
+        "function-native:pigpen"
+      ]
+    },
+    {
+      "id": "cetacean",
+      "title": "CetaceanCipherEncode 的 16 位映射",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/operations/CetaceanCipherEncode.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "run：UTF-16 码元、0→E、1→e",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "固定版本 UTF-16 码元 16 位，0→E、1→e，保留空格。"
+      ],
+      "referencedBy": [
+        "function-pair:Cetacean%20Cipher%20Encode"
+      ]
+    },
+    {
+      "id": "braille-map",
+      "title": "CyberChef 的 Braille ASCII 查表",
+      "publisher": "CyberChef 11.5.0（Apache-2.0）",
+      "url": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/lib/Braille.mjs",
+      "language": "en",
+      "kind": "implementation",
+      "locator": "BRAILLE_LOOKUP.ascii 与 dot6",
+      "reviewStatus": "web-open-and-relevant-excerpt-read",
+      "reviewNote": "本地源代码／目录与已读原始文档核对；未复制长文。",
+      "supportedFacts": [
+        "左列 1/2/3、右列 4/5/6，64 六点组合含空白，点形意义随语言。"
+      ],
+      "referencedBy": [
+        "function-pair:To%20Braille"
+      ]
+    }
+  ],
+  "excludedOrAlternativeSources": [
+    {
+      "url": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201807/W020180725666187054299.pdf",
+      "note": "教育部正式规范搜到，但 PDF open 无法获取；已改用教育部 Q&A 同源普法网站与浙江特教学院官方教学正文，未假装审阅规范全文。"
+    },
+    {
+      "url": "https://doc.hutool.cn/pages/Base62/",
+      "note": "官方页搜索命中，连续 open timeout；为避免正文机制依赖未读文档，移除文章引用，采用固定版本源码。"
+    },
+    {
+      "url": "https://plus.hutool.cn/apidocs/cn/hutool/core/codec/Base58.html",
+      "note": "官方 API 搜到，连续 open timeout；移除，使用已读固定版本官方 ToBase58 实现。"
+    },
+    {
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc2045.html",
+      "note": "HTML open 失败；改用实际可读取 .txt。"
+    }
+  ],
+  "exampleVerification": {
+    "passed": 17,
+    "nativeOrIndependentStandardsVectors": [
+      "Base64 ARG→QVJH",
+      "Base64 A→QQ==",
+      "Base64 AB→QUI=",
+      "UTF-8 中→E4 B8 AD",
+      "Base32 f→MY======",
+      "native Braille ABC / numeric12",
+      "Roman 2049→MMXLIX",
+      "Tap TAP exact spacing",
+      "Polybius ARG→11 42 22",
+      "ITA2 A3E and shifts",
+      "Semaphore A directions",
+      "IEEE binary32 1.0 big-endian",
+      "ABC big-endian integer 4276803",
+      "RFC9285 AB→BB8"
+    ],
+    "fixedImplementationArithmetic": [
+      "Base92 A→8q",
+      "CTX1 A→OEEB",
+      "Cetacean A→EEEEEEEEEeEEEEEe"
+    ]
+  },
+  "networkStatement": "使用国内官方站、国内高校标准镜像及本站引用。国外来源是否在中国各运营商可访问未经实测；原始代码外链待 root 完成许可证允许的本地只读镜像。",
+  "copyrightStatement": "只使用短事实转述与独立计算例子，无文章全文拷贝；编译内核、项目实现与规范分开标记。",
+  "reviewCorrections": [
+    "六点面板实际逐方识读：英语 ⠼⠁⠃→12 只作为规则例子，明确并非该面板连续翻译功能；未改变任何工具逻辑。",
+    "Base92 数据表实际含反斜杠，排除的是双引号、反引号和波浪号。",
+    "独立校算 CTX1 A 输出 OEEB、Base92 A 输出 8q。"
+  ]
+}

@@ -1,0 +1,18 @@
+/* File-editor composition; ByteGrid appearance and state live in ui/components. */
+.hex-workbench{container-type:inline-size;grid-column:1/-1;min-width:0}
+.hex-editor-heading{margin-bottom:14px}
+.hex-editor-heading h2{margin:0;flex:1 1 220px}
+.hex-editor-layout{margin-bottom:16px}
+.hex-editor-primary{display:grid;gap:16px;min-width:0}
+.hex-position-controls{align-items:end}
+.hex-position-controls>button{align-self:end}
+.hex-edit-controls>div,.hex-search-controls>div{grid-column:1/-1}
+.hex-export-controls{align-items:end}
+.hex-export-controls>div{align-self:end}
+.hex-inspection{min-width:0}
+.hex-inspection dl{margin:0}
+@container(min-width:850px){
+ .site-ui.workbench-app .hex-editor-layout[data-ui=split-view]{grid-template-columns:minmax(0,1fr) minmax(225px,.35fr)}
+ .hex-search-controls{grid-template-columns:minmax(140px,.35fr) minmax(220px,1fr)}
+ .hex-export-controls{grid-template-columns:minmax(0,1fr) auto}
+}

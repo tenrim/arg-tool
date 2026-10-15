@@ -1,0 +1,191 @@
+{
+  "readOnly": true,
+  "limits": {
+    "commandSearch": 60,
+    "directoryInitial": 60,
+    "directoryIncrement": 60,
+    "homeSearch": "none",
+    "knowledgeReader": "all articles"
+  },
+  "cause": "searchEntries filters a vocabulary-expanded registry in original group/inventory order, without relevance ranking. Short exact lesson names can be behind more than60 broad group aliases.",
+  "cases": [
+    {
+      "query": "ASCII",
+      "total": 128,
+      "exactTitles": [
+        {
+          "id": "learn:function-native:ascii",
+          "title": "ASCII",
+          "index": 119
+        }
+      ],
+      "first": [
+        {
+          "id": "native:ascii",
+          "title": "ASCII 文本与数字"
+        },
+        {
+          "id": "native:utf8",
+          "title": "UTF-8 字节与文字"
+        },
+        {
+          "id": "native:radix",
+          "title": "数字进制转换"
+        },
+        {
+          "id": "native:a1z26",
+          "title": "字母与数字 A1Z26"
+        },
+        {
+          "id": "native:codepoint",
+          "title": "Unicode 码点与文字"
+        },
+        {
+          "id": "pair:To%20Octal",
+          "title": "八进制 编码与解码"
+        },
+        {
+          "id": "pair:To%20Binary",
+          "title": "二进制 编码与解码"
+        },
+        {
+          "id": "pair:To%20Float",
+          "title": "浮点数 编码与解码"
+        }
+      ]
+    },
+    {
+      "query": "ＡＳＣＩＩ",
+      "total": 128,
+      "exactTitles": [
+        {
+          "id": "learn:function-native:ascii",
+          "title": "ASCII",
+          "index": 119
+        }
+      ],
+      "first": [
+        {
+          "id": "native:ascii",
+          "title": "ASCII 文本与数字"
+        },
+        {
+          "id": "native:utf8",
+          "title": "UTF-8 字节与文字"
+        },
+        {
+          "id": "native:radix",
+          "title": "数字进制转换"
+        },
+        {
+          "id": "native:a1z26",
+          "title": "字母与数字 A1Z26"
+        },
+        {
+          "id": "native:codepoint",
+          "title": "Unicode 码点与文字"
+        },
+        {
+          "id": "pair:To%20Octal",
+          "title": "八进制 编码与解码"
+        },
+        {
+          "id": "pair:To%20Binary",
+          "title": "二进制 编码与解码"
+        },
+        {
+          "id": "pair:To%20Float",
+          "title": "浮点数 编码与解码"
+        }
+      ]
+    },
+    {
+      "query": "Base64",
+      "total": 8,
+      "exactTitles": [
+        {
+          "id": "learn:function-pair:To%20Base64",
+          "title": "Base64",
+          "index": 4
+        }
+      ],
+      "first": [
+        {
+          "id": "pair:To%20Base64",
+          "title": "Base64 编码与解码"
+        },
+        {
+          "id": "op:Show%20Base64%20offsets",
+          "title": "显示 Base64 偏移量"
+        },
+        {
+          "id": "learn:function-op:JWT%20Sign",
+          "title": "签署 JWT"
+        },
+        {
+          "id": "learn:function-pair:To%20Base",
+          "title": "任意进制整数"
+        },
+        {
+          "id": "learn:function-pair:To%20Base64",
+          "title": "Base64"
+        },
+        {
+          "id": "learn:function-op:Show%20Base64%20offsets",
+          "title": "Base64 偏移"
+        },
+        {
+          "id": "learn:function-pair:Hex%20to%20PEM",
+          "title": "PEM / 十六进制"
+        },
+        {
+          "id": "learn:function-pair:LZString%20Compress",
+          "title": "LZString 压缩与解压"
+        }
+      ]
+    },
+    {
+      "query": "SSTV",
+      "total": 3,
+      "exactTitles": [
+        {
+          "id": "learn:function-native:audio-sstv",
+          "title": "SSTV",
+          "index": 2
+        }
+      ],
+      "first": [
+        {
+          "id": "native:audio-spectrum",
+          "title": "声音频谱与线索分析"
+        },
+        {
+          "id": "native:audio-sstv",
+          "title": "SSTV 声音还原图片"
+        },
+        {
+          "id": "learn:function-native:audio-sstv",
+          "title": "SSTV"
+        }
+      ]
+    },
+    {
+      "query": "From Base64",
+      "total": 2,
+      "exactTitles": [],
+      "first": [
+        {
+          "id": "pair:To%20Base64",
+          "title": "Base64 编码与解码",
+          "preferredOperation": "From Base64"
+        },
+        {
+          "id": "learn:function-pair:To%20Base",
+          "title": "任意进制整数"
+        }
+      ]
+    }
+  ],
+  "recommendation": "For nonempty searches stable-rank normalized exact title above exact original operation/direction/alias, above all-token title match, above operation matches and broad aliases. Preserve all filtering and transient direction selection; retain empty-query order and object identity.",
+  "tests": "Existing capabilities tests check presence and direction with some/filter/find; they do not assert a relevant result appears before UI limits. browser-knowledge-pairs exact-title UI assertion is a valid user discovery check and should remain."
+}

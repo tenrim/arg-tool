@@ -1,0 +1,302 @@
+{
+  "task": "基本名称与删除旧科普入口最终只读验收",
+  "timestamp": "2026-10-13T02:29:18.048Z",
+  "repoUnchanged": true,
+  "totalArticles": 528,
+  "namesChecked": 528,
+  "nameSuffixFindings": [],
+  "keyChecks": [
+    {
+      "id": "function-pair:To%20Base64",
+      "title": "Base64",
+      "expected": "Base64",
+      "correctName": true,
+      "sourcesUnchanged": true,
+      "sectionRefsAndExamplesUnchanged": true
+    },
+    {
+      "id": "function-native:braille",
+      "title": "六点盲文",
+      "expected": "六点盲文",
+      "correctName": true,
+      "sourcesUnchanged": true,
+      "sectionRefsAndExamplesUnchanged": true
+    },
+    {
+      "id": "function-pair:To%20Braille",
+      "title": "Braille ASCII",
+      "expected": "Braille ASCII",
+      "correctName": true,
+      "sourcesUnchanged": true,
+      "sectionRefsAndExamplesUnchanged": true
+    },
+    {
+      "id": "function-native:audio-sstv",
+      "title": "SSTV",
+      "expected": "SSTV",
+      "correctName": true,
+      "sourcesUnchanged": true,
+      "sectionRefsAndExamplesUnchanged": true
+    }
+  ],
+  "oldKnowledgeIdsChecked": 40,
+  "oldChecks": [
+    {
+      "id": "intro-characters",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-encoding",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-communication",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-classical",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-modern",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-authentication",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-cipher-analysis",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-text-language",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-formats",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-technical",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-world",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-sky",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-matter",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-characters-reference",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-colors",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-calendar",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-geology",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-traditions",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-sequences",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-image",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-fragments",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-files",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-audio",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-video",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-models",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-boards",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-logic",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-simulation",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-programming",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-maths",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-sequence-processing",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-coordinates-time",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-network",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "intro-pipeline",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "it-ports",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "it-http",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "it-formats",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "it-domains",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "it-rfc",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    },
+    {
+      "id": "it-instructions",
+      "articleResolved": false,
+      "registryResolved": false,
+      "aliasPresent": false
+    }
+  ],
+  "oldAliasFileRemoved": true,
+  "remainingLearnAliases": [],
+  "visibleCodecCapabilities": 269,
+  "localReferencesChecked": 336,
+  "allCodecArticlesStillHaveBoundReferences": true,
+  "UIReadOnlyChecks": {
+    "catalogueUsesTitleOnly": true,
+    "articleHeaderNoSummaryOrGroupBadge": true,
+    "sectionBoundReferenceStillRendered": true
+  },
+  "newMaterialDefects": [],
+  "notes": [
+    "所有528标题已查看；解析、提取、格式化等词是功能本身的动作名称，而非机制解释后缀。",
+    "核心四篇与上轮验收记录比较，来源、章节引用及例子未改变。",
+    "本轮未重跑专项浏览器测试；root正在运行browser-knowledge-pairs。",
+    "所有检查为只读，唯一写入文件为/tmp验收报告。"
+  ]
+}

@@ -1,0 +1,1458 @@
+{
+  "checkedAt": "2026-10-13",
+  "scope": [
+    "image",
+    "fragments",
+    "files",
+    "models"
+  ],
+  "articleCount": 114,
+  "method": "Primary web sources searched/opened; implemented parameters and pixel/byte paths checked against local bundled official engine. No China carrier access measurement claimed. Examples are explicit mathematical/format demonstrations unless stated as digest test vectors.",
+  "observations": [
+    {
+      "key": "filesReadImage",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas",
+      "title": "像素操作 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【9†Date & time formats】",
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "图片宽度，单位是像素"
+      ]
+    },
+    {
+      "key": "filesReadImage",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage",
+      "title": "CanvasRenderingContext2D：drawImage() 方法 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【9†Date & time formats】"
+      ]
+    },
+    {
+      "key": "filesReadImage",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/filter",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/filter",
+      "title": "CanvasRenderingContext2D：filter 属性 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/filter)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesReadImage",
+      "url": "https://www.w3.org/TR/png-3/",
+      "requestedRef": "https://www.w3.org/TR/png-3/",
+      "title": "Portable Network Graphics (PNG) Specification (Third Edition) (https://www.w3.org/TR/png-3/)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesReadImageDetails",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage",
+      "requestedRef": "turn306609view1",
+      "title": "CanvasRenderingContext2D：drawImage() 方法 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "        src=\"https://mdn.github.io/shared-assets/images/examples/rhino.jpg\"",
+        "`drawImage()` 方法在绘制时使用源元素的以 CSS 像素为单位的固有尺寸。"
+      ]
+    },
+    {
+      "key": "filesReadImageDetails",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/filter",
+      "requestedRef": "turn306609view2",
+      "title": "CanvasRenderingContext2D：filter 属性 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/filter)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "【99†`drop-shadow()`】",
+        "将阴影效果应用于绘图。阴影效果实际上是绘图 alpha 蒙版的模糊、偏移版本，以特定颜色绘制，位于绘图下方。此函数最多接受五个参数："
+      ]
+    },
+    {
+      "key": "filesReadImageDetails",
+      "url": "https://www.w3.org/TR/png-3/",
+      "requestedRef": "turn306609view3",
+      "title": "Portable Network Graphics (PNG) Specification (Third Edition) (https://www.w3.org/TR/png-3/)",
+      "status": "opened",
+      "relevantFacts": [
+        "Only RGB may be used in PNG, ICtCp is NOT supported.",
+        "PNG decoder",
+        "    process or device that reconstructs the 【250†reference image】 from a 【251†PNG datastream】 and generates a corresponding 【252†delivered image】.",
+        "PNG editor",
+        "    process or device that creates a modification of an existing 【251†PNG datastream】, preserving unmodified ancillary information wherever possible, and obeying the 【253†chunk】 ordering rules, even for unknown chunk types."
+      ]
+    },
+    {
+      "key": "filesReadImageDetails",
+      "url": "https://www.rfc-editor.org/rfc/rfc1950.html",
+      "requestedRef": "https://www.rfc-editor.org/rfc/rfc1950.html",
+      "title": "www.rfc-editor.org (https://www.rfc-editor.org/rfc/rfc1950.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesReadNativeImage",
+      "url": "https://www.qrcode.com/zh/about/index.html",
+      "requestedRef": "https://www.qrcode.com/zh/about/index.html",
+      "title": "什么是QR码？ | QRcode.com | DENSO WAVE (https://www.qrcode.com/zh/about/index.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "# 什么是QR码？",
+        "浏览本网站，您可以了解QR码的优点、规格等知识。",
+        "### QR码的优点十分突出!",
+        "QR码的信息量和版本",
+        "QR码有40种版本。下面说明一下详细的版本情况。"
+      ]
+    },
+    {
+      "key": "filesReadNativeImage",
+      "url": "https://www.qrcode.com/zh/about/error_correction.html",
+      "requestedRef": "https://www.qrcode.com/zh/about/error_correction.html",
+      "title": "关于纠错功能| QRcode.com | DENSO WAVE (https://www.qrcode.com/zh/about/error_correction.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "【0†返回 什么是QR码？ 首页】",
+        "QR码具有“纠错功能”。即使编码变脏或破损，也可自动恢复数据。这一“纠错能力”具备4个级别，用户可根据使用环境选择相应的级别。调高级别，纠错能力也相应提高，但由于数据量会随之增加，编码尺寸也也会变大。",
+        "※相对于全部码字(组成数据的单位，在QR码中，1码字对应于8比特)的恢复率",
+        "例如，需要编码的码字数据有100个，并且想对其中的一半，也就是50个码字进行纠错，则计算方法如下。纠错需要相当于码字2倍的符号（RS编码※），因此在这种情况下的数量为50个×2＝100码字。因此，全部码字数量为200个，其中用作纠错的码字为50个，所以计算得出，相对于全部码字的纠错率就是25%。这一比率相当于QR码纠错级别中的“Q”级别。",
+        "另外，在上述例子当中，也可以认为相对于码字数据的纠错率为50%，但变脏或破损的部位不仅仅局限于码字数据部分，因此，在QR码中，还是用相对于全部码字的比率来描述纠错率。"
+      ]
+    },
+    {
+      "key": "filesReadNativeImage",
+      "url": "https://learn.microsoft.com/zh-cn/windows/win32/wic/-wic-about-metadata",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/windows/win32/wic/-wic-about-metadata",
+      "title": "WIC 元数据概述 - Win32 apps | Microsoft Learn (https://learn.microsoft.com/zh-cn/windows/win32/wic/-wic-about-metadata)",
+      "status": "opened",
+      "relevantFacts": [
+        "图像元数据是嵌入在图像文件中的数据，它提供有关图像的其他信息，例如用于捕获图像的设备或图像的尺寸。 尽管它包含在图像文件本身中，但此元数据不是呈现数据的一部分。 WIC 提供接口，使你能够读取和写入多种常见元数据格式的元数据，包括可扩展元数据平台 (XMP) 、可交换图像文件 (EXIF) 和 Png 文本数据 (tEXt) 。",
+        "元数据提供有关图像的扩展信息。 此信息可通过多种方式使用。 图像可能包含元数据，例如说明、分级、类别标记和版权信息。 通过访问元数据，可以更轻松地执行资产管理、文件位置或确定版权信息等任务。 例如，Windows Vista 中的 Windows 照片库使你能够向图像添加说明和类别标记。 这样可以更好地发现图像，并方便地对图像进行分类。 使用 WIC API 和常见元数据格式，应用程序可以轻松地在图像中写入或读取此类元数据。",
+        "Exif  | Exif 2.2  | JPEG、TIFF  | 是",
+        "GPS  | Exif 2.2  | JPEG、TIFF  | 是",
+        "文本  | PNG 1.2  | PNG  | 否"
+      ]
+    },
+    {
+      "key": "filesReadNativeImage",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/scale",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/scale",
+      "title": "CanvasRenderingContext2D：scale() 方法 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/scale)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【9†Date & time formats】",
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "Canvas 2D API 的 `CanvasRenderingContext2D.scale()` 方法用于根据水平和垂直方向，为 canvas 单位添加缩放变换。"
+      ]
+    },
+    {
+      "key": "filesImageMethods0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit",
+      "title": "object-fit - CSS：层叠样式表 | MDN (https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "        src=\"/shared-assets/images/examples/plumeria-146x200.jpg\" />",
+        "      <img class=\"fill\" src=\"mdn_logo_only_color.png\" alt=\"MDN Logo\" />"
+      ]
+    },
+    {
+      "key": "filesImageMethods0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/object-fit",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/object-fit",
+      "title": "object-fit - CSS：层叠样式表 | MDN (https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/object-fit)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "        src=\"/shared-assets/images/examples/plumeria-146x200.jpg\" />",
+        "      <img class=\"fill\" src=\"mdn_logo_only_color.png\" alt=\"MDN Logo\" />"
+      ]
+    },
+    {
+      "key": "filesImageMethods0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob",
+      "title": "HTMLCanvasElement.toBlob() - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "可以在调用时指定所需的文件格式和图像质量，若未指定文件格式（或不支持指定的文件格式），则默认导出 `image/png` 类型。浏览器需要支持 `image/png`，大多数浏览器还支持额外的图片格式，包括 `image/jpeg` 和 `image/webp`。",
+        "【96†`String`】 类型，指定图片格式，默认格式（未指定或不支持）为 `image/png`。"
+      ]
+    },
+    {
+      "key": "filesImageMethods3",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalAlpha",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalAlpha",
+      "title": "CanvasRenderingContext2D：globalAlpha 属性 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalAlpha)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "    20. 【125†`shadowBlur`】",
+        "    21. 【126†`shadowColor`】"
+      ]
+    },
+    {
+      "key": "filesImageMethods3",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/rotate",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/rotate",
+      "title": "CanvasRenderingContext2D：rotate() 方法 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/rotate)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "此示例将矩形旋转了 45°。注意，旋转的中心是画布的左上角，而不是相对于任何形状的位置。",
+        "    // 将变换矩阵重置为单位矩阵"
+      ]
+    },
+    {
+      "key": "filesImageMethods3",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fillText",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fillText",
+      "title": "CanvasRenderingContext2D：fillText() 方法 - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fillText)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "开始绘制文本的点的 X 轴坐标，单位为像素。",
+        "开始绘制文本的基线的 Y 轴坐标，单位为像素。"
+      ]
+    },
+    {
+      "key": "filesJimpStereo",
+      "url": "https://jimp-dev.github.io/jimp/api/jimp/classes/jimp/",
+      "requestedRef": "https://jimp-dev.github.io/jimp/api/jimp/classes/jimp/",
+      "title": "Jimp | Jimp (https://jimp-dev.github.io/jimp/api/jimp/classes/jimp/)",
+      "status": "opened",
+      "relevantFacts": [
+        "    * 【112†getPixelColor()】",
+        "    * 【113†getPixelIndex()】",
+        "    * 【124†pixelate()】",
+        "    * 【135†setPixelColor()】",
+        "    * 【142†formats】"
+      ]
+    },
+    {
+      "key": "filesJimpStereo",
+      "url": "https://cs.brown.edu/courses/csci1290/labs/lab_stereo/index.html",
+      "requestedRef": "https://cs.brown.edu/courses/csci1290/labs/lab_stereo/index.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesJimpStereo",
+      "url": "https://konvajs.org/docs/overview.html",
+      "requestedRef": "https://konvajs.org/docs/overview.html",
+      "title": "Konva Framework Overview | Konva - JavaScript Canvas 2d Library (https://konvajs.org/docs/overview.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesJimpStereo",
+      "url": "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html",
+      "requestedRef": "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html",
+      "title": "glTF™ 2.0 Specification (https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "An object describing the number and the format of data elements stored in a binary buffer.",
+        "A two dimensional array of pixels encoded as a standardized bitstream, such as 【365†PNG】.",
+        "A skinning method that computes a per-vertex transformation matrix as a linear weighted sum of transformation matrices of the designated nodes.",
+        "scene",
+        "A process of selecting an image pixel based on normalized texture coordinates."
+      ]
+    },
+    {
+      "key": "filesNjuRFC",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1950.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1950.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc1950.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "    Deutsch & Gailly             Informational                      [Page 3]",
+        "    【0†RFC 1950】       ZLIB Compressed Data Format Specification        May 1996",
+        "          multi-byte numbers in the format described here are stored with",
+        "       2.2. Data format",
+        "    Deutsch & Gailly             Informational                      [Page 4]"
+      ]
+    },
+    {
+      "key": "filesNjuRFC",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1951.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1951.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc1951.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "    Deutsch                      Informational                      [Page 2]",
+        "    【0†RFC 1951】      DEFLATE Compressed Data Format Specification      May 1996",
+        "              * Is compatible with the file format produced by the current",
+        "          The data format defined by this specification does not attempt to:",
+        "          format defined here, the worst case expansion is 5 bytes per 32K-"
+      ]
+    },
+    {
+      "key": "filesNjuRFC",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1952.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1952.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc1952.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "              * Is compatible with the file format produced by the current",
+        "    Deutsch                      Informational                      [Page 2]",
+        "    【0†RFC 1952】             GZIP File Format Specification             May 1996",
+        "          The data format defined by this specification does not attempt to:",
+        "          to compress data into gzip format and/or decompress data from gzip"
+      ]
+    },
+    {
+      "key": "filesNjuRFC",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7693.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc7693.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc7693.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "         【31†6.2】.  Informative References  . . . . . . . . . . . . . . . . .  【28†11】",
+        "    Saarinen & Aumasson           Informational                     [Page 2]",
+        "          produces digests of any size between 1 and 64 bytes.",
+        "          digests of any size between 1 and 32 bytes.",
+        "       Hash Algorithms SHA and HMAC-SHA [【51†RFC6234】].  BLAKE2s-128 is"
+      ]
+    },
+    {
+      "key": "filesNjuFind",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc7693.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc7693.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc7693.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "         【23†3.3】.  Padding Data and Computing a BLAKE2 Digest  . . . . . . .   【24†9】",
+        "         【31†6.2】.  Informative References  . . . . . . . . . . . . . . . . .  【28†11】",
+        "    Saarinen & Aumasson           Informational                     [Page 2]",
+        "          produces digests of any size between 1 and 64 bytes.",
+        "          digests of any size between 1 and 32 bytes."
+      ]
+    },
+    {
+      "key": "filesNjuFind",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1952.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1952.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc1952.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesNjuFind",
+      "url": "https://www.qrcode.com/zh/about/error_correction.html",
+      "requestedRef": "https://www.qrcode.com/zh/about/error_correction.html",
+      "title": "关于纠错功能| QRcode.com | DENSO WAVE (https://www.qrcode.com/zh/about/error_correction.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAsconBlakeNtlm",
+      "url": "https://csrc.nist.gov/pubs/sp/800/232/final",
+      "requestedRef": "https://csrc.nist.gov/pubs/sp/800/232/final",
+      "title": "SP 800-232, Ascon-Based Lightweight Cryptography Standards for Constrained Devices: Authenticated Encryption, Hash, and Extendable Output Functions | CSRC (https://csrc.nist.gov/pubs/sp/800/232/final)",
+      "status": "opened",
+      "relevantFacts": [
+        "# Ascon-Based Lightweight Cryptography Standards for Constrained Devices: Authenticated Encryption, Hash, and Extendable Output Functions",
+        "In 2023, the National Institute of Standards and Technology (NIST) announced the selection of the Ascon family of algorithms designed by Dobraunig, Eichlseder, Mendel, and Schläffer to provide efficient cryptographic solutions for resource-constrained devices. This decision emerged from a rigorous, multi-round lightweight cryptography standardization process.",
+        "The Ascon family includes a suite of cryptographic primitives that provide Authenticated Encryption with Associated Data (AEAD), hash function, and eXtendable Output Function (XOF) capabilities. The Ascon family is characterized by lightweight, permutation-based primitives and provides robust security, efficiency, and flexibility, making it ideal for resource-constrained environments, such as Internet of Things (IoT) devices, embedded systems, and low-power sensors.",
+        "The family is developed to offer a viable alternative when the Advanced Encryption Standard (AES) may not perform optimally. This standard outlines the technical specifications and security properties of Ascon-AEAD128, Ascon-Hash256, Ascon-XOF128, and Ascon-CXOF128.",
+        "In 2023, the National Institute of Standards and Technology (NIST) announced the selection of the Ascon family of algorithms designed by Dobraunig, Eichlseder, Mendel, and Schläffer to provide efficient cryptographic solutions for resource-constrained devices. This decision emerged from a rigorous,... 【37†See full abstract】"
+      ]
+    },
+    {
+      "key": "filesAsconBlakeNtlm",
+      "url": "https://ascon.isec.tugraz.at/specification.html",
+      "requestedRef": "https://ascon.isec.tugraz.at/specification.html",
+      "title": "Ascon – Specification (https://ascon.isec.tugraz.at/specification.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "# Ascon",
+        "The Ascon family is specified in 【6†NIST SP 800-232†doi.org】: \"Ascon-based Lightweight Cryptography Standards for Constrained Devices: Authenticated Encryption, Hash, and Extendable Output Functions\".",
+        "The original authenticated encryption (AEAD) and hashing schemes (Hash, XOF) Ascon as submitted to the LWC project are specified in the 【7†Journal of Cryptology article†doi.org】, the 【8†NIST submission】, and the 【9†CAESAR submission】. Additionally, pseudorandom functions (PRF) and message authentication codes (MAC) are specified in the 【10†CT-RSA 2024 paper†doi.org】.",
+        "### Ascon's Permutation",
+        "All Ascon family members use the same lightweight permutation. This permutation iteratively applies an SPN-based round transformation for up to 16 rounds; the standardized modes of operation use 12 rounds in Ascon-p[12], and 8 rounds in Ascon-p[8]. The round transformation consists of the following three steps which operate on a 320-bit state divided into 5 words S_{0}, S_{1}, S_{2}, S_{3}, S_{4} of 64 bits each:"
+      ]
+    },
+    {
+      "key": "filesAsconBlakeNtlm",
+      "url": "https://blake3.io/",
+      "requestedRef": "https://blake3.io/",
+      "title": "GitHub - BLAKE3-team/BLAKE3: the official Rust and C implementations of the BLAKE3 cryptographic hash function · GitHub (https://blake3.io/)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * Much faster than MD5, SHA-1, SHA-2, SHA-3, and BLAKE2.",
+        "  * Secure, unlike MD5 and SHA-1. And secure against length extension, unlike SHA-2.",
+        "  * Highly parallelizable across any number of threads and SIMD lanes, because it's a Merkle tree on the inside.",
+        "  * Capable of verified streaming and incremental updates, again because it's a Merkle tree.",
+        "BLAKE3 is based on an optimized instance of the established hash function 【101†BLAKE2†blake2.net】 and on the 【102†original Bao tree mode】. The specifications and design rationale are available in the 【100†BLAKE3 paper】. The default output size is 256 bits. The current version of 【103†Bao】 implements verified streaming with BLAKE3."
+      ]
+    },
+    {
+      "key": "filesAsconBlakeNtlm",
+      "url": "https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-nlmp/",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-nlmp/",
+      "title": "[MS-NLMP]: NT LAN Manager (NTLM) Authentication Protocol | Microsoft Learn (https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-nlmp/)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesHashPrimaryMore",
+      "url": "https://c2sp.org/BLAKE3",
+      "requestedRef": "https://c2sp.org/BLAKE3",
+      "title": "The BLAKE3 Hashing Framework | C2SP (https://c2sp.org/BLAKE3)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesHashPrimaryMore",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6234.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc6234.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc6234.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       corresponds to a given message digest, or (2) find two different",
+        "       messages that produce the same message digest.  Any change to a",
+        "       different message digest.  This will result in a verification failure",
+        "       length.  SHA-1's sample code from [【1†RFC3174】] has also been updated to",
+        "    Eastlake & Hansen             Informational                     [Page 4]"
+      ]
+    },
+    {
+      "key": "filesHashPrimaryMore",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1319.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1319.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesHashPrimaryMore",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1320.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1320.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://www.iso.org/standard/70484.html",
+      "requestedRef": "https://www.iso.org/standard/70484.html",
+      "title": "ISO/IEC 7812-1:2017 - Identification cards — Identification of issuers — Part 1: Numbering system (https://www.iso.org/standard/70484.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "Format",
+        "ISO/IEC 7812-1:2017 specifies a numbering system for the identification of the card issuers, the format of the issuer identification number (IIN) and the primary account number (PAN).",
+        "## General information"
+      ]
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://sourceware.org/bzip2/manual/manual.html",
+      "requestedRef": "https://sourceware.org/bzip2/manual/manual.html",
+      "title": "bzip2 and libbzip2, version 1.0.8 (https://sourceware.org/bzip2/manual/manual.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.",
+        "【43†4.1. Limitations of the compressed file format】",
+        "`bzip2` compresses files using the Burrows-Wheeler block-sorting text compression algorithm, and Huffman coding. Compression is generally considerably better than that achieved by more conventional LZ77/LZ78-based compressors, and approaches the performance of the PPM family of statistical compressors.",
+        "`bzip2` is built on top of `libbzip2`, a flexible library for handling compressed data in the `bzip2` format. This manual describes both how to use the program and how to work with the library interface. Most of the manual is devoted to this library, not the program, which is good news if your interest is only in the program.",
+        "`bzip2` compresses files using the Burrows-Wheeler block sorting text compression algorithm, and Huffman coding. Compression is generally considerably better than that achieved by more conventional LZ77/LZ78-based compressors, and approaches the performance of the PPM family of statistical compressors."
+      ]
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://lz4.org/",
+      "requestedRef": "https://lz4.org/",
+      "title": "LZ4 - Extremely fast compression (https://lz4.org/)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://www.7-zip.org/sdk.html",
+      "requestedRef": "https://www.7-zip.org/sdk.html",
+      "title": "LZMA SDK (Software Development Kit) (https://www.7-zip.org/sdk.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://pieroxy.net/blog/pages/lz-string/guide.html",
+      "requestedRef": "https://pieroxy.net/blog/pages/lz-string/guide.html",
+      "title": "lz-string: everything to make it work for you - pieroxy.net (https://pieroxy.net/blog/pages/lz-string/guide.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "requestedRef": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "title": "(https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://www.gnu.org/software/tar/manual/html_node/Standard.html",
+      "requestedRef": "https://www.gnu.org/software/tar/manual/html_node/Standard.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFormatURLAudit",
+      "url": "https://www.gnu.org/software/coreutils/manual/html_node/Changing-file-attributes.html",
+      "requestedRef": "https://www.gnu.org/software/coreutils/manual/html_node/Changing-file-attributes.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData",
+      "title": "ImageData - Web API | MDN (https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【9†Date & time formats】",
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "【98†`Uint8ClampedArray`】 描述了一个一维数组，包含以 RGBA 顺序的数据，数据使用 `0` 至 `255`（包含）的整数表示。"
+      ]
+    },
+    {
+      "key": "filesAuditMore0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/color_value",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/color_value",
+      "title": "<color> - CSS：层叠样式表 | MDN (https://developer.mozilla.org/zh-CN/docs/Web/CSS/color_value)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【9†Date & time formats】",
+        "  * 【77†Box-shadow generator】",
+        "  * 【78†Color format converter】",
+        "  * 【80†Shape generator】",
+        "明确指定【120†颜色插值中缺失的分量】在你想要对部分颜色分量进行【121†插值】而不对其他分量进行插值的情况下非常有用。对于所有其他用途，缺失的分量在适当的单位下将有效地具有零值：`0`、`0%` 或 `0deg`。例如，下面的颜色在不插值时是等价的："
+      ]
+    },
+    {
+      "key": "filesAuditMore0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_AND",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_AND",
+      "title": "按位与（&） - JavaScript | MDN (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_AND)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+      "title": "DataView - JavaScript | MDN (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore0",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+      "requestedRef": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+      "title": "Uint8Array - JavaScript | MDN (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore1",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": [
+        "URL https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity is not accessible via this tool."
+      ]
+    },
+    {
+      "key": "filesAuditMore1",
+      "url": "https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/tree",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/tree",
+      "title": "树 | Microsoft Learn (https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/tree)",
+      "status": "opened",
+      "relevantFacts": [
+        "    `tree [<drive>:][<path>] [/f] [/a]",
+        "    `tree \\",
+        "    `tree c:\\ /f | more",
+        "    `tree c:\\ /f > <driveletter>:\\<filepath>\\filename.txt"
+      ]
+    },
+    {
+      "key": "filesAuditMore1",
+      "url": "https://www.qrcode.com/zh/howto/generate.html",
+      "requestedRef": "https://www.qrcode.com/zh/howto/generate.html",
+      "title": "生成QR码 | QRcode.com | DENSO WAVE (https://www.qrcode.com/zh/howto/generate.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "# 生成QR码",
+        "## 生成QR码时的要点",
+        "实际生成并打印QR码时，请注意以下要点和注意事项。",
+        "为生成容易读取的QR码，必须根据打印机和读取设备的性能设计码元(黑色小方形)大小。",
+        "QR码的边缘必须留出一定空白。"
+      ]
+    },
+    {
+      "key": "filesAuditMore1",
+      "url": "https://www.pcisecuritystandards.org/faqs/1137/",
+      "requestedRef": "https://www.pcisecuritystandards.org/faqs/1137/",
+      "title": "PCI Security Standards Council – Protect Payment Data with Industry-driven Security Standards, Training, and Programs (https://www.pcisecuritystandards.org/faqs/1137/)",
+      "status": "opened",
+      "relevantFacts": [
+        "    *       *         * Learn more about PCI SSC’s Training & Qualification programs, class schedules, registration information, corporate group training and knowledge training.",
+        "  * 【127†Is the PCI DSS Attestation of Compliance intended to be shared?】",
+        "  * 【131†What are acceptable formats for truncation of primary account numbers?】",
+        "  * 【136†Which date format should be used when completing PCI SSC documents that request dates?】"
+      ]
+    },
+    {
+      "key": "filesAuditMore2",
+      "url": "https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32",
+      "requestedRef": "https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore2",
+      "url": "https://stegonline.georgeom.net/",
+      "requestedRef": "https://stegonline.georgeom.net/",
+      "title": "StegOnline (https://stegonline.georgeom.net/)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore2",
+      "url": "https://www.oscca.gov.cn/sca/xxgk/2010-12/17/content_1002389.shtml",
+      "requestedRef": "https://www.oscca.gov.cn/sca/xxgk/2010-12/17/content_1002389.shtml",
+      "title": "国家密码管理局关于发布《SM3密码杂凑算法》公告（国密局公告第22号）_国家密码管理局 (https://www.oscca.gov.cn/sca/xxgk/2010-12/17/content_1002389.shtml)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesAuditMore2",
+      "url": "https://sourceforge.net/p/rhash/wiki/HashFunctions/",
+      "requestedRef": "https://sourceforge.net/p/rhash/wiki/HashFunctions/",
+      "title": "RHash / Wiki / HashFunctions (https://sourceforge.net/p/rhash/wiki/HashFunctions/)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【33†Formatting Help】",
+        "Name  | Hash Length (bits)  | Format  | Specification",
+        "MD4  | 128  | hex  | 【36†RFC 1320†www.ietf.org】",
+        "MD5  | 128  | hex  | 【37†RFC 1321†www.ietf.org】",
+        "SHA1  | 160  | hex  | 【38†RFC 3174†www.ietf.org】"
+      ]
+    },
+    {
+      "key": "filesRFCFinal",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.parity?view=net-10.0",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.parity?view=net-10.0",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCFinal",
+      "url": "https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32",
+      "requestedRef": "https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32",
+      "title": "双眼立体视觉可塑性的实验研究 (https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc5831.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc5831.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc5831.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       Information about the current status of this document, any errata,",
+        "    Dolmatov                      Informational                     [Page 1]",
+        "       be created, except to format it for publication as an RFC or to",
+        "          【7†1.1】. General Information ........................................【6†3】",
+        "          【16†5.2】. Encryption Transformation ..................................【17†7】"
+      ]
+    },
+    {
+      "key": "filesRFCFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6986.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc6986.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1146.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1146.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1071.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1071.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc1071.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "                        Computing the Internet Checksum",
+        "       computing the Internet checksum.  It is not a standard, but a set of",
+        "       checksum that is used by the standard Internet protocols IP, UDP, and",
+        "       An efficient checksum implementation is critical to good performance.",
+        "       protocol processing, the checksum computation becomes one of the"
+      ]
+    },
+    {
+      "key": "filesRetryFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6986.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc6986.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRetryFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1146.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1146.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRetryFinal",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity?view=net-9.0-pp",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity?view=net-9.0-pp",
+      "title": "SerialPort.Parity Property (System.IO.Ports) | Microsoft Learn (https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity?view=net-9.0-pp)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * csharp",
+        "  * fsharp",
+        "# Serial Port.Parity Property",
+        "Some information relates to prerelease product that may be substantially modified before it’s released. Microsoft makes no warranties, express or implied, with respect to the information provided here.",
+        "Gets or sets the parity-checking protocol."
+      ]
+    },
+    {
+      "key": "filesRetryFinal",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.parity?view=net-8.0",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.parity?view=net-8.0",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": [
+        "URL https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.parity?view=net-8.0 is not accessible via this tool."
+      ]
+    },
+    {
+      "key": "filesRetryFinal",
+      "url": "https://docs.openssl.org/3.3/man3/EVP_whirlpool/",
+      "requestedRef": "https://docs.openssl.org/3.3/man3/EVP_whirlpool/",
+      "title": "EVP_whirlpool - OpenSSL Documentation (https://docs.openssl.org/3.3/man3/EVP_whirlpool/)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【6†File Formats】",
+        "    * 【68†BIO_do_handshake】"
+      ]
+    },
+    {
+      "key": "filesRetryFinal",
+      "url": "https://homes.esat.kuleuven.be/~bosselae/ripemd160.html",
+      "requestedRef": "https://homes.esat.kuleuven.be/~bosselae/ripemd160.html",
+      "title": "The RIPEMD-160 page (https://homes.esat.kuleuven.be/~bosselae/ripemd160.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCAuthorityFallback",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1146.txt",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1146.txt",
+      "title": "(https://mirrors.nju.edu.cn/rfc/rfc1146.txt)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCAuthorityFallback",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6986.txt",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc6986.txt",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRFCAuthorityFallback",
+      "url": "https://www.rfc-editor.org/rfc/rfc1146.html",
+      "requestedRef": "https://www.rfc-editor.org/rfc/rfc1146.html",
+      "title": "www.rfc-editor.org (https://www.rfc-editor.org/rfc/rfc1146.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       the data portion TCP Alternate Checksum Data Option are replaced with",
+        "       using a 16-bit checksum algorithm, or carrying this option with an",
+        "       inappropriate number of data octets for the chosen alternate checksum",
+        "       the standard TCP checksum.",
+        "    APPENDIX I:  The 8-bit Fletcher Checksum Algorithm"
+      ]
+    },
+    {
+      "key": "filesRFCAuthorityFallback",
+      "url": "https://www.rfc-editor.org/rfc/rfc6986.html",
+      "requestedRef": "https://www.rfc-editor.org/rfc/rfc6986.html",
+      "title": "www.rfc-editor.org (https://www.rfc-editor.org/rfc/rfc6986.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       Z_(2^n) ring of residues modulo 2^n",
+        "    Dolmatov & Degtyarev          Informational                     [Page 5]",
+        "               |M| < 2^512",
+        "       IV      hash-function initializing value, IV in V_512",
+        "       hash-code lengths n = 512 bits and n = 256 bits."
+      ]
+    },
+    {
+      "key": "filesSemanticFinal",
+      "url": "turn346930view2",
+      "requestedRef": "turn346930view2",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesSemanticFinal",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6234.html",
+      "requestedRef": "turn346930view1",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc6234.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesSemanticFinal",
+      "url": "https://c2sp.org/BLAKE3",
+      "requestedRef": "turn346930view0",
+      "title": "The BLAKE3 Hashing Framework | C2SP (https://c2sp.org/BLAKE3)",
+      "status": "opened",
+      "relevantFacts": [
+        "### 1.3. Tree Hashing Overview 【6†§】",
+        "BLAKE3 processes input data according to a binary tree structure:",
+        "  1. It splits its input into 1024-byte chunks, processing each chunk independently of the other chunks, using a compression function iterating over each of the 16 consecutive 64-byte blocks of a chunk.",
+        "  2. From the hash of each chunk, it builds a binary hash tree to compute the root of the tree, which determines the BLAKE3 output.",
+        "In the simplest case, there is only one chunk. In this case, this node is seen as the tree's root and its output determines BLAKE3's output. If the number of chunks is a power of 2, the binary tree is a complete tree and all leaves are at the same level. If the number of chunks is not a power of 2, not all chunks will be at the same level of the tree."
+      ]
+    },
+    {
+      "key": "filesSemanticFinal",
+      "url": "https://jimp-dev.github.io/jimp/api/jimp/classes/jimp/",
+      "requestedRef": "https://jimp-dev.github.io/jimp/api/jimp/classes/jimp/",
+      "title": "Jimp | Jimp (https://jimp-dev.github.io/jimp/api/jimp/classes/jimp/)",
+      "status": "opened",
+      "relevantFacts": [
+        "    * 【112†getPixelColor()】",
+        "    * 【113†getPixelIndex()】",
+        "    * 【124†pixelate()】",
+        "    * 【135†setPixelColor()】",
+        "    * 【142†formats】"
+      ]
+    },
+    {
+      "key": "filesChineseStandardsFinal",
+      "url": "https://oscca.gov.cn/sca/xxgk/2010-12/17/1002389/files/302a3ada057c4a73830536d03e683110.pdf",
+      "requestedRef": "https://oscca.gov.cn/sca/xxgk/2010-12/17/1002389/files/302a3ada057c4a73830536d03e683110.pdf",
+      "title": "(https://oscca.gov.cn/sca/xxgk/2010-12/17/1002389/files/302a3ada057c4a73830536d03e683110.pdf)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesChineseStandardsFinal",
+      "url": "https://www.rfc-editor.org/rfc/rfc6986.html",
+      "requestedRef": "https://www.rfc-editor.org/rfc/rfc6986.html",
+      "title": "www.rfc-editor.org (https://www.rfc-editor.org/rfc/rfc6986.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       Z_(2^n) ring of residues modulo 2^n",
+        "    Dolmatov & Degtyarev          Informational                     [Page 5]",
+        "               |M| < 2^512",
+        "       IV      hash-function initializing value, IV in V_512",
+        "       hash-code lengths n = 512 bits and n = 256 bits."
+      ]
+    },
+    {
+      "key": "filesChineseStandardsFinal",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity?view=net-9.0-pp",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity?view=net-9.0-pp",
+      "title": "SerialPort.Parity 属性 (System.IO.Ports) | Microsoft Learn (https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ports.serialport.parity?view=net-9.0-pp)",
+      "status": "opened",
+      "relevantFacts": [
+        "【10†Parity】",
+        "表示奇偶校验协议的枚举值之一。 默认值为 【11†None】。",
+        "【16†Parity】传递的值不是枚举中的【10†Parity】有效值。",
+        "        _serialPort.Parity = SetPortParity(_serialPort.Parity);",
+        "        _serialPort.Handshake = SetPortHandshake(_serialPort.Handshake);"
+      ]
+    },
+    {
+      "key": "filesChineseStandardsFinal",
+      "url": "https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32",
+      "requestedRef": "https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32",
+      "title": "双眼立体视觉可塑性的实验研究 (https://journal.psych.ac.cn/xlxb/CN/Y1992/V24/I2/32)",
+      "status": "opened",
+      "relevantFacts": [
+        "摘要： 设计了四组随机点立体图对,用来探讨图形的大小、位置、双眼视差、图形三维结构、图像质地和人的双眼立体视觉可塑性容限之问的关系。我们得到的主要结果是: (1)随机点立体图对的体视可塑性最大容限在17％左右。 (2)体视可塑性容限与图形的大小、位置有关;图形太大、太分散,都会使体视可塑性容限降低。 (3)体视可塑性容限与双眼视差大小、图形三维构型有关;视差太大、构型大复杂,也会使体视可塑性容限降低。 (4)体视可塑性容限还与图像质地有关。小圆点和棋盘格质地的体视可塑性容限高于窗纱布质地的可塑性容限。",
+        "Abstract: Four sets of random-dot stereograms were demonstrated to explore into the relationship between the scale, position,disparity,structure of the figure and texture of the image with the plastic capacity of human stereopsis. The main results are: (1) The plastic capacity of a set of random-dot stereograms is no more than 17%; (2) The plastic capacity of stereopsis is associated with the scale and po- sition of a figure.",
+        "A large,distributed figure decreases the plastic ca- pacity; (3) The plastic capacity of stereopsis is associated with the disparity and the three-dimensional configuration of a figure. Large disparities and complex configurations decrease the plastic capacity; (4) The plastic capacity of stereopsis is also associated with the texture of the image. The capacity with dots or checkboard texture is larger than that with gauze-like patterns."
+      ]
+    },
+    {
+      "key": "filesRareURLFinal",
+      "url": "https://people.csail.mit.edu/rivest/pubs/RABCx08.pdf",
+      "requestedRef": "https://people.csail.mit.edu/rivest/pubs/RABCx08.pdf",
+      "title": "(https://people.csail.mit.edu/rivest/pubs/RABCx08.pdf)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRareURLFinal",
+      "url": "https://keccak.team/keccak_specs_summary.html",
+      "requestedRef": "https://keccak.team/keccak_specs_summary.html",
+      "title": "Keccak Team (https://keccak.team/keccak_specs_summary.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRareURLFinal",
+      "url": "https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp",
+      "requestedRef": "https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp",
+      "title": "smhasher/src/MurmurHash3.cpp at master · aappleby/smhasher · GitHub (https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRareURLFinal",
+      "url": "https://ssdeep-project.github.io/ssdeep/usage.html",
+      "requestedRef": "https://ssdeep-project.github.io/ssdeep/usage.html",
+      "title": "Getting Started with ssdeep (https://ssdeep-project.github.io/ssdeep/usage.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRareURLFinal",
+      "url": "https://dfrws.org/presentation/identifying-almost-identical-files-using-context-triggered-piecewise-hashing/",
+      "requestedRef": "https://dfrws.org/presentation/identifying-almost-identical-files-using-context-triggered-piecewise-hashing/",
+      "title": "Identifying Almost Identical Files Using Context Triggered Piecewise Hashing - DFRWS (https://dfrws.org/presentation/identifying-almost-identical-files-using-context-triggered-piecewise-hashing/)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRareURLFinal",
+      "url": "https://yara.readthedocs.io/en/stable/writingrules.html",
+      "requestedRef": "https://yara.readthedocs.io/en/stable/writingrules.html",
+      "title": "Writing YARA rules — yara 4.4.0 documentation (https://yara.readthedocs.io/en/stable/writingrules.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://opensource.adobe.com/dc-acrobat-sdk-docs/pdfstandards/PDF32000_2008.pdf",
+      "requestedRef": "https://opensource.adobe.com/dc-acrobat-sdk-docs/pdfstandards/PDF32000_2008.pdf",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://man7.org/linux/man-pages/man5/elf.5.html",
+      "requestedRef": "https://man7.org/linux/man-pages/man5/elf.5.html",
+      "title": "elf(5) - Linux manual page (https://man7.org/linux/man-pages/man5/elf.5.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "    ELF(5)                     File Formats Manual                     ELF(5)",
+        "           elf - format of Executable and Linking Format (ELF) files",
+        "           The header file <elf.h> defines the format of ELF executable",
+        "           relocatable object files, core files, and shared objects.",
+        "           An executable file using the ELF file format consists of an ELF"
+      ]
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://developer.arm.com/Architectures/Instruction%20Sets",
+      "requestedRef": "https://developer.arm.com/Architectures/Instruction%20Sets",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
+      "requestedRef": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
+      "title": "Manuals for Intel® 64 and IA-32 Architectures (https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.security.cryptography.sha256",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.security.cryptography.sha256",
+      "title": "SHA256 类 (System.Security.Cryptography) | Microsoft Learn (https://learn.microsoft.com/zh-cn/dotnet/api/system.security.cryptography.sha256)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://learn.microsoft.com/zh-cn/dotnet/api/system.security.cryptography.md5",
+      "requestedRef": "https://learn.microsoft.com/zh-cn/dotnet/api/system.security.cryptography.md5",
+      "title": "MD5 类 (System.Security.Cryptography) | Microsoft Learn (https://learn.microsoft.com/zh-cn/dotnet/api/system.security.cryptography.md5)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesFinalFormatHardware",
+      "url": "https://help.aliyun.com/zh/maxcompute/user-guide/sha1",
+      "requestedRef": "https://help.aliyun.com/zh/maxcompute/user-guide/sha1",
+      "title": "SHA1函数用于计算哈希值-云原生大数据计算服务 MaxCompute-阿里云-云原生大数据计算服务 MaxCompute(MaxCompute)-阿里云帮助中心 (https://help.aliyun.com/zh/maxcompute/user-guide/sha1)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000_2008.pdf",
+      "requestedRef": "https://opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000_2008.pdf",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://www.arm.com/zh-cn/architecture/cpu/a-profile",
+      "requestedRef": "https://www.arm.com/zh-cn/architecture/cpu/a-profile",
+      "title": "A 系列架构 1 – Arm® (https://www.arm.com/zh-cn/architecture/cpu/a-profile)",
+      "status": "opened",
+      "relevantFacts": [
+        "Arm 的职业机会和空缺职位",
+        "        * 【16†AE 技术】"
+      ]
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1321.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1321.html",
+      "title": "mirrors.nju.edu.cn (https://mirrors.nju.edu.cn/rfc/rfc1321.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1319.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1319.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1320.html",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1320.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://csrc.nist.gov/pubs/fips/180/final",
+      "requestedRef": "https://csrc.nist.gov/pubs/fips/180/final",
+      "title": "FIPS 180, Secure Hash Standard (SHS) | CSRC (https://csrc.nist.gov/pubs/fips/180/final)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesPrimaryRemaining",
+      "url": "https://csrc.nist.gov/pubs/fips/202/final",
+      "requestedRef": "https://csrc.nist.gov/pubs/fips/202/final",
+      "title": "FIPS 202, SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions | CSRC (https://csrc.nist.gov/pubs/fips/202/final)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRfcMdTextFallback",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1319.txt",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1319.txt",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRfcMdTextFallback",
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc1320.txt",
+      "requestedRef": "https://mirrors.nju.edu.cn/rfc/rfc1320.txt",
+      "title": "(https://mirrors.nju.edu.cn/rfc/rfc1320.txt)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesRfcMdTextFallback",
+      "url": "https://www.rfc-editor.org/rfc/rfc1319.html",
+      "requestedRef": "https://www.rfc-editor.org/rfc/rfc1319.html",
+      "title": "www.rfc-editor.org (https://www.rfc-editor.org/rfc/rfc1319.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       This document describes the MD2 message-digest algorithm. The",
+        "       as output a 128-bit \"fingerprint\" or \"message digest\" of the input.",
+        "       two messages having the same message digest, or to produce any",
+        "       message having a given prespecified target message digest. The MD2",
+        "       License to use MD2 is granted for non-commerical Internet Privacy-"
+      ]
+    },
+    {
+      "key": "filesRfcMdTextFallback",
+      "url": "https://www.rfc-editor.org/rfc/rfc1320.html",
+      "requestedRef": "https://www.rfc-editor.org/rfc/rfc1320.html",
+      "title": "www.rfc-editor.org (https://www.rfc-editor.org/rfc/rfc1320.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "       3. MD4 Algorithm Description                                        2",
+        "       This document describes the MD4 message-digest algorithm [【2†1】]. The",
+        "       as output a 128-bit \"fingerprint\" or \"message digest\" of the input.",
+        "       two messages having the same message digest, or to produce any",
+        "       message having a given prespecified target message digest. The MD4"
+      ]
+    },
+    {
+      "key": "filesLastSourceAudit",
+      "url": "https://c2sp.org/BLAKE3@v1.0.0",
+      "title": "The BLAKE3 Hashing Framework | C2SP (https://c2sp.org/BLAKE3%40v1.0.0)",
+      "status": "opened",
+      "relevantFacts": [
+        "【1†BLAKE3†github.com】 was designed by Jack O'Connor, Jean-Philippe Aumasson, Samuel Neves, and Zooko Wilcox-O'Hearn. BLAKE3 is an evolution from its predecessors 【2†BLAKE†aumasson.jp】 (a SHA-3 competition finalist) and 【3†BLAKE2†blake2.net】 (RFC 7693). BLAKE2 is widely used in open-source and proprietary software. For example, the Linux kernel uses BLAKE2 in its cryptographic pseudorandom generator, and the WireGuard secure tunnel protocol uses BLAKE2 for hashing and keyed hashing.",
+        "At the time of its publication, BLAKE3 was demonstrated to be approximately five times faster than BLAKE2 when hashing 16 kibibyte messages using a single thread on CPUs supporting AVX-512. When using multiple threads and hashing large messages, BLAKE3 can be more than twenty times faster than BLAKE2.",
+        "  * Keyed hashing (`keyed_hash`): The keyed mode takes a 32-byte key in addition to the input. BLAKE3 in this mode can be used whenever a pseudorandom function (PRF) or message authentication code (MAC) is needed. For example, keyed BLAKE3 can replace HMAC instances.",
+        "BLAKE3 works with 32-bit words and arrays thereof. Array indexing starts at zero: the first element of an n-element array `v` is `v[0]` and the last one is `v[n - 1]`. The sequence of all elements is denoted by `v[0..n-1]`.",
+        "If two or more flags are set, then all their respective bits must appear in the `flags` compression function input. This combination may be implemented as an OR, XOR, or integer addition between the flags. For example, if `CHUNK_START` and `KEYED_HASH` are set, then the flags input word will be the 32-bit word 0x00000011, where `0x11 = 0x10 | 0x01 = 0x10 ^ 0x01 = 0x10 + 0x01`."
+      ]
+    },
+    {
+      "key": "filesLastSourceAudit",
+      "url": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/464551a8-9fc4-428e-b3d3-bc5bfb2e73a5",
+      "title": "[MS-NLMP]: NTLM v1 Authentication | Microsoft Learn (https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/464551a8-9fc4-428e-b3d3-bc5bfb2e73a5)",
+      "status": "opened",
+      "relevantFacts": [
+        "Access to this page requires authorization. You can try 【1†signing in】 or changing directories.",
+        "Note The LM and NTLM authentication versions are not negotiated by the protocol. It MUST be configured on both the client and the server prior to authentication. The 【5†NTOWF】 v1 function defined in this section is NTLM version-dependent and is used only by NTLM v1. The 【6†LMOWF】 v1 function defined in this section is also version-dependent and is used only by LM and NTLM v1.",
+        "Passwd: Password of the user. If the password is longer than 14 characters, the LMOWF v1 cannot be computed.  For LMOWF v1, if the password is shorter than 14 characters, it is padded by appending zeroes.",
+        "ResponseKeyNT: Temporary variable to hold the results of calling NTOWF().",
+        "     Define NTOWFv1(Passwd, User, UserDom) as MD4(UNICODE(Passwd))",
+        "     Define LMOWFv1(Passwd, User, UserDom) as"
+      ]
+    },
+    {
+      "key": "filesLastSourceAudit",
+      "url": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-xca/",
+      "title": "[MS-XCA]: Xpress Compression Algorithm | Microsoft Learn (https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-xca/)",
+      "status": "opened",
+      "relevantFacts": [
+        "Access to this page requires authorization. You can try 【1†signing in】 or changing directories.",
+        "Specifies the three variants of the Xpress Compression Algorithm: LZ77+Huffman, Plain LZ77, LZNT1, and their respective decompression algorithms. This algorithm efficiently compresses data that contains repeated byte sequences. It is not designed to compress image, audio, or video data. Between the trade-offs of compressed size and CPU cost, it heavily emphasizes low CPU cost.",
+        "6/25/2021  | 9.0  | Major  | 【9†PDF†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【10†DOCX†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【11†Errata†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【12†Diff†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】",
+        "4/7/2021  | 8.0  | Major  | 【13†PDF†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【14†DOCX†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【15†Diff†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】",
+        "3/4/2020  | 6.0  | Major  | 【19†PDF†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【20†DOCX†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【21†Errata†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】 | 【22†Diff†winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net】"
+      ]
+    },
+    {
+      "key": "filesLastSourceAudit",
+      "url": "https://www.cipa.jp/e/std/std-sec.html",
+      "title": "CIPA - Camera & Imaging Products Association: CIPA Standards (https://www.cipa.jp/e/std/std-sec.html)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesLastSourceAudit",
+      "url": "https://www.gnu.org/software/coreutils/manual/html_node/Changing-file-attributes.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesLastSourceAudit",
+      "url": "https://www.gnu.org/software/tar/manual/html_node/Standard.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesExactChinaFacts",
+      "url": "https://info.support.huawei.com/hedex/api/pages/EDOC1100331207/FZM1012J/06/resources/zh-cn_topic_0000002022607466.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesExactChinaFacts",
+      "url": "https://help.aliyun.com/zh/ecs/user-guide/file-compression",
+      "title": "压缩文件后向实例上传文件-云服务器 ECS(ECS)-阿里云帮助中心 (https://help.aliyun.com/zh/ecs/user-guide/file-compression)",
+      "status": "opened",
+      "relevantFacts": [
+        "复制 MD 格式",
+        "  2. 向实例上传压缩包：通过工具，将压缩包上传到实例。选择上传文件的方式，请参见【21†选择传输文件的方式】。",
+        "Windows  | Linux  | tar.gz  | 7-zip  | Windows压缩tar.gz  | Linux解压tar.gz",
+        "macOS、Linux  | Linux  | tar.gz  | tar（命令行）  | macOS、Linux压缩tar.gz  | Linux解压tar.gz",
+        "### Windows压缩tar.gz压缩包",
+        "在Windows压缩tar.gz压缩包时，需要安装额外的压缩工具，本文以通过7-Zip工具压缩为例。"
+      ]
+    },
+    {
+      "key": "filesExactChinaFacts",
+      "url": "https://www.qrcode.com/zh/about/version.html",
+      "title": "关于纠错功能| QRcode.com | DENSO WAVE (https://www.qrcode.com/zh/about/version.html)",
+      "status": "opened",
+      "relevantFacts": [
+        "“码元结构”是指二维码中的码元数。从版本1(21码元×21码元)开始，在纵向和横向各自以4码元为单位递增，一直到版本40(177码元×177码元)。",
+        "21-30",
+        "31-40"
+      ]
+    },
+    {
+      "key": "filesExactChinaFacts",
+      "url": "https://www.gnu.org/software/tar/manual/html_node/Standard.html",
+      "title": "Internal Error ()",
+      "status": "connector_error",
+      "relevantFacts": [
+        "Failed to fetch https://www.gnu.org/software/tar/manual/html_node/Standard.html: (400) Timeout fetching"
+      ]
+    },
+    {
+      "key": "filesQaPreciseSources",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_XOR",
+      "title": "按位异或（^） - JavaScript | MDN (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_XOR)",
+      "status": "opened",
+      "relevantFacts": [
+        "  * 【10†See all…】",
+        "  * 【21†Animations】",
+        "  * 【62†Security】",
+        "  * 【65†Getting started modules】",
+        "# 按位异或（^）",
+        "按位异或（`^`）运算符在两个操作数有且仅有一个对应的二进制位为 `1` 时，该位的结果值为 `1`。"
+      ]
+    },
+    {
+      "key": "filesQaPreciseSources",
+      "url": "https://github.com/lz4/lz4/blob/dev/doc/lz4_Block_format.md",
+      "title": "lz4/doc/lz4_Block_format.md at dev · lz4/lz4 · GitHub (https://github.com/lz4/lz4/blob/dev/doc/lz4_Block_format.md)",
+      "status": "opened",
+      "relevantFacts": []
+    },
+    {
+      "key": "filesQaPreciseSources",
+      "url": "https://github.com/lz4/lz4/blob/dev/doc/lz4_Frame_format.md",
+      "title": "lz4/doc/lz4_Frame_format.md at dev · lz4/lz4 · GitHub (https://github.com/lz4/lz4/blob/dev/doc/lz4_Frame_format.md)",
+      "status": "opened",
+      "relevantFacts": []
+    }
+  ],
+  "notPublishedDownloads": [
+    {
+      "path": "/tmp/files-PDF32000_2008.pdf",
+      "officialSource": "https://raw.githubusercontent.com/adobe/dc-acrobat-sdk-docs/master/docs/standards/pdfstandards/pdf/PDF32000_2008.pdf",
+      "readAs": "/tmp/files-PDF32000_2008.txt",
+      "sections": "4.14 content stream; 4.15 cross reference table; 4.19 electronic document; 4.23 font; 4.28 indirect object",
+      "sha256": "9de0ca9e8570d6209e8bd48a355be8eb6ec376acfc3fc3ae97cd8730351417ff"
+    }
+  ],
+  "semanticCorrections": [
+    "Extract RGBA emits delimiter-separated decimal component text, not an ArrayBuffer.",
+    "Image Opacity parameter is percent, separate from normalized alpha.",
+    "Sharpen Image uses positive unsharp-mask difference with Gaussian blur, amount and threshold.",
+    "GOST Hash selector supports both 1994 and 2012 versions.",
+    "Fletcher naming here is total output width; RFC 1146 names accumulator width.",
+    "View Bit Plane displays one bits black and zero bits white.",
+    "Raw Deflate / zlib / gzip and ZIP / TAR are individually explained.",
+    "BLAKE3 output parameter is bytes, MD6/SHAKE parameters are bits."
+  ],
+  "exampleValidation": {
+    "count": 35,
+    "checks": [
+      {
+        "name": "op:MD5",
+        "actual": "900150983cd24fb0d6963f7d28e17f72"
+      },
+      {
+        "name": "op:SHA2",
+        "actual": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      {
+        "name": "op:SHA1",
+        "actual": "a9993e364706816aba3e25717850c26c9cd0d89d"
+      },
+      {
+        "name": "op:SHA3",
+        "actual": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532"
+      },
+      {
+        "name": "op:SM3",
+        "actual": "66c7f0f462eeedd9d1f2d46bdc10e4e24167c4875cf2f7a2297da02b8f4ba8e0"
+      },
+      {
+        "name": "op:RIPEMD",
+        "actual": "8eb208f7e05d987a9b044a8e98c6b087f15a0bfc"
+      },
+      {
+        "name": "op:BLAKE2b",
+        "actual": "ba80a53f981c4d0d6a2797b69f12f6e94c212f14685ac4b74b12bb6fdbffa2d17d87c5392aab792dc252d5de4533cc9518d38aa8dbf1925ab92386edd4009923"
+      },
+      {
+        "name": "op:BLAKE2s",
+        "actual": "508c5e8c327c14e2e1a72ba34eeb452f37458b209ed63a294d999b4c86675982"
+      },
+      {
+        "name": "SHAKE128 128-bit example",
+        "actual": "5881092dd818bf5cf8a3ddb793fbcba7"
+      },
+      {
+        "name": "raw DEFLATE example",
+        "actual": "616263"
+      },
+      {
+        "name": "zlib example",
+        "actual": "616263"
+      },
+      {
+        "name": "Adler-32 abc",
+        "actual": "024D0127"
+      },
+      {
+        "name": "CRC-32 abc",
+        "actual": "352441C2"
+      },
+      {
+        "name": "CRC-32 standard check",
+        "actual": "CBF43926"
+      },
+      {
+        "name": "Fletcher-8 1,2 example",
+        "actual": "43"
+      },
+      {
+        "name": "Fletcher-16 1,2 example",
+        "actual": "0403"
+      },
+      {
+        "name": "Fletcher-32 1,2 example",
+        "actual": "00040003"
+      },
+      {
+        "name": "Fletcher-64 1,2 example",
+        "actual": "0000000400000003"
+      },
+      {
+        "name": "XOR example",
+        "actual": "03"
+      },
+      {
+        "name": "Internet checksum example",
+        "actual": "FFFC"
+      },
+      {
+        "name": "Luhn example",
+        "actual": 70
+      },
+      {
+        "name": "take nth bytes",
+        "actual": "BDF"
+      },
+      {
+        "name": "drop nth bytes",
+        "actual": "BDF"
+      },
+      {
+        "name": "take byte slice",
+        "actual": "BCD"
+      },
+      {
+        "name": "drop byte slice",
+        "actual": "AD"
+      },
+      {
+        "name": "remove NUL",
+        "actual": "4100300042"
+      },
+      {
+        "name": "remove NUL output",
+        "actual": "A0B"
+      },
+      {
+        "name": "32-bit byte order",
+        "actual": "78563412"
+      },
+      {
+        "name": "RGB inverse",
+        "actual": [
+          245,
+          235,
+          225
+        ]
+      },
+      {
+        "name": "low bits to ASCII",
+        "actual": "A"
+      },
+      {
+        "name": "opacity percent",
+        "actual": 100.0
+      },
+      {
+        "name": "cover scale",
+        "actual": 1.0
+      },
+      {
+        "name": "contain scale",
+        "actual": 0.5
+      },
+      {
+        "name": "QR version formula",
+        "actual": 177
+      },
+      {
+        "name": "TAR 600-byte member payload blocks",
+        "actual": 1024
+      }
+    ]
+  },
+  "artifact": {
+    "path": "/workspace/arg-tool/public/knowledge/articles/files.js",
+    "capabilities": 114,
+    "scopeGroups": {
+      "image": 39,
+      "files": 73,
+      "fragments": 1,
+      "models": 1
+    },
+    "validation": "Exact canonical ID coverage, references resolve, local implementation URLs exist, ES module import succeeds."
+  },
+  "limitations": [
+    "Connector failed to open GNU tar Standard three times due fetching timeout, but official indexed snippet explicitly supports 512-byte blocks.",
+    "Adobe PDF normative file recovered from official Adobe repository over allowed raw.githubusercontent.com after connector PDF parsing failed; read locally with pdftotext.",
+    "Huawei official permission documentation indexed content supplies rwx=4+2+1; connector open was unavailable.",
+    "Some primary sources remain English, supplemented by Chinese explanatory text and locally served official implementation references. No actual mainland carrier testing was performed."
+  ]
+}

@@ -1,0 +1,2 @@
+import {solveSubstitution} from '../vendor/round1/substitution/solver.js';
+self.onmessage=({data})=>{try{const results=[];for(let i=0;i<data.attempts;i++){const r=solveSubstitution(data.text,{runs:data.runs,seed:12345+i*7919,locked:data.locked});if(!results.some(x=>x.key===r.key))results.push(r);results.sort((a,b)=>b.score-a.score);self.postMessage({results,done:i===data.attempts-1,progress:i+1});}}catch(e){self.postMessage({error:e.message});}};

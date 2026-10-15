@@ -1,0 +1,365 @@
+{
+  "pins": {
+    "datasets/currency-codes": "7cdc784a3090d253721a1f00cfd5843b46a4dc64",
+    "astronexus/HYG-Database": "c7f7f883fe678cc7680169a50ccd7dcc49b060ce",
+    "mattiaverga/OpenNGC": "75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06",
+    "dzangolab/marine-signal-flags": "ce7c4c5a6db900ce25be34b37dca522a9bf7434a",
+    "SabakiHQ/sgf": "7533e7d46d90e4e82dcc269c9af71e89e8cc33bf"
+  },
+  "packages": {
+    "doken": {
+      "version": "1.0.0",
+      "integrity": "sha512-KoWqzS6SrHWKqbRU8DlXAEja0IorWvSN4O37ptueAc/unSnbd4lOYGFKNaRrOH2CayIrdkQje3EoTlg6Xpn3xg=="
+    }
+  },
+  "files": [
+    {
+      "path": "upstream/discovery/sources/currency/codes-all.csv",
+      "url": "https://raw.githubusercontent.com/datasets/currency-codes/7cdc784a3090d253721a1f00cfd5843b46a4dc64/data/codes-all.csv",
+      "sha256": "c4b6829a966f0564e77dc6c2d100d268cce61b30f7637bf3d5ec626b0393407f"
+    },
+    {
+      "path": "upstream/discovery/sources/currency/README.md",
+      "url": "https://raw.githubusercontent.com/datasets/currency-codes/7cdc784a3090d253721a1f00cfd5843b46a4dc64/README.md",
+      "sha256": "0c45a5d4a604ffabc87420aeab4fe5872aa7d9be6a52a2843540ef14d5a79f7e"
+    },
+    {
+      "path": "upstream/discovery/sources/currency/datapackage.json",
+      "url": "https://raw.githubusercontent.com/datasets/currency-codes/7cdc784a3090d253721a1f00cfd5843b46a4dc64/datapackage.json",
+      "sha256": "ad6fbe820d2eef7e656a7eedae140e4f1c096a75e2222d1a1c3c940b99d0517d"
+    },
+    {
+      "path": "upstream/discovery/sources/hyg/hygdata_v41.csv.gz",
+      "url": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/hyg/CURRENT/hygdata_v41.csv",
+      "sha256": "b6ae3545609f2f0ccdadd28a88c40eba48eb69b03d1e71bac3e433b0196eeced",
+      "compression": "gzip",
+      "content_sha256": "d9f69fd86bbf90a4e4d52b4c5c53eacfa6dfc0bfdef85bfd94f095e0bebe4ebd",
+      "content_bytes": 33932548
+    },
+    {
+      "path": "upstream/discovery/sources/hyg/LICENSE",
+      "url": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/LICENSE",
+      "sha256": "f404190403d31e0ce7223f4cb7af954485ad88077358330754dc5c892a856627"
+    },
+    {
+      "path": "upstream/discovery/sources/hyg/README.md",
+      "url": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/hyg/README.md",
+      "sha256": "81f765951e60131e49ccc91376815791e130ad1db46047eb1384d3ba6bcb5af4"
+    },
+    {
+      "path": "upstream/discovery/sources/ngc/NGC.csv",
+      "url": "https://raw.githubusercontent.com/mattiaverga/OpenNGC/75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06/database_files/NGC.csv",
+      "sha256": "d3cd7f1ab83122e81b3453d765d93b6dbbb15c910716c9e4ff99c7e916cb2218"
+    },
+    {
+      "path": "upstream/discovery/sources/ngc/addendum.csv",
+      "url": "https://raw.githubusercontent.com/mattiaverga/OpenNGC/75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06/database_files/addendum.csv",
+      "sha256": "1d8f0914e643ada325a5a94d88d8fefad6a4937a2f77cc34f21483af22b11983"
+    },
+    {
+      "path": "upstream/discovery/sources/ngc/NGC_guide.txt",
+      "url": "https://raw.githubusercontent.com/mattiaverga/OpenNGC/75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06/NGC_guide.txt",
+      "sha256": "b7fca022985daa0f41a8bc8dd7028513e4db9ca96a2cfc380b68ff4c2e812810"
+    },
+    {
+      "path": "upstream/discovery/sources/ngc/README.md",
+      "url": "https://raw.githubusercontent.com/mattiaverga/OpenNGC/75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06/README.md",
+      "sha256": "382a717d05a2b75fcc22e9769340b5ec0a6d6beec210e43b5993b1c2b9efd7d2"
+    },
+    {
+      "path": "upstream/discovery/sources/ngc/CC-BY-SA-4.0.txt",
+      "url": "https://raw.githubusercontent.com/mattiaverga/OpenNGC/75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06/LICENSES/CC-BY-SA-4.0.txt",
+      "sha256": "cde7883b9050a1104f4ac19a1572aafd6e5d7323b68351aaf51fbf4beba54966"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/LICENSE",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/LICENSE",
+      "sha256": "8f1195d55a2fd315a07d812328470ca9ba2abb78c8d317ff19619d5125e00cea"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/README.md",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/README.md",
+      "sha256": "5672d3ce2d68abfc7d51ee2acfdfd79d17a469252d78ee63398c548320b06376"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/LICENSE",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/LICENSE",
+      "sha256": "e7a7c671a7b25a260fca524f94426bff885ceebe1fb4275118bbce674325d373"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/README.md",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/README.md",
+      "sha256": "a15cb89abacf9f159f86364338cdc2d75ca04e149886df660d40677f2f75e856"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/package.json",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/package.json",
+      "sha256": "ec12ab55ab3551895f1e7078e5c28a1d8c118a2fc2cb2faa1ea4cccdd0944217"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/a.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/a.svg",
+      "sha256": "1745ffc8ffa0e2bbc3b98c8da092dcb78583620db1399935889b4316ff2c5da9"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/b.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/b.svg",
+      "sha256": "318c2a83590cd88f87bfcc63bd41baf62f2c7e05eec8b48a721f94fd2ef316b9"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/c.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/c.svg",
+      "sha256": "a657fe52cbde775295ae899b6cdc94a855ce16a95a0c99a1a84681eade373f98"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/d.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/d.svg",
+      "sha256": "8f10590f0b0286900203faa4ed8485ac44ad269993c42812f183406bc6476e71"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/e.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/e.svg",
+      "sha256": "f374da1cca26f120b8c3d8a0e72515467bb443d7f2bc690e01c9df71c7332e0e"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/f.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/f.svg",
+      "sha256": "802823a59a5583ac77e6d834f489aa1f96938184e6590f84f080deb16c14518c"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/g.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/g.svg",
+      "sha256": "d6fdfb56fb67d2f49611bf306339841e9b1d316c6454986ea159608c192a403f"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/h.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/h.svg",
+      "sha256": "3b739e263ccf8858acc19aa5c25163a05957d09867e161b458b71c910fe19133"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/i.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/i.svg",
+      "sha256": "9d222bab7de26bf266df650c2d657b2e5cce59f828a784ddfca436b4b62e1d37"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/j.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/j.svg",
+      "sha256": "3bc2250721e0dbe4eec58f8ecba6630e928faaee27efa7cac34a390a940166f5"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/k.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/k.svg",
+      "sha256": "1ef6d4f082831ad5d9cd80c8dfc17326249a1b80d9f87278cd9486305ba157a1"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/l.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/l.svg",
+      "sha256": "7b863466ee61cd2fddeb5557c43c76c9b935fd673e6196757a8eb155724c9956"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/m.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/m.svg",
+      "sha256": "acb9b9cf2da0c8abe85cb3c05de2819f674c1a13d8a0feecdc1c814502a5df88"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/n.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/n.svg",
+      "sha256": "d9c9273361b58dd81e2eae35f479d369e0f7112af0c3b22b84bd09960fd6f60d"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/o.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/o.svg",
+      "sha256": "2357b2ecde8059f2fad15f665a4b4b60f35295073f4378352d255bf7e41911ad"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/p.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/p.svg",
+      "sha256": "75ab7f2d3448f82d3ebaa582e4345fc140a5a493538d5b08666e072e10c54629"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/q.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/q.svg",
+      "sha256": "40ce4395fe2287d1db68843170ec6c82d07a8bb510346cedbf218393c6bdaa19"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/r.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/r.svg",
+      "sha256": "a50c2920626c47ac1798eaba337d2fcb3fdac9921a0b576e9542e9c7ce547731"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/s.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/s.svg",
+      "sha256": "a0c887cf67a9b7d633b0b1c858d83d4f55e2e02b9a3874cc778c0a20b820f245"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/t.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/t.svg",
+      "sha256": "00ad119f63a386641e7f2cf1cb83c843bd45a3209a68c30b08acde9e1ce681be"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/u.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/u.svg",
+      "sha256": "768bc2803880d9903cbfaadbb5e20b5d1724c3061cc217253476639ae63773ed"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/v.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/v.svg",
+      "sha256": "9539f2c3c050852945ff983edbca70d3e60a8ac8c61479b52d7df1bd84c88f15"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/w.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/w.svg",
+      "sha256": "c5080e9bca403af4347d47b0db3d865655a8da80c624d2ff8db71c74ab7b1130"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/x.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/x.svg",
+      "sha256": "20646e0de2d41b622dce9e47ecec7b8da397ee5623ef97e356622afbdacfafc1"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/y.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/y.svg",
+      "sha256": "d33b63bc67d97264faddd156bec0fba8ba34a970d8358786136fe6d7c717889a"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/z.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/z.svg",
+      "sha256": "a9cc2af82e2487e97239af6811ff77a547a46bffe13d1b83846906670139b4c4"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/0.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/0.svg",
+      "sha256": "a2da24771c1372c4973bbe97b48c9f94e5d77e47afe7efcf3ea659139bdd63ef"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/1.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/1.svg",
+      "sha256": "8e99b252233159416133f89bb38174c921cff4ac151c3a0433b03aaf614c48b2"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/2.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/2.svg",
+      "sha256": "22335a843af323293f10b0d280866fab1c8e8a41d34a665bf2e43d8de81b26b2"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/3.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/3.svg",
+      "sha256": "2cd8f1ae7e76fb91a73b1ce6453f089931f58b43bd2dba1b9fbbadec15e3d900"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/4.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/4.svg",
+      "sha256": "9df1c946e0ea10b386cfd30b917183794007b1dec69dc8bf90da3e2726543d89"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/5.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/5.svg",
+      "sha256": "3db434eccfdfb0cddcf087258b7cd7e625013cde80ea939e75a6394d05a30971"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/6.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/6.svg",
+      "sha256": "e568fcd9addba8c506dd7cc42c228734ba713b66b85d47557b87b4c41ae77c74"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/7.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/7.svg",
+      "sha256": "d3c98ec1b3c2ea80408521d12d9969288dd95bb9f4a2fc00d4c8d2a1f716bbdb"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/8.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/8.svg",
+      "sha256": "756d285fab85197bce299c22afad58203b5c8cab3b4287ceb4b54f0aa40d27f8"
+    },
+    {
+      "path": "upstream/discovery/sources/marine/flags/9.svg",
+      "url": "https://raw.githubusercontent.com/dzangolab/marine-signal-flags/ce7c4c5a6db900ce25be34b37dca522a9bf7434a/dist/svg/9.svg",
+      "sha256": "7fe3cd8b1f29c42cebcd47c3b2700053edfa244b84bc71c281823cc886bf6647"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/main.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/main.js",
+      "sha256": "3110de91f06c4ae612572417847ac7b6181dbaaf76ebeffe7ebf57a6f58bb53c"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/helper.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/helper.js",
+      "sha256": "e2d8536e82990d21c9642cecde666ea5927fe9e95db6ef61ef857632a9ed6db7"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/parse.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/parse.js",
+      "sha256": "adfc6624e46521f5a3191d68d418d52d0a3d711e258aa373ea5603164e7d66c0"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/tokenize.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/tokenize.js",
+      "sha256": "3bf0cc6c0cbb7cd82bf7c25f83cd455907b21e203dc1c4e1ef11bf965d621b51"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/peekable.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/peekable.js",
+      "sha256": "a21d4c8e93e9c4d1e1551915390acf76deca7f2b952ffbc92c8acd20c14947df"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/stringify.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/stringify.js",
+      "sha256": "8988bc6b40e1e3852cc52cafbea0486a692fa8b2b80d3ec131cc3985a3765b92"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/iconv-lite.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/iconv-lite.js",
+      "sha256": "1d623d67cfccb02b688046c1b3f16c68ffebcda2f7739cacfbdfbe4b6679d2ff"
+    },
+    {
+      "path": "upstream/discovery/sources/sgf/src/jschardet.js",
+      "url": "https://raw.githubusercontent.com/SabakiHQ/sgf/7533e7d46d90e4e82dcc269c9af71e89e8cc33bf/src/jschardet.js",
+      "sha256": "d323c00628933c9beca289a63e6905550c8ff5f5829480e23abb9f7fa7d11f6c"
+    },
+    {
+      "path": "upstream/discovery/sources/doken-1.0.0.tgz",
+      "url": "https://registry.npmjs.org/doken/-/doken-1.0.0.tgz",
+      "sha256": "a35c7c9d0ca437f2651808eeca9df40980eb6b2a3b06dca446e506219235b484"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/LICENSE",
+      "package": "doken@1.0.0",
+      "sha256": "804d4639066222fb26d3df8cac114703e8262d2004e44e7f1455a04f5a30e6fb"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/tests/createTokenizer.test.js",
+      "package": "doken@1.0.0",
+      "sha256": "c8efde6e1909fea228bf3bfbcf705916e69428ecc0eb5479cab78ad58fe2b676"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/tests/tap-snapshots/createTokenizer.test.js-TAP.test.js",
+      "package": "doken@1.0.0",
+      "sha256": "2d01b70c718b28b980fe97c2ec1830e85394d621e6b7f7fb3d3ee5bf9856b0c3"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/src/main.js",
+      "package": "doken@1.0.0",
+      "sha256": "2a9915d97f7e1b8640dbc0efa5560062729f7551166bab17147322ca5ebb4200"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/package.json",
+      "package": "doken@1.0.0",
+      "sha256": "3e7f7e471fb5888eeb912ddbd006fdea1952d4b0cff9f82c17edb95955cb1c7a"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/README.md",
+      "package": "doken@1.0.0",
+      "sha256": "723f9b5460c5816e2aa67377c1ce78e0fe8fe42eec4ce0d5df234095edc1615a"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/src/main.d.ts",
+      "package": "doken@1.0.0",
+      "sha256": "75e79931ffbbc60e64c9e3c0d66ad91d68a005666fbf95d8d403abedac5416cb"
+    },
+    {
+      "path": "upstream/discovery/sources/doken/.github/workflows/ci.yml",
+      "package": "doken@1.0.0",
+      "sha256": "c0a615c35b714fc9d2f74a88df2427059bdad3149f7c796ba22bdaf46be5b3cd"
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+.r4-root {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.r4-box {
+  padding: 18px;
+  border: 1px solid var(--border, #263345);
+  background: #101722;
+  min-width: 0;
+}
+.r4-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+  margin: 10px 0;
+}
+.r4-row > .r1-field {
+  flex: 1 1 135px;
+  min-width: 0;
+}
+.r4-row button {
+  flex: 0 1 auto;
+}
+.r4-panel input,
+.r4-panel select,
+.r4-panel textarea {
+  max-width: 100%;
+  min-width: 0;
+}
+.r4-panel textarea {
+  width: 100%;
+}
+.r4-panel button {
+  min-height: 44px;
+  white-space: normal;
+}
+.r4-view {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  border: 1px solid #354454;
+  background: #0b111b;
+  overflow: hidden;
+  touch-action: none;
+}
+.r4-view canvas {
+  display: block;
+  max-width: 100%;
+}
+.r4-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.65fr);
+  gap: 16px;
+}
+.r4-note {
+  color: #a9b8c8;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.r4-list {
+  display: grid;
+  gap: 8px;
+  max-height: 340px;
+  overflow: auto;
+}
+.r4-list button {
+  text-align: left;
+  width: 100%;
+  overflow-wrap: anywhere;
+}
+.r4-output {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 350px;
+  overflow: auto;
+  padding: 12px;
+  color: #bfeae7;
+}
+.r4-chess {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  width: min(100%, 520px);
+  aspect-ratio: 1;
+  margin: auto;
+  contain: layout;
+}
+.r4-chess button {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  min-height: 0;
+  aspect-ratio: 1;
+  color: #fff;
+  font-size: clamp(24px, 5vw, 46px);
+  position: relative;
+  background: #7f8e98;
+  text-shadow: 0 1px 2px #000;
+}
+.r4-chess button:nth-child(16n + 2),
+.r4-chess button:nth-child(16n + 4),
+.r4-chess button:nth-child(16n + 6),
+.r4-chess button:nth-child(16n + 8),
+.r4-chess button:nth-child(16n + 9),
+.r4-chess button:nth-child(16n + 11),
+.r4-chess button:nth-child(16n + 13),
+.r4-chess button:nth-child(16n + 15) {
+  background: #304354;
+}
+.r4-chess button[data-color="b"] {
+  color: #151c28;
+  text-shadow: 0 0 2px #f8e4ae;
+}
+.r4-chess button.selected {
+  box-shadow: inset 0 0 0 3px #ffc45b;
+}
+.r4-chess small {
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  font-size: 10px;
+  color: #e8edf4;
+  text-shadow: none;
+}
+.r4-moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 250px;
+  overflow: auto;
+}
+.r4-moves button[aria-current="true"] {
+  border-color: #ffc45b;
+  color: #ffc45b;
+}
+.r4-view svg {
+  max-width: 100%;
+}
+.r4-table {
+  overflow: auto;
+}
+.r4-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.r4-table td,
+.r4-table th {
+  padding: 8px;
+  border-bottom: 1px solid #29394d;
+  text-align: left;
+}
+.r4-panel [hidden] {
+  display: none !important;
+}
+@media (max-width: 700px) {
+  .r4-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .r4-box {
+    padding: 12px;
+  }
+  .r4-view {
+    height: 350px;
+  }
+  .r4-row > button {
+    flex: 1 1 100px;
+  }
+  .r4-row > .r1-field {
+    flex-basis: 115px;
+  }
+  .r4-chess button {
+    font-size: clamp(23px, 8vw, 40px);
+  }
+}
+
+.r4-row > select {
+  width: auto;
+  flex: 1 1 180px;
+}
+.r4-upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.r4-upload span {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.r4-panel input[type="file"].r4-file-hidden {
+  display: none;
+}
+
+
+/* Fragment editing is a canvas + inspector on desktop, with adjacent touch controls on phones. */
+.frag-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--line)}.frag-toolbar>.r1-field{margin:0;flex:1 1 260px}.frag-toolbar .r4-upload{gap:8px}.frag-toolbar .r4-upload span{max-width:260px;max-height:2.8em;overflow:hidden}.frag-history{display:flex;gap:8px;flex-wrap:wrap}
+.frag-workspace{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:16px;align-items:start}.frag-stage-panel,.frag-inspector{min-width:0}.frag-stage-panel{position:sticky;top:80px}.frag-stage-panel>.r4-note{font-size:12px;margin:10px 0}.frag-viewbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.frag-modes,.frag-zoom{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.frag-viewbar button{padding:8px 10px;font-size:13px}.frag-zoom output{min-width:44px;font:12px var(--mono);text-align:right;color:var(--cyan)}#frag-view{height:clamp(380px,62dvh,760px);touch-action:none;user-select:none;cursor:grab}#frag-view[data-mode=edit]{cursor:default}#frag-view:active{cursor:grabbing}#frag-view .konvajs-content{max-width:none}#frag-view canvas{max-width:none}.frag-selection{margin:8px 0;color:var(--cyan);font-size:13px;overflow-wrap:anywhere}.frag-card{padding:16px;background:var(--surface);border:1px solid var(--line);margin-bottom:12px}.frag-card .r1-field{margin-bottom:12px}.frag-quick,.frag-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.frag-quick button{padding:8px 6px;font-size:13px}.frag-adjust{margin:14px 0;border-top:1px solid var(--line);padding-top:10px}.frag-card summary{cursor:pointer;min-height:36px;color:var(--muted);font-size:14px;line-height:1.7;padding:4px 0}.frag-card summary:focus-visible{outline:2px solid var(--accent)}.frag-nudge{display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:8px;align-items:end;margin:8px 0 12px}.frag-nudge>.r1-field{margin:0}.frag-arrows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.frag-arrows button{padding:4px;min-height:44px;font-size:20px}.frag-fields{margin-top:12px;align-items:end}.frag-fields>.r1-field{margin:0}.frag-fields input{padding:8px!important}.frag-fields button{min-height:44px}.frag-card input[type=range]{width:100%;height:44px;accent-color:var(--accent)}.frag-card>.r4-note{font-size:12px}.frag-root button:disabled{opacity:.45}.frag-root [aria-pressed=true]{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+@media(max-width:950px){.frag-workspace{grid-template-columns:minmax(0,1fr)}.frag-stage-panel{position:static}.frag-toolbar{padding:12px}.frag-toolbar>.r1-field{flex-basis:100%}.frag-history{width:100%}.frag-history>button{flex:1}.frag-viewbar{gap:8px}.frag-modes,.frag-zoom{flex:1 1 100%;justify-content:space-between}.frag-modes button{flex:1}.frag-zoom button{flex:1}.frag-viewbar button{min-height:44px}#frag-view{height:clamp(240px,44svh,460px)}.frag-stage-panel>.r4-note{margin:8px 0;font-size:12px}.frag-card{padding:12px}.frag-inspector{display:grid;grid-template-columns:1fr;gap:8px}.frag-card{margin:0}.frag-quick{grid-template-columns:repeat(3,minmax(0,1fr))}.frag-quick button{min-height:46px;font-size:13px}.frag-nudge{grid-template-columns:minmax(0,1fr) 112px}.frag-nudge>.r1-field select{padding:9px 6px}.frag-arrows{gap:6px}.frag-card .frag-adjust>summary{min-height:44px;padding:10px 0}.frag-canvas-settings>summary{min-height:44px;padding:10px 0}.frag-toolbar .r4-upload span{max-width:100%}}
+@media(max-width:370px){.frag-quick{grid-template-columns:repeat(2,minmax(0,1fr))}.frag-nudge{grid-template-columns:1fr}.frag-nudge>.r1-field{flex-direction:row;align-items:center}.frag-nudge>.r1-field select{flex:1}.frag-arrows button{min-height:44px}}
+@media(max-height:550px) and (orientation:landscape){#frag-view{height:290px}}

@@ -1,0 +1,227 @@
+{
+  "scope": "Sidebar direct task navigation, 2026-10-13",
+  "baseline": "a5f3b0a",
+  "environment": {
+    "os": "Windows",
+    "node": "v24.19.0",
+    "browser": "Local Google Chrome, Playwright viewport/touch simulation",
+    "python": "Python 3.14, isolated python3 launcher, UTF-8 mode"
+  },
+  "full_run": {
+    "run_at": "2026-10-13T07:48:52.319Z",
+    "passed": false,
+    "checks": [
+      {
+        "command": "node scripts/audit-integrity.mjs",
+        "exit_code": 0,
+        "duration_ms": 1378
+      },
+      {
+        "command": "node scripts/audit-ui.mjs",
+        "exit_code": 0,
+        "duration_ms": 149
+      },
+      {
+        "command": "npm test",
+        "exit_code": 0,
+        "duration_ms": 5696
+      },
+      {
+        "command": "npm run check",
+        "exit_code": 0,
+        "duration_ms": 79799
+      },
+      {
+        "command": "npm run build",
+        "exit_code": 0,
+        "duration_ms": 3205
+      },
+      {
+        "command": "node scripts/browser-site-pages.mjs",
+        "exit_code": 0,
+        "duration_ms": 14794
+      },
+      {
+        "command": "node scripts/browser-ui-components.mjs",
+        "exit_code": 0,
+        "duration_ms": 5624
+      },
+      {
+        "command": "node scripts/browser-ui-layout.mjs",
+        "exit_code": 0,
+        "duration_ms": 45240
+      },
+      {
+        "command": "node scripts/browser-ui-motion.mjs",
+        "exit_code": 0,
+        "duration_ms": 13855
+      },
+      {
+        "command": "node scripts/browser-workspace.mjs",
+        "exit_code": 0,
+        "duration_ms": 60519
+      },
+      {
+        "command": "node scripts/browser-sidebar-routing.mjs",
+        "exit_code": 0,
+        "duration_ms": 9066
+      },
+      {
+        "command": "node scripts/browser-knowledge-pairs.mjs",
+        "exit_code": 0,
+        "duration_ms": 76997
+      },
+      {
+        "command": "node tests/browser-capabilities.mjs",
+        "exit_code": 0,
+        "duration_ms": 29043
+      },
+      {
+        "command": "node scripts/browser-capability-resilience.mjs",
+        "exit_code": 1,
+        "duration_ms": 3743
+      },
+      {
+        "command": "node scripts/browser-task-lifecycle.mjs",
+        "exit_code": 0,
+        "duration_ms": 4455
+      },
+      {
+        "command": "node scripts/browser-reference.mjs",
+        "exit_code": 0,
+        "duration_ms": 58237
+      },
+      {
+        "command": "node scripts/browser-discovery.mjs",
+        "exit_code": 0,
+        "duration_ms": 25679
+      },
+      {
+        "command": "node scripts/browser-turing.mjs",
+        "exit_code": 0,
+        "duration_ms": 21820
+      },
+      {
+        "command": "node scripts/browser-basics.mjs",
+        "exit_code": 0,
+        "duration_ms": 69366
+      },
+      {
+        "command": "node scripts/browser-hex-it.mjs",
+        "exit_code": 0,
+        "duration_ms": 45847
+      },
+      {
+        "command": "node scripts/browser-science.mjs",
+        "exit_code": 0,
+        "duration_ms": 18087
+      },
+      {
+        "command": "node scripts/browser-project-licenses.mjs",
+        "exit_code": 0,
+        "duration_ms": 28053
+      },
+      {
+        "command": "node scripts/browser-privacy.mjs",
+        "exit_code": 0,
+        "duration_ms": 9769
+      },
+      {
+        "command": "node scripts/browser-metadata.mjs",
+        "exit_code": 0,
+        "duration_ms": 1885
+      },
+      {
+        "command": "node scripts/browser-resilience.mjs",
+        "exit_code": 0,
+        "duration_ms": 2791
+      },
+      {
+        "command": "node scripts/browser-smoke.mjs",
+        "exit_code": 0,
+        "duration_ms": 15648
+      },
+      {
+        "command": "node scripts/browser-responsive-smoke.mjs",
+        "exit_code": 0,
+        "duration_ms": 6228
+      },
+      {
+        "command": "node scripts/browser-chef-categories.mjs",
+        "exit_code": 0,
+        "duration_ms": 16162
+      },
+      {
+        "command": "node scripts/browser-chef-corrections.mjs",
+        "exit_code": 0,
+        "duration_ms": 6997
+      },
+      {
+        "command": "node scripts/browser-chef-tools.mjs",
+        "exit_code": 0,
+        "duration_ms": 32766
+      },
+      {
+        "command": "node scripts/browser-round-one.mjs",
+        "exit_code": 0,
+        "duration_ms": 15990
+      },
+      {
+        "command": "node scripts/browser-round-two.mjs",
+        "exit_code": 0,
+        "duration_ms": 14553
+      },
+      {
+        "command": "node scripts/browser-round-three.mjs",
+        "exit_code": 0,
+        "duration_ms": 8087
+      },
+      {
+        "command": "node scripts/browser-round-four.mjs",
+        "exit_code": 0,
+        "duration_ms": 9192
+      },
+      {
+        "command": "node scripts/browser-release-layout.mjs",
+        "exit_code": 0,
+        "duration_ms": 71205
+      },
+      {
+        "command": "node scripts/browser-hunt-smoke.mjs",
+        "exit_code": 0,
+        "duration_ms": 2344
+      },
+      {
+        "command": "node scripts/browser-hunt-media-smoke.mjs",
+        "exit_code": 0,
+        "duration_ms": 12917
+      },
+      {
+        "command": "node scripts/browser-paper-removal.mjs",
+        "exit_code": 0,
+        "duration_ms": 2230
+      },
+      {
+        "command": "node scripts/browser-coderunner.mjs",
+        "exit_code": 0,
+        "duration_ms": 23435
+      }
+    ]
+  },
+  "rechecks": [
+    {
+      "command": "node scripts/browser-capability-resilience.mjs",
+      "exit_code": 0,
+      "reason": "Corrected the new sidebar assertion to retain the shared exact-title-first SM4 search order; both desktop/mobile real engine and failure-recovery checks passed."
+    }
+  ],
+  "effective_passed": true,
+  "effective_count": 39,
+  "total": 39,
+  "unit_tests": 154,
+  "notes": [
+    "No application code changed during the full run or recheck.",
+    "The failed first-run check was a newly authored assertion with the wrong expected search ordering.",
+    "This verifies local source and static build, not a 1Panel deployment or physical mobile devices."
+  ]
+}

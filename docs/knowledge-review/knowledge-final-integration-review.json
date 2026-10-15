@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-10-13T01:58:21.949Z",
+  "reviewer": "/root/learn_reference_sim",
+  "mode": "read-only final integration review",
+  "reviewedFiles": [
+    "public/knowledge/content.js",
+    "public/knowledge/aliases.js",
+    "public/capabilities/registry.js",
+    "public/knowledge/page.js",
+    "public/ui/references.js",
+    "public/ui/core.js",
+    "public/ui/controls.js",
+    "public/ui/layout.js",
+    "scripts/import-knowledge-sources.py",
+    "scripts/audit-integrity.mjs",
+    "scripts/build.mjs",
+    "public/vendor/knowledge/UPSTREAM.json",
+    "public/vendor/knowledge/LICENSE.txt",
+    "public/vendor/knowledge/NOTICE.txt",
+    "public/vendor/knowledge/esolang-park/LICENSE.txt",
+    "public/project-licenses.js",
+    "upstream-manifest.json",
+    "THIRD_PARTY.md",
+    "tests/knowledge.test.mjs"
+  ],
+  "blockingFindings": [],
+  "result": "No current release blocker found in this integration slice.",
+  "staticChecks": {
+    "articles": 528,
+    "visibleTools": 528,
+    "eachVisibleToolOwnsExactLesson": true,
+    "legacyArticles": 40,
+    "legacyAliases": 40,
+    "allOldAliasesRetained": true,
+    "toolCoverage": 52,
+    "coveredTools": 52,
+    "operationCoverage": 505,
+    "coveredOperations": 505,
+    "localReferenceLinkFields": 721,
+    "subdirectoryReferenceURLChecks": "Root and /toolbox/ bases resolve correctly; all actual local targets exist",
+    "mirroredCitations": 29,
+    "mirrorFiles": 27,
+    "mirrorPinMatchesRuntimePin": true,
+    "mirrorSHA256": "All 27 manifest file hashes matched current bytes",
+    "retainedHeaders": "All 23 CyberChef source headers retain original authors and Apache-2.0 license; Esolang Park MIT license retains 2021 Nilay Majorwar notice",
+    "buildIncludesResources": "build.mjs copies public recursively to dist; normal build never runs maintenance fetch"
+  },
+  "reviewConclusions": [
+    "content.js validates one canonical capability per article, unique IDs, section-bound citations and worked examples before registry/DOM work. Frozen nested data prevents accidental in-place changes.",
+    "createRegistry validates exact same-group visible owners and rejects missing lessons. Paired inverse directions retain one article owner; older operation directions continue to resolve through canonical capability aliases.",
+    "All 40 former article IDs map to existing precise articles; compatibility aliases are not duplicate inventory entries.",
+    "ReferenceList uses text-only components and safe links with noopener/noreferrer; actual leading-slash logical asset paths resolve against import.meta.url at the application root, including /toolbox/.",
+    "Knowledge examples use DataList with literal textContent and pre-wrap; they neither interpret code/HTML nor mutate the tool input/result state.",
+    "The knowledge reader handles stale asynchronous related-tool loads with revision guards and disconnect cleanup; it keeps current reader nodes on canonical route re-entry.",
+    "Mirrored docs link both upstream originals and precise license text. Hash manifests cover copies and notices; original runtime/vendor artifacts remain separate."
+  ],
+  "nonBlockingMaintenanceFindings": [
+    {
+      "id": "mirror-cache-version-provenance",
+      "severity": "medium",
+      "file": "scripts/import-knowledge-sources.py",
+      "locator": "fetch(): target.exists() and relative in old_hashes cache branch",
+      "issue": "Cache reuse validates existing bytes against old SHA only, without checking old_manifest.commit or the per-file source_url against current COMMIT/remote. A future coordinated PIN and source-link upgrade could reuse old bytes while emitting source_url for the new commit.",
+      "currentRelease": "Current source docs and runtime PIN both use 8cd426dd4f40f1423912d5fad91b578a86a65112 and current hashes match; no inaccurate current pin found.",
+      "suggestedFix": "Reuse cached source only when old manifest pin and that file source_url match current expected remote. Otherwise fetch newly pinned bytes and then hash.",
+      "status": "fixed",
+      "fixedIn": "scripts/import-knowledge-sources.py",
+      "regression": "tests/knowledge-sources.test.mjs",
+      "validation": "9 isolated Node/Python AST tests pass; actual predicate and fetch exercised with temporary files and stub-only urllib. No importer entrypoint, network or corpus rewrite executed."
+    }
+  ],
+  "limitations": [
+    "No long browser suite or full verify rerun, per freeze instruction; root is running that separately.",
+    "This read-only check covers integration mechanics and current files, not a fresh semantic re-audit of every external document.",
+    "External access and Chinese carrier connectivity are not guaranteed by HTTP/url syntax checks.",
+    "No project files modified; this report is the only new file written under /tmp."
+  ],
+  "maintenanceFixCheckedAt": "2026-10-13T02:06:25.011Z"
+}

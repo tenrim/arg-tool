@@ -1,0 +1,66 @@
+{
+  "scope": [
+    "scripts/browser-capability-resilience.mjs"
+  ],
+  "passed": true,
+  "cause": "The exclusive pre-load SM4 rail search assertion expected only the cipher category/group. The new exact function-specific SM4 lesson correctly also exposes the knowledge category/group.",
+  "routes_asserted": [
+    "browse/codec",
+    "browse/codec/modern",
+    "browse/knowledge",
+    "browse/knowledge/learn-codec"
+  ],
+  "extra_validation": [
+    "Actual knowledge rail group opens the exact SM4 lesson and renders section references.",
+    "Original modern-cipher rail group opens canonical pair:SM4%20Encrypt.",
+    "Real pinned worker encrypts the published single-block vector in ECB/NoPadding; grouped hex is validated as16two-digit bytes before the byte-equivalent known-answer comparison."
+  ],
+  "sm4_known_answer": {
+    "key": "0123456789abcdeffedcba9876543210",
+    "plaintext": "0123456789abcdeffedcba9876543210",
+    "mode": "ECB/NoPadding",
+    "ciphertext": "681edf34d206965e86b3e94f536e4246"
+  },
+  "preserved": [
+    "Catalogue HTTP404/503 injection and visible startup retry.",
+    "Exact original Base64 inverse route and real UTF-8 result.",
+    "Shared world picker label, identity, country/flag state and node retention across countries/airports/ports/currencies.",
+    "Desktop/mobile bounds and absence of runtime errors/missing resources/popups/external requests."
+  ],
+  "read_only_neighbor_review": [
+    {
+      "file": "scripts/browser-workspace.mjs",
+      "finding": "Paper rail search already expects both actual tool and function-specific knowledge categories/groups; RSA command search explicitly targets capability rather than last result."
+    },
+    {
+      "file": "scripts/browser-basics.mjs",
+      "finding": "Punched-tape rail search checks the expected communication group remains visible; no exclusive old category count."
+    },
+    {
+      "file": "scripts/browser-knowledge-pairs.mjs",
+      "finding": "Directory initial/continued counts derive from actual lesson inventory; command search explicitly selects the exact article capability."
+    },
+    {
+      "file": "scripts/browser-chef-tools.mjs",
+      "finding": "first() belongs to exact legacy recipe-discovery query Resize Image, separate from shared tool/knowledge registry; no new duplicate category assumption."
+    }
+  ],
+  "production_source_changed": false,
+  "successful_scenarios": 8,
+  "viewports": [
+    390,
+    1440
+  ],
+  "log": "/workspace/.mist-validation/capability-resilience.log",
+  "pass_lines": [
+    "PASS 390: catalogue HTTP 404, visible startup retry, original inverse and real UTF-8 result",
+    "PASS 390: catalogue HTTP 503, visible startup retry, original inverse and real UTF-8 result",
+    "PASS 390: pre-load SM4 sidebar search, deferred re-filter, actual tool/knowledge groups, cited SM4 lesson and real known-answer encryption",
+    "PASS 390: shared world label association, real country/flag selection, retained node and country context across all four canonical tasks",
+    "PASS 1440: catalogue HTTP 404, visible startup retry, original inverse and real UTF-8 result",
+    "PASS 1440: catalogue HTTP 503, visible startup retry, original inverse and real UTF-8 result",
+    "PASS 1440: pre-load SM4 sidebar search, deferred re-filter, actual tool/knowledge groups, cited SM4 lesson and real known-answer encryption",
+    "PASS 1440: shared world label association, real country/flag selection, retained node and country context across all four canonical tasks",
+    "PASS capability resilience: catalogue 404/503 recovery, shared sidebar discovery and world picker/flag state at desktop/mobile widths; no runtime errors, missing resources, popups or external requests"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "arg-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chinese ARG puzzle workbench with local text, image, audio and file tools",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/build-vendor.mjs && node scripts/server.mjs",
+    "start": "node scripts/build-vendor.mjs && node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/verify-affected.mjs --unit",
+    "check": "node scripts/verify-affected.mjs --static",
+    "verify": "node scripts/verify-affected.mjs",
+    "audit:integrity": "node scripts/audit-integrity.mjs",
+    "audit:ui": "node scripts/audit-ui.mjs",
+    "audit:dependencies": "node scripts/audit-dependencies.mjs",
+    "release": "node scripts/package-release.mjs",
+    "test:all": "node scripts/build-basics.mjs && node scripts/build-vendor.mjs && node scripts/test-all.mjs",
+    "check:all": "node scripts/check.mjs",
+    "verify:all": "node scripts/verify-all.mjs",
+    "test:plan": "node scripts/verify-affected.mjs --plan",
+    "audit:architecture": "node scripts/audit-architecture.mjs",
+    "deps:install": "python scripts/source-dependencies.py install",
+    "deps:check": "python scripts/source-dependencies.py check",
+    "deps:export": "python scripts/source-dependencies.py export",
+    "predev": "npm run deps:check",
+    "prestart": "npm run deps:check",
+    "prebuild": "npm run deps:check && npm run audit:integrity"
+  },
+  "license": "GPL-3.0-or-later"
+}

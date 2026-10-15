@@ -1,0 +1,79 @@
+{
+  "reviewedAt": "2026-10-13",
+  "mode": "独立只读内容与实现复核；没有修改项目文件，没有重新执行完整 UI 测试。",
+  "baselineCommit": "8cd426dd4f40f1423912d5fad91b578a86a65112（CyberChef 11.5.0）",
+  "scope": {
+    "cryptoArticleCount": 95,
+    "filesArticleCount": 114,
+    "method": "审阅全部条目标题与结构，并重点核对古典密码、现代密码、MAC/KDF/签名、位提取、端序、压缩、校验和及密码摘要；固定源码运行仅使用隔离轻量 stub，非整站执行。"
+  },
+  "contentSnapshots": {
+    "public/knowledge/articles/crypto.js": "09fcc29ead556c372471ceac9e60c5d5b23c47df86b7611cff387c7444d5f55f",
+    "public/knowledge/articles/files.js": "3cf188780e10ab7b15df4baae45d55d4a19edff321187ed534f7b6b0387ba255"
+  },
+  "findings": [
+    {
+      "id": "extract-lsb-column-index",
+      "severity": "high",
+      "articleId": "function-op:Extract%20LSB",
+      "kind": "upstream-runtime/content-boundary",
+      "evidence": "固定 ExtractLSB.mjs Column 分支使用 rowWidth+(col+colour*4)，应为 rowWidth+col*4+colour。隔离运行 2×4 图片、R 位0、Column，正确00001111=0f，实际00001000=08。Row示例正确。",
+      "proofFile": "/tmp/knowledge-independent-qa/ExtractLSB.mjs",
+      "fix": "在本站适配层统一纠正 Column 索引，覆盖多列和 R/G/B/A 的不同值回归；如不能修，隐藏错误模式并在边界明确限制，不在 fixed vendor 上无记录修改。",
+      "notifiedRoot": true
+    },
+    {
+      "id": "tcp-checksum-repeat-carry",
+      "severity": "high",
+      "articleId": "function-op:TCP%2FIP%20Checksum",
+      "kind": "upstream-runtime/content-boundary",
+      "evidence": "固定 TCPIPChecksum.mjs 仅回卷一次，实测输入为 FF FF FF FF 00 01；总和0x1ffff→首次0x10000→应再次回卷到1，正确fffe；实际运算0xffff-0x10000=-1。大量输入还会遇 signed >>16 问题。",
+      "proofFile": "/tmp/knowledge-independent-qa/TCPIPChecksum.mjs",
+      "fix": "统一 checksum adapter 边读边回卷、收尾重复回卷并保留16位，再取反；加入双回卷和长输入向量。标准算法说明与实际实现须一致。",
+      "notifiedRoot": true
+    },
+    {
+      "id": "xor-checksum-wrong-reference",
+      "severity": "medium",
+      "articleId": "function-op:XOR%20Checksum",
+      "kind": "citation",
+      "evidence": "bits 来源链接指向 MDN Bitwise_AND，不能支撑 XOR 两位不同为1的真值规则。",
+      "fix": "改为 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_XOR，locator 描述/XOR真值规则；保留实际实现引用。",
+      "notifiedRoot": true
+    },
+    {
+      "id": "gost-key-wrap-output-layout",
+      "severity": "medium",
+      "articleId": "function-pair:GOST%20Key%20Wrap",
+      "kind": "implementation-versus-standard",
+      "evidence": "例子只写规范字段32+8+4=44，但实际固定依赖 @wavesenterprise/crypto-gost-js 2.1.0-RC1 的 wrapKeyGOST 与 wrapKeyCP 返回32 CEK_ENC+4 MAC=36；UKM单独作为算法参数。上游库注释说44，实际缓冲区len=keySize+(blockSize>>1)=36。",
+      "proofFile": "/tmp/knowledge-independent-qa/gostCipher.js",
+      "locator": "wrapKeyGOST line1298 / wrapKeyCP line1427",
+      "fix": "展示本站1989 NO/CP 32字节CEK→36字节结果，另存8字节UKM；如按协议拼入UKM，完整结构才为44。其它Magma/Kuznyechik/SC变体另按实际尺寸说明。",
+      "notifiedRoot": true
+    },
+    {
+      "id": "lz4-homepage-too-broad",
+      "severity": "low",
+      "articleId": "function-pair:LZ4%20Compress",
+      "kind": "citation-precision",
+      "evidence": "lz4.org 首页介绍性能并链接规范，未直接给出文章所述 token 两半字段及 frame 魔数的详细规则。",
+      "fix": "补 https://github.com/lz4/lz4/blob/dev/doc/lz4_Block_format.md 和 https://github.com/lz4/lz4/blob/dev/doc/lz4_Frame_format.md 原作者正式规范，按块/帧分别旁注。",
+      "notifiedRoot": true
+    }
+  ],
+  "passedChecks": [
+    "Fletcher8/16/32/64 所列实例与固定源码一致，32/64 采用小端读字的说明正确。",
+    "ViewBitPlane 位1画黑、位0画白说明与固定实现一致，避免通常白=1惯例误导。",
+    "ExtractRGBA 返回十进制分量文本，而非raw bytes；文案与固定实现一致。",
+    "GenerateImage RGB三字节像素示例、Opacity百分比与Alpha乘法对应固定实现。",
+    "Drop/Take nth bytes 的起点0/1与每2字节示例符合固定源码；eachLine 以LF复位。",
+    "RawDeflate、zlib、Adler32、CRC32、BLAKE2b/s、SHA3、SHAKE、PBKDF2与HMAC标准数值例均以Python独立计算成功。",
+    "Ascon源码使用 js-ascon1.3.0，其包说明明确标准草案版AEAD128/Hash256，而非早期v1.2；作者规范确认320位状态、128位nonce/tag及Hash256吸收64位、p12。",
+    "GOSTSign/GOSTVerify 被文案正确识别为对称MAC，没有错称GOST椭圆曲线数字签名。",
+    "SM2/SM3/SM4 官方条目与机制草案分别区分标准存在性与算法内容；未把仅含标准标题的网页独自当详细算法证据。",
+    "未发现明确 /en-us 或 /en 路径被标 zh-CN 的来源。"
+  ],
+  "proofVectors": "/tmp/knowledge-independent-qa/vectors.json",
+  "qaLimitations": "没有替用户实际测试中国三网访问，链接可打开不构成三网保证。此报告不把所有209篇标成全部逐句验证；它记录实际重点复核范围。"
+}

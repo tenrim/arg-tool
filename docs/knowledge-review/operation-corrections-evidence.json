@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-13",
+  "files": [
+    "public/cyberchef-operation-corrections.js",
+    "public/cyberchef-worker.js",
+    "scripts/browser-chef-corrections.mjs"
+  ],
+  "runtime": "CyberChef 11.5.0 / 8cd426dd4f40f1423912d5fad91b578a86a65112",
+  "verified": {
+    "runner": "node scripts/browser-chef-corrections.mjs",
+    "scenarios": [
+      "native",
+      "blob",
+      "blob-subpath"
+    ],
+    "casesPerScenario": 265,
+    "totalCases": 795,
+    "exitCode": 0
+  },
+  "corrections": [
+    {
+      "operation": "Extract LSB",
+      "rootCause": "Column RGBA index uses rowWidth+col+channel*4, rather than rowWidth+col*4+channel",
+      "implementation": "Reuse original Row operation and exact decoder, then transpose selected packed bits; dimensions from PNG IHDR or original Jimp Convert Image Format for JPEG/TIFF/BMP/GIF. Preserve right-aligned final partial byte.",
+      "regressions": [
+        "2x2 RG Row 9c / Column b4",
+        "2x2 R Row 0a / Column 0c",
+        "3x2 nonsquare, repeated/reordered channels, bit 0/1/2/7",
+        "JPEG/TIFF and Convert->Extract LSB->To Hex recipe"
+      ]
+    },
+    {
+      "operation": "TCP/IP Checksum",
+      "rootCause": "Single end-around carry and signed 32-bit shift can leave a carry or overflow on long input",
+      "implementation": "Fold each 16-bit network-order word and finish all remaining carries, including odd high byte; preserve upstream minimum-two-digit lowercase format",
+      "regressions": [
+        "FFFF FFFF 0001 -> fffe",
+        "RFC1071 ->220d",
+        "odd FF ->ff",
+        "262146-byte signed-overflow boundary",
+        "recipe -> To Upper case FFFE"
+      ]
+    },
+    {
+      "operation": "Chi Square",
+      "rootCause": "Skips unobserved byte categories while Pearson formula requires every uniform expectation",
+      "implementation": "Exact integer sum of observed squares divided by N/256 minus N, mathematically equivalent full 256-bin Pearson sum",
+      "regressions": [
+        "AAB ->1271/3",
+        "one A ->255",
+        "uniform 0..255 ->0",
+        "recipe conversion preserves number"
+      ]
+    },
+    {
+      "operation": "AMF3 Encode",
+      "rootCause": "Getter-only literal value; absent ArrayValue value setter; uninitialized associative terminal key node",
+      "implementation": "Capture only exact Encodings synchronous import registrations; validate unique AMF3 factory ownership, seven variants, discriminants, markers, direct prototype descriptors, array/string/associative syntax; adapt only pinned library nodes using original factories/serializer",
+      "regressions": [
+        "true 03 / false02 / null01 / []090101",
+        "scalar/array/nested-object/Chinese/emoji/object keys",
+        "native decode node fields and Encode->Decode chain",
+        "Encode->To Hex"
+      ]
+    },
+    {
+      "operation": "AMF0 Encode",
+      "rootCause": "UTF16 code-unit lengths drive measurement while serializer writes UTF8 bytes; short/long boundary also measured in code units",
+      "implementation": "Validate unique AMF0 factory and fifteen variant markers; original short/long/value and property-key setters retain validation while length fields use TextEncoder UTF8 byte length; select original LongString node after 65535 bytes",
+      "regressions": [
+        "Chinese/emoji strings and property keys",
+        "65535-byte short marker2",
+        "32768 é =65536 UTF8 bytes -> long marker12",
+        "23334 你 =70002 UTF8 bytes -> long marker12",
+        "original decoder fields preserve all tested values"
+      ]
+    },
+    {
+      "operation": "AMF0/AMF3 Decode length-delimited strings",
+      "rootCause": "The original StringSerializer passes field.options.string to BitstreamReader.readStringSync, whose default truncates a string at embedded NUL. AMF encodes these strings and keys by explicit UTF8 byte length.",
+      "implementation": "After strict validation of the existing four String fields and their shared original serializer, set nullTerminated:false only for AMF0 ShortString.$value, LongString.$value, ObjectProperty.key and AMF3 StringOrReference.$value. Existing reader/serializer/factory/output schema remain unchanged; no additional global hook.",
+      "regressions": [
+        "Independent AMF0 020003410042 and AMF3 0607410042 decode to A\\u0000B",
+        "NUL at first/middle/last position; Chinese/emoji on both sides",
+        "Embedded NUL object and nested property/trait names; arrays and objects",
+        "72000-byte UTF8 long AMF0 string with NUL",
+        "Original Decode fields and Encode->Decode / Encode->To Hex recipes",
+        "Independent fixed bundle 20 vectors preserve complete encoded bytes before/after the field option change"
+      ]
+    }
+  ],
+  "importSafety": [
+    "Object.defineProperty restored in finally",
+    "shape mismatch leaves unrelated constructor untouched",
+    "503 import and full import then injected throw restore hook without patching class",
+    "new operation adapter503 terminates client promptly and fresh worker retry works"
+  ],
+  "upstreamIntegrity": "Official ChefWorker.js, catalogue.json and Image/Crypto/Encodings bundle SHA256 values verified before and after all browser cases; git diff under public/vendor/cyberchef is empty. No client or pre-existing test files edited.",
+  "helperResearch": [
+    "/tmp/amf3-runtime-adapter-sketch.js",
+    "/tmp/amf0-runtime-adapter-sketch.js",
+    "/tmp/amf0-strict-guard-probe.cjs",
+    "/tmp/amf-nul-runtime-adapter-sketch.js",
+    "/tmp/amf-nul-strict-guard-probe.cjs",
+    "/tmp/amf-nul-matrix-evidence.json"
+  ],
+  "decoderBehavior": "AMF Decode intentionally retains the upstream structured node-tree output. Tests project semantics only for assertions, without changing the operation output schema. Embedded NUL now survives within the tested JSON-compatible AMF0/AMF3 input subset."
+}

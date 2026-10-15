@@ -1,0 +1,51 @@
+diff --git a/src/i18n.ts b/src/i18n.ts
+index 7a0cba5..1f0e220 100644
+--- a/src/i18n.ts
++++ b/src/i18n.ts
+@@ -3,7 +3,9 @@ import { initReactI18next } from "react-i18next";
+ import translationEN from "./locales/en/translation.json";
+ import translationJA from "./locales/ja/translation.json";
+ 
++import translationZH from "./locales/zh/translation.json";
+ const resources = {
++ zh: {translation:translationZH},
+   en: {
+     translation: translationEN,
+   },
+@@ -16,8 +18,8 @@ i18n
+   .use(initReactI18next)
+   .init({
+     resources,
+-    lng: "ja", // default language
+-    fallbackLng: "ja",
++    lng: "zh", // default language
++    fallbackLng: "en",
+     interpolation: {
+       escapeValue: false, // react already safes from xss
+     },
+diff --git a/src/puzzleSolver.tsx b/src/puzzleSolver.tsx
+index c88c198..c697326 100644
+--- a/src/puzzleSolver.tsx
++++ b/src/puzzleSolver.tsx
+@@ -242,7 +242,7 @@ export const PuzzleSolver = () => {
+               onChange={(_, value) => { if (value !== null) i18n.changeLanguage(value) } }
+               exclusive
+             >
+-              <ToggleButton value="ja">日本語</ToggleButton>
++              <ToggleButton value="zh">中文</ToggleButton><ToggleButton value="ja">日本語</ToggleButton>
+               <ToggleButton value="en">English</ToggleButton>
+             </ToggleButtonGroup>
+           </ListItem>
+diff --git a/src/usage.tsx b/src/usage.tsx
+index f22a62e..c432d35 100644
+--- a/src/usage.tsx
++++ b/src/usage.tsx
+@@ -10,7 +10,7 @@ const puzzleList = (language: "ja" | "en", mode: "solve" | "enumerate") => {
+ 
+ export const Usage = () => {
+   const { t, i18n } = useTranslation();
+-  const language = i18n.language as "ja" | "en";
++  const language = (i18n.language === "ja" ? "ja" : "en") as "ja" | "en";
+ 
+   const currentUrl = location.protocol + "//" + location.host + location.pathname;
+   const bookmarkUrl = 'javascript:void(window.open(`' + currentUrl + '#url=${encodeURIComponent(ui.puzzle.getURL(pzpr.parser.URL_PZPRV3))}`,target="__solver_window"))';

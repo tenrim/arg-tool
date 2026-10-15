@@ -1,0 +1,505 @@
+{
+  "run_at": "2026-10-15T09:49:05.736Z",
+  "mode": "affected",
+  "files": [
+    "AGENTS.md",
+    "README.md",
+    "VERIFICATION.md",
+    "docs/UI_COMPONENTS.md",
+    "docs/conversion-layout-verification.json",
+    "public/app.js",
+    "public/basics/session.js",
+    "public/basics/ui.js",
+    "public/chef-tools.css",
+    "public/chef-tools/index.js",
+    "public/chef-tools/result-view.js",
+    "public/chef-tools/task-view.js",
+    "public/desktop-layout.css",
+    "public/tool-help.js",
+    "public/ui/components.css",
+    "public/ui/conversion.js",
+    "public/workspace.css",
+    "scripts/browser-basics.mjs",
+    "scripts/browser-capability-resilience.mjs",
+    "scripts/browser-chef-categories.mjs",
+    "scripts/browser-chef-tools.mjs",
+    "scripts/browser-hex-it.mjs",
+    "scripts/browser-knowledge-pairs.mjs",
+    "scripts/browser-navigation.mjs",
+    "scripts/browser-sidebar-routing.mjs",
+    "scripts/browser-ui-components.mjs",
+    "scripts/browser-ui-layout.mjs",
+    "scripts/browser-ui-motion.mjs",
+    "scripts/browser-workspace.mjs",
+    "tests/browser-capabilities.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "AGENTS.md",
+        "README.md",
+        "VERIFICATION.md",
+        "docs/UI_COMPONENTS.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/basics/session.js",
+        "public/basics/ui.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/task-view.js",
+        "public/tool-help.js",
+        "public/ui/conversion.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/basics/session.js",
+        "public/basics/ui.js",
+        "public/chef-tools.css",
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/task-view.js",
+        "public/desktop-layout.css",
+        "public/tool-help.js",
+        "public/ui/components.css",
+        "public/ui/conversion.js",
+        "public/workspace.css"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/basics/session.js",
+        "public/basics/ui.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/task-view.js",
+        "public/tool-help.js",
+        "public/ui/conversion.js",
+        "scripts/browser-basics.mjs",
+        "scripts/browser-capability-resilience.mjs",
+        "scripts/browser-chef-categories.mjs",
+        "scripts/browser-chef-tools.mjs",
+        "scripts/browser-hex-it.mjs",
+        "scripts/browser-knowledge-pairs.mjs",
+        "scripts/browser-navigation.mjs",
+        "scripts/browser-sidebar-routing.mjs",
+        "scripts/browser-ui-components.mjs",
+        "scripts/browser-ui-layout.mjs",
+        "scripts/browser-ui-motion.mjs",
+        "scripts/browser-workspace.mjs",
+        "tests/browser-capabilities.mjs"
+      ],
+      "reasons": [
+        "public/app.js, public/basics/session.js, public/basics/ui.js, public/chef-tools/index.js, public/chef-tools/result-view.js, public/chef-tools/task-view.js, public/tool-help.js, public/ui/conversion.js, scripts/browser-basics.mjs, scripts/browser-capability-resilience.mjs, scripts/browser-chef-categories.mjs, scripts/browser-chef-tools.mjs, scripts/browser-hex-it.mjs, scripts/browser-knowledge-pairs.mjs, scripts/browser-navigation.mjs, scripts/browser-sidebar-routing.mjs, scripts/browser-ui-components.mjs, scripts/browser-ui-layout.mjs, scripts/browser-ui-motion.mjs, scripts/browser-workspace.mjs, tests/browser-capabilities.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/chef-tools.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/chef-tools.test.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools/result-view.js"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/tool-help.js",
+        "scripts/browser-navigation.mjs",
+        "scripts/browser-workspace.mjs"
+      ]
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "command": [
+        "node",
+        "scripts/browser-sidebar-routing.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "scripts/browser-sidebar-routing.mjs"
+      ]
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "command": [
+        "node",
+        "scripts/browser-task-lifecycle.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:basics",
+      "command": [
+        "node",
+        "scripts/browser-basics.mjs"
+      ],
+      "reasons": [
+        "public/basics/session.js",
+        "public/basics/ui.js",
+        "scripts/browser-basics.mjs"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools.css",
+        "public/desktop-layout.css",
+        "public/tool-help.js",
+        "public/ui/components.css",
+        "public/ui/conversion.js",
+        "public/workspace.css",
+        "scripts/browser-ui-layout.mjs"
+      ]
+    },
+    {
+      "id": "browser:chef-tools",
+      "command": [
+        "node",
+        "scripts/browser-chef-tools.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/task-view.js",
+        "scripts/browser-chef-tools.mjs",
+        "scripts/browser-navigation.mjs"
+      ]
+    },
+    {
+      "id": "browser:chef-categories",
+      "command": [
+        "node",
+        "scripts/browser-chef-categories.mjs"
+      ],
+      "reasons": [
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/task-view.js",
+        "scripts/browser-chef-categories.mjs",
+        "scripts/browser-navigation.mjs"
+      ]
+    },
+    {
+      "id": "browser:responsive-smoke",
+      "command": [
+        "node",
+        "scripts/browser-responsive-smoke.mjs"
+      ],
+      "reasons": [
+        "public/desktop-layout.css",
+        "public/workspace.css"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css",
+        "public/ui/conversion.js",
+        "scripts/browser-ui-components.mjs"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css",
+        "scripts/browser-ui-motion.mjs"
+      ]
+    },
+    {
+      "id": "browser:capability-resilience",
+      "command": [
+        "node",
+        "scripts/browser-capability-resilience.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-capability-resilience.mjs"
+      ]
+    },
+    {
+      "id": "browser:hex-it",
+      "command": [
+        "node",
+        "scripts/browser-hex-it.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-hex-it.mjs"
+      ]
+    },
+    {
+      "id": "browser:knowledge-pairs",
+      "command": [
+        "node",
+        "scripts/browser-knowledge-pairs.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-knowledge-pairs.mjs",
+        "scripts/browser-navigation.mjs"
+      ]
+    },
+    {
+      "id": "browser:privacy",
+      "command": [
+        "node",
+        "scripts/browser-privacy.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-navigation.mjs"
+      ]
+    },
+    {
+      "id": "browser:capabilities",
+      "command": [
+        "node",
+        "tests/browser-capabilities.mjs"
+      ],
+      "reasons": [
+        "tests/browser-capabilities.mjs"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "unit:tests/chef-tools.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 268
+    },
+    {
+      "id": "browser:basics",
+      "exit_code": 0,
+      "duration_ms": 60616
+    },
+    {
+      "id": "browser:responsive-smoke",
+      "exit_code": 0,
+      "duration_ms": 5772
+    },
+    {
+      "id": "browser:capability-resilience",
+      "exit_code": 0,
+      "duration_ms": 10549
+    },
+    {
+      "id": "browser:hex-it",
+      "exit_code": 0,
+      "duration_ms": 46889
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 155
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 124
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 1523
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 63056
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 9114
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "exit_code": 0,
+      "duration_ms": 3978
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 50290
+    },
+    {
+      "id": "browser:chef-tools",
+      "exit_code": 0,
+      "duration_ms": 32626
+    },
+    {
+      "id": "browser:chef-categories",
+      "exit_code": 0,
+      "duration_ms": 14872
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 6462
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 17506
+    },
+    {
+      "id": "browser:knowledge-pairs",
+      "exit_code": 0,
+      "duration_ms": 78168
+    },
+    {
+      "id": "browser:privacy",
+      "exit_code": 0,
+      "duration_ms": 8372
+    },
+    {
+      "id": "browser:capabilities",
+      "exit_code": 0,
+      "duration_ms": 34661
+    },
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 112
+    }
+  ],
+  "attempts": [
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 171
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 1806
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 47536
+    },
+    {
+      "id": "browser:chef-categories",
+      "exit_code": 1,
+      "duration_ms": 11697
+    },
+    {
+      "id": "browser:hex-it",
+      "exit_code": 1,
+      "duration_ms": 32145
+    },
+    {
+      "id": "browser:hex-it",
+      "exit_code": 1,
+      "duration_ms": 23066
+    },
+    {
+      "id": "browser:hex-it",
+      "exit_code": 1,
+      "duration_ms": 22395
+    },
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 93
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 147
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 120
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 1416
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 58804
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 50209
+    },
+    {
+      "id": "browser:chef-tools",
+      "exit_code": 0,
+      "duration_ms": 30482
+    },
+    {
+      "id": "browser:chef-categories",
+      "exit_code": 0,
+      "duration_ms": 13807
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 6194
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 17026
+    },
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 105
+    }
+  ]
+}

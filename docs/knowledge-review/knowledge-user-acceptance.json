@@ -1,0 +1,430 @@
+{
+  "task": "最终只读用户需求验收",
+  "timestamp": "2026-10-13T02:19:39.329Z",
+  "repoUnchanged": true,
+  "scope": {
+    "totalArticles": 528,
+    "visibleCodecCapabilities": 269,
+    "byGroup": {
+      "characters": 22,
+      "encoding": 22,
+      "communication": 11,
+      "classical": 21,
+      "modern": 32,
+      "authentication": 42,
+      "cipher-analysis": 7,
+      "text-language": 69,
+      "formats": 43
+    },
+    "independentlyReadMechanisms": [
+      "Base64",
+      "六点盲文",
+      "Braille ASCII",
+      "SSTV"
+    ],
+    "coverageChecks": "逐项科普归属、学习入口、本站参考文件和许可证路径"
+  },
+  "findings": {
+    "missingArticles": [],
+    "badLearningLinks": [],
+    "missingLocalSources": [],
+    "noLocalSource": [],
+    "githubRawMainSources": []
+  },
+  "mechanismConclusions": [
+    "Base64包含ARG的3字节→24位→4组6位→16/21/9/7→QVJH完整演算，包含A→QQ==和AB→QUI=的零填充与=区别。",
+    "六点盲文包含左123/右456位置图、A/B/C点组合、中文初声韵调规则边界；英语数字标记演算明确不声称本面板支持连续数字状态。",
+    "Braille ASCII说明64字符表与大写归一化；Ab1→⠁⠃⠂区分数字1的dot2与英语盲文数字模式，原始源码可从本站副本访问。",
+    "SSTV说明1500/2300Hz像素端点、1200Hz同步、VIS与模式扫描差异，1900Hz归一化0.5；VIS44为Martin1/320×256/GBR，并明确仅支持实际7个模式。",
+    "knowledge/page.js将每section的规则依据直接置于该section的机制段落和演算之后，references.js显示出处、章节、语言、实现标识、上游与许可证。"
+  ],
+  "externalFulltextChecks": [
+    {
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc4648.html",
+      "scope": "Base64原始标准，英文，经南京大学国内镜像访问"
+    },
+    {
+      "url": "https://www.zcse.edu.cn/info/1696/40761.htm",
+      "scope": "浙江特殊教育职业学院盲文方点123/456与63个非空组合"
+    },
+    {
+      "url": "https://qspfw.moe.gov.cn/html/hotnews/20180523/12925.html",
+      "scope": "教育部网站国家通用盲文说明，中文声母韵母声调"
+    },
+    {
+      "url": "https://www.crac.org.cn/?p=1088",
+      "scope": "中国无线电协会业余无线电工作委员会SSTV活动/模式选择"
+    },
+    {
+      "url": "https://batc.org.uk/wp-content/uploads/Slow-Scan-Television-Explained.pdf",
+      "scope": "BATC104页原书；核对1500/2300/1200Hz、VIS位频率与颜色扫描，未用CRAC活动页代替信号规范"
+    }
+  ],
+  "actualExamplesRecomputed": [
+    "ARG→QVJH",
+    "A→QQ==",
+    "AB→QUI=",
+    "⠃→B",
+    "Braille ASCII Ab1→⠁⠃⠂",
+    "VIS_MAP[44]=Martin1,GBR,320×256",
+    "(1900-1500)/(2300-1500)=0.5"
+  ],
+  "searchChecks": {
+    "Base64": [
+      "function-pair:To%20Base64",
+      "function-op:Show%20Base64%20offsets",
+      "function-op:JWT%20Sign"
+    ],
+    "盲文": [
+      "function-native:braille",
+      "function-pair:To%20Braille"
+    ],
+    "SSTV": [
+      "function-native:audio-sstv"
+    ]
+  },
+  "selectedArticles": [
+    {
+      "id": "function-pair:To%20Base64",
+      "title": "Base64：24 位如何变成四个字符，为什么末尾有 =",
+      "sections": [
+        {
+          "title": "是什么，怎样表示与还原",
+          "sourceIds": [
+            "base",
+            "base64zh",
+            "sls",
+            "chef"
+          ],
+          "examples": [
+            {
+              "label": "三字节手算全过程",
+              "input": "ARG\n字节：41 52 47\n八位：01000001 01010010 01000111",
+              "output": "24 位：010000010101001001000111\n六位：010000 010101 001001 000111\n索引：16 21 9 7\n字符：Q V J H\n结果：QVJH",
+              "explanation": "16→Q，21→V，9→J，7→H；反向把四组六位连回三组八位，得到 ARG。"
+            },
+            {
+              "label": "一字节尾组",
+              "input": "A：01000001",
+              "output": "010000 010000 → Q Q\nQQ==",
+              "explanation": "第二组低四位补零，两个 = 表示原始尾组只有一字节。"
+            },
+            {
+              "label": "两字节尾组",
+              "input": "AB：01000001 01000010",
+              "output": "010000 010100 001000 → Q U I\nQUI=",
+              "explanation": "第三组低两位补零，一个 = 表示原始尾组有两字节。"
+            }
+          ]
+        },
+        {
+          "title": "识读条件与边界",
+          "sourceIds": [
+            "base",
+            "base64zh",
+            "sls",
+            "chef"
+          ],
+          "examples": []
+        }
+      ],
+      "sources": [
+        {
+          "id": "base",
+          "title": "RFC 4648：Base16、Base32、Base64",
+          "publisher": "IETF／南京大学开源镜像站",
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc4648.html",
+          "language": "en",
+          "kind": "standard",
+          "locator": "第 4–8 节及第 10 节测试向量"
+        },
+        {
+          "id": "base64zh",
+          "title": "Base64：6 位分组和 Unicode 文本",
+          "publisher": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Base64",
+          "language": "zh-CN",
+          "kind": "official-doc",
+          "locator": "编码后大小增加、Unicode 问题"
+        },
+        {
+          "id": "sls",
+          "title": "编码解码函数的语法规则",
+          "publisher": "阿里云日志服务",
+          "url": "https://help.aliyun.com/zh/sls/encoding-and-decoding-functions",
+          "language": "zh-CN",
+          "kind": "official-doc",
+          "locator": "base64、url、html、hex 函数"
+        },
+        {
+          "id": "chef",
+          "title": "CyberChef 11.5.0 官方操作定义与参数",
+          "publisher": "GCHQ（Apache-2.0）",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "language": "en",
+          "kind": "implementation",
+          "locator": "对应 operation 的 description、args、inputType、outputType"
+        }
+      ]
+    },
+    {
+      "id": "function-native:braille",
+      "title": "六点盲文识读：两列三行怎样排列和编号",
+      "sections": [
+        {
+          "title": "是什么，怎样表示与还原",
+          "sourceIds": [
+            "braille-school",
+            "braille",
+            "braille-native",
+            "braille-cn",
+            "braille-panel"
+          ],
+          "examples": [
+            {
+              "label": "从读面看点位",
+              "input": "1 4\n2 5\n3 6",
+              "output": "点 1：⠁ → A\n点 1、2：⠃ → B\n点 1、4：⠉ → C",
+              "explanation": "先确认读面方向；凸点 1+2 对应英文基础字母 B。手写扎点时从背面压印会出现镜像，不能直接沿用读面方向。"
+            },
+            {
+              "label": "英语盲文数字语境（不是本面板的连续数字翻译）",
+              "input": "⠼⠁⠃",
+              "output": "12",
+              "explanation": "这是英语盲文的数字语境规则：⠼ 后的 a、b 点形读作 1、2。本面板逐方识读，不能将这一整串自动追加为 12。"
+            }
+          ]
+        },
+        {
+          "title": "识读条件与边界",
+          "sourceIds": [
+            "braille-school",
+            "braille",
+            "braille-native",
+            "braille-cn",
+            "braille-panel"
+          ],
+          "examples": []
+        }
+      ],
+      "sources": [
+        {
+          "id": "braille-school",
+          "title": "“指趣”小课堂：国家通用盲文（一）",
+          "publisher": "浙江特殊教育职业学院",
+          "url": "https://www.zcse.edu.cn/info/1696/40761.htm",
+          "language": "zh-CN",
+          "kind": "official-doc",
+          "locator": "三：六点位置、读面编号与 63 个非空符形"
+        },
+        {
+          "id": "braille",
+          "title": "Unicode 17 第 21.1 节：Braille",
+          "publisher": "Unicode 联盟",
+          "url": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-21/",
+          "language": "en",
+          "kind": "standard",
+          "locator": "点位编号、六点 64 种组合、不同语言的映射差异"
+        },
+        {
+          "id": "braille-native",
+          "title": "英文字母与数字的六点对应",
+          "publisher": "puzzle-lib 项目（MIT）",
+          "url": "/vendor/puzzle-lib/Braille/BrailleEncoding.js",
+          "language": "en",
+          "kind": "implementation",
+          "locator": "Letter、Number、FormattingNumber"
+        },
+        {
+          "id": "braille-cn",
+          "title": "《国家通用盲文方案》研制组负责人答记者问",
+          "publisher": "教育部／国家语言文字工作委员会",
+          "url": "https://qspfw.moe.gov.cn/html/hotnews/20180523/12925.html",
+          "language": "zh-CN",
+          "kind": "official-doc",
+          "locator": "第六问：声母、韵母、声调与汉盲规则"
+        },
+        {
+          "id": "braille-panel",
+          "title": "六点面板的单方追加校验",
+          "publisher": "迷雾工具箱",
+          "url": "/round1/symbols.js",
+          "language": "zh-CN",
+          "kind": "implementation",
+          "locator": "braille-add：仅追加当前单个英文字母或数字；面板不保存跨方数字状态"
+        }
+      ]
+    },
+    {
+      "id": "function-pair:To%20Braille",
+      "title": "盲文转码：CyberChef 的 Braille ASCII 查表是什么",
+      "sections": [
+        {
+          "title": "是什么，怎样表示与还原",
+          "sourceIds": [
+            "braille-school",
+            "braille",
+            "braille-map",
+            "chef",
+            "braille-cn"
+          ],
+          "examples": [
+            {
+              "label": "点位和直接查表",
+              "input": "1 4\n2 5\n3 6\n输入：Ab1",
+              "output": "⠁⠃⠂",
+              "explanation": "A/a 都查到点 1；B/b 查到点 1、2；字符 1 在 Braille ASCII 中查到点 2。"
+            }
+          ]
+        },
+        {
+          "title": "识读条件与边界",
+          "sourceIds": [
+            "braille-school",
+            "braille",
+            "braille-map",
+            "chef",
+            "braille-cn"
+          ],
+          "examples": []
+        }
+      ],
+      "sources": [
+        {
+          "id": "braille-school",
+          "title": "“指趣”小课堂：国家通用盲文（一）",
+          "publisher": "浙江特殊教育职业学院",
+          "url": "https://www.zcse.edu.cn/info/1696/40761.htm",
+          "language": "zh-CN",
+          "kind": "official-doc",
+          "locator": "三：六点位置、读面编号与 63 个非空符形"
+        },
+        {
+          "id": "braille",
+          "title": "Unicode 17 第 21.1 节：Braille",
+          "publisher": "Unicode 联盟",
+          "url": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-21/",
+          "language": "en",
+          "kind": "standard",
+          "locator": "点位编号、六点 64 种组合、不同语言的映射差异"
+        },
+        {
+          "id": "braille-map",
+          "title": "CyberChef 的 Braille ASCII 查表",
+          "publisher": "CyberChef 11.5.0（Apache-2.0）",
+          "url": "/vendor/knowledge/cyberchef/src/core/lib/Braille.mjs",
+          "language": "en",
+          "kind": "implementation",
+          "locator": "BRAILLE_LOOKUP.ascii 与 dot6",
+          "upstreamUrl": "https://raw.githubusercontent.com/gchq/CyberChef/v11.5.0/src/core/lib/Braille.mjs",
+          "license": "Apache-2.0",
+          "licenseUrl": "/vendor/knowledge/LICENSE.txt",
+          "mirroredCommit": "8cd426dd4f40f1423912d5fad91b578a86a65112"
+        },
+        {
+          "id": "chef",
+          "title": "CyberChef 11.5.0 官方操作定义与参数",
+          "publisher": "GCHQ（Apache-2.0）",
+          "url": "/vendor/cyberchef/catalogue.json",
+          "language": "en",
+          "kind": "implementation",
+          "locator": "对应 operation 的 description、args、inputType、outputType"
+        },
+        {
+          "id": "braille-cn",
+          "title": "《国家通用盲文方案》研制组负责人答记者问",
+          "publisher": "教育部／国家语言文字工作委员会",
+          "url": "https://qspfw.moe.gov.cn/html/hotnews/20180523/12925.html",
+          "language": "zh-CN",
+          "kind": "official-doc",
+          "locator": "第六问：声母、韵母、声调与汉盲规则"
+        }
+      ]
+    },
+    {
+      "id": "function-native:audio-sstv",
+      "title": "SSTV 声音还原图片：一幅图片怎样变成可听见的声音",
+      "sections": [
+        {
+          "title": "原理与规则",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ],
+          "examples": []
+        },
+        {
+          "title": "模式与 VIS：为什么选错会出现斜图",
+          "sourceIds": [
+            "s2",
+            "s3"
+          ],
+          "examples": [
+            {
+              "label": "模式标识核对",
+              "input": "VIS 数据值 44",
+              "output": "Martin 1；320×256；按 G、B、R 通道扫描",
+              "explanation": "44 对应随站模式表的 M1；40 是 M2，不能因尺寸相同就交换时序。"
+            }
+          ]
+        },
+        {
+          "title": "逐步核对",
+          "sourceIds": [
+            "s2"
+          ],
+          "examples": [
+            {
+              "label": "音调到像素强度",
+              "input": "在采用 1500～2300 Hz 线性映射的通道内，测得 1900 Hz",
+              "output": "归一化分量约 0.5",
+              "explanation": "(1900−1500)/(2300−1500)=0.5；1200 Hz 同步脉冲不是一个黑色像素。"
+            }
+          ]
+        },
+        {
+          "title": "本站能处理的模式",
+          "sourceIds": [
+            "s3"
+          ],
+          "examples": []
+        }
+      ],
+      "sources": [
+        {
+          "id": "s1",
+          "title": "CRAC SSTV 图像传送演练规则",
+          "publisher": "中国无线电协会业余无线电分会",
+          "url": "https://www.crac.org.cn/?p=1088",
+          "locator": "SSTV 通信成绩与制式选择",
+          "language": "zh-CN",
+          "kind": "official-doc"
+        },
+        {
+          "id": "s2",
+          "title": "Slow Scan Television Explained",
+          "publisher": "英国业余电视俱乐部 BATC",
+          "url": "https://batc.org.uk/wp-content/uploads/Slow-Scan-Television-Explained.pdf",
+          "locator": "Modes and Systems；印刷 pp. 15–19、22、94",
+          "language": "en",
+          "kind": "author-spec"
+        },
+        {
+          "id": "s3",
+          "title": "随站 SSTV 模式时序表",
+          "publisher": "Mathieu Renaud / Equinoxis",
+          "url": "/vendor/hunt/sstv/spec.js",
+          "locator": "VIS_MAP；M1、M2、S1、S2、SDX、R36、R72",
+          "language": "en",
+          "kind": "implementation"
+        }
+      ]
+    }
+  ],
+  "newMaterialDefects": [],
+  "limits": [
+    "未重复全文核对全部528篇文章或所有外部链接；本轮重点核对当前核心需求和全部编解码可见功能的覆盖/本地路径。",
+    "未实际测量中国各运营商全国可达性；核对国内官方页面、大学标准镜像与站内原文副本。",
+    "未在本轮另跑完整浏览器套件；root正在对冻结源码运行完整verify。"
+  ]
+}

@@ -1,0 +1,13 @@
+import './audit-ui.mjs';
+import './build-round-one.mjs';
+import './build-turing.mjs';
+import './build-basics.mjs';
+import './build-it-reference.mjs';
+import './build-vendor.mjs';
+import { cp, rm, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { root } from './build-vendor.mjs';
+await rm(join(root, 'dist'), { recursive: true, force: true });
+await mkdir(join(root, 'dist'), { recursive: true });
+await cp(join(root, 'public'), join(root, 'dist'), { recursive: true });
+console.log('Static site built in dist/.');

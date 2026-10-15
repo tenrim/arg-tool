@@ -1,0 +1,21 @@
+import {readFile,writeFile,readdir} from 'node:fs/promises';
+import {stripTypeScriptTypes} from 'node:module';
+import {createHash} from 'node:crypto';
+const root=new URL('../public/vendor/round1/',import.meta.url);
+let source=await readFile(new URL('substitution/src/solver.ts',root),'utf8');
+source=source.replace('function climb(cipher: Int8Array, key: number[]): number {','function climb(cipher: Int8Array, key: number[], locked: number[] = []): number {').replace('const tmp = key[i];\n        key[i]', 'if (locked.includes(i) || locked.includes(j)) continue;\n        const tmp = key[i];\n        key[i]');
+source=source.replace('rng: () => number): number[] {','rng: () => number, free: number[] = Array.from({length:26},(_,i)=>i)): number[] {\n  if(free.length<2)return start.slice();');
+source=source.replace('let i = Math.floor(rng() * 26);\n      let j = Math.floor(rng() * 26);\n      if (i === j) j = (j + 1) % 26;','let a = Math.floor(rng() * free.length), b = Math.floor(rng() * free.length);\n      if(a===b)b=(b+1)%free.length;\n      let i=free[a],j=free[b];');
+source=source.replace('const seedKey = frequencySeedKey(counts);',`const seedKey = frequencySeedKey(counts);
+  const fixed=Object.entries(opts.locked||{}).map(([a,b])=>[Number(a),String(b).charCodeAt(0)-65]);
+  if(fixed.some(([a,b])=>!Number.isInteger(a)||a<0||a>25||b<0||b>25)||new Set(fixed.map(x=>x[1])).size!==fixed.length)throw Error('锁定映射必须一一对应。');
+  const locked=fixed.map(x=>x[0]),free=Array.from({length:26},(_,i)=>i).filter(i=>!locked.includes(i));
+  for(const [a,b] of fixed){const at=seedKey.indexOf(b);[seedKey[a],seedKey[at]]=[seedKey[at],seedKey[a]];}`);
+source=source.replace('climb(cipher, bestKey)','climb(cipher, bestKey, locked)').replace('if (r > 0) shuffle(start, rng);','if (r > 0) {const values=free.map(i=>start[i]);shuffle(values,rng);free.forEach((i,j)=>start[i]=values[j]);}').replace('anneal(cipher, start, rng)','anneal(cipher, start, rng, free)').replace('climb(cipher, candidate)','climb(cipher, candidate, locked)');
+await writeFile(new URL('substitution/solver.js',root),'// Generated from upstream TypeScript; adds locked mappings. See scripts/build-round-one.mjs.\n'+stripTypeScriptTypes(source,{mode:'transform'}));
+await writeFile(new URL('substitution/trigrams.js',root),stripTypeScriptTypes(await readFile(new URL('substitution/src/trigrams.ts',root),'utf8'),{mode:'transform'}));
+// QRazyBox structural templates are isolated from the global UI.
+const tables=await readFile(new URL('qrazybox/js/table.js',root),'utf8'),qr=await readFile(new URL('qrazybox/js/qr.js',root),'utf8');
+await writeFile(new URL('qrazybox/templates.js',root),'// QRazyBox, MIT. Original files retained in js/.\n'+tables+'\n'+qr.replace('console.log(`Generating ${version}`)','void version')+'\nexport {generate_qr};\n');
+const hashes={};async function walk(url,prefix=''){for(const f of (await readdir(url,{withFileTypes:true})).sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0)){const p=prefix+f.name,u=new URL(f.name+(f.isDirectory()?'/':''),url);if(f.isDirectory())await walk(u,p+'/');else if(p!=='INTEGRITY.json')hashes[p]=createHash('sha256').update(await readFile(u)).digest('hex');}}await walk(root);await writeFile(new URL('INTEGRITY.json',root),JSON.stringify(hashes,null,2)+'\n');
+console.log('Round-one adapters generated and integrity recorded.');

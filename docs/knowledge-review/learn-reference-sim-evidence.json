@@ -1,0 +1,1005 @@
+{
+  "checkedAt": "2026-10-13",
+  "count": 44,
+  "articles": [
+    {
+      "capabilityId": "native:it-ports",
+      "sources": [
+        {
+          "url": "https://www.iana.org/assignments/service-names-port-numbers",
+          "publisher": "IANA",
+          "locator": "Note：三个端口范围与传输协议列"
+        },
+        {
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc6335.txt",
+          "publisher": "IETF · 南京大学开源镜像",
+          "locator": "§6，端口号范围"
+        }
+      ],
+      "implementation": "/it-reference/model.js",
+      "claims": [
+        "端口是在 TCP、UDP 等传输协议内区分服务的 16 位编号。0–1023 为系统端口，1024–49151 为用户端口，49152–65535 为动态或私有端口；查表时必须同时看端口和协议列。",
+        "IP 首部的协议号标识下一层协议，例如 TCP 是 6、UDP 是 17；它不是服务器的端口。IANA 登记只给出约定用途，流量出现在某个端口并不能证明实际应用就是登记的服务。",
+        "6 描述传输层协议，443 描述该协议下的服务端点，二者不可互换。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:it-http",
+      "sources": [
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Status",
+          "publisher": "MDN 官方中文文档",
+          "locator": "五类响应状态码"
+        },
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Headers",
+          "publisher": "MDN 官方中文文档",
+          "locator": "请求、响应与表示标头"
+        },
+        {
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc9110.html",
+          "publisher": "IETF · 南京大学开源镜像",
+          "locator": "§5 字段；§15 状态码"
+        }
+      ],
+      "implementation": "/it-reference/model.js",
+      "claims": [
+        "HTTP 状态码是三位十进制数，首位区分类别：1xx 信息、2xx 成功、3xx 重定向、4xx 客户端错误、5xx 服务端错误。200、301、404 各有独立语义，不能仅把它们当作成功或失败两个开关。",
+        "标头使用字段名与字段值携带消息上下文，例如 Content-Type 描述内容类型，Location 可指出重定向目标。字段名不区分大小写；主体内容、状态码和标头是不同部分。",
+        "302 的具体行为需连同 Location 和请求方法解释，不能凭字段出现就断言永久跳转。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:it-formats",
+      "sources": [
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Guides/MIME_types",
+          "publisher": "MDN 官方中文文档",
+          "locator": "类型/子类型、参数与通用类型"
+        },
+        {
+          "url": "https://www.iana.org/assignments/character-sets/character-sets.xhtml",
+          "publisher": "IANA",
+          "locator": "字符集名称与别名登记"
+        }
+      ],
+      "implementation": "/it-reference/model.js",
+      "claims": [
+        "媒体类型写成 type/subtype，例如 image/png、text/plain、application/json；它说明数据的类别和格式。文件名的 .txt 或 .json 是命名约定，不能独立保证内部字节的格式。",
+        "字符集规定文本字节怎样还原字符。Content-Type: text/plain; charset=utf-8 同时给出媒体类型和字符集；UTF-8 不是压缩方法，也不能把图片字节当文本去解码。",
+        "类型回答内容是什么，字符集回答文本字节怎样读。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:it-domains",
+      "sources": [
+        {
+          "url": "https://publicsuffix.org/learn/",
+          "publisher": "Public Suffix List 项目",
+          "locator": "公共后缀、可注册域与 Cookie 边界"
+        },
+        {
+          "url": "/vendor/it-reference/public_suffix_list.dat",
+          "publisher": "Public Suffix List 项目",
+          "locator": "ICANN / PRIVATE 段，通配符与例外规则"
+        }
+      ],
+      "implementation": "/it-reference/model.js",
+      "claims": [
+        "公共后缀是用户通常不能直接控制、注册下一级名称的后缀，例如 com、co.uk。识别可注册域需要按列表匹配最长规则，不能固定截取最后两段。",
+        "规则既有精确后缀，也有 *. 的通配规则和 ! 开头的例外；列表还区分 ICANN 与私人平台段。私人平台规则是否纳入，会改变某些托管域名的可注册边界。",
+        "co.uk 整体是后缀，所以最后两段 co.uk 并不是可注册域。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:it-instructions",
+      "sources": [
+        {
+          "url": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
+          "publisher": "Intel 官方手册",
+          "locator": "Volume 1 寄存器和 EFLAGS；Volume 2 指令定义"
+        },
+        {
+          "url": "/vendor/it-reference/instructions.json",
+          "publisher": "迷雾工具箱 · 随站资料",
+          "locator": "记录采用 Intel 语法；按每条指令单独标明语义"
+        }
+      ],
+      "implementation": "/it-reference/model.js",
+      "claims": [
+        "Intel 语法通常把目的操作数放在前面：mov eax, 65 把十进制 65 写入 EAX；mov 是复制值，而非把源位置清空。EAX 是 32 位寄存器，RAX 是相关的 64 位寄存器。",
+        "算术标志记录运算条件，例如 ZF 表示结果为零，CF 与无符号进位或借位有关，OF 与有符号溢出有关。不同指令更新的标志不一样，不能把 INC 与 ADD 的全部标志行为视为相同。",
+        "65 和 0x41 是同一数值的十进制与十六进制表示；转成 ASCII 才是字母 A。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:it-rfc",
+      "sources": [
+        {
+          "url": "https://www.rfc-editor.org/search/",
+          "publisher": "RFC Editor",
+          "locator": "编号、标题和状态检索"
+        },
+        {
+          "url": "https://mirrors.nju.edu.cn/rfc/rfc2026.html",
+          "publisher": "IETF · 南京大学开源镜像",
+          "locator": "§4 Standards Track；§5 非标准轨道"
+        }
+      ],
+      "implementation": "/it-reference/model.js",
+      "claims": [
+        "RFC 是有连续编号的文档系列；编号是文档身份，并不表示内容越大越新就一定替代所有旧规则。RFC 可以属于标准轨道，也可以是信息性、实验性等文档，不是每一篇都是互联网标准。",
+        "Obsoletes 表示新文档替代旧文档，Updates 表示对既有内容作补充或修改。判断某项协议当前规定时，应同时读文档状态、勘误和这些引用关系。",
+        "替代关系来自文档首页和状态信息，不靠编号大小自行猜测。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:countries",
+      "sources": [
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=FBCE39BE204B54F6F944092C209121F2",
+          "publisher": "国家市场监督管理总局 · 国家标准公开系统",
+          "locator": "标准名称、采用关系与实施状态"
+        },
+        {
+          "url": "https://www.iso.org/iso-3166-country-codes.html",
+          "publisher": "ISO",
+          "locator": "alpha-2、alpha-3、numeric-3 的用途"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "国家及地区代码用稳定短标识减少跨语言名称歧义。ISO 3166-1 有二字母、三字母和三位数字形式；它们不是国家名称的自由缩写，也不能靠任意取首字母得到。",
+        "本站以二字母代码连接国旗与地区记录，再关联货币和地点资料。相似旗帜只提供候选，需连同条纹方向、图案、名称和代码核验。",
+        "CN 是地区代码，CNY 是货币代码，二者属于不同标准字段。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:currencies",
+      "sources": [
+        {
+          "url": "https://www.iso.org/iso-4217-currency-codes.html",
+          "publisher": "ISO",
+          "locator": "字母代码、数字代码与国家代码联系"
+        },
+        {
+          "url": "https://www.boc.cn/ebanking/service/cs1/201003/t20100326_992613.html",
+          "publisher": "中国银行",
+          "locator": "币种缩写字段；电话键盘代码是该业务自用代码"
+        }
+      ],
+      "implementation": "/discovery/reference-core.js",
+      "claims": [
+        "ISO 4217 用三字母或三位数字标识货币。USD 的 US 与美国国家代码联系，D 对应 dollar；但这是编码约定，欧元等代码不能套用一国一币的规则。",
+        "¥、$ 等货币符号可能被多种货币共用，所以题目里单独的符号不足以确定币种。货币代码表示种类，不包含实时汇率、购买力或兑换方向。",
+        "明确代码比只看符号更能消除歧义；银行电话代码也不要当作 ISO 数字代码。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:airports",
+      "sources": [
+        {
+          "url": "https://www.iata.org/codes/",
+          "publisher": "国际航空运输协会 IATA",
+          "locator": "官方三字地点代码检索"
+        },
+        {
+          "url": "https://www.iata.org/en/iata-repository/pressroom/fact-sheets/fact-sheet-iata-location-codes/",
+          "publisher": "国际航空运输协会 IATA",
+          "locator": "IATA 商业用途与 ICAO 运行用途区别"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "IATA 地点代码通常是三个字母，服务于航空商业与预订体系；ICAO 地点标识通常是四个字母，面向航空运行。三字码可能指机场，也可能指包含多个机场的都市地区。",
+        "机场名称、城市名、代码和地理位置应一起核对。本站数据的“ICAO／本地标识”字段并不保证每一项都是已分配的四字 ICAO 代码，小型设施可能只有本地标识。",
+        "PEK 属于 IATA，ZBAA 属于 ICAO；不能通过增删一个字母相互转换。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:ports",
+      "sources": [
+        {
+          "url": "https://unlocode.unece.org/recommendation16/",
+          "publisher": "联合国欧洲经济委员会 UNECE",
+          "locator": "五字符代码与维护原则"
+        },
+        {
+          "url": "https://unlocode.unece.org/docs/data-attributes/",
+          "publisher": "联合国欧洲经济委员会 UNECE",
+          "locator": "列与功能、状态字段"
+        },
+        {
+          "url": "https://std.samr.gov.cn/gb/search/gbDetailed?id=60D16A2E9D2DB783E05397BE0A0A90DB",
+          "publisher": "全国标准信息公共服务平台",
+          "locator": "国家地点代码属于 UN/LOCODE 体系的说明"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "UN/LOCODE 是五字符地理代码，前两个字符是国家/地区代码，后三个标识地点。它覆盖港口、机场、铁路、公路和其他贸易运输节点，并非每条记录都只是海港。",
+        "功能字段用不同位置或数字标注地点用途，状态字段说明记录的确认状态。某地点可有多种运输功能，因此不能仅凭代码后缀就断言它是单一港口。",
+        "完整代码才标识 UN/LOCODE 地点；SHA 单独出现也可能处于机场等别的代码体系。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:sky",
+      "sources": [
+        {
+          "url": "https://www.hko.gov.hk/sc/gts/astronomy/sun_ra_dec.htm",
+          "publisher": "香港天文台",
+          "locator": "注释：赤经单位与赤纬方向"
+        },
+        {
+          "url": "https://www.astro4edu.org/zh-hans/resources/glossary/term/15/",
+          "publisher": "国际天文学联合会 IAU 天文教育办公室",
+          "locator": "视星等对数尺度；页面标明中文译文审核状态"
+        }
+      ],
+      "implementation": "/discovery/reference-core.js",
+      "claims": [
+        "星表编号表示目录条目的身份，同一对象可能有多个目录名。赤经 RA 常用时、分、秒，24 小时对应 360°；赤纬 Dec 用角度，天赤道以北为正、以南为负。",
+        "视星等描述观测到的亮度，数值越小通常越亮，相差 5 星等对应 100 倍亮度。坐标必须带参考历元理解，目录 J2000 坐标并不是某时某地的方位角和高度角。",
+        "赤经的 1 小时等于 15°，不是地球表面经度的 1°。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:astronomy",
+      "sources": [
+        {
+          "url": "https://www.hko.gov.hk/sc/gts/astronomy/sun_ra_dec.htm",
+          "publisher": "香港天文台",
+          "locator": "赤道坐标与时间标准注释"
+        },
+        {
+          "url": "/vendor/science/astronomy.js",
+          "publisher": "原作者 Don Cross · MIT 许可的随站上游文件",
+          "locator": "Observer、Horizon、SearchRiseSet、MoonPhase 的原始文档注释"
+        }
+      ],
+      "implementation": "/science/core.js",
+      "claims": [
+        "天体在本地天空的位置取决于时刻、经纬度和天体本身。本站先把输入本地时间减去 UTC 时差得到 UTC，再按观测地点计算天体方向。赤经赤纬描述天球坐标，方位高度描述观察者天空。",
+        "本站方位角从正北 0° 起，正东 90°；高度角以地平线为 0°，负值表示地平线下。升落查询在所选时刻后的 24 小时内搜索，极区天体可能在这段时间内没有升落事件。",
+        "时差是本地时间相对 UTC 的偏移，不能重复再加 8 小时。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:chemistry",
+      "sources": [
+        {
+          "url": "https://img.chemsoc.org.cn/web/2019/01/%E5%85%83%E7%B4%A0%E5%91%A8%E6%9C%9F%E8%A1%A8%E4%B8%AD%E6%96%87%E7%89%8820190123%E6%9C%80%E6%96%B0(1).pdf",
+          "publisher": "中国化学会",
+          "locator": "图例：原子序数、元素符号、相对原子量"
+        },
+        {
+          "url": "https://iupac.org/what-we-do/periodic-table-of-elements/",
+          "publisher": "国际纯粹与应用化学联合会 IUPAC",
+          "locator": "原子量数据、同位素和周期表说明"
+        }
+      ],
+      "implementation": "/science/core.js",
+      "claims": [
+        "元素由原子序数区分，原子序数是核内质子数。元素符号区分大小写，例如 Co 是钴，C 与 O 分别是碳和氧；表格横向称周期、纵向称族。",
+        "相对原子量不是原子序数，也不必是整数，它与同位素组成有关。题目把词拆成元素符号时，多个拆分可能成立，需将符号、序数和题目语境一起核对。",
+        "Fe 是一个元素符号，不是字母 F 与 e 的两个独立元素。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:crystals",
+      "sources": [
+        {
+          "url": "https://www.cas.cn/kj/202208/t20220812_4844446.shtml",
+          "publisher": "中国科学院",
+          "locator": "晶态与非晶态的长程周期性"
+        },
+        {
+          "url": "https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/Iatom_site_fract_.html",
+          "publisher": "国际晶体学联合会 IUCr",
+          "locator": "分数坐标 x、y、z 定义"
+        }
+      ],
+      "implementation": "/reference/cif.js",
+      "claims": [
+        "晶体的结构具有长程周期性。晶胞用三条边长 a、b、c 和三夹角 α、β、γ 描述重复单元；原子位点给出单元内部的位置，重复与对称操作生成更大的结构。",
+        "分数坐标不是米或埃：位置写作 x·a 向量 + y·b 向量 + z·c 向量。CIF 将晶胞参数和位点等结构信息保存为可读文本，分数坐标必须结合晶胞才能变成空间坐标。",
+        "这只是说明分数坐标换算的示例，不代表某个真实矿物的完整晶体结构。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:sequence",
+      "sources": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi",
+          "publisher": "美国国家生物技术信息中心 NCBI",
+          "locator": "Standard Code / transl_table=1 与变体遗传密码表"
+        },
+        {
+          "url": "https://higher.smartedu.cn/course/690530325345b68214577976",
+          "publisher": "国家高等教育智慧教育平台",
+          "locator": "遗传密码：相邻三个核苷酸形成三联体"
+        }
+      ],
+      "implementation": "/science/core.js",
+      "claims": [
+        "DNA 常用 A、C、G、T，RNA 用 U 代替 T；蛋白质使用氨基酸的一字母或三字母代码。RNA 的三个相邻碱基构成密码子，例如 AUG 对应甲硫氨酸 Met，蛋白一字母记为 M。",
+        "阅读框从起点每三个碱基分组，起点移一位就可能得到不同结果。双链核酸还需考虑反向互补链，因此可有六个阅读框；标准密码表中的 UAA、UAG、UGA 是终止码。",
+        "每组恰好三个碱基；末尾 * 表示终止，不是一个普通氨基酸。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:chemistry-formula",
+      "sources": [
+        {
+          "url": "https://iupac.org/what-we-do/periodic-table-of-elements/",
+          "publisher": "国际纯粹与应用化学联合会 IUPAC",
+          "locator": "标准原子量与同位素组成"
+        },
+        {
+          "url": "/science/core.js",
+          "publisher": "迷雾工具箱",
+          "locator": "formula：下标、括号倍数、点分隔结晶水"
+        }
+      ],
+      "implementation": "/science/core.js",
+      "claims": [
+        "本站分子式计数器把数字视为前面元素或括号组的倍数。Ca(OH)2 展开为 1 个 Ca、2 个 O、2 个 H；括号外的 2 同时乘括号里的 O 和 H。",
+        "结晶水以点分隔，例如 CuSO4·5H2O 中 5 乘整个水组；总量是 Cu 1、S 1、O 9、H 10。质量估算将每种元素的原子数乘随站平均原子量，再相加。",
+        "2 乘整个 OH 组，不是只乘紧挨数字的 H。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:chemistry-molecule",
+      "sources": [
+        {
+          "url": "https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html",
+          "publisher": "SMILES 规范原作者 Daylight",
+          "locator": "Atoms、Bonds、Branches、Rings"
+        },
+        {
+          "url": "https://www.simm.cas.cn/web/xwzx/kydt/202606/t20260612_8227870.html",
+          "publisher": "中国科学院上海药物研究所",
+          "locator": "SMILES 描述分子拓扑与三维构象的区别"
+        }
+      ],
+      "implementation": "/science/worker.js",
+      "claims": [
+        "SMILES 是分子连接关系的线性表示：原子用元素符号，= 表示双键，# 表示三键，括号表示分支，相同数字标记成对闭环位置。数字不是该原子的数量。",
+        "CCO 表示碳—碳—氧连接，省略的氢按价态补齐；c1ccccc1 用小写芳香原子与成对的 1 描述苯环。不同 SMILES 可能描述同一连接图，原始字符串并不天然唯一。",
+        "CCO 中没有写出的氢通过价态规则补足，不能仅按三个字符计算所有原子。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:unicode",
+      "sources": [
+        {
+          "url": "https://www.unicode.org/faq/utf_bom.html",
+          "publisher": "Unicode 联盟",
+          "locator": "Unicode 编码形式、代理码位与字节序"
+        },
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt",
+          "publisher": "MDN 官方中文文档",
+          "locator": "码点与 UTF-16 代码单元区别"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "Unicode 给字符指定码点，U+ 后使用十六进制，例如 A 是 U+0041。码点编号、UTF-16 代码单元和 UTF-8 文件字节是不同层次，不能直接把 U+ 后的数字拆成文件字节。",
+        "UTF-8 把一个 Unicode 标量值写成 1–4 个字节。Unicode 属性如字母类别、文字系统和区块用于组织字符；组合标记也可能参与组成一个可见符号。",
+        "U+4E2D 指字符身份，而 UTF-8 采用三个字节保存它。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:marine",
+      "sources": [
+        {
+          "url": "https://www.cinnet.cn/zh-hans/xsjl/hhkp/kpzsc/287-hai-shang-yun-shu-chuan-bo-guo-ji-xin-hao-qi-jian-jie.htm",
+          "publisher": "中国航海学会",
+          "locator": "单旗用途、两旗通用信息及三旗医疗部分"
+        }
+      ],
+      "implementation": "/discovery/reference-core.js",
+      "claims": [
+        "国际信号旗用特定图案代表字母和数字。单旗独立使用时可有规定航海含义，例如 A 旗提示有潜水员，要求他船慢速远离；B 旗提示危险货物。",
+        "旗帜排列还可以用于拼写，或按《国际信号规则》形成组合消息。组合含义不是把每面单旗中文意思机械相加；阅读时要先确认上下排列与通信语境。",
+        "在单旗航海语境中读取规定消息；在谜题拼字语境中也可能只取字母 A。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:colors",
+      "sources": [
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Values/color_value",
+          "publisher": "MDN 官方中文文档",
+          "locator": "RGB、HEX、HSL 与命名颜色"
+        },
+        {
+          "url": "/reference/core.js",
+          "publisher": "迷雾工具箱",
+          "locator": "colorLab / queryRecords colors：ΔE76 排序"
+        }
+      ],
+      "implementation": "/reference/color-picker.js",
+      "claims": [
+        "#RRGGBB 用两位十六进制表示红、绿、蓝通道，各通道 00–FF 对应十进制 0–255。#RGB 是简写，每位扩为两位；#f80 就等于 #ff8800。",
+        "HSL 用色相角、饱和度和亮度描述颜色，表达方式不同但可对应同一 sRGB 色值。本站将输入色与名称库转换到 Lab，用 ΔE76 距离排序近似名称，而非给任意颜色唯一命名。",
+        "FF=255，80=128，00=0；这三个数分别是红、绿、蓝的通道。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:calendar",
+      "sources": [
+        {
+          "url": "https://www.hko.gov.hk/sc/gts/time/lunarcal.htm",
+          "publisher": "香港天文台",
+          "locator": "朔望月、回归年与朔日"
+        },
+        {
+          "url": "https://www.hko.gov.hk/sc/gts/time/24solarterms.htm",
+          "publisher": "香港天文台",
+          "locator": "太阳黄经每 15° 分一个节气"
+        }
+      ],
+      "implementation": "/science/core.js",
+      "claims": [
+        "农历是同时考虑月相和太阳季节的阴阳历。月以朔，也就是新月，为开端；朔望月约 29.53 日，因此农历月有 29 或 30 天，不是每月固定 30 天。",
+        "二十四节气按太阳黄经每 15° 分段，春分为 0°、清明为 15°。十二个朔望月比回归年短约 11 天，安排闰月用于协调月与季节；闰月不是每四年固定增加的一天。",
+        "这里的角度是太阳沿黄道的位置；它不是当地太阳高度角。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:geology",
+      "sources": [
+        {
+          "url": "https://stratigraphy.org/ICSchart/ChronostratChart2023-09Chinese.pdf",
+          "publisher": "国际地层委员会 ICS",
+          "locator": "地质时间层级、数值年龄与单位 Ma"
+        },
+        {
+          "url": "https://stratigraphy.org/chart/?language=zh",
+          "publisher": "国际地层委员会 ICS",
+          "locator": "最新版本及界线定义说明"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "Ma 表示百万年，以距今时间表达年龄；66 Ma 就是约 6600 万年前，不能当作公元前 66 年。时间单位按宙、代、纪、世、期嵌套，岩层单位对应宇、界、系、统、阶。",
+        "数值年龄通常是年代界线的估计，有些界线用全球界线层型剖面和点位来定义，并不只是任意整数。新版表可能修订估计年龄，查询时要保留数据版本。",
+        "先乘 100 万，再根据年代层级查找；边界值要按数据表的区间约定理解。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:iching",
+      "sources": [
+        {
+          "url": "https://www.shidianguji.com/mid-page/7418256532158021659",
+          "publisher": "明代季本著 · 识典古籍",
+          "locator": "八卦之象、位与乾坤交生诸卦"
+        },
+        {
+          "url": "/vendor/reference/iching.json",
+          "publisher": "迷雾工具箱 · 随站资料",
+          "locator": "lines 自下而上；上下三爻与收录编号"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "阳爻画为完整横线，阴爻画为断开的横线；三爻有 2³=8 种组合，六爻有 2⁶=64 种组合。本站用阳 1、阴 0 表示，lines 字段按自下而上排列。",
+        "六爻的底部三爻构成下卦，顶部三爻构成上卦；上、下次序改变可得到不同卦。卦名、传统序号、先天/后天方位是不同排列约定，不能把六位二进制的数值直接当作传统序号。",
+        "数字是本站标记线型的约定，读取时保留自下而上的顺序。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:tarot",
+      "sources": [
+        {
+          "url": "https://www.metmuseum.org/perspectives/tarot-2",
+          "publisher": "大都会艺术博物馆 · 策展人 Tim Husband",
+          "locator": "四花色、56 花色牌、21 张王牌与愚者；历史变体"
+        },
+        {
+          "url": "/reference/tarot-art.js",
+          "publisher": "迷雾工具箱 · 已署名牌面资料",
+          "locator": "蓝金幻想与经典 RWS；正义、力量编号映射"
+        }
+      ],
+      "implementation": "/reference/tarot-art.js",
+      "claims": [
+        "常见 78 张塔罗由 22 张大阿尔卡那与 56 张小阿尔卡那组成。后者分四花色，每花色 14 张，包括 Ace 至 Ten 与四张宫廷牌；历史牌组也有不同结构。",
+        "读取一张牌时应分清花色、牌名、序号和牌面版本。不同版本可交换力量与正义的编号；本工具的编号查询跟随当前选择的牌组，而不是固定套用同一序列。",
+        "名称和编号必须连同版式核对；切换牌组后相同数字可能对应另一张牌。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:integerseq",
+      "sources": [
+        {
+          "url": "https://oeis.org/A000045",
+          "publisher": "OEIS 基金会",
+          "locator": "数列项、offset 与递推公式"
+        },
+        {
+          "url": "https://oeis.org/FAQ.html",
+          "publisher": "OEIS 基金会",
+          "locator": "按若干连续项查找与条目编号"
+        }
+      ],
+      "implementation": "/reference/core.js",
+      "claims": [
+        "数列查找把输入整数作为连续项，在收录的前缀中寻找同顺序匹配；匹配索引需要结合条目的 offset 解释。某组数字可能是数列中间片段，不一定从第 0 或第 1 项开始。",
+        "有限个数不能证明唯一生成规律。等差或整数等比只是可检验的简单候选，OEIS 条目还需核对定义、递推式和索引范围，再看新的项是否继续符合。",
+        "按照 F(n)=F(n−1)+F(n−2) 得到 3+5=8；这是候选定义，而非仅凭六项证明。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:go",
+      "sources": [
+        {
+          "url": "https://www.red-bean.com/sgf/go.html",
+          "publisher": "SGF 格式维护者",
+          "locator": "Move / Point 坐标；B、W、AB、AW 与提子顺序"
+        },
+        {
+          "url": "https://wqwh.weiqi.org.cn/rules/",
+          "publisher": "中国围棋协会",
+          "locator": "第2–6条：下法、气、提子和禁止全局同形再现"
+        }
+      ],
+      "implementation": "/discovery/go-core.js",
+      "claims": [
+        "SGF 用分号开始节点、属性名加方括号保存内容。B[dd] 表示黑棋在 dd 落子，W[] 表示白棋停一手；括号嵌套记录变化分支，而不是所有分支都依次下到同一盘。",
+        "SGF 坐标的第一字母从左向右表示列，第二字母从上向下表示行，a 为第一格；它与常见棋盘 A1 显示坐标不同。复盘落子后还要检查相邻棋块的气，移除无气棋块才能得到对应局面。",
+        "dd 的两个 d 都是从左上数的第四格，不是棋盘显示里的 D4。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:chess",
+      "sources": [
+        {
+          "url": "https://handbook.fide.com/chapter/e012023",
+          "publisher": "国际棋联 FIDE",
+          "locator": "Appendix C：代数记谱法"
+        },
+        {
+          "url": "https://jhlywa.github.io/chess.js/",
+          "publisher": "Chess.js 官方文档",
+          "locator": "loadPgn、fen、move 与局面校验"
+        }
+      ],
+      "implementation": "/round4/chess.js",
+      "claims": [
+        "PGN 保存棋局的标签和按顺序的走子，走子通常使用 SAN 代数记谱：N 表示马，f3 表示终点格，x 表示吃子，+ 表示将军。王车易位用 O-O 或 O-O-O，兵走子通常不写 P。",
+        "FEN 描述一个局面：棋子排列、行棋方、易位权、吃过路兵目标、半回合计数和完整回合数。它没有过去全部着法；相同棋子位置也可能因易位权不同而有不同合法着法。",
+        "在标准初始局面中按合法性确定具体棋子，Nf3 不表示字母 N 位置的棋子。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:paper",
+      "sources": [
+        {
+          "url": "https://www.nikoli.co.jp/en/puzzles/sudoku/",
+          "publisher": "Nikoli 官方题型规则",
+          "locator": "9×9 的行、列和 3×3 宫约束"
+        }
+      ],
+      "implementation": "/round3/board-model.js",
+      "claims": [
+        "标准 9×9 数独用 1–9 填满空格，每行、每列和每个 3×3 宫都恰好出现一次每个数字。数字只是不同符号的标签，不要求对题面进行加减乘除。",
+        "一个空格的候选集合是 1–9 减去同行、同列、同宫已经出现的数字；若只剩一个值，就可以确定。局部候选还需同全盘约束一起验证，重复给定数字会使题目矛盾。",
+        "由行内不重复并完整使用 1–9 推出；仍需检查该 9 不与列或宫条件冲突。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:paper-slitherlink",
+      "sources": [
+        {
+          "url": "https://www.nikoli.co.jp/en/puzzles/slitherlink/",
+          "publisher": "Nikoli 官方题型规则",
+          "locator": "单闭环、格周边数、不分叉或交叉"
+        }
+      ],
+      "implementation": "/round3/board-model.js",
+      "claims": [
+        "数回沿相邻格点间的横竖边画线，最终只形成一条不分叉、不交叉的闭合回路。格内数字说明它四条周边中恰好有几条被使用；无数字格不规定周边条数。",
+        "每个被回路经过的点应连接两条线，未经过的点连接零条线。局部满足数字仍不够，还需排除独立的小闭环与分叉，保证所有线属于同一个回路。",
+        "0 表示周边用边总数为零，与空白格的无约束完全不同。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:paper-nurikabe",
+      "sources": [
+        {
+          "url": "https://www.nikoli.co.jp/en/puzzles/nurikabe/",
+          "publisher": "Nikoli 官方题型规则",
+          "locator": "白区含一个数字、黑区连通与禁 2×2"
+        }
+      ],
+      "implementation": "/round3/board-model.js",
+      "claims": [
+        "数墙把格子分成白色岛屿与黑色海域。每个岛恰好有一个数字，白格总数等于该数字；不同岛不能通过格边连接，角上接触不等于四邻连通。",
+        "所有黑格必须通过上下左右连成一片，同时不能出现 2×2 全黑块。数字格属于自己的岛，不能涂黑；面积与全局连通条件需要同时满足。",
+        "岛的面积已经用完，四邻不能再成为同一岛，也不能边邻另一座岛。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:paper-akari",
+      "sources": [
+        {
+          "url": "https://www.nikoli.co.jp/en/puzzles/akari/",
+          "publisher": "Nikoli 官方题型规则",
+          "locator": "白格全照亮、灯不互照与黑格邻灯数"
+        }
+      ],
+      "implementation": "/round3/board-model.js",
+      "claims": [
+        "照明在白格放灯，灯沿同一行、列传播，遇黑格或外框停止；每一个白格都必须被至少一盏灯照亮，但任何两盏灯不能互相照射。",
+        "黑格数字只计上下左右紧邻的灯数，不计斜角灯，也不计远处照来的光。黑格会挡光，数字 0 禁止四邻放灯，但不代表周边白格不能被远处灯照亮。",
+        "提示数数的是直接相邻的灯；随后仍需检查这些灯没有与其他灯相互照射。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:life",
+      "sources": [
+        {
+          "url": "https://ibiblio.org/lifepatterns/october1970.html",
+          "publisher": "Martin Gardner · Scientific American 1970；ibiblio 原文存档",
+          "locator": "生存、死亡与出生规则"
+        }
+      ],
+      "implementation": "/round4/life.js",
+      "claims": [
+        "Conway 生命游戏把每个格子分为活或死，检查周围八个邻格。B3 表示死格恰有 3 个活邻居时出生；S23 表示活格有 2 或 3 个活邻居时存活，其他情况死亡。",
+        "所有格子必须依据同一旧代同时更新，不能一边修改一边给后面的格子计数。初始图案决定演化：有些稳定不变，有些周期振荡，还有些图案会移动。",
+        "端点各只有一个活邻居而死亡；中心存活，上下两个死格各有三个活邻居而出生。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:cube",
+      "sources": [
+        {
+          "url": "https://www.worldcubeassociation.org/regulations/translations/chinese/",
+          "publisher": "世界魔方协会 WCA",
+          "locator": "12a1：面转动方向；英文原规则为准"
+        }
+      ],
+      "implementation": "/round1/cube.js",
+      "claims": [
+        "三阶魔方面转动以 F、B、R、L、U、D 表示前、后、右、左、上、下。单字母表示面对该面观察时顺时针 90°，加撇号表示逆时针 90°，加 2 表示 180°。",
+        "公式从左到右执行，次序通常不可交换。撤销一串动作时要反转动作顺序并逐个取逆；R 与 R′ 互为逆，R2 的逆仍是 R2。",
+        "先撤销最后的 U，再撤销先前的 R；R′ U′ 一般不能撤销 R U。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code",
+      "sources": [
+        {
+          "url": "https://www.brainfuck.org/brainfuck.html",
+          "publisher": "Brainfuck 文档作者 Brian Raiter",
+          "locator": "八指令、循环匹配与输入输出差异"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "Brainfuck 只有 > < + - . , [ ] 八条核心指令：尖括号移动内存指针，加减改变当前单元，. 输出字节，, 读入字节；其他字符通常被忽略。内存单元初值为 0。",
+        "[ 在当前单元为 0 时跳过匹配循环，] 在当前单元非 0 时回到循环继续执行。方括号必须正确嵌套，循环测试的是当前指针指向的单元，而不是某个固定变量。",
+        "循环将 8×8=64 加到右侧单元，移过去再加 1 得 65，. 将字节 65 输出为 A。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-python",
+      "sources": [
+        {
+          "url": "https://docs.python.org/zh-cn/3.13/tutorial/controlflow.html",
+          "publisher": "Python 软件基金会",
+          "locator": "for、range 与函数定义"
+        },
+        {
+          "url": "https://pyodide.org/en/stable/usage/index.html",
+          "publisher": "Pyodide 官方项目",
+          "locator": "浏览器中的 Python 运行环境"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "Python 用缩进界定复合语句的代码块，for 按序迭代列表、字符串或其他可迭代对象。变量名绑定对象，代码执行结果只有通过 print 等输出操作才显示为程序输出。",
+        "range 的终点不包含在序列中，例如 range(3) 产生 0、1、2；range(1,4) 产生 1、2、3。本工具通过 Pyodide 在浏览器里运行 CPython，语言规则与运行环境可用 API 要分别理解。",
+        "range(1,4) 为 1、2、3，求和是 6，不包括 4。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-whitespace",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/susisu/Whitespace-JS/master/README.md",
+          "publisher": "实际解释器作者 Susisu",
+          "locator": "32 位精度、终止指令与显形转换"
+        },
+        {
+          "url": "/vendor/coderunner/esoteric.js",
+          "publisher": "Susisu · Whitespace-JS 随站版本",
+          "locator": "Whitespace 指令前缀、数字解析与栈执行"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "本站 Whitespace 引擎只把空格、Tab 和换行作为语法字符，普通可见字符被忽略。指令由前缀和后续空白组合区分，分别操作栈、算术、堆、流程和输入输出。",
+        "数字参数用空格表示二进制 0、Tab 表示 1，带符号并以换行结束；栈顶是最近压入的值。看起来“空白”的文本仍可能包含完整程序，自动整理缩进会改变它。",
+        "TST 对应二进制 101，即十进制 5；这是参数说明，显形字母本身不是可直接执行的原始程序。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-sql",
+      "sources": [
+        {
+          "url": "https://www.sqlite.org/lang_select.html",
+          "publisher": "SQLite 项目",
+          "locator": "SELECT、WHERE、ORDER BY 与 LIMIT"
+        },
+        {
+          "url": "https://www.sqlite.org/lang_expr.html",
+          "publisher": "SQLite 项目",
+          "locator": "表达式与字符串字面量"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "SQLite 将数据组织成表，表有列和行。SELECT 指定结果表达式，FROM 指定输入，WHERE 过滤行，ORDER BY 指定返回顺序；没有 ORDER BY 就不能保证行按录入顺序返回。",
+        "SELECT 本身不修改数据库；CREATE、INSERT、UPDATE 等语句会修改结构或数据。字符串通常使用单引号，SQL 的 NULL 表示缺失值，不能直接按普通数值或空字符串推理。",
+        "SELECT 可以直接返回表达式的一行结果；AS 为这一结果列起名。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:turing",
+      "sources": [
+        {
+          "url": "https://turingmachine.io/",
+          "publisher": "图灵机模拟器原作者 Andy Li",
+          "locator": "Basics、Formal definition 与 Binary increment"
+        }
+      ],
+      "implementation": "/turing/core.js",
+      "claims": [
+        "图灵机由有限状态、符号表、纸带和读写头组成。每一步用“当前状态＋当前格符号”查转换表，然后写一个符号、移动读写头、切到下一状态。未写入的纸带格使用指定空白符。",
+        "纸带在数学模型中可无限延伸，但浏览器模拟必须有资源上限。本站规则可用 L、R、S 表示左移、右移、停留；没有适用转换时停机，这和进入无限循环是不同情况。",
+        "写入、移动、改状态属于同一转移，不是三条独立输入字符。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-befunge",
+      "sources": [
+        {
+          "url": "https://catseye.tc/view/Befunge-93/doc/Befunge-93.markdown",
+          "publisher": "原作者 Chris Pressey · Cat’s Eye Technologies",
+          "locator": "80×25 环绕空间、栈、指令方向与输出"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "Befunge-93 把源码放在 80×25 二维字符网格上，指令指针从左上角向右出发。>、<、^、v 改变方向，越过网格边界会绕回对侧，所以空格与换行都属于程序布局。",
+        "数字 0–9 压入栈，+ 等从栈顶取数计算，. 输出整数，, 输出字符，@ 停机。双引号切换字符串模式，把沿途字符的 ASCII 值压栈；栈是后进先出。",
+        "依次压入 2、3，+ 弹出两数再压入 5，. 输出栈顶，@ 结束。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-deadfish",
+      "sources": [
+        {
+          "url": "/vendor/coderunner/esoteric.js",
+          "publisher": "实际引擎作者 nilaymaj · 随站固定提交",
+          "locator": "Deadfish：value、i/d/s/o 与边界重置"
+        },
+        {
+          "url": "/coderunner/model.js",
+          "publisher": "迷雾工具箱",
+          "locator": "Deadfish 命令说明及输出类型"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "本站 Deadfish 执行器从一个初值 0 的累计器开始：i 加一，d 减一，s 平方，o 输出当前十进制值。它没有普通变量名，也没有读取用户输入的命令。",
+        "平方会快速增长数值；该引擎在值恰好等于 −1 或 256 时重置为 0，而不是把一切大于 255 的数都取模。o 输出数字，不会自动按 ASCII 转成字符。",
+        "0→1→2→4，最后 o 输出十进制 4；它不是 ASCII 值 4 的字符。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-javascript",
+      "sources": [
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_types",
+          "publisher": "MDN 官方中文文档",
+          "locator": "变量声明、数据类型与字面量"
+        },
+        {
+          "url": "https://bellard.org/quickjs/quickjs.html",
+          "publisher": "QuickJS 作者 Fabrice Bellard",
+          "locator": "JavaScript 语言与嵌入环境"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "JavaScript 表达式计算值，let、const 声明名称绑定，数组按从 0 开始的索引保存元素。程序的运行环境决定哪些 API 存在，语言支持 JavaScript 并不代表它就是浏览器页面脚本。",
+        "+ 在两个数值间进行加法，遇到字符串会参与字符串拼接；例如 1+2 为 3，而 \"1\"+2 得 \"12\"。解谜处理数字串时，要先明确它是文字还是数值。",
+        "65、82、71 都位于 ASCII 范围，分别对应 A、R、G；此例不涵盖所有 Unicode 码点。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-lua",
+      "sources": [
+        {
+          "url": "https://www.lua.org/manual/5.4/manual.html",
+          "publisher": "Lua 官方作者团队",
+          "locator": "§3.4.9 Table Constructors；§6.1 ipairs、print"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "Lua 用 table 同时表达映射和序列；构造 {10,20,30} 时自动给顺序项使用 1、2、3 键。local 声明局部变量，.. 连接字符串，print 将参数输出。",
+        "ipairs 按整数键从 1 开始依次遍历，遇第一个不存在的值停止。表中有空洞时，#t 不一定等于所有已保存项数量，所以缺失值与序列长度需要分开看。",
+        "ipairs 读取键 1、2、3 的值，累计得到 2+4+6=12。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-malbolge",
+      "sources": [
+        {
+          "url": "https://www.lscheffer.com/malbolge_spec.html",
+          "publisher": "语言原作者 Ben Olmstead；Lou Scheffer 保存",
+          "locator": "Environment、Commands；作者声明公共领域"
+        },
+        {
+          "url": "https://www.lscheffer.com/malbolge.shtml",
+          "publisher": "研究者 Lou Scheffer 原始分析",
+          "locator": "执行后改写与跳转的次序"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "标准 Malbolge 使用十个三进制位的无符号机器字，范围 0–59048，内存有 59049 个字。A 是累计器，C 是代码指针，D 是数据指针；程序和数据共用同一内存。",
+        "指令含义不仅取决于字符，也取决于地址；执行之后还会通过置换表改写指令。因此同一字符在不同位置、或第二次被执行时，可能产生不同操作，普通逐字符替换不足以解释它。",
+        "从全 0 到全 2 共 59049 个不同字，不能把它当作十位二进制整数。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    },
+    {
+      "capabilityId": "native:code-ook",
+      "sources": [
+        {
+          "url": "https://www.dangermouse.net/esoteric/ook.html",
+          "publisher": "语言原作者 David Morgan-Mar",
+          "locator": "三个语法元素与两词命令映射"
+        }
+      ],
+      "implementation": "/coderunner/model.js",
+      "claims": [
+        "Ook! 使用 Ook.、Ook?、Ook! 三种标记，每两个组成一条命令。Ook. Ook. 对应 +，Ook. Ook? 对应 >，Ook? Ook. 对应 <；词数必须成对。",
+        "这些命令映射到 Brainfuck 的内存带模型。Ook! Ook. 输出当前字节，Ook. Ook! 读输入；Ook! Ook? 与 Ook? Ook! 是匹配循环起止，需要像方括号一样正确嵌套。",
+        "前两词把当前单元加 1，后两词把指针右移；不是把每个 Ook 单独当作一条指令。"
+      ],
+      "networkNote": "来源在检索工具核对，未声称已在中国各运营商线路实测；英文原始资料如实标注。"
+    }
+  ],
+  "copying": "事实摘要与独立小例子；无整篇复制；Malbolge 原规范有作者公共领域声明。",
+  "limitations": [
+    "国内运营商线路未实测；不伪称所有国外原站具有中国国内站点。",
+    "Whitespace 原 Durham 站失效，保留实际解释器作者资料与随站语法实现，标注为实现说明。",
+    "Deadfish 使用本站固定上游实现说明，不将社区解释包装成统一标准。"
+  ],
+  "implementationDifferences": [
+    {
+      "capabilityId": "native:turing",
+      "fact": "原站作者 Andy Li；S/stay 是本站适配层扩展，原站默认只 L/R；两个来源分别支持规范与实现说明。"
+    },
+    {
+      "capabilityId": "native:code",
+      "fact": "Brian Raiter 文档说明通用 Brainfuck；本站 8 位循环、左边界及 EOF=0 为固定引擎约定。"
+    },
+    {
+      "capabilityId": "native:code-whitespace",
+      "fact": "Whitespace 原 Durham 站失效；实际采用 Susisu 的 Whitespace-JS，32 位整数与原始任意精度不同，语法例子已通过实际解析/VM输出5核对。"
+    },
+    {
+      "capabilityId": "native:code-deadfish",
+      "fact": "未找到可稳定访问的作者原始站；明确仅说明本站 Esolang Park 固定解释器，按特定值 -1/256 重置，不伪造标准或把社区百科当作权威。"
+    },
+    {
+      "capabilityId": "native:code-ook",
+      "fact": "作者将 Ook? Ook? 写成幽默 banana 动作；本站只实现八个与 Brainfuck 对应命令，明确拒绝该命令对。"
+    },
+    {
+      "capabilityId": "native:code-befunge",
+      "fact": "采用 Befunge-93 的80×25布局；除零与g/p越界是本站报错约定，未声称符合所有其他解释器。"
+    },
+    {
+      "capabilityId": "native:astronomy",
+      "fact": "旧GitHub Pages API地址失效，改引用随站原始 MIT 上游库的带注释 API；UTC、24h搜索与 J2000 无自行适配分别有实现来源。"
+    },
+    {
+      "capabilityId": "native:tarot",
+      "fact": "经典RWS力量VIII正义XI；本站Gearberry蓝金幻想正义VIII力量XI，来自已有版本映射而非通用牌组规范。"
+    },
+    {
+      "capabilityId": "native:chemistry-formula",
+      "fact": "区分相对式量与真正分子的相对分子质量；离子化合物化学式不意味着一个独立分子。"
+    }
+  ],
+  "exampleChecks": {
+    "Brainfuck": "实际固定引擎 ++++++++[>++++++++<-]>+. 输出 A，115步",
+    "Befunge-93": "23+.@ 输出5后接空格，5步",
+    "Deadfish": "iiso 输出4，4步",
+    "Whitespace": "空白原程序压栈5、数值输出、结束，3条指令实际输出5",
+    "formula": "Ca(OH)2 O=2；CuSO4·5H2O O=9，实际计数函数通过"
+  },
+  "knownNetworkObservations": [
+    {
+      "url": "https://mirrors.nju.edu.cn/rfc/rfc6335.txt",
+      "result": "实际全文读取成功；同号html不成功，已采用txt"
+    },
+    {
+      "url": "https://handbook.fide.com/chapter/e012023",
+      "result": "小写路径全文读取成功；大写E012023失败，已采用小写"
+    },
+    {
+      "url": "https://publicsuffix.org/learn/",
+      "result": "实际全文读取成功；www子域失败，已采用无www"
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
+      "result": "实际手册索引读取成功；intel.cn同路径重定向到泛开发首页，未把泛首页当作手册"
+    },
+    {
+      "url": "https://wqwh.weiqi.org.cn/rules/",
+      "result": "官方搜索索引有具体围棋规则；打开暂时失败，未谎称全文读取通过"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/susisu/Whitespace-JS/master/README.md",
+      "result": "实际读取成功，但GitHub原始域非国内保证；同时提供随站引擎可读来源"
+    },
+    {
+      "url": "https://stratigraphy.org/chart/?language=zh",
+      "result": "动态入口文本提取为空；实际读取2023-09中文版PDF作为精确内容来源"
+    }
+  ]
+}

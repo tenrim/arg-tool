@@ -1,0 +1,147 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "query": "ASCII",
+      "total": 128,
+      "lessonRank": 0,
+      "toolRank": 1,
+      "first": [
+        {
+          "id": "learn:function-native:ascii",
+          "title": "ASCII"
+        },
+        {
+          "id": "native:ascii",
+          "title": "ASCII 文本与数字"
+        },
+        {
+          "id": "learn:function-pair:To%20Braille",
+          "title": "Braille ASCII"
+        },
+        {
+          "id": "native:utf8",
+          "title": "UTF-8 字节与文字"
+        },
+        {
+          "id": "native:radix",
+          "title": "数字进制转换"
+        }
+      ]
+    },
+    {
+      "query": "ＡＳＣＩＩ",
+      "total": 128,
+      "lessonRank": 0,
+      "toolRank": 1,
+      "first": [
+        {
+          "id": "learn:function-native:ascii",
+          "title": "ASCII"
+        },
+        {
+          "id": "native:ascii",
+          "title": "ASCII 文本与数字"
+        },
+        {
+          "id": "learn:function-pair:To%20Braille",
+          "title": "Braille ASCII"
+        },
+        {
+          "id": "native:utf8",
+          "title": "UTF-8 字节与文字"
+        },
+        {
+          "id": "native:radix",
+          "title": "数字进制转换"
+        }
+      ]
+    },
+    {
+      "query": "  ascii  ",
+      "total": 128,
+      "lessonRank": 0,
+      "toolRank": 1,
+      "first": [
+        {
+          "id": "learn:function-native:ascii",
+          "title": "ASCII"
+        },
+        {
+          "id": "native:ascii",
+          "title": "ASCII 文本与数字"
+        },
+        {
+          "id": "learn:function-pair:To%20Braille",
+          "title": "Braille ASCII"
+        },
+        {
+          "id": "native:utf8",
+          "title": "UTF-8 字节与文字"
+        },
+        {
+          "id": "native:radix",
+          "title": "数字进制转换"
+        }
+      ]
+    },
+    {
+      "query": "Base64",
+      "total": 8,
+      "lessonRank": -1,
+      "toolRank": -1,
+      "first": [
+        {
+          "id": "learn:function-pair:To%20Base64",
+          "title": "Base64"
+        },
+        {
+          "id": "pair:To%20Base64",
+          "title": "Base64 编码与解码"
+        },
+        {
+          "id": "op:Show%20Base64%20offsets",
+          "title": "显示 Base64 偏移量"
+        },
+        {
+          "id": "learn:function-op:Show%20Base64%20offsets",
+          "title": "Base64 偏移"
+        },
+        {
+          "id": "learn:function-op:JWT%20Sign",
+          "title": "签署 JWT"
+        }
+      ]
+    },
+    {
+      "query": "From Base64",
+      "total": 2,
+      "lessonRank": -1,
+      "toolRank": -1,
+      "first": [
+        {
+          "id": "pair:To%20Base64",
+          "title": "Base64 编码与解码",
+          "preferredOperation": "From Base64"
+        },
+        {
+          "id": "learn:function-pair:To%20Base",
+          "title": "任意进制整数"
+        }
+      ]
+    }
+  ],
+  "scope": [
+    "public/capabilities/registry.js:searchEntries",
+    "tests/capabilities.test.mjs"
+  ],
+  "regressionLog": "/tmp/mist-search-ranking-test.log",
+  "preserved": [
+    "matching set",
+    "empty-query ordering and identity",
+    "category filtering",
+    "exact source-operation ownership",
+    "preferred direction",
+    "registry inventory and coverage"
+  ]
+}

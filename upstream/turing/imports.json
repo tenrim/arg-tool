@@ -1,0 +1,148 @@
+{
+  "pins": {
+    "turing-machine-viz": "b4dab9e4a649051ada94cb352c48ec177da5952e"
+  },
+  "packages": {
+    "js-yaml": {
+      "version": "4.3.2",
+      "integrity": "sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA=="
+    }
+  },
+  "files": [
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/LICENSE",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/LICENSE",
+      "sha256": "2c3bb1f63994bc8581f5ab2228f5e933767d68dcf09c367196e79602eb2a1831"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/README.md",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/README.md",
+      "sha256": "feaf8f95ba1b64f15c64655246d5fb56730fdd4aa162e4ea7287c124bcaac8d4"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/package.json",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/package.json",
+      "sha256": "b201947537671e59f5e24ae80251965264c614bf8960e30be9717a810b3b9f22"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/TuringMachine.js",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/TuringMachine.js",
+      "sha256": "f74c749896e4b9e9820a78eaf36a25f044284494bc8aeff434bb630b85558be5"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/tape/Tape.js",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/tape/Tape.js",
+      "sha256": "56d6ee978c03055cfb428ca0d8d8d3957176f2dedd88b8c74139c96abd0a0754"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/parser.js",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/parser.js",
+      "sha256": "330122f10e25735d991b7e349cf30a5f4d9d7363f8d3bd8880deaa148cd29432"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/state-diagram/StateGraph.js",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/state-diagram/StateGraph.js",
+      "sha256": "4abd2cea306933966d8dd70dc818e8e6f22f1da1bca5265367076c273a25dac1"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/binaryAdd.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/binaryAdd.yaml",
+      "sha256": "66c245d13f0c383e5b963c84e6e27c1c63c29dbc7d0272bb46e5e6a99df6ab71"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/binaryIncrement.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/binaryIncrement.yaml",
+      "sha256": "eb05e7ee434b5022f6447d44c49664a0e36800ee97b537c55a959e2537c43545"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/binaryMult.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/binaryMult.yaml",
+      "sha256": "7ecc5a769de6ed4d0a244bddd1d63baa3da4cc688c95cf13450a35491a9fbcd1"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/busyBeaver3.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/busyBeaver3.yaml",
+      "sha256": "a3bd7c56492865129926312e752cc58230f6b9b7386443b575444cf826a078e3"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/busyBeaver4.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/busyBeaver4.yaml",
+      "sha256": "8e8f8ff22848f25f8f6fde12b22afe4b230191f694ce24ca459b83e55076ed8b"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/copy1s.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/copy1s.yaml",
+      "sha256": "6544b489f4021fc2bbddbe201c894c09740be4d784bdae51abe275c029f173f5"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/divisibleBy3.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/divisibleBy3.yaml",
+      "sha256": "ce05b8778d08b0c7552ab9fc286c6e6de2409871d91f83b1207978038137de81"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/divisibleBy3Base10.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/divisibleBy3Base10.yaml",
+      "sha256": "dc8c9b5781ebc93670f7efbc295e1b0c3076b3006763b4b056ad889188eeed07"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/lengthMult.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/lengthMult.yaml",
+      "sha256": "6d46d861a570c0ac5d3f03848b0255a0204638cfccab4c85b3da05d3b5d7edd4"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/matchBinaryStrings.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/matchBinaryStrings.yaml",
+      "sha256": "f2f893c1e6ecc3c45dc2f46e46c72778053a89928894ad8d8e5181236d9d6df6"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/matchThreeLengths.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/matchThreeLengths.yaml",
+      "sha256": "1bb66d6f4cd5499ffe1d3ff594d60df791b0ca2444cf9ffa6830e0a26bb737a3"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/palindrome.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/palindrome.yaml",
+      "sha256": "8c86312755ca4c3193af14422d793136f2dd05e189395e01b939c2c332d3380e"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/powersOfTwo.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/powersOfTwo.yaml",
+      "sha256": "061d584f2cd8fa1e980a46ce59ddfebe05f75bd80a788ff96cc3e94852b688ed"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/repeat01.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/repeat01.yaml",
+      "sha256": "2339c61207b9fd0c89a8b42161612a6ff3eb7b788c87926d5b3b885e63ab4bf2"
+    },
+    {
+      "path": "upstream/turing/sources/turing-machine-viz/src/examples/unaryMult.yaml",
+      "url": "https://raw.githubusercontent.com/aepsilon/turing-machine-viz/b4dab9e4a649051ada94cb352c48ec177da5952e/src/examples/unaryMult.yaml",
+      "sha256": "689a499cc2a4c3dd341c48d737bf7c8ef3e1c249c0073c774210cd7ad09c277d"
+    },
+    {
+      "path": "upstream/turing/sources/js-yaml-4.3.2.tgz",
+      "url": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.2.tgz",
+      "sha256": "c7b241d2224cf9253ff53854aa4cee87da91bd889c4d0fa3a3ffd1041ecee5b1"
+    },
+    {
+      "path": "upstream/turing/sources/js-yaml/LICENSE",
+      "url": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.2.tgz",
+      "sha256": "a07bc24468b9654ce76a547d47a2db282d07733b715db4c73a98bd63961f9550"
+    },
+    {
+      "path": "upstream/turing/sources/js-yaml/README.md",
+      "url": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.2.tgz",
+      "sha256": "aa65504ff91c42c9f5159b66e4f4e398fe6b0df07740ef37e61984220cc7a7c4"
+    },
+    {
+      "path": "upstream/turing/sources/js-yaml/package.json",
+      "url": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.2.tgz",
+      "sha256": "3eeb05aa0ceb4c3686e44c9b5d9b88f914b099ba9a7426b36947e65c6373d9a5"
+    },
+    {
+      "path": "upstream/turing/sources/js-yaml/dist/js-yaml.mjs",
+      "url": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.2.tgz",
+      "sha256": "cea276c7e15f409a1adbe5d177aba7824398a474f7cf702bd57962c7d570636f"
+    }
+  ]
+}

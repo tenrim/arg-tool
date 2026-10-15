@@ -1,0 +1,1545 @@
+{
+  "scope": "All first-party public JS modules; vendor bytes excluded. Literal ESM imports enforced; computed resources, event participants and global writes inventoried for review.",
+  "modules": 148,
+  "import_edges": 376,
+  "cycles": [],
+  "issues": [],
+  "dependencies": {
+    "public/ambience.js": [],
+    "public/app.js": [
+      "public/basics/ui.js",
+      "public/capabilities/input-session.js",
+      "public/capabilities/native-workspaces.js",
+      "public/capabilities/reference-workspaces.js",
+      "public/capabilities/registry.js",
+      "public/capabilities/routes.js",
+      "public/capabilities/workspace.js",
+      "public/chef-tools/catalog.js",
+      "public/chef-tools/index.js",
+      "public/chef-tools/schema.js",
+      "public/coderunner/ui.js",
+      "public/cyberchef.js",
+      "public/discovery/go.js",
+      "public/engine.js",
+      "public/hex/editor.js",
+      "public/hunt-media.js",
+      "public/hunt-tools.js",
+      "public/image-tools.js",
+      "public/it-reference/page.js",
+      "public/knowledge/page.js",
+      "public/media.js",
+      "public/navigation.js",
+      "public/preferences.js",
+      "public/project-sources.js",
+      "public/reference/index.js",
+      "public/round-one.js",
+      "public/round-two.js",
+      "public/round3/paper.js",
+      "public/round4/index.js",
+      "public/science/index.js",
+      "public/site-pages.js",
+      "public/site-shell.js",
+      "public/turing/ui.js",
+      "public/ui/index.js",
+      "public/workspace.js"
+    ],
+    "public/audio-worker.js": [
+      "public/media.js"
+    ],
+    "public/basics/core.js": [
+      "public/basics/model.js",
+      "public/vendor/basics/PolybiusSquare.js",
+      "public/vendor/basics/TapCode.js",
+      "public/vendor/basics/baudot.js",
+      "public/vendor/basics/invisibles.js",
+      "public/vendor/basics/roman-index.js"
+    ],
+    "public/basics/foundation.js": [
+      "public/chef-tools/schema.js"
+    ],
+    "public/basics/model.js": [],
+    "public/basics/session.js": [
+      "public/basics/foundation.js",
+      "public/capabilities/input-session.js",
+      "public/chef-tools/catalog.js",
+      "public/cyberchef-client.js",
+      "public/cyberchef-i18n.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/basics/ui.js": [
+      "public/basics/foundation.js",
+      "public/basics/model.js",
+      "public/basics/session.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/basics/worker.js": [],
+    "public/capabilities/browser.js": [
+      "public/capabilities/registry.js",
+      "public/ui/index.js"
+    ],
+    "public/capabilities/input-session.js": [],
+    "public/capabilities/native-workspaces.js": [
+      "public/ui/index.js"
+    ],
+    "public/capabilities/reference-workspaces.js": [
+      "public/capabilities/registry.js",
+      "public/capabilities/routes.js",
+      "public/discovery/bridge.js",
+      "public/reference/world-map.js",
+      "public/science/core.js",
+      "public/ui/index.js"
+    ],
+    "public/capabilities/registry.js": [
+      "public/chef-tools/catalog.js",
+      "public/coderunner/catalog.js",
+      "public/cyberchef-i18n.js",
+      "public/knowledge/content.js",
+      "public/navigation.js",
+      "public/round3/catalog.js",
+      "public/tool-search.js"
+    ],
+    "public/capabilities/routes.js": [],
+    "public/capabilities/sidebar.js": [
+      "public/capabilities/registry.js",
+      "public/capabilities/routes.js",
+      "public/ui/index.js"
+    ],
+    "public/capabilities/task-lifecycle.js": [
+      "public/ui/index.js"
+    ],
+    "public/capabilities/workspace.js": [
+      "public/capabilities/browser.js",
+      "public/capabilities/registry.js",
+      "public/ui/index.js"
+    ],
+    "public/chef-tools/catalog.js": [
+      "public/tool-search.js"
+    ],
+    "public/chef-tools/families.js": [
+      "public/chef-tools/catalog.js",
+      "public/cyberchef-i18n.js",
+      "public/tool-search.js"
+    ],
+    "public/chef-tools/guidance.js": [],
+    "public/chef-tools/index.js": [
+      "public/capabilities/registry.js",
+      "public/chef-tools/catalog.js",
+      "public/chef-tools/families.js",
+      "public/chef-tools/schema.js",
+      "public/chef-tools/task-view.js",
+      "public/cyberchef-i18n.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/chef-tools/inverse.js": [
+      "public/capabilities/registry.js"
+    ],
+    "public/chef-tools/limits.js": [],
+    "public/chef-tools/result-view.js": [
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/chef-tools/schema.js": [
+      "public/cyberchef-i18n.js",
+      "public/ui/index.js"
+    ],
+    "public/chef-tools/task-view.js": [
+      "public/capabilities/input-session.js",
+      "public/capabilities/registry.js",
+      "public/chef-tools/catalog.js",
+      "public/chef-tools/families.js",
+      "public/chef-tools/guidance.js",
+      "public/chef-tools/inverse.js",
+      "public/chef-tools/limits.js",
+      "public/chef-tools/result-view.js",
+      "public/chef-tools/schema.js",
+      "public/cyberchef-client.js",
+      "public/cyberchef-i18n.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/coderunner/catalog.js": [],
+    "public/coderunner/model.js": [
+      "public/coderunner/catalog.js"
+    ],
+    "public/coderunner/ui.js": [
+      "public/coderunner/model.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/coderunner/worker.js": [],
+    "public/cyberchef-client.js": [],
+    "public/cyberchef-i18n.js": [],
+    "public/cyberchef-operation-corrections.js": [],
+    "public/cyberchef-worker.js": [],
+    "public/cyberchef.js": [
+      "public/capabilities/registry.js",
+      "public/chef-tools/catalog.js",
+      "public/chef-tools/families.js",
+      "public/chef-tools/schema.js",
+      "public/cyberchef-client.js",
+      "public/cyberchef-i18n.js",
+      "public/ui/index.js"
+    ],
+    "public/discovery/bridge.js": [
+      "public/ui/index.js"
+    ],
+    "public/discovery/catalog.js": [],
+    "public/discovery/go-core.js": [],
+    "public/discovery/go-worker.js": [],
+    "public/discovery/go.js": [
+      "public/discovery/go-core.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/discovery/reference-browser.js": [
+      "public/discovery/bridge.js",
+      "public/discovery/reference-core.js",
+      "public/ui/index.js"
+    ],
+    "public/discovery/reference-core.js": [],
+    "public/discovery/reference-worker.js": [],
+    "public/engine.js": [
+      "public/vendor/puzzle-lib/Braille/BrailleCharacter.js",
+      "public/vendor/puzzle-lib/Braille/BrailleEncoding.js",
+      "public/vendor/puzzle-lib/Cipher/AutoKeyString.js",
+      "public/vendor/puzzle-lib/Cipher/CaesarString.js",
+      "public/vendor/puzzle-lib/Cipher/VigenereString.js",
+      "public/vendor/puzzle-lib/Common/EncodingCategory.js",
+      "public/vendor/puzzle-lib/Morse/MorseCharacter.js",
+      "public/vendor/puzzle-lib/Morse/MorseData.js",
+      "public/vendor/puzzle-lib/Morse/MorseEncoding.js"
+    ],
+    "public/hex/editor.js": [
+      "public/hex/model.js",
+      "public/ui/index.js"
+    ],
+    "public/hex/model.js": [],
+    "public/hex/search-worker.js": [],
+    "public/hunt-media.js": [
+      "public/hunt-tools.js",
+      "public/ui/index.js",
+      "public/vendor/hunt/ffmpeg/esm/index.js",
+      "public/vendor/hunt/zxing/index.js"
+    ],
+    "public/hunt-tools.js": [
+      "public/ui/index.js"
+    ],
+    "public/hunt-worker.js": [
+      "public/vendor/hunt/chinese-puzzle/search.js",
+      "public/vendor/hunt/cipher-machine/common/Trie.js",
+      "public/vendor/hunt/cipher-machine/one-word/one-word.js",
+      "public/vendor/hunt/cipher-machine/word-search/wordSearch.js"
+    ],
+    "public/image-inspect.js": [
+      "public/media.js",
+      "public/ui/index.js"
+    ],
+    "public/image-projects.js": [
+      "public/vendor/aperisolve/visual.js",
+      "public/vendor/stegonline/bitplane-browser.component.js",
+      "public/vendor/stegonline/extract-data.service.js",
+      "public/vendor/stegonline/helpers.service.js"
+    ],
+    "public/image-tools.js": [
+      "public/image-inspect.js",
+      "public/media.js",
+      "public/ui/index.js"
+    ],
+    "public/image-worker.js": [
+      "public/image-projects.js",
+      "public/media.js"
+    ],
+    "public/it-reference/model.js": [],
+    "public/it-reference/page.js": [
+      "public/capabilities/task-lifecycle.js",
+      "public/it-reference/model.js",
+      "public/ui/index.js"
+    ],
+    "public/knowledge/articles/crypto.js": [],
+    "public/knowledge/articles/encodings.js": [],
+    "public/knowledge/articles/files.js": [],
+    "public/knowledge/articles/media-technical.js": [],
+    "public/knowledge/articles/reference-sim.js": [],
+    "public/knowledge/articles/text-formats.js": [],
+    "public/knowledge/content.js": [
+      "public/knowledge/articles/crypto.js",
+      "public/knowledge/articles/encodings.js",
+      "public/knowledge/articles/files.js",
+      "public/knowledge/articles/media-technical.js",
+      "public/knowledge/articles/reference-sim.js",
+      "public/knowledge/articles/text-formats.js",
+      "public/navigation.js"
+    ],
+    "public/knowledge/page.js": [
+      "public/capabilities/registry.js",
+      "public/capabilities/routes.js",
+      "public/knowledge/content.js",
+      "public/navigation.js",
+      "public/ui/index.js"
+    ],
+    "public/media.js": [
+      "public/engine.js",
+      "public/vendor/fft.js"
+    ],
+    "public/navigation.js": [
+      "public/chef-tools/catalog.js"
+    ],
+    "public/preferences.js": [
+      "public/navigation.js"
+    ],
+    "public/project-licenses.js": [],
+    "public/project-sources.js": [
+      "public/project-licenses.js",
+      "public/ui/index.js"
+    ],
+    "public/reference/browser.js": [
+      "public/capabilities/reference-workspaces.js",
+      "public/discovery/bridge.js",
+      "public/discovery/reference-browser.js",
+      "public/reference/color-picker.js",
+      "public/reference/tarot-deck.js",
+      "public/reference/visual-core.js",
+      "public/ui/index.js"
+    ],
+    "public/reference/catalog.js": [
+      "public/discovery/catalog.js"
+    ],
+    "public/reference/cif.js": [],
+    "public/reference/color-picker.js": [
+      "public/reference/visual-core.js",
+      "public/tool-help.js",
+      "public/ui/index.js"
+    ],
+    "public/reference/core.js": [
+      "public/reference/tarot-art.js",
+      "public/reference/visual-core.js"
+    ],
+    "public/reference/index.js": [
+      "public/capabilities/reference-workspaces.js",
+      "public/capabilities/task-lifecycle.js",
+      "public/discovery/bridge.js",
+      "public/discovery/reference-core.js",
+      "public/reference/browser.js",
+      "public/reference/catalog.js",
+      "public/reference/model-bridge.js",
+      "public/reference/tarot-art.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/reference/model-bridge.js": [],
+    "public/reference/tarot-art.js": [],
+    "public/reference/tarot-deck.js": [
+      "public/reference/tarot-art.js",
+      "public/ui/index.js"
+    ],
+    "public/reference/visual-core.js": [],
+    "public/reference/worker.js": [],
+    "public/reference/world-map.js": [
+      "public/reference/visual-core.js",
+      "public/ui/index.js"
+    ],
+    "public/round-one.js": [
+      "public/round1/analysis.js",
+      "public/round1/cube.js",
+      "public/round1/hanzi.js",
+      "public/round1/instruments.js",
+      "public/round1/qr.js",
+      "public/round1/substitution.js",
+      "public/round1/symbols.js"
+    ],
+    "public/round-two.js": [
+      "public/round1/common.js",
+      "public/round2/archive.js",
+      "public/round2/common.js",
+      "public/round2/coordinates.js",
+      "public/round2/images.js",
+      "public/round2/music.js",
+      "public/ui/index.js"
+    ],
+    "public/round1/analysis-engine.js": [],
+    "public/round1/analysis.js": [
+      "public/cyberchef-client.js",
+      "public/round1/analysis-engine.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/round1/common.js": [
+      "public/ui/index.js"
+    ],
+    "public/round1/cube-worker.js": [],
+    "public/round1/cube.js": [
+      "public/round1/common.js",
+      "public/ui/index.js",
+      "public/vendor/round1/cubing/lib/cubing/alg/index.js",
+      "public/vendor/round1/cubing/lib/cubing/twisty/index.js"
+    ],
+    "public/round1/hanzi.js": [
+      "public/round1/common.js",
+      "public/vendor/round1/opencc-js/full.js",
+      "public/vendor/round1/pinyin-pro/dist/index.mjs"
+    ],
+    "public/round1/instruments.js": [
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/round1/qr-engine.js": [],
+    "public/round1/qr-worker.js": [
+      "public/round1/qr-engine.js",
+      "public/vendor/jsqr.js"
+    ],
+    "public/round1/qr.js": [
+      "public/round1/common.js",
+      "public/round1/qr-engine.js",
+      "public/ui/index.js",
+      "public/vendor/round1/qrazybox/templates.js"
+    ],
+    "public/round1/substitution-worker.js": [
+      "public/vendor/round1/substitution/solver.js"
+    ],
+    "public/round1/substitution.js": [
+      "public/round1/analysis-engine.js",
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/round1/symbols.js": [
+      "public/engine.js",
+      "public/round1/common.js",
+      "public/ui/index.js",
+      "public/vendor/puzzle-lib/Semaphore/SemaphoreEncoding.js"
+    ],
+    "public/round2/archive-engine.js": [
+      "public/vendor/round2/fflate.js"
+    ],
+    "public/round2/archive-worker.js": [
+      "public/round2/archive-engine.js"
+    ],
+    "public/round2/archive.js": [
+      "public/media.js",
+      "public/round1/common.js",
+      "public/round2/common.js",
+      "public/ui/index.js"
+    ],
+    "public/round2/common.js": [
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/round2/coordinates-engine.js": [
+      "public/vendor/round2/geo.js"
+    ],
+    "public/round2/coordinates.js": [
+      "public/round1/common.js",
+      "public/round2/coordinates-engine.js"
+    ],
+    "public/round2/image-engine.js": [
+      "public/vendor/round2/chroma.js",
+      "public/vendor/round2/pixelmatch.js"
+    ],
+    "public/round2/image-worker.js": [
+      "public/round2/image-engine.js"
+    ],
+    "public/round2/images.js": [
+      "public/round1/common.js",
+      "public/round2/common.js",
+      "public/round2/image-engine.js",
+      "public/ui/index.js"
+    ],
+    "public/round2/music-engine.js": [
+      "public/vendor/round2/pitchy.js",
+      "public/vendor/round2/tonal.js"
+    ],
+    "public/round2/music-worker.js": [
+      "public/round2/music-engine.js"
+    ],
+    "public/round2/music.js": [
+      "public/round1/common.js",
+      "public/round1/instruments.js",
+      "public/round2/common.js",
+      "public/round2/music-engine.js",
+      "public/ui/index.js",
+      "public/vendor/round2/midi.js"
+    ],
+    "public/round3/board-model.js": [
+      "public/round3/catalog.js"
+    ],
+    "public/round3/catalog.js": [],
+    "public/round3/paper.js": [
+      "public/round1/common.js",
+      "public/round2/common.js",
+      "public/round3/board-model.js",
+      "public/ui/index.js"
+    ],
+    "public/round3/solver-worker.js": [
+      "public/round3/board-model.js",
+      "public/vendor/round3/grid-engine.js"
+    ],
+    "public/round4/chess.js": [
+      "public/round4/common.js",
+      "public/ui/index.js",
+      "public/vendor/round4/chess.js"
+    ],
+    "public/round4/common.js": [
+      "public/round1/common.js"
+    ],
+    "public/round4/fragment-geometry.js": [],
+    "public/round4/fragments.js": [
+      "public/round4/common.js",
+      "public/round4/fragment-geometry.js",
+      "public/ui/index.js",
+      "public/vendor/round4/konva.js"
+    ],
+    "public/round4/index.js": [
+      "public/round4/common.js",
+      "public/tool-help.js",
+      "public/ui/index.js"
+    ],
+    "public/round4/life.js": [
+      "public/round4/common.js",
+      "public/ui/index.js",
+      "public/vendor/round4/life.js"
+    ],
+    "public/round4/model.js": [
+      "public/reference/model-bridge.js",
+      "public/round4/common.js",
+      "public/ui/index.js",
+      "public/vendor/round4/model.js"
+    ],
+    "public/science/core.js": [],
+    "public/science/index.js": [
+      "public/capabilities/task-lifecycle.js",
+      "public/discovery/bridge.js",
+      "public/round1/common.js",
+      "public/science/visuals.js",
+      "public/ui/index.js"
+    ],
+    "public/science/visuals.js": [
+      "public/ui/index.js"
+    ],
+    "public/science/worker.js": [],
+    "public/site-pages.js": [
+      "public/capabilities/browser.js",
+      "public/navigation.js",
+      "public/preferences.js",
+      "public/tool-search.js",
+      "public/ui/index.js"
+    ],
+    "public/site-shell.js": [
+      "public/navigation.js",
+      "public/tool-help.js",
+      "public/ui/index.js",
+      "public/workbench-shell.js",
+      "public/workspace.js"
+    ],
+    "public/stereo-worker.js": [
+      "public/vendor/hunt/stereogram/processing-worker.js"
+    ],
+    "public/tool-help.js": [
+      "public/ui/index.js"
+    ],
+    "public/tool-search.js": [],
+    "public/turing/core.js": [
+      "public/vendor/turing/machine.js",
+      "public/vendor/turing/parser.js",
+      "public/vendor/turing/tape.js"
+    ],
+    "public/turing/ui.js": [
+      "public/round1/common.js",
+      "public/ui/index.js"
+    ],
+    "public/turing/worker.js": [],
+    "public/ui/byte-grid.js": [
+      "public/ui/controls.js",
+      "public/ui/core.js"
+    ],
+    "public/ui/capabilities.js": [
+      "public/ui/controls.js",
+      "public/ui/core.js",
+      "public/ui/icons.js",
+      "public/ui/layout.js",
+      "public/ui/overlays.js"
+    ],
+    "public/ui/controls.js": [
+      "public/ui/core.js",
+      "public/ui/motion.js"
+    ],
+    "public/ui/conversion.js": [
+      "public/ui/controls.js",
+      "public/ui/feedback.js",
+      "public/ui/layout.js"
+    ],
+    "public/ui/core.js": [
+      "public/ui/motion.js"
+    ],
+    "public/ui/feedback.js": [
+      "public/ui/core.js"
+    ],
+    "public/ui/icons.js": [
+      "public/ui/core.js"
+    ],
+    "public/ui/index.js": [
+      "public/ui/byte-grid.js",
+      "public/ui/capabilities.js",
+      "public/ui/controls.js",
+      "public/ui/conversion.js",
+      "public/ui/core.js",
+      "public/ui/feedback.js",
+      "public/ui/icons.js",
+      "public/ui/layout.js",
+      "public/ui/motion.js",
+      "public/ui/overlays.js",
+      "public/ui/pages.js",
+      "public/ui/references.js",
+      "public/ui/template.js"
+    ],
+    "public/ui/layout.js": [
+      "public/ui/controls.js",
+      "public/ui/core.js",
+      "public/ui/icons.js"
+    ],
+    "public/ui/motion.js": [],
+    "public/ui/overlays.js": [
+      "public/ui/controls.js",
+      "public/ui/core.js",
+      "public/ui/motion.js"
+    ],
+    "public/ui/pages.js": [
+      "public/ui/controls.js",
+      "public/ui/layout.js",
+      "public/ui/template.js"
+    ],
+    "public/ui/references.js": [
+      "public/ui/controls.js",
+      "public/ui/core.js"
+    ],
+    "public/ui/template.js": [
+      "public/ui/controls.js",
+      "public/ui/core.js",
+      "public/ui/feedback.js",
+      "public/ui/layout.js",
+      "public/ui/overlays.js"
+    ],
+    "public/workbench-shell.js": [
+      "public/capabilities/browser.js",
+      "public/capabilities/registry.js",
+      "public/capabilities/sidebar.js",
+      "public/navigation.js",
+      "public/preferences.js",
+      "public/ui/index.js"
+    ],
+    "public/workspace.js": [
+      "public/capabilities/browser.js",
+      "public/capabilities/registry.js",
+      "public/navigation.js",
+      "public/ui/index.js"
+    ]
+  },
+  "highest_fan_in": [
+    {
+      "file": "public/ui/index.js",
+      "consumers": [
+        "public/app.js",
+        "public/basics/session.js",
+        "public/basics/ui.js",
+        "public/capabilities/browser.js",
+        "public/capabilities/native-workspaces.js",
+        "public/capabilities/reference-workspaces.js",
+        "public/capabilities/sidebar.js",
+        "public/capabilities/task-lifecycle.js",
+        "public/capabilities/workspace.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/schema.js",
+        "public/chef-tools/task-view.js",
+        "public/coderunner/ui.js",
+        "public/cyberchef.js",
+        "public/discovery/bridge.js",
+        "public/discovery/go.js",
+        "public/discovery/reference-browser.js",
+        "public/hex/editor.js",
+        "public/hunt-media.js",
+        "public/hunt-tools.js",
+        "public/image-inspect.js",
+        "public/image-tools.js",
+        "public/it-reference/page.js",
+        "public/knowledge/page.js",
+        "public/project-sources.js",
+        "public/reference/browser.js",
+        "public/reference/color-picker.js",
+        "public/reference/index.js",
+        "public/reference/tarot-deck.js",
+        "public/reference/world-map.js",
+        "public/round-two.js",
+        "public/round1/analysis.js",
+        "public/round1/common.js",
+        "public/round1/cube.js",
+        "public/round1/instruments.js",
+        "public/round1/qr.js",
+        "public/round1/substitution.js",
+        "public/round1/symbols.js",
+        "public/round2/archive.js",
+        "public/round2/common.js",
+        "public/round2/images.js",
+        "public/round2/music.js",
+        "public/round3/paper.js",
+        "public/round4/chess.js",
+        "public/round4/fragments.js",
+        "public/round4/index.js",
+        "public/round4/life.js",
+        "public/round4/model.js",
+        "public/science/index.js",
+        "public/science/visuals.js",
+        "public/site-pages.js",
+        "public/site-shell.js",
+        "public/tool-help.js",
+        "public/turing/ui.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "file": "public/round1/common.js",
+      "consumers": [
+        "public/basics/session.js",
+        "public/basics/ui.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/result-view.js",
+        "public/chef-tools/task-view.js",
+        "public/coderunner/ui.js",
+        "public/discovery/go.js",
+        "public/reference/index.js",
+        "public/round-two.js",
+        "public/round1/analysis.js",
+        "public/round1/cube.js",
+        "public/round1/hanzi.js",
+        "public/round1/instruments.js",
+        "public/round1/qr.js",
+        "public/round1/substitution.js",
+        "public/round1/symbols.js",
+        "public/round2/archive.js",
+        "public/round2/common.js",
+        "public/round2/coordinates.js",
+        "public/round2/images.js",
+        "public/round2/music.js",
+        "public/round3/paper.js",
+        "public/round4/common.js",
+        "public/science/index.js",
+        "public/turing/ui.js"
+      ]
+    },
+    {
+      "file": "public/capabilities/registry.js",
+      "consumers": [
+        "public/app.js",
+        "public/capabilities/browser.js",
+        "public/capabilities/reference-workspaces.js",
+        "public/capabilities/sidebar.js",
+        "public/capabilities/workspace.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/inverse.js",
+        "public/chef-tools/task-view.js",
+        "public/cyberchef.js",
+        "public/knowledge/page.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "file": "public/ui/core.js",
+      "consumers": [
+        "public/ui/byte-grid.js",
+        "public/ui/capabilities.js",
+        "public/ui/controls.js",
+        "public/ui/feedback.js",
+        "public/ui/icons.js",
+        "public/ui/index.js",
+        "public/ui/layout.js",
+        "public/ui/overlays.js",
+        "public/ui/references.js",
+        "public/ui/template.js"
+      ]
+    },
+    {
+      "file": "public/navigation.js",
+      "consumers": [
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/knowledge/content.js",
+        "public/knowledge/page.js",
+        "public/preferences.js",
+        "public/site-pages.js",
+        "public/site-shell.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "file": "public/ui/controls.js",
+      "consumers": [
+        "public/ui/byte-grid.js",
+        "public/ui/capabilities.js",
+        "public/ui/conversion.js",
+        "public/ui/index.js",
+        "public/ui/layout.js",
+        "public/ui/overlays.js",
+        "public/ui/pages.js",
+        "public/ui/references.js",
+        "public/ui/template.js"
+      ]
+    },
+    {
+      "file": "public/chef-tools/catalog.js",
+      "consumers": [
+        "public/app.js",
+        "public/basics/session.js",
+        "public/capabilities/registry.js",
+        "public/chef-tools/families.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/task-view.js",
+        "public/cyberchef.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "file": "public/cyberchef-i18n.js",
+      "consumers": [
+        "public/basics/session.js",
+        "public/capabilities/registry.js",
+        "public/chef-tools/families.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/schema.js",
+        "public/chef-tools/task-view.js",
+        "public/cyberchef.js"
+      ]
+    },
+    {
+      "file": "public/media.js",
+      "consumers": [
+        "public/app.js",
+        "public/audio-worker.js",
+        "public/image-inspect.js",
+        "public/image-tools.js",
+        "public/image-worker.js",
+        "public/round2/archive.js"
+      ]
+    },
+    {
+      "file": "public/chef-tools/schema.js",
+      "consumers": [
+        "public/app.js",
+        "public/basics/foundation.js",
+        "public/chef-tools/index.js",
+        "public/chef-tools/task-view.js",
+        "public/cyberchef.js"
+      ]
+    },
+    {
+      "file": "public/discovery/bridge.js",
+      "consumers": [
+        "public/capabilities/reference-workspaces.js",
+        "public/discovery/reference-browser.js",
+        "public/reference/browser.js",
+        "public/reference/index.js",
+        "public/science/index.js"
+      ]
+    },
+    {
+      "file": "public/round2/common.js",
+      "consumers": [
+        "public/round-two.js",
+        "public/round2/archive.js",
+        "public/round2/images.js",
+        "public/round2/music.js",
+        "public/round3/paper.js"
+      ]
+    }
+  ],
+  "bridges": [
+    {
+      "from": "public/basics/session.js",
+      "to": "public/cyberchef-client.js",
+      "reason": "Execute basic conversions through the shared Chef client"
+    },
+    {
+      "from": "public/chef-tools/task-view.js",
+      "to": "public/cyberchef-client.js",
+      "reason": "Chef task execution adapter"
+    },
+    {
+      "from": "public/round1/analysis.js",
+      "to": "public/cyberchef-client.js",
+      "reason": "Explicit automatic decoding through Chef"
+    },
+    {
+      "from": "public/round1/symbols.js",
+      "to": "public/engine.js",
+      "reason": "Reuse the original Morse conversion"
+    },
+    {
+      "from": "public/round2/archive.js",
+      "to": "public/media.js",
+      "reason": "Reuse the shared file signature inspector"
+    },
+    {
+      "from": "public/basics/foundation.js",
+      "to": "public/chef-tools/schema.js",
+      "reason": "Basic conversions reuse the real Chef parameter schema"
+    },
+    {
+      "from": "public/basics/session.js",
+      "to": "public/chef-tools/catalog.js",
+      "reason": "Basic conversion adapter resolves original operation metadata"
+    },
+    {
+      "from": "public/capabilities/reference-workspaces.js",
+      "to": "public/reference/world-map.js",
+      "reason": "Region context uses the real map"
+    },
+    {
+      "from": "public/capabilities/reference-workspaces.js",
+      "to": "public/discovery/bridge.js",
+      "reason": "Region and sky detail actions"
+    },
+    {
+      "from": "public/capabilities/reference-workspaces.js",
+      "to": "public/science/core.js",
+      "reason": "Sequence workspace uses the amino acid table"
+    },
+    {
+      "from": "public/reference/browser.js",
+      "to": "public/discovery/reference-browser.js",
+      "reason": "Reference UI composes currencies, marine and sky"
+    },
+    {
+      "from": "public/reference/browser.js",
+      "to": "public/discovery/bridge.js",
+      "reason": "Reference detail object handoff"
+    },
+    {
+      "from": "public/reference/browser.js",
+      "to": "public/capabilities/reference-workspaces.js",
+      "reason": "Shared region context"
+    },
+    {
+      "from": "public/reference/index.js",
+      "to": "public/discovery/bridge.js",
+      "reason": "Validated detail object handoff"
+    },
+    {
+      "from": "public/reference/index.js",
+      "to": "public/discovery/reference-core.js",
+      "reason": "Catalogue object normalization"
+    },
+    {
+      "from": "public/reference/index.js",
+      "to": "public/capabilities/reference-workspaces.js",
+      "reason": "Reference controller registration"
+    },
+    {
+      "from": "public/reference/catalog.js",
+      "to": "public/discovery/catalog.js",
+      "reason": "One combined reference catalogue"
+    },
+    {
+      "from": "public/round2/music.js",
+      "to": "public/round1/instruments.js",
+      "reason": "Audio play tab keeps its original instrument controller"
+    },
+    {
+      "from": "public/round3/paper.js",
+      "to": "public/round2/common.js",
+      "reason": "Bounded workerJob compatibility helper"
+    },
+    {
+      "from": "public/round4/model.js",
+      "to": "public/reference/model-bridge.js",
+      "reason": "Explicit real CIF model handoff"
+    },
+    {
+      "from": "public/science/index.js",
+      "to": "public/discovery/bridge.js",
+      "reason": "Real sky catalogue object to astronomy"
+    }
+  ],
+  "events": {
+    "arg:astronomy-object": [
+      "public/capabilities/reference-workspaces.js",
+      "public/discovery/bridge.js",
+      "public/science/index.js"
+    ],
+    "arg:audiochange": [
+      "public/app.js",
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js",
+      "public/hunt-media.js",
+      "public/round2/music.js"
+    ],
+    "arg:audioready": [
+      "public/app.js",
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js"
+    ],
+    "arg:capability-direction": [
+      "public/app.js",
+      "public/chef-tools/task-view.js"
+    ],
+    "arg:capability-native-direction": [
+      "public/app.js",
+      "public/capabilities/workspace.js"
+    ],
+    "arg:cipherchange": [
+      "public/chef-tools/index.js"
+    ],
+    "arg:collectionschange": [
+      "public/preferences.js",
+      "public/site-pages.js",
+      "public/workbench-shell.js"
+    ],
+    "arg:crystal-ready": [
+      "public/reference/model-bridge.js",
+      "public/round4/model.js"
+    ],
+    "arg:filechange": [
+      "public/app.js",
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js",
+      "public/round2/archive.js"
+    ],
+    "arg:fileready": [
+      "public/app.js",
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js"
+    ],
+    "arg:imagechange": [
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js",
+      "public/hunt-media.js",
+      "public/image-tools.js",
+      "public/round2/images.js"
+    ],
+    "arg:imageready": [
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js",
+      "public/image-tools.js"
+    ],
+    "arg:imageviewchange": [
+      "public/chef-tools/index.js",
+      "public/hunt-media.js",
+      "public/image-tools.js",
+      "public/round2/images.js"
+    ],
+    "arg:materialchange": [
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js"
+    ],
+    "arg:nativetaskchange": [
+      "public/app.js",
+      "public/capabilities/native-workspaces.js",
+      "public/capabilities/task-lifecycle.js",
+      "public/hunt-media.js",
+      "public/round2/archive.js",
+      "public/round2/images.js",
+      "public/round2/music.js"
+    ],
+    "arg:opencapability": [
+      "public/app.js",
+      "public/capabilities/browser.js"
+    ],
+    "arg:openoperation": [
+      "public/chef-tools/index.js"
+    ],
+    "arg:panelchange": [
+      "public/app.js",
+      "public/basics/session.js",
+      "public/basics/ui.js",
+      "public/capabilities/native-workspaces.js",
+      "public/capabilities/reference-workspaces.js",
+      "public/capabilities/task-lifecycle.js",
+      "public/chef-tools/index.js",
+      "public/coderunner/ui.js",
+      "public/discovery/go.js",
+      "public/discovery/reference-browser.js",
+      "public/reference/browser.js",
+      "public/round1/cube.js",
+      "public/round1/instruments.js",
+      "public/round3/paper.js",
+      "public/round4/fragments.js",
+      "public/round4/index.js",
+      "public/round4/life.js",
+      "public/round4/model.js",
+      "public/science/index.js",
+      "public/turing/ui.js",
+      "public/workbench-shell.js",
+      "public/workspace.js"
+    ],
+    "arg:preferenceschange": [
+      "public/preferences.js",
+      "public/site-pages.js",
+      "public/ui/motion.js",
+      "public/workbench-shell.js"
+    ],
+    "arg:qr-source": [
+      "public/round-two.js",
+      "public/round1/qr.js"
+    ],
+    "arg:reference-context": [
+      "public/capabilities/reference-workspaces.js"
+    ],
+    "arg:reference-request": [
+      "public/capabilities/reference-workspaces.js",
+      "public/discovery/bridge.js",
+      "public/reference/index.js"
+    ],
+    "arg:reference-result": [
+      "public/capabilities/reference-workspaces.js",
+      "public/reference/index.js"
+    ],
+    "arg:searchopen": [
+      "public/workbench-shell.js",
+      "public/workspace.js"
+    ],
+    "arg:subpanelchange": [
+      "public/chef-tools/index.js",
+      "public/round1/instruments.js",
+      "public/round2/common.js",
+      "public/workspace.js"
+    ],
+    "arg:taskgroup": [
+      "public/app.js",
+      "public/chef-tools/task-view.js"
+    ],
+    "arg:videochange": [
+      "public/capabilities/native-workspaces.js",
+      "public/chef-tools/index.js"
+    ]
+  },
+  "globals": [
+    {
+      "file": "public/coderunner/worker.js",
+      "name": "console"
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "name": "print"
+    }
+  ],
+  "resources": [
+    {
+      "file": "public/app.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/app.js",
+      "expression": "new URL('./audio-worker.js'"
+    },
+    {
+      "file": "public/basics/session.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/basics/session.js",
+      "expression": "new URL('./worker.js'"
+    },
+    {
+      "file": "public/basics/session.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/basics/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/basics/worker.js",
+      "expression": "new URL('basics/core.js'"
+    },
+    {
+      "file": "public/capabilities/reference-workspaces.js",
+      "expression": "new URL('../vendor/reference/flags/'"
+    },
+    {
+      "file": "public/capabilities/reference-workspaces.js",
+      "expression": "new URL('../vendor/reference/'"
+    },
+    {
+      "file": "public/capabilities/reference-workspaces.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/capabilities/reference-workspaces.js",
+      "expression": "new URL('../science/worker.js'"
+    },
+    {
+      "file": "public/capabilities/reference-workspaces.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/chef-tools/catalog.js",
+      "expression": "new URL('../vendor/cyberchef/catalogue.json'"
+    },
+    {
+      "file": "public/coderunner/ui.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/coderunner/ui.js",
+      "expression": "new URL('./worker.js'"
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "expression": "new URL('../vendor/coderunner/'"
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "expression": "importScripts("
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/coderunner/worker.js",
+      "expression": "importScripts("
+    },
+    {
+      "file": "public/cyberchef-client.js",
+      "expression": "new URL('./'"
+    },
+    {
+      "file": "public/cyberchef-client.js",
+      "expression": "new URL('./vendor/cyberchef/'"
+    },
+    {
+      "file": "public/cyberchef-client.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/cyberchef-client.js",
+      "expression": "new URL('./cyberchef-worker.js'"
+    },
+    {
+      "file": "public/cyberchef-worker.js",
+      "expression": "new URL('vendor/cyberchef/'"
+    },
+    {
+      "file": "public/cyberchef-worker.js",
+      "expression": "new URL('./vendor/cyberchef/modules/Encodings.js'"
+    },
+    {
+      "file": "public/cyberchef-worker.js",
+      "expression": "importScripts("
+    },
+    {
+      "file": "public/cyberchef-worker.js",
+      "expression": "importScripts("
+    },
+    {
+      "file": "public/cyberchef.js",
+      "expression": "new URL('./vendor/cyberchef/catalogue.json'"
+    },
+    {
+      "file": "public/discovery/bridge.js",
+      "expression": "new URL('../vendor/reference/flags/'"
+    },
+    {
+      "file": "public/discovery/go-worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/discovery/go-worker.js",
+      "expression": "new URL('vendor/discovery/sgf.js'"
+    },
+    {
+      "file": "public/discovery/go-worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/discovery/go-worker.js",
+      "expression": "new URL('discovery/go-core.js'"
+    },
+    {
+      "file": "public/discovery/go.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/discovery/go.js",
+      "expression": "new URL('./go-worker.js'"
+    },
+    {
+      "file": "public/discovery/go.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/discovery/reference-browser.js",
+      "expression": "new URL('../vendor/'"
+    },
+    {
+      "file": "public/discovery/reference-browser.js",
+      "expression": "new URL('../vendor/discovery/'"
+    },
+    {
+      "file": "public/discovery/reference-browser.js",
+      "expression": "new URL('../vendor/discovery/'"
+    },
+    {
+      "file": "public/discovery/reference-browser.js",
+      "expression": "new URL('../vendor/discovery/'"
+    },
+    {
+      "file": "public/discovery/reference-worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/discovery/reference-worker.js",
+      "expression": "new URL('discovery/reference-core.js'"
+    },
+    {
+      "file": "public/hex/editor.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/hex/editor.js",
+      "expression": "new URL('./search-worker.js'"
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new URL('./vendor/hunt/zxing/'"
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new URL('./stereo-worker.js'"
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new URL('./vendor/hunt/sstv/worker/decoder.js'"
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new URL('./vendor/hunt/ffmpeg-core/esm/ffmpeg-core.wasm.gz'"
+    },
+    {
+      "file": "public/hunt-media.js",
+      "expression": "new URL('./vendor/hunt/ffmpeg-core/esm/ffmpeg-core.js'"
+    },
+    {
+      "file": "public/hunt-tools.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/hunt-tools.js",
+      "expression": "new URL('./hunt-worker.js'"
+    },
+    {
+      "file": "public/image-inspect.js",
+      "expression": "new URL('./vendor/jsqr.js'"
+    },
+    {
+      "file": "public/image-inspect.js",
+      "expression": "new URL('./vendor/exifr.js'"
+    },
+    {
+      "file": "public/image-tools.js",
+      "expression": "new URL('./vendor/stegonline/pngtoy.min.js'"
+    },
+    {
+      "file": "public/image-tools.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/image-tools.js",
+      "expression": "new URL('./image-worker.js'"
+    },
+    {
+      "file": "public/it-reference/model.js",
+      "expression": "new URL('../vendor/it-reference/'"
+    },
+    {
+      "file": "public/project-sources.js",
+      "expression": "new URL('./'"
+    },
+    {
+      "file": "public/reference/browser.js",
+      "expression": "new URL('../vendor/reference/'"
+    },
+    {
+      "file": "public/reference/browser.js",
+      "expression": "new URL('../vendor/reference/flags/'"
+    },
+    {
+      "file": "public/reference/browser.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/reference/browser.js",
+      "expression": "new URL('./worker.js'"
+    },
+    {
+      "file": "public/reference/browser.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/reference/index.js",
+      "expression": "new URL('../vendor/reference/flags/'"
+    },
+    {
+      "file": "public/reference/index.js",
+      "expression": "new URL('../vendor/reference/'"
+    },
+    {
+      "file": "public/reference/index.js",
+      "expression": "new URL('../vendor/discovery/'"
+    },
+    {
+      "file": "public/reference/index.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/reference/index.js",
+      "expression": "new URL('./worker.js'"
+    },
+    {
+      "file": "public/reference/index.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/reference/tarot-deck.js",
+      "expression": "new URL('../vendor/reference/'"
+    },
+    {
+      "file": "public/reference/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/reference/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/reference/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/round1/cube-worker.js",
+      "expression": "importScripts("
+    },
+    {
+      "file": "public/round1/cube.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/round1/cube.js",
+      "expression": "new URL('./cube-worker.js'"
+    },
+    {
+      "file": "public/round1/qr.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/round1/qr.js",
+      "expression": "new URL('./qr-worker.js'"
+    },
+    {
+      "file": "public/round1/substitution.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/round1/substitution.js",
+      "expression": "new URL('./substitution-worker.js'"
+    },
+    {
+      "file": "public/round2/archive.js",
+      "expression": "new URL('./archive-worker.js'"
+    },
+    {
+      "file": "public/round2/common.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/round2/images.js",
+      "expression": "new URL('./image-worker.js'"
+    },
+    {
+      "file": "public/round2/music.js",
+      "expression": "new URL('./music-worker.js'"
+    },
+    {
+      "file": "public/round3/paper.js",
+      "expression": "new URL('./solver-worker.js'"
+    },
+    {
+      "file": "public/round3/solver-worker.js",
+      "expression": "new URL('../vendor/round3/grid-engine.wasm'"
+    },
+    {
+      "file": "public/round4/index.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/science/index.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/science/index.js",
+      "expression": "new URL('./worker.js'"
+    },
+    {
+      "file": "public/science/index.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/science/index.js",
+      "expression": "new URL('../vendor/science/elements.json'"
+    },
+    {
+      "file": "public/science/worker.js",
+      "expression": "importScripts("
+    },
+    {
+      "file": "public/science/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/site-shell.js",
+      "expression": "new URL('./index.html'"
+    },
+    {
+      "file": "public/turing/ui.js",
+      "expression": "new Worker("
+    },
+    {
+      "file": "public/turing/ui.js",
+      "expression": "new URL('./worker.js'"
+    },
+    {
+      "file": "public/turing/ui.js",
+      "expression": "new URL('../'"
+    },
+    {
+      "file": "public/turing/worker.js",
+      "expression": "import("
+    },
+    {
+      "file": "public/turing/worker.js",
+      "expression": "new URL('turing/core.js'"
+    },
+    {
+      "file": "public/ui/references.js",
+      "expression": "new URL('..'"
+    }
+  ]
+}

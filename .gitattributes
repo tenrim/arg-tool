@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+# Pinned runtime/source bytes are checked against upstream SHA-256 manifests.
+public/vendor/** -text
+upstream/** -text
+public/licenses/** -text
+public/fonts/** -text

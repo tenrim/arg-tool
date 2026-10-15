@@ -1,0 +1,90 @@
+{
+  "pins": {
+    "larseggert/iana-assignments": "a3cbd401df5dd06cf60f7376fa0601bd5f426aec",
+    "publicsuffix/list": "3929462652695bad04f0a27afb600974014a3c8b",
+    "AlexMelanFromRingo/rfc-library": "4a9672c79e71f0816cffb4968f50da279d7bf910",
+    "spdx/license-list-data": "v3.27.0"
+  },
+  "packages": {
+    "mime-db": {
+      "version": "1.54.0",
+      "integrity": "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="
+    }
+  },
+  "files": [
+    {
+      "path": "upstream/it-reference/sources/iana/CC0-1.0.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/text/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "upstream/it-reference/sources/iana/character-sets.xml",
+      "url": "https://raw.githubusercontent.com/larseggert/iana-assignments/a3cbd401df5dd06cf60f7376fa0601bd5f426aec/character-sets/character-sets.xml",
+      "sha256": "edf0d7c18bec58490dcbea1e9fcf9a9f504e5812549a627e97e589cbd08d15f1"
+    },
+    {
+      "path": "upstream/it-reference/sources/iana/http-fields.xml",
+      "url": "https://raw.githubusercontent.com/larseggert/iana-assignments/a3cbd401df5dd06cf60f7376fa0601bd5f426aec/http-fields/http-fields.xml",
+      "sha256": "535ea18a8fd6b97c86637e32069ffaf227ea1be68592245336d65796cf705aff"
+    },
+    {
+      "path": "upstream/it-reference/sources/iana/http-status-codes.xml",
+      "url": "https://raw.githubusercontent.com/larseggert/iana-assignments/a3cbd401df5dd06cf60f7376fa0601bd5f426aec/http-status-codes/http-status-codes.xml",
+      "sha256": "0a83f83eb55f1a0c514e63dc11f53c03f5b56f038bc811d3e8bd02b769b58add"
+    },
+    {
+      "path": "upstream/it-reference/sources/iana/protocol-numbers.xml",
+      "url": "https://raw.githubusercontent.com/larseggert/iana-assignments/a3cbd401df5dd06cf60f7376fa0601bd5f426aec/protocol-numbers/protocol-numbers.xml",
+      "sha256": "59cdd7930cd6152bd11713b8883503511fffb2add72345d21d043cecb969803b"
+    },
+    {
+      "path": "upstream/it-reference/sources/iana/service-names-port-numbers.xml",
+      "url": "https://raw.githubusercontent.com/larseggert/iana-assignments/a3cbd401df5dd06cf60f7376fa0601bd5f426aec/service-names-port-numbers/service-names-port-numbers.xml",
+      "sha256": "308a736765444099cb3d8e20f8ce0bb72b49f308df95dea3c448d26c946be582"
+    },
+    {
+      "path": "upstream/it-reference/sources/mime-db/LICENSE",
+      "url": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "sha256": "cc1dfd4dafa27271e8212cd3b274eeb3f262e40a6fdab36ddc3f9696f706f58b",
+      "archive_path": "package/LICENSE"
+    },
+    {
+      "path": "upstream/it-reference/sources/mime-db/README.md",
+      "url": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "sha256": "2ad38dad2e26d606496a40da2d037dd2985123988ecc507ae1f1ed9a1f81c3f2",
+      "archive_path": "package/README.md"
+    },
+    {
+      "path": "upstream/it-reference/sources/mime-db/db.json",
+      "url": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "sha256": "96b8a5746867c832ab56743c05e46e73c9facb04879677df0b356f20496cb6cd",
+      "archive_path": "package/db.json"
+    },
+    {
+      "path": "upstream/it-reference/sources/mime-db/package.json",
+      "url": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "sha256": "33bdbb99915697ac01df12490b9d479a55529123842e67975e6d76d0010aa142",
+      "archive_path": "package/package.json"
+    },
+    {
+      "path": "upstream/it-reference/sources/mime-db/package.tgz",
+      "url": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "sha256": "2b21054e65d0eabd58c5002d2713e968dd47b15700bfed4b7281a344ded1c420"
+    },
+    {
+      "path": "upstream/it-reference/sources/psl/LICENSE",
+      "url": "https://raw.githubusercontent.com/publicsuffix/list/3929462652695bad04f0a27afb600974014a3c8b/LICENSE",
+      "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172"
+    },
+    {
+      "path": "upstream/it-reference/sources/psl/public_suffix_list.dat",
+      "url": "https://raw.githubusercontent.com/publicsuffix/list/3929462652695bad04f0a27afb600974014a3c8b/public_suffix_list.dat",
+      "sha256": "2919eb9803c91a3f73a507cc6fedc934de005543c22c4016f72e3343de5dd6e7"
+    },
+    {
+      "path": "upstream/it-reference/sources/rfc/rfc-index.txt",
+      "url": "https://raw.githubusercontent.com/AlexMelanFromRingo/rfc-library/4a9672c79e71f0816cffb4968f50da279d7bf910/indexes/rfc-index.txt",
+      "sha256": "82ef2947a26edd0acfa4326db3d91790c5ef5ce1b433c9c484770e2e1e286cfd"
+    }
+  ]
+}

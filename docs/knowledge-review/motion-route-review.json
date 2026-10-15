@@ -1,0 +1,57 @@
+{
+  "scope": [
+    "scripts/browser-ui-motion.mjs"
+  ],
+  "reported_full_suite_failure": {
+    "script": "scripts/browser-ui-motion.mjs",
+    "assertion": "route motion: encoding",
+    "cause": "The old assertion sampled getAnimations after two requestAnimationFrame callbacks; it tested current lifetime rather than actual application animation creation. Route loading and short effect cleanup run asynchronously, so a late frame can miss a valid effect."
+  },
+  "read_only_reproduction": {
+    "log": "/tmp/mist-motion-before.log",
+    "result": "Entire motion suite passed in isolation, consistent with load-dependent observation race."
+  },
+  "native_creation_probe": {
+    "log": "/tmp/mist-motion-route-probe.log",
+    "observed_routes": [
+      "symbols",
+      "encoding",
+      "image"
+    ],
+    "observed_id": "ui-enter",
+    "observed_duration_ms": 180,
+    "limitation": "The isolated diagnostic did not reproduce the exact full-suite missing snapshot; it verified the real native effect and exposed wall-time/frame-time separation."
+  },
+  "repair": {
+    "mechanism": "Temporarily record actual native Element.animate calls and retain their original Animation object. Wait for real target visibility and assigned animation ID; assert target, positive duration, unique visible panel and route. After normal settle assert original owned Animation idle. Restore the original animate property descriptor in finally.",
+    "production_source_changed": false,
+    "duration_changed": false,
+    "arbitrary_sleep_added": false,
+    "synthetic_motion_created": false,
+    "assertions_removed": false
+  },
+  "verification": {
+    "log": "/tmp/mist-motion-after.log",
+    "passed": true,
+    "checks": [
+      "real route presence and idle cleanup",
+      "desktop sidebar collapse/interrupt",
+      "button press/release",
+      "disclosure enter/exit/interrupt",
+      "tab geometry/keyboard",
+      "busy/success states",
+      "result/unmount cleanup",
+      "all motion entrypoints respect continuous input",
+      "native modal enter/exit/reopen and search stability",
+      "desktop category popup bounds",
+      "real tarot collection reordering/rapid selection",
+      "actual ROT13 with busy and result motion",
+      "sticky navigation during live route motion",
+      "mobile drawer continuity/directory/keyboard viewport",
+      "live reduced-motion preference and immediate interactions"
+    ],
+    "errors": [],
+    "missing": [],
+    "external": []
+  }
+}

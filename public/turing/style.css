@@ -1,0 +1,21 @@
+.turing-workspace { display: grid; gap: 1rem; min-width: 0; }
+.turing-workspace [data-ui="card"] { min-width: 0; }
+.turing-tape-scroll, .turing-graph-scroll, .turing-table-scroll { overflow: auto; max-width: 100%; }
+.turing-tape-scroll { position: relative; }
+.turing-tape-cells { display: flex; width: max-content; padding: .5rem 0; }
+.turing-tape-cell { display: grid; justify-items: center; align-content: center; width: 3.5rem; min-height: 4.5rem; flex: none; border: 1px solid var(--line); background: var(--bg); }
+.turing-tape-cell[data-head="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); box-shadow: inset 0 3px var(--accent); }
+.turing-tape-symbol { font-family: var(--mono); font-size: 1.2rem; white-space: pre; }
+.turing-tape-index { color: var(--muted); font-family: var(--mono); font-size: .7rem; }
+.turing-state-svg { display: block; max-height: none; min-width: 620px; }
+.turing-graph-scroll { max-height: 28rem; }
+.turing-state-node { fill: var(--bg); stroke: var(--line); stroke-width: 2; }
+.turing-state-svg [data-current="true"] .turing-state-node { stroke: var(--accent); fill: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+.turing-state-svg [role="button"] { cursor: pointer; }
+.turing-state-svg [role="button"]:focus-visible .turing-state-node { stroke: var(--cyan); stroke-width: 3; }
+.turing-state-label { fill: var(--ink); font-size: 15px; font-family: var(--mono); }
+.turing-state-edge { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.turing-state-edge[data-active="true"] { stroke: var(--cyan); stroke-width: 3; }
+.turing-state-arrow { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.turing-edge-label { fill: var(--muted); font-size: 12px; font-family: var(--mono); }
+.turing-table-scroll { max-height: 24rem; }

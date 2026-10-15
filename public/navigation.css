@@ -1,0 +1,28 @@
+/* The same four dropdowns are mounted inside every page header. */
+#sidebar.tool-navigation,#arg-navigation.tool-navigation{display:flex!important;align-items:center;justify-content:center;position:relative;inset:auto;gap:8px;width:auto;max-height:none;margin:0;padding:0;background:transparent;border:0;overflow:visible;box-shadow:none;z-index:5}
+.tool-nav-group{position:relative;min-width:0}
+.tool-navigation .tool-category{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:44px;margin:0;padding:10px 18px;border:1px solid transparent;border-radius:4px;background:transparent;box-shadow:none;color:var(--muted);font:14px/1.5 var(--mono);cursor:pointer;white-space:nowrap}
+.tool-navigation .tool-category:hover,.tool-navigation .tool-category[aria-expanded=true]{color:var(--accent);background:var(--accent-bg)}
+.tool-nav-group.is-current>.tool-category{color:var(--accent)}
+.category-arrow{display:inline-block;font-size:14px}.tool-category[aria-expanded=true] .category-arrow{transform:rotate(180deg)}
+.tool-navigation .tool-category-menu{position:absolute;top:calc(100% + 10px);left:0;z-index:10;width:340px;max-height:calc(100dvh - 90px);overflow:auto;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);box-shadow:0 16px 40px #0006}
+.tool-nav-group:nth-last-child(-n+2) .tool-category-menu{left:auto;right:0}
+.tool-navigation .tool-category-menu[hidden]{display:none!important}
+.tool-navigation .tool-category-menu a,#arg-navigation.tool-navigation .tool-category-menu a{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;margin:0;padding:10px 12px;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--ink);font:14px/1.6 var(--mono);text-decoration:none;white-space:normal;overflow-wrap:anywhere}
+.tool-navigation .tool-category-menu a:hover,.tool-navigation .tool-category-menu a:focus-visible{color:var(--accent);background:var(--accent-bg)}
+.tool-navigation .tool-category-menu a[aria-current=page]{color:var(--accent);border-color:rgba(240,165,0,.24);background:var(--accent-bg)}
+@media(max-width:800px){
+ #sidebar.tool-navigation,#arg-navigation.tool-navigation{display:grid!important;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr) minmax(0,1fr) minmax(0,.8fr);grid-column:1/-1;order:3;width:100%;gap:0;border-top:1px solid var(--line);padding:0;position:static}
+ .tool-nav-group{position:static}.tool-navigation .tool-category{min-height:44px;padding:8px 5px;border-radius:0}.tool-nav-group.is-current>.tool-category{border-bottom-color:var(--accent)}
+ .tool-navigation .tool-category-menu,.tool-nav-group:nth-last-child(-n+2) .tool-category-menu{top:100%;left:16px;right:16px;width:auto;max-height:calc(100dvh - 120px);border-top:0;border-radius:0 0 6px 6px}
+}
+
+.tool-submenu+ .tool-submenu{border-top:1px solid var(--line)}
+.tool-submenu>summary{padding:12px 8px;cursor:pointer;color:var(--ink);list-style:none;min-height:44px}
+.tool-submenu>summary strong{font-size:15px;color:var(--accent)}
+.tool-submenu>summary strong:after{content:'＋';float:right;font-weight:normal}
+.tool-submenu[open]>summary strong:after{content:'−'}
+.tool-submenu>summary span{display:block;font-size:12px;color:var(--muted);line-height:1.7;margin-top:3px;overflow-wrap:anywhere}
+.tool-submenu>summary::-webkit-details-marker{display:none}
+.tool-submenu[open]{padding-bottom:6px}
+@media(max-width:800px){.tool-navigation .tool-category{gap:0}.category-arrow{display:none}}
