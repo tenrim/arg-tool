@@ -15,3 +15,10 @@ test('source distribution pins external files and keeps original grid bridge out
  const ignore=await readFile('.gitignore','utf8');assert(ignore.includes('/public/vendor/'));assert(ignore.includes('/release/'));
  for(const row of lock.files){assert.match(row.sha256,/^[0-9a-f]{64}$/);assert(Number.isSafeInteger(row.size)&&row.size>=0);}
 });
+
+test('optional mail template contains no credentials or original deployment domain',async()=>{
+ const template=await readFile('services/feedback/.env.example','utf8');
+ for(const key of ['SMTP_USER','SMTP_PASS','REPORT_TO'])assert.match(template,new RegExp('^'+key+'=$','m'));
+ assert(!template.includes('mistarg.cn'));
+ assert.match(template,/ALLOWED_ORIGINS=http:\/\/localhost:3000/);
+});
