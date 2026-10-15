@@ -16463,5 +16463,10 @@
       "size": 2226,
       "sha256": "56d6ee978c03055cfb428ca0d8d8d3957176f2dedd88b8c74139c96abd0a0754"
     }
-  ]
+  ],
+  "bundle": {
+    "url": "https://github.com/tenrim/arg-tool/releases/download/dependencies-6ab6aea/arg-tool-dependencies.zip",
+    "size": 168572397,
+    "sha256": "bdb3d76ca3b745084ade7edc6aa3c5c2c9cc180d4646bf3fee81f486a49ab0f6"
+  }
 }

@@ -5,6 +5,10 @@ from pathlib import Path
 import tempfile
 import unittest
 import zipfile
+import io
+import sys
+from unittest.mock import patch
+import urllib.error
 
 spec = importlib.util.spec_from_file_location("dependencies", Path(__file__).resolve().parents[1] / "scripts/source-dependencies.py")
 deps = importlib.util.module_from_spec(spec)
@@ -77,6 +81,69 @@ class DependenciesTest(unittest.TestCase):
             self.skipTest("OS does not permit creating symlinks")
         with self.assertRaisesRegex(ValueError, "Symlink"):
             deps.safe_path(self.root, self.rows[0]["path"])
+
+    def bundle(self, payload=b"downloaded fixed bytes"):
+        lock = {"schema": 1, "files": self.rows, "bundle": {"url": "https://example.org/fixed.zip", "size": len(payload), "sha256": hashlib.sha256(payload).hexdigest()}}
+        (self.root / "dependencies.lock.json").write_text(json.dumps(lock))
+        return payload
+
+    def test_download_and_verified_cache(self):
+        payload = self.bundle()
+        class Opener:
+            calls = 0
+            def open(self, request, timeout):
+                self.calls += 1
+                return io.BytesIO(payload)
+        opener = Opener()
+        with patch.object(deps.urllib.request, "build_opener", return_value=opener):
+            path = deps.fetch_bundle(self.root)
+            self.assertEqual(path.read_bytes(), payload)
+            self.assertEqual(deps.fetch_bundle(self.root), path)
+        self.assertEqual(opener.calls, 1)
+
+    def test_download_rejects_corruption_and_cleans_partial_file(self):
+        payload = self.bundle()
+        for body in [b"x" * len(payload), payload + b"extra"]:
+            class Opener:
+                def open(self, request, timeout):return io.BytesIO(body)
+            with patch.object(deps.urllib.request, "build_opener", return_value=Opener()):
+                with self.assertRaises(ValueError):deps.fetch_bundle(self.root)
+            self.assertEqual(list((self.root / ".cache/arg-dependencies").iterdir()), [])
+        self.assertFalse((self.root / self.rows[0]["path"]).exists())
+
+    def test_download_retries_then_recovers(self):
+        payload = self.bundle()
+        class Opener:
+            calls = 0
+            def open(self, request, timeout):
+                self.calls += 1
+                if self.calls == 1:raise urllib.error.URLError("offline")
+                return io.BytesIO(payload)
+        opener = Opener()
+        with patch.object(deps.urllib.request, "build_opener", return_value=opener), patch.object(deps.time, "sleep"):
+            self.assertEqual(deps.fetch_bundle(self.root).read_bytes(), payload)
+        self.assertEqual(opener.calls, 2)
+
+    def test_download_failure_has_no_install_side_effect(self):
+        self.bundle()
+        class Opener:
+            def open(self, request, timeout):raise urllib.error.URLError("offline")
+        with patch.object(deps.urllib.request, "build_opener", return_value=Opener()), patch.object(deps.time, "sleep"):
+            with self.assertRaisesRegex(RuntimeError, "offline installation"):deps.fetch_bundle(self.root)
+        self.assertEqual(list((self.root / ".cache/arg-dependencies").iterdir()), [])
+
+    def test_network_policy_rejects_plain_http_credentials_and_downgrade(self):
+        self.bundle()
+        for url in ["http://example.org/file.zip", "https://user:secret@example.org/file.zip"]:
+            with self.assertRaises(ValueError):deps.bundle_info(self.root, url)
+        with self.assertRaisesRegex(ValueError, "away from HTTPS"):
+            deps.HTTPSRedirect().redirect_request(None, None, 302, "", {}, "http://example.org/file.zip")
+
+    def test_existing_install_needs_no_network(self):
+        deps.install(self.root, self.rows, source=self.source)
+        with patch.object(sys, "argv", ["source-dependencies.py", "install", "--root", str(self.root)]), patch.object(deps, "fetch_bundle", side_effect=AssertionError("must stay offline")):
+            deps.main()
+
 
 if __name__ == "__main__":
     unittest.main()

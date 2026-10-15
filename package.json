@@ -28,7 +28,9 @@
     "deps:export": "python scripts/source-dependencies.py export",
     "predev": "npm run deps:check",
     "prestart": "npm run deps:check",
-    "prebuild": "npm run deps:check && npm run audit:integrity"
+    "prebuild": "npm run deps:check && npm run audit:integrity",
+    "setup": "npm run deps:install && npm run build",
+    "deps:fetch": "python scripts/source-dependencies.py fetch"
   },
   "license": "GPL-3.0-or-later"
 }

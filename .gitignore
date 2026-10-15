@@ -1596,3 +1596,6 @@ __pycache__/
 /upstream/turing/sources/turing-machine-viz/src/parser.js
 /upstream/turing/sources/turing-machine-viz/src/state-diagram/StateGraph.js
 /upstream/turing/sources/turing-machine-viz/src/tape/Tape.js
+
+# Verified downloads remain local.
+/.cache/

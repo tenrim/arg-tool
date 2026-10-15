@@ -34,7 +34,7 @@ export async function planChecks(files, {unitOnly=false, staticOnly=false}={}) {
     }
     if(/\.md$/.test(file)&&!file.startsWith('upstream/')&&!file.startsWith('public/vendor/')){add('docs',['node','scripts/audit-docs.mjs'],file);continue;}
     if(['public/project-licenses.js','public/project-sources.js'].includes(file))integrity(file);
-    if(['dependencies.lock.json','scripts/source-dependencies.py','tests/source-dependencies_test.py','.openai/hosting.json'].includes(file)){addUnit('source-distribution',file);continue;}
+    if(['dependencies.lock.json','scripts/source-dependencies.py','tests/source-dependencies_test.py','.openai/hosting.json'].includes(file)){addUnit('source-distribution',file);if(['dependencies.lock.json','scripts/source-dependencies.py'].includes(file))addBrowser('deployment',file);continue;}
     if(/^docs\//.test(file))continue; // Verification artifacts, not runtime data.
     if(/^tests\/[^/]+\.test\.mjs$/.test(file)){try{await access(file);addUnit(file,file);}catch{}continue;}
     const browser=browserSuites.find(name=>browserFile(name)===file);

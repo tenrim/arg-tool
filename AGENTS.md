@@ -3,7 +3,7 @@
 ## Standalone source distribution (user-approved 2026-10-15)
 
 - This worktree owns `codex/open-source`, an independent-history source distribution. The server deployment worktree remains on main. Do not merge main wholesale or merge this branch back; port scoped original changes and tests.
-- Third-party runtime/source/data/font payloads are installed from the separately delivered ZIP using scripts/source-dependencies.py and dependencies.lock.json. Keep payloads ignored and outside source Git history; preserve original adapters, patches, metadata and license notices. Do not publish the local full-history backup branch.
+- Third-party runtime/source/data/font payloads are automatically downloaded from the pinned public release using scripts/source-dependencies.py and dependencies.lock.json (npm run setup); the separately delivered ZIP remains an offline option. Keep payloads ignored and outside source Git history; preserve original adapters, patches, metadata and license notices. Do not publish the local full-history backup branch.
 - About content is generic with author attribution; personal support/related-site promotion and the Sites project binding are removed. Feedback defaults to local copy/download. Optional same-origin mail service is explicitly configured by each operator in public/deployment.js; never add credentials to frontend files.
 - These distribution choices supersede older server-specific branding/about/deployment guidance below. Keep tool behavior, safety and scoped-verification contracts.
 

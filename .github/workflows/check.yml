@@ -1,6 +1,7 @@
 name: Check ARG tools
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
     inputs:
@@ -29,20 +30,17 @@ jobs:
           python-version: '3.12'
       - name: Test source distribution without bundled engines
         run: node --test tests/source-distribution.test.mjs
-      - name: Install matching dependency release attachment
+      - name: Download and verify pinned runtime dependencies
         id: dependencies
         env:
           BUNDLE_URL: ${{ vars.DEPENDENCY_BUNDLE_URL }}
         run: |
-          if [ -z "$BUNDLE_URL" ]; then
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "Only source-installer tests ran. Configure DEPENDENCY_BUNDLE_URL to verify tools and builds." >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$BUNDLE_URL" ]; then
+            npm run deps:install -- --url "$BUNDLE_URL"
           else
-            case "$BUNDLE_URL" in https://*) ;; *) echo "HTTPS required"; exit 1;; esac
-            curl --fail --location --proto '=https' --proto-redir '=https' "$BUNDLE_URL" -o /tmp/arg-dependencies.zip
-            npm run deps:install -- --archive /tmp/arg-dependencies.zip
-            echo "ready=true" >> "$GITHUB_OUTPUT"
+            npm run deps:install
           fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
       - if: steps.dependencies.outputs.ready == 'true'
         run: npm ci --ignore-scripts
       - name: Select checks from actual changes
@@ -61,6 +59,12 @@ jobs:
           npm ci --ignore-scripts --prefix test-tools
           npx --prefix test-tools playwright install --with-deps chromium
           echo "CHROMIUM_PATH=$(node -e "console.log(require('./test-tools/node_modules/playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
+      - name: Prepare static output for selected deployment smoke
+        if: steps.plan.outputs.full != 'true' && steps.plan.outputs.browser == 'true'
+        run: |
+          if node -e "const p=require('/tmp/arg-plan.json');process.exit(p.checks.some(c=>c.id==='browser:deployment')?0:1)"; then
+            npm run build
+          fi
       - name: Run selected checks (full only when explicitly requested)
         if: steps.dependencies.outputs.ready == 'true'
         run: |

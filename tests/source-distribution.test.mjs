@@ -10,7 +10,7 @@ test('dependency installer roundtrip, integrity, path safety and failure preserv
 });
 test('source distribution pins external files and keeps original grid bridge outside the bundle',async()=>{
  const lock=JSON.parse(await readFile('dependencies.lock.json','utf8'));
- assert.equal(lock.schema,1);assert(lock.files.length>0);
+ assert.equal(lock.schema,1);assert(lock.files.length>0);assert.match(lock.bundle.url,/^https:\/\//);assert.match(lock.bundle.sha256,/^[0-9a-f]{64}$/);assert(Number.isSafeInteger(lock.bundle.size)&&lock.bundle.size>0);
  assert(!lock.files.some(row=>row.path==='upstream/round3/board_bridge.rs'));
  const ignore=await readFile('.gitignore','utf8');assert(ignore.includes('/public/vendor/'));assert(ignore.includes('/release/'));
  for(const row of lock.files){assert.match(row.sha256,/^[0-9a-f]{64}$/);assert(Number.isSafeInteger(row.size)&&row.size>=0);}

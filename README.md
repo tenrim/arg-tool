@@ -8,15 +8,24 @@
 
 需要 **Node.js 24+、Python 3.12+**。正常部署不需要 Rust，也不需要 npm 安装生产依赖。
 
-1. 获取源码包和与它匹配的 `arg-tool-dependencies.zip`（依赖包须由发布者一同提供，不能用其他版本随意替换）。
-2. 在源码目录运行：
+获取源码后，在源码目录运行：
 
 ```sh
-npm run deps:install -- --archive /path/to/arg-tool-dependencies.zip
+npm run setup
 npm start
 ```
 
-浏览器打开 `http://localhost:3000`。不要直接双击 HTML：Worker 和 WASM 需要 HTTP 服务。
+`setup` 自动从项目的固定发布地址下载运行依赖，验证整包与全部文件的尺寸和 SHA-256，再构建静态站点。依赖已正确安装时不再联网；下载缓存会在校验通过后复用。适配过的运行文件和本地数据由项目发布提供，不要求每个部署者重新编译 WASM 或寻找多个上游包。
+
+浏览器打开 `http://localhost:3000`。不要直接双击 HTML：Worker 和 WASM 需要 HTTP 服务。首次准备依赖需要联网，日后常规使用和构建保持离线。
+
+离线部署也可手动取得匹配的 `arg-tool-dependencies.zip` 后运行：
+
+```sh
+npm run deps:install -- --archive /path/to/arg-tool-dependencies.zip
+npm run build
+npm start
+```
 
 安装只接受 [dependencies.lock.json](dependencies.lock.json) 列出的路径、尺寸和 SHA-256，先在临时目录验证全部文件，再写入依赖目录。损坏、额外文件及不匹配版本会报错，不执行依赖包中的安装脚本。安装需要约 340 MB 的最终空间和额外临时空间。
 
@@ -26,7 +35,7 @@ npm start
 npm run deps:install -- --from /path/to/full-checkout
 ```
 
-这不是要求使用者访问维护者的服务器或私有仓库。公开源码时必须同时提供匹配依赖包；目前尚未配置公共下载地址。
+默认安装不需要账号、访问维护者的服务器或私有仓库。固定下载地址、整包哈希和逐文件清单都记录在 dependencies.lock.json；不使用 latest。网络受限时可通过 `npm run deps:install -- --url https://your-mirror.example/fixed.zip` 指定同一文件的 HTTPS 镜像，原有哈希仍必须匹配。
 
 ## 构建静态站点
 
