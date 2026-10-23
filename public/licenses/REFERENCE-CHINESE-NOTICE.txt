@@ -1,0 +1,39 @@
+Wikidata Chinese reference supplement — CC0-1.0
+https://www.wikidata.org/wiki/Wikidata:Licensing
+https://www.wikidata.org/wiki/Wikidata:Data_access
+
+Structured labels and Chinese aliases were acquired by explicit maintenance queries, then fixed locally. No runtime request is made to Wikidata. Snapshot acquired 2026-10-17T05:11:18.070Z. Exact queries, original gzip-compressed JSON responses, uncompressed SHA-256 and compressed SHA-256 are retained in upstream/reference-chinese/imports.json. The original reference databases remain unchanged.
+
+{
+  "capitals": {
+    "chinese": 235,
+    "total": 247
+  },
+  "airports": {
+    "chinese": 5093,
+    "total": 86226
+  },
+  "ports": {
+    "chinese": 33831,
+    "total": 116213
+  },
+  "sky": {
+    "chinese": 87,
+    "total": 14034
+  },
+  "geology": {
+    "existing": 158,
+    "derived": 21,
+    "total": 179
+  }
+}
+
+Airports: Chinese labels joined by ICAO (P239) / IATA (P238); multiple observed Chinese identities or conflicting ICAO/IATA identities are rejected. At least one source coordinate must be within 15 km of the original airport.
+Capitals: country ISO 3166-1 alpha-2 (P297) plus capital (P36), with an exact normalized English source capital name. This supplements names; it does not reclassify countries or assert geopolitical status.
+UN/LOCODE: all A–Z prefixes queried automatically, zh labels only. Exact P1937 codes match existing locations. Multiple observed Chinese item identities for a code are rejected. Codes refer to transportation locations, not only seaports.
+Deep sky: catalog-code statements P528 qualified by NGC (Q14534), IC (Q741672) or Messier (Q14530); Chinese labels and aliases. Exact normalized identifiers only; multiple observed Chinese identities are rejected. No translation or new astronomical object is invented.
+
+Coverage is partial: missing labels, ambiguous joins or failed coordinate/name validation retain the original names. Wikidata is a community-maintained structured-data source, not an official naming authority; labels can contain upstream errors. All original names, identifiers and raw factual fields remain available.
+
+The 21 geological names with absent Chinese labels are generated using lower/middle/upper and the pinned ICS chart's existing Chinese parent name. This is an original deterministic naming transformation, not Wikidata content. Original ages, ranks and parent IDs remain unchanged. ICS chart is separately attributed under CC BY 4.0; see existing reference provenance.
+OpenCC-JS search normalization uses the existing pinned package, MIT code and Apache-2.0 dictionaries; see vendor/round1/opencc-js/LICENSE, THIRD_PARTY_LICENSES.md and LICENSES/Apache-2.0.txt. It normalizes search strings only, never source records.

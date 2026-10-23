@@ -1,0 +1,13 @@
+汉典公开字词页读取（非官方 API）
+Source: https://zdic.net/hans/
+Terms: https://www.zdic.net/terms/
+Access boundaries: https://zdic.net/robots.txt
+
+汉典使用条款声明其相关汉语字词等内容采用 CC0。该原始声明随包保存于
+ZDIC-TERMS.txt，CC0法律原文为 ONLINE-CC0-1.0.txt。保留汉典来源、词条地址、
+原分节、书证和检索时间；不把原文引用的作者误称本站原创。
+
+本站原创适配器只按玩家明确输入读取固定 /hans/ 的公开字词原文；这不是汉典
+官方API。未接入动态/api/、全文检索、拼音检索、会员、音频、图像或书影。
+站点内容CC0不等于无限频率访问授权或可访问robots禁止路径。网页变化或访问
+拒绝时明确失败并保留原站入口，不用生成内容补齐未返回的章节。

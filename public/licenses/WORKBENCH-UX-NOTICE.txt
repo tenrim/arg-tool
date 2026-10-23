@@ -1,0 +1,21 @@
+迷雾工具箱：实时单位换算、盲文录入及资料展示调整（2026-10-21）
+
+本轮仅修改本站适配与界面，不升级或修改任何固定上游运行文件。
+Qalculate/libqalculate 5.13.0 及既有 GMP、MPFR、libxml2、Emscripten：继续按原定义换算全部随包单位。
+实时输入仅提交数值，复用一个独立计算实例；离页、停止及执行中改输入均终止旧任务。
+完整对应源码与各自许可仍在 vendor/qalculate/，组合按其原 GPL 条款提供。
+
+puzzle-lib（MIT）：复用原 BrailleCharacter/BrailleEncoding 六点盲文映射，字符按键与逐点输入共用状态。
+按键仅展示 26 个英文字母与数字标记；逐点输入仍可查看全部六点组合。
+未对应当前英文字母的图形不假造读音或译文。
+原完整许可在 vendor/puzzle-lib/LICENSE.txt。
+
+Animate UI 2.0.0（MIT + Commons Clause）与 Motion 14.4.0（MIT）：
+仍使用固定真实组件；二维按键各自反馈，线性菜单保持滑动高亮；未复制或修改上游组件源码。
+独立许可、依赖与原 NOTICE 在 vendor/ui-runtime/。
+
+AviList v2025b Extended（CC BY 4.0）、IOC 15.2 中文鸟名（CC BY 3.0）及既有 CLDR、Open Opus、Wikidata：
+常用资料与原始字段分层显示，不删除记录、原文、原始字段或署名。
+完整记录、资料版本、引用、来源、许可和中文补充继续用于下载及笔记保存。
+AviList Core Team. 2026. AviList: The Global Avian Checklist, v2025b. DOI: 10.2173/avilist.v2025b。
+IOC 的编者及中文鸟名编者完整原文、原始六工作表及各来源许可在 vendor/atlas-life-culture/。

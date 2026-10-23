@@ -1,0 +1,12 @@
+import {Box,Button,Card,Disclosure,Textarea,Toolbar,onDisconnect,setTextareaValue,updateStatus,Status} from '../ui/index.js';
+export function attachQRAdvanced({host,getMatrix,applyMatrix,invalidate,isActive,publish=()=>{}}){
+ const status=Status({}),words=Textarea({attrs:{'aria-label':'完整数据码字'},minRows:5,maxRows:12,autoSize:true}),details=Textarea({attrs:{readonly:true,'aria-label':'完整分块诊断'},minRows:5,maxRows:16,autoSize:true});
+ const inspect=Button({text:'分析数据与分块'}),recover=Button({text:'纠错与擦除恢复'}),padding=Button({text:'恢复填充位'}),write=Button({text:'应用编辑的码字'}),apply=Button({text:'采用修复矩阵',disabled:true}),stop=Button({text:'停止',disabled:true});
+ const root=Card({title:'纠错与恢复',children:[Toolbar({children:[inspect,recover,padding,stop,apply]}),Disclosure({id:'qr-codeword-details',children:[Box({tag:'summary',text:'码字编辑与分块诊断（进阶）'}),words,write,details]}),status]});host.append(root);
+ let worker=null,generation=0,pending=null,timer;
+ const clear=()=>{generation++;worker?.terminate();worker=null;clearTimeout(timer);pending=null;apply.disabled=true;stop.disabled=true;};
+ const run=mode=>{if(!isActive())return;invalidate();clear();const revision=generation;worker=new Worker(new URL('./qr-worker.js',import.meta.url));stop.disabled=false;updateStatus(status,'正在处理…');timer=setTimeout(()=>{clear();updateStatus(status,'已超时停止，原始矩阵未改变。','error');},20000);worker.onmessage=({data})=>{if(revision!==generation||!isActive())return;worker.terminate();worker=null;clearTimeout(timer);stop.disabled=true;if(data.error){updateStatus(status,data.error,'error');return;}const {info,matrix}=data.result;publish({info,matrix});pending=matrix;apply.disabled=!matrix;setTextareaValue(words,(info.correctedCodewords||info.codewords).join(' '));setTextareaValue(details,JSON.stringify(info,null,2));updateStatus(status,matrix?'修复完成；点击采用后才会改写矩阵，可撤销。':'已分析完整码字与 RS 分块。');};worker.onerror=e=>{e.preventDefault();clear();updateStatus(status,e.message,'error');};worker.postMessage({matrix:getMatrix(),mode,codewords:words.value});};
+ words.addEventListener('input',()=>{clear();updateStatus(status,'码字已编辑，请应用编辑的码字后再采用矩阵。');});
+ inspect.onclick=()=>run('inspect');recover.onclick=()=>run('recover');padding.onclick=()=>run('padding');write.onclick=()=>run('write');stop.onclick=()=>{clear();updateStatus(status,'已停止');};apply.onclick=()=>{if(pending&&isActive()){const m=pending;clear();applyMatrix(m);}};
+ onDisconnect(root,clear);return {invalidate:()=>{clear();setTextareaValue(details,'');updateStatus(status,'');}};
+}

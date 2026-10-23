@@ -1,26 +1,64 @@
-import {element as uiElement, render as uiRender, dialogController, motionAllowed} from './ui/index.js';
+import {element as uiElement, Box, Button, Input, SearchField, Icon, Status, SearchHighlight, SearchMatchDetails, onDisconnect, animatePresence, motionAllowed} from './ui/index.js';
 import {sitePages} from './navigation.js';
-import {loadRegistry, searchEntries, capabilityCategories} from './capabilities/registry.js';
+import {loadRegistry, searchEntries, capabilityCategories, literalSearchEvidence} from './capabilities/registry.js';
 import {requestCapability} from './capabilities/browser.js';
 
 // All discovery surfaces read canonical public capability metadata.
 export function mountToolSearch(header,navigate){
- const trigger=uiElement('button');trigger.className='workspace-search-trigger';trigger.type='button';uiRender(trigger, '<span>查找功能</span><kbd>Ctrl K</kbd>');trigger.setAttribute('aria-haspopup','dialog');header.append(trigger);
- const dialog=uiElement('dialog');dialog.className='workspace-search';dialog.setAttribute('aria-labelledby','workspace-search-title');
- uiRender(dialog, '<div class="workspace-search-heading"><h2 id="workspace-search-title">查找工具与操作</h2><button type="button" class="quiet-button" aria-label="关闭工具搜索">关闭</button></div><label class="workspace-search-field"><span class="sr-only">中文用途或英文名称</span><input type="search" placeholder="输入用途、中文或英文名称…" autocomplete="off"></label><p class="workspace-search-info" role="status" aria-live="polite"></p><div class="workspace-search-results"></div><p class="workspace-search-hint">↑ ↓ 选择 · Enter 打开 · Esc 关闭</p>');
- document.body.append(dialog);const input=dialog.querySelector('input'),list=dialog.querySelector('.workspace-search-results'),info=dialog.querySelector('[role=status]');let registry,index=0,revision=0;
- const modal=dialogController(dialog,{trigger,closeButton:dialog.querySelector('.workspace-search-heading button'),initialFocus:input});
- function render(){const term=input.value.trim(),matches=registry?searchEntries(registry,term):[];list.replaceChildren();index=0;
-  for(const entry of matches.slice(0,60)){const b=uiElement('button');b.type='button';b.className='workspace-search-item';b.dataset.capability=entry.id;b.dataset.op=entry.engineName||'';b.dataset.route=entry.route;const name=uiElement('strong'),hint=uiElement('span');name.textContent=entry.title;hint.textContent=capabilityCategories.find(c=>c.id===entry.category).title+' / '+registry.groups.find(g=>g.id===entry.group).title;b.append(name,hint);b.onclick=()=>{modal.close();requestCapability(entry);};list.append(b);}
-  if(term)for(const page of sitePages.filter(p=>p.title.includes(term))){const b=uiElement('button',page.title,'workspace-search-item');b.type='button';b.onclick=()=>{modal.close();navigate(page.route);};list.append(b);}
-  info.textContent=registry?(matches.length?`${matches.length} 项匹配${matches.length>60?' · 显示前 60 项，请细化搜索':''}`:'没有匹配项，请换一个名称或用途。'):'正在载入本地功能目录…';highlight();
+ const input=Input({id:'workspace-search-input',type:'search',placeholder:'查找工具',attrs:{autocomplete:'off',role:'combobox','aria-autocomplete':'list','aria-controls':'workspace-search-results','aria-expanded':'false'}});
+ const field=SearchField({className:'workspace-search-field workspace-search-trigger',control:input,label:'查找工具与操作',icon:Icon('search')});
+ const shortcut=Box({tag:'kbd',className:'workspace-search-shortcut',text:'Ctrl K'});field.append(shortcut);
+ const info=Status({className:'workspace-search-info'}),list=Box({id:'workspace-search-results',className:'workspace-search-results',attrs:{role:'listbox','aria-label':'匹配的工具与页面'}});
+ const popover=Box({className:'workspace-search-popover',attrs:{'data-motion':'popover'},hidden:true,children:[info,list]});
+ const root=Box({className:'workspace-search',children:[field,popover]});header.append(root);
+ const abort=new AbortController();let registry,index=-1,loading,expanded=false,destroyed=false,composing=false;
+ function close(){expanded=false;popover.hidden=true;popover.inert=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');}
+ function highlight(){
+  [...list.children].forEach((button,i)=>{button.classList.toggle('is-current',i===index);button.setAttribute('aria-selected',String(i===index));});
+  if(list.children[index])input.setAttribute('aria-activedescendant',list.children[index].id);else input.removeAttribute('aria-activedescendant');
  }
- function highlight(){[...list.children].forEach((b,i)=>b.classList.toggle('is-current',i===index));}
- function open(){if(dialog.open)return;document.dispatchEvent(new CustomEvent('arg:searchopen'));modal.open();input.value='';render();input.focus();const gen=++revision;if(!registry)loadRegistry().then(r=>{if(gen!==revision)return;registry=r;render();}).catch(()=>{if(gen===revision)info.textContent='功能目录暂时无法载入，请关闭后重试。';});}
- trigger.onclick=open;
- input.oninput=render;input.onkeydown=e=>{if(!list.children.length)return;if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();index=(index+(e.key==='ArrowDown'?1:-1)+list.children.length)%list.children.length;highlight();list.children[index].scrollIntoView({block:'nearest'});}else if(e.key==='Enter'){e.preventDefault();list.children[index].click();}};
- document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open();}});
- return {open,close(){if(dialog.open)modal.close();}};
+ function render(){
+  if(destroyed||!expanded)return;
+  const term=input.value.trim(),matches=term&&registry?searchEntries(registry,term):[];
+  list.replaceChildren();index=-1;
+  const add=(title,subtitle,attrs,onOpen,match)=>{const button=Button({id:'workspace-search-option-'+list.children.length,className:'workspace-search-item',layout:'stacked',attrs:{role:'option',tabindex:'-1','aria-selected':'false',...attrs},children:[SearchHighlight({tag:'strong',text:title,ranges:match?.title}),...(match?.snippets.length?[SearchMatchDetails({match})]:[]),Box({tag:'span',text:subtitle})],on:{click:()=>{close();onOpen();}}});list.append(button);};
+  const sites=term?sitePages.filter(page=>[page.title,...page.aliases||[]].some(name=>name.toLocaleLowerCase().includes(term.toLocaleLowerCase()))):[];
+  const exactSites=new Set(sites.filter(page=>[page.title,...page.aliases||[]].some(name=>name.toLocaleLowerCase()===term.toLocaleLowerCase())));
+  const addSite=page=>add(page.title,page.route==='notebook'?'笔记 · 思维导图 · 线索白板':page.category?capabilityCategories.find(c=>c.id===page.category).title+' · 外站介绍':'网站页面',{'data-route':page.route},()=>navigate(page.route),literalSearchEvidence(page,term));
+  for(const page of exactSites)addSite(page);
+  for(const entry of matches.slice(0,30))add(entry.title,capabilityCategories.find(c=>c.id===entry.category).title,{'data-capability':entry.id,'data-op':entry.preferredOperation||entry.engineName||'','data-route':entry.route},()=>requestCapability(entry),entry.searchMatch);
+  for(const page of sites)if(!exactSites.has(page))addSite(page);
+  const total=matches.length+sites.length;
+  info.textContent=!term?'输入工具名称或用途，支持中文和英文。':!registry?'正在载入本地功能目录…':total?`${total} 项匹配${matches.length>30?' · 显示前 30 项工具':''}`:'没有匹配项，请换一个名称或用途。';
+  highlight();
+ }
+ function load(){
+  if(registry||loading)return;
+  loading=loadRegistry().then(value=>{if(!destroyed){registry=value;render();}}).catch(()=>{if(!destroyed&&expanded)info.textContent='功能目录暂时无法载入，再次输入可重试。';}).finally(()=>loading=null);
+ }
+ function show(){if(destroyed)return;if(!expanded){document.dispatchEvent(new CustomEvent('arg:searchopen'));expanded=true;popover.hidden=false;popover.inert=false;input.setAttribute('aria-expanded','true');render();}load();}
+ function open(){show();input.focus();input.select();}
+ const listen=(node,event,fn)=>node.addEventListener(event,fn,{signal:abort.signal});
+ listen(input,'focus',show);listen(input,'input',()=>{if(!composing){show();render();}});
+ listen(input,'pointerdown',show);
+ listen(input,'compositionstart',()=>composing=true);listen(input,'compositionend',()=>{composing=false;show();render();});
+ listen(input,'keydown',event=>{
+  if(event.isComposing||composing)return;
+  if(event.key==='Escape'){event.preventDefault();close();return;}
+  // A long result list can become a browser-tab-stop scroll container. Close
+  // before native Tab traversal so focus goes to the next real page control.
+  if(event.key==='Tab'){close();return;}
+  if(event.key==='ArrowDown'||event.key==='ArrowUp'){
+   event.preventDefault();show();if(!list.children.length)return;
+   index=index<0?(event.key==='ArrowDown'?0:list.children.length-1):(index+(event.key==='ArrowDown'?1:-1)+list.children.length)%list.children.length;highlight();list.children[index].scrollIntoView({block:'nearest'});
+  }else if(event.key==='Enter'&&expanded&&list.children.length){event.preventDefault();list.children[Math.max(0,index)].click();}
+ });
+ listen(document,'keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();open();}});
+ listen(document,'pointerdown',event=>{if(!root.contains(event.target))close();});
+ listen(document,'focusin',event=>{if(!root.contains(event.target))close();});
+ listen(document,'arg:panelchange',close);
+ onDisconnect(root,()=>{destroyed=true;abort.abort();close();list.replaceChildren();registry=null;});
+ return {open,close};
 }
 
 // Preserve the original controls and listeners. Shortcuts simply focus/scroll

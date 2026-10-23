@@ -1,0 +1,46 @@
+{
+  "run_at": "2026-10-16T07:54:02.072Z",
+  "mode": "affected",
+  "files": [
+    "VERIFICATION.md",
+    "scripts/browser-graphics.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "VERIFICATION.md"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-graphics.mjs"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

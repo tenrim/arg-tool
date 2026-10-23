@@ -1,5 +1,4 @@
-import {render as uiRender} from '../ui/index.js';
-import {takeCrystal} from '../reference/model-bridge.js';
+import {render as uiRender, onDisconnect} from '../ui/index.js';
 import * as T from "../vendor/round4/model.js";
 import {
   $,
@@ -87,13 +86,15 @@ export function init(root) {
   uiRender(root, box(
     row(
       field(
-        "本地模型（STL / OBJ / GLB / 内嵌 glTF）",
-        '<input id="model-file" type="file" accept=".stl,.obj,.glb,.gltf">',
+        "本地模型（STL / OBJ / GLB / 内嵌 glTF / CIF）",
+        '<input id="model-file" type="file" accept=".stl,.obj,.glb,.gltf,.cif">',
       ) +
+        button("model-stop", "停止读取") +
         button("model-reset", "重置视角") +
         button("model-save", "下载视图 PNG"),
     ) +
       row(
+        field("CIF 晶胞重复（每条轴）",select("model-repeat",[["1","1 × 1 × 1"],["2","2 × 2 × 2"],["3","3 × 3 × 3"]])) +
         field(
           "显示方式",
           select("model-style", [
@@ -124,6 +125,8 @@ export function init(root) {
       ) +
       '<div id="model-view" class="r4-view" aria-label="三维模型，拖动旋转，双指缩放和平移"></div><pre id="model-info" class="r4-output"></pre>',
   ));
+  const stopButton = $("model-stop");
+  stopButton.disabled = true;
   const host = $("model-view");
   let renderer;
   try {
@@ -152,8 +155,46 @@ export function init(root) {
   const plane = new T.Plane(new T.Vector3(1, 0, 0), 0);
   let object = null,
     token = 0,
+    loading = false,
+    loadTimer = null,
+    cifWorker = null,
+    rejectCIF = null,
     frame = 0,
     active = !$("panel-model").hidden;
+  function cancelLoad(message) {
+    ++token;
+    loading = false;
+    clearTimeout(loadTimer);
+    loadTimer = null;
+    cifWorker?.terminate();
+    cifWorker = null;
+    const reject = rejectCIF;
+    rejectCIF = null;
+    reject?.(new DOMException("读取已停止。", "AbortError"));
+    stopButton.disabled = true;
+    if (message) setStatus("model-status", message);
+  }
+  function readCrystal(cif, repeat) {
+    return new Promise((resolve, reject) => {
+      const worker = new Worker(new URL("./cif-worker.js", import.meta.url), {type:"module"});
+      cifWorker = worker;
+      rejectCIF = reject;
+      const finish = () => {
+        worker.terminate();
+        if (cifWorker === worker) {cifWorker = null;rejectCIF = null;}
+      };
+      worker.onmessage = ({data}) => {
+        finish();
+        if (data.error) reject(Error(data.error));
+        else resolve(data.model);
+      };
+      worker.onerror = event => {
+        event.preventDefault();finish();reject(Error("CIF 解析组件载入失败，请重新选择文件。"));
+      };
+      try {worker.postMessage({cif, repeat});}
+      catch (error) {finish();reject(error);}
+    });
+  }
   function dispose(o) {
     if (!o) return;
     const textures = new Set();
@@ -221,16 +262,27 @@ export function init(root) {
     render();
   }
   $("model-file").onchange = async () => {
-    const version = ++token,
+    cancelLoad();
+    const version = token,
       file = $("model-file").files[0];
     if (!file) return;
+    loading = true;
+    stopButton.disabled = false;
+    loadTimer = setTimeout(() => cancelLoad("读取超过 30 秒，已停止，原模型保留。"), 30000);
     setStatus("model-status", "正在解析本地模型…");
     let next;
     try {
+      const ext = file.name.split(".").pop().toLowerCase();
+      if (ext === "cif" && file.size > 1024 * 1024) throw Error("CIF 最多 1 MB。");
       if (file.size > 16 * 1024 * 1024) throw Error("模型不能超过 16 MB。");
       const buffer = await file.arrayBuffer();
       if (version !== token) return;
-      const ext = file.name.split(".").pop().toLowerCase();
+      if (ext === "cif") {
+        const model = await readCrystal(new TextDecoder().decode(buffer), Number($("model-repeat").value));
+        if (version !== token) return;
+        renderCrystal(model, file.name);
+        return;
+      }
       if (ext === "stl") {
         validateMesh(buffer, ext);
         const geometry = new T.STLLoader().parse(buffer);
@@ -254,7 +306,7 @@ export function init(root) {
           "",
         );
         next = gltf.scene;
-      } else throw Error("请选择 STL、OBJ、GLB 或内嵌 glTF。");
+      } else throw Error("请选择 STL、OBJ、GLB、内嵌 glTF 或 CIF。");
       if (version !== token) {
         dispose(next);
         return;
@@ -302,7 +354,13 @@ export function init(root) {
       dispose(next);
       if (version === token)
         setStatus("model-status", "无法读取模型：" + e.message, true);
+    } finally {
+      if (version === token) {loading = false;clearTimeout(loadTimer);loadTimer = null;stopButton.disabled = true;}
     }
+  };
+  stopButton.onclick = () => cancelLoad("已停止读取，原模型保留。");
+  $("model-repeat").onchange = () => {
+    if (/\.cif$/i.test($("model-file").files[0]?.name || "")) $("model-file").onchange();
   };
   $("model-reset").onclick = home;
   $("model-style").onchange =
@@ -337,11 +395,13 @@ export function init(root) {
   });
   document.addEventListener("arg:panelchange", (e) => {
     active = e.detail.name === "model";
+    if (!active && loading) cancelLoad("已离开工作区，读取已停止，原模型保留。");
     animate();
   });
   document.addEventListener("visibilitychange", animate);
   renderer.domElement.addEventListener("webglcontextlost", (e) => {
     e.preventDefault();
+    cancelLoad();
     cancelAnimationFrame(frame);
     setStatus(
       "model-status",
@@ -349,10 +409,7 @@ export function init(root) {
       true,
     );
   });
-  function loadPendingCrystal() {
-    const model = takeCrystal();
-    if (!model) return;
-    ++token; // A pending local file parse cannot replace a newer crystal.
+  function renderCrystal(model, fileName) {
     let next;
     try {
       if (!Array.isArray(model.atoms) || model.atoms.length > 2000 || !model.atoms.length)
@@ -377,13 +434,12 @@ export function init(root) {
       const wrapper=new T.Group();wrapper.add(next);next.position.sub(center);wrapper.scale.setScalar(2/extent);
       if(object){scene.remove(object);dispose(object);}object=wrapper;scene.add(object);
       const counts={};for(const atom of model.atoms)counts[atom.element]=(counts[atom.element]||0)+1;
-      $("model-info").textContent=`${model.title} · ${model.formula}\n空间群 ${model.group || '未提供'} · ${model.repeat} × ${model.repeat} × ${model.repeat} 晶胞\n独立位点 ${model.sites} · 每晶胞展开 ${model.unitAtoms} 原子 · 当前 ${model.atoms.length} 原子\n${Object.entries(counts).map(([k,v])=>k+': '+v).join(' · ')}\n晶胞 a/b/c：${model.cell.join(' / ')} Å\nα/β/γ：${model.angles.join(' / ')}°\n${model.citation}\n球体大小仅为示意，不代表真实原子半径；透明度表示部分占位，不推断化学键。`;
+      $("model-info").textContent=`${fileName}\n${model.title} · ${model.formula}\n空间群 ${model.group || '未提供'} · ${model.repeat} × ${model.repeat} × ${model.repeat} 晶胞\n独立位点 ${model.sites} · 每晶胞展开 ${model.unitAtoms} 原子 · 当前 ${model.atoms.length} 原子\n${Object.entries(counts).map(([k,v])=>k+': '+v).join(' · ')}\n晶胞 a/b/c：${model.cell.join(' / ')} Å\nα/β/γ：${model.angles.join(' / ')}°\n${model.citation}\n球体大小仅为示意，不代表真实原子半径；透明度表示部分占位，不推断化学键。`;
       $("model-info").dataset.kind='crystal';
-      home();appearance();animate();setStatus('model-status','晶体已载入，可拖动、缩放、剖切或下载视图。');
-    } catch(e) {dispose(next);setStatus('model-status','晶体无法显示：'+e.message,true);}
+      home();appearance();animate();setStatus('model-status','晶体已载入，文件未上传，可拖动、缩放、剖切或下载视图。');
+    } catch(e) {dispose(next);throw e;}
   }
-  document.addEventListener('arg:crystal-ready',loadPendingCrystal);
+  onDisconnect(root, () => cancelLoad());
   home();
-  setStatus("model-status", "选择本地模型开始观察，也可从晶体查询送入结构。");
-  loadPendingCrystal();
+  setStatus("model-status", "选择本地模型或 CIF 开始观察。");
 }

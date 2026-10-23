@@ -1,0 +1,14 @@
+神奇宝贝百科 / 52poke 文字查询
+Source: https://wiki.52poke.com/
+API: https://wiki.52poke.com/api.php
+Copyright: https://wiki.52poke.com/wiki/神奇宝贝百科:版权声明
+
+百科文字按 CC BY-NC-SA 3.0 使用，署名神奇宝贝百科和条目贡献者，并保留条目、
+固定版本、作者历史、许可及检索时间。演绎和再分享需遵守非商业、署名及相同
+方式共享等条件。完整法律原文见52POKE-CC-BY-NC-SA-3.0.txt，原站版权页原字节
+见52POKE-COPYRIGHT.txt。
+
+本站读取完整返回的Wiki原文，不执行模板、HTML、脚本，不获取图片、游戏截图、
+音频或角色素材。媒体、宝可梦角色、游戏及商标权利独立，不能从文字许可推定。
+robots声明Crawl-delay:500，本站采用至少500秒的全服务上游请求间隔；这不是
+官方稳定API配额承诺。明确提交才能外发，失败不自动重试、不绕验证或登录。

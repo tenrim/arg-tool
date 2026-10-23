@@ -1,0 +1,19 @@
+{
+  "upstream_commit": "ce5535e653694e0a4e01a83b510c8b400f1e88fc",
+  "version": "V1.4",
+  "source_files": 902,
+  "dependency_files": 49762,
+  "bundle_bytes": 576070906,
+  "bundle_sha256": "1a6f9322a23010c474e84b8ef66cdf9448b42fac8b7cfc903d29c8ad2ccd441a",
+  "checks": {
+    "integrity": "28849 pinned hashes / 151 license registrations passed",
+    "architecture": "335 modules / 808 edges / 0 cycles / 0 boundary violations",
+    "source_install_unit": "12 Python safety cases and 3 Node cases passed",
+    "server": "4 lifecycle/security/online-query cases passed",
+    "build": "dist built from V1.4 source",
+    "real_http": "root and subdirectory; PC/mobile; normal/reduced motion; Chef, reference, Python/QuickJS, FFmpeg; calculator and notebook on desktop passed",
+    "clean_archive_install": "49762 pinned files installed from source archive and dependency ZIP in empty directory",
+    "clean_archive_build": "npm run build passed from clean archive extraction; no original main workspace dependency"
+  },
+  "scope": "Original upstream implementation copied from committed snapshot; verification targets distribution adaptations and representative deployment, not all historical engines."
+}

@@ -2,6 +2,7 @@ import {chooseOperation} from './browser-navigation.mjs';
 import {createRequire} from 'node:module';
 import {readFile, mkdir} from 'node:fs/promises';
 import {resolve, extname} from 'node:path';
+import {tmpdir} from 'node:os';
 import {createCipheriv} from 'node:crypto';
 import assert from 'node:assert/strict';
 
@@ -10,7 +11,10 @@ import assert from 'node:assert/strict';
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});
 const mime={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.woff2':'font/woff2','.wasm':'application/wasm','.png':'image/png','.webp':'image/webp'};
-await mkdir('/tmp/mist-knowledge-pairs',{recursive:true});
+const artifacts=resolve(tmpdir(),'mist-knowledge-pairs');
+const part=process.env.KNOWLEDGE_PART||'all';
+assert.ok(['all','engines','continuation','discovery','reader','layout','enigma-example','references'].includes(part),'unknown KNOWLEDGE_PART');
+await mkdir(artifacts,{recursive:true});
 let active;
 
 async function productionContext({prefix='/',motion='reduce',width=1440}={}){
@@ -73,16 +77,17 @@ async function enginePairs(page){
  const probe=page.locator('#knowledge-pair-probe');
  const activate=async op=>{
   const entry=pairMetadata.families.find(item=>item.sourceOperationIds.includes(op));
-  assert.ok(entry,'real family exists for '+op);assert.equal(entry.directions.length,2);
+  assert.ok(entry,'real family exists for '+op);const actions=entry.actions?.length?entry.actions:entry.directions;assert.ok(actions.some(action=>action.op===op));if(entry.topic)assert.ok(actions.some(action=>action.op==='To Base64')&&actions.some(action=>action.op==='From Base64'));else assert.equal(actions.length,2);
   await page.evaluate(async({entry,op})=>window.__knowledgePairProbe.selectCapability({capabilityId:entry.id,op,directions:entry.directions}),{entry,op});
   assert.equal(await probe.getAttribute('data-operation'),op);
  };
  const direction=async op=>{
   const button=probe.locator('.ct-direction');await button.focus();
-  await button.evaluate(node=>window.__knowledgeDirectionNode=node);await button.selectOption(op);
+  await button.evaluate(node=>{window.__knowledgeDirectionNode=node;window.__knowledgeDirectionFocus=document.activeElement;});await button.selectOption(op);
   assert.equal(await probe.getAttribute('data-operation'),op);
   assert.equal(await probe.locator('.ct-download').isDisabled(),true,'direction change invalidates old output synchronously');
-  assert.equal(await page.evaluate(()=>document.activeElement===window.__knowledgeDirectionNode),true,'direction switches retain their real focused control');
+  assert.equal(await button.evaluate(node=>node===window.__knowledgeDirectionNode),true,'direction switches retain their original native state owner');
+  assert.equal(await page.evaluate(()=>document.activeElement===window.__knowledgeDirectionFocus&&document.activeElement.matches('.ui-select-trigger')),true,'direction switches retain the same visible focused select trigger');
  };
  const run=async()=>{
   await probe.locator('.ct-run').click();
@@ -218,31 +223,65 @@ async function discoveryAndAliases({page,go},registry){
  await page.locator('#panel-home [data-capability]').filter({hasText:telegraph.title}).click();
  await page.waitForFunction(()=>document.querySelector('#hanzi-mode')?.value==='tele-decode');
  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('dir'),'decode','global native reverse search carries its real direction');
+ await page.locator('#hanzi-input').fill('中国');
+ assert.equal(await page.locator('.capability-native-directions,[data-native-direction]').count(),0,'the task header has no duplicate direction controls');
+ assert.deepEqual(await page.locator('#hanzi-mode option').evaluateAll(nodes=>nodes.map(node=>node.value)),['tele-encode','tele-decode'],'the original select exposes only the registered task directions');
  for(const [direction,mode]of [['encode','tele-encode'],['decode','tele-decode']]){
-  const button=page.locator('.capability-native-directions [data-native-direction="'+direction+'"]');
-  await button.focus();await button.evaluate(node=>window.__knowledgeNativeDirectionNode=node);await button.click();
-  await page.waitForFunction(mode=>document.querySelector('#hanzi-mode')?.value===mode,mode);
-  assert.equal(await page.evaluate(()=>document.activeElement===window.__knowledgeNativeDirectionNode),true,'native direction routing preserves the actual focused button');
-  assert.equal(await page.evaluate(()=>document.querySelector('[data-native-direction="'+window.__knowledgeNativeDirectionNode.dataset.nativeDirection+'"]')===window.__knowledgeNativeDirectionNode),true,'native direction choices retain their DOM identity');
+  const select=page.locator('#hanzi-mode');
+  await select.focus();await select.evaluate(node=>{window.__knowledgeNativeDirectionNode=node;window.__knowledgeNativeDirectionFocus=document.activeElement;});await select.selectOption(mode);
+  await page.waitForFunction(({mode,direction})=>document.querySelector('#hanzi-mode')?.value===mode&&new URLSearchParams(location.hash.split('?')[1]).get('dir')===direction,{mode,direction});
+  assert.equal(await page.evaluate(()=>document.activeElement===window.__knowledgeNativeDirectionFocus&&document.activeElement.matches('.ui-select-trigger')),true,'native direction routing preserves the same visible focused trigger');
+  assert.equal(await page.evaluate(()=>document.querySelector('#hanzi-mode')===window.__knowledgeNativeDirectionNode),true,'native direction choices retain their original form node');
+  assert.equal(await page.locator('#hanzi-input').inputValue(),'中国','direction selection preserves the original input');
+ }
+ const rapid=await page.evaluate(()=>{
+  const control=document.querySelector('#hanzi-mode');
+  for(const value of ['tele-encode','tele-decode','tele-encode','tele-decode']){control.value=value;control.dispatchEvent(new Event('input',{bubbles:true}));control.dispatchEvent(new Event('change',{bubbles:true}));}
+  return {value:control.value,direction:new URLSearchParams(location.hash.split('?')[1]).get('dir')};
+ });assert.deepEqual(rapid,{value:'tele-decode',direction:'decode'},'rapid direction edits update the route synchronously without a listener gap');
+ const recentDirection=await page.evaluate(async()=>{const {getRecentEntries}=await import(new URL('./preferences.js',location.href));return getRecentEntries().find(e=>e.route.includes('hanzi-telegraph'))?.route;});
+ assert.equal(new URLSearchParams(recentDirection.split('?')[1]).get('dir'),'decode','recent entry preserves the actual native direction');
+ for(const entry of registry.entries.filter(entry=>entry.open.nativeDirections?.length>1)){
+  await go(entry.route+'?'+new URLSearchParams({task:entry.id}));
+  await page.waitForFunction(id=>document.querySelector('.panel:not([hidden]) [data-current-capability]')?.dataset.currentCapability===id,entry.id);
+  const selectors=new Set(entry.open.nativeDirections.flatMap(choice=>choice.controls.map(control=>control.selector)));
+  for(const selector of selectors){
+   const values=[...new Set(entry.open.nativeDirections.flatMap(choice=>choice.controls.filter(control=>control.selector===selector).map(control=>String(control.value))))];
+   if(values.length<2)continue;
+   const select=page.locator('#panel-'+entry.open.panel+' '+selector);
+   assert.equal(await select.isVisible(),true,entry.id+' owns a visible form direction select');
+   assert.equal(await select.evaluate(node=>node.tagName),'SELECT');
+   assert.deepEqual(await select.locator('option').evaluateAll(nodes=>nodes.map(node=>node.value).sort()),values.sort(),entry.id+' exposes exactly its real registered directions');
+  }
  }
  await go('encoding');
  const task=page.locator('#ct-encoding');await task.locator('.ct-run:enabled').waitFor();
  assert.equal(await page.locator('.ct-picker').count(),0,'Task workspace has no legacy picker');
  await chooseOperation(page,'From Base64');
- assert.equal(await task.locator('.ct-direction option').count(),2,'both real directions remain visible');
+ assert.equal(family.reversible,false,'the Base topic is not an inverse pair across different alphabets');
+ assert.deepEqual(await task.locator('.ct-direction option').evaluateAll(nodes=>nodes.map(node=>node.value)),
+  family.actions.map(action=>action.op),'the Base selector preserves every registered real action without duplicate operations');
+ assert.equal(await task.locator('.ct-direction').inputValue(),'From Base64','the requested real decode action is selected');
+ for(const op of ['To Base64','From Base64'])assert.equal(await task.locator('.ct-direction option').evaluateAll((nodes,op)=>nodes.filter(node=>node.value===op).length,op),1,'each real Base64 direction remains available exactly once inside the larger topic');
  await task.locator('.ct-input').fill(Buffer.from('方向合并').toString('base64'));await task.locator('.ct-run').click();
  await page.waitForFunction(()=>document.querySelector('#ct-encoding .ct-status').dataset.state==='success',null,{timeout:45000});
  assert.equal(await task.locator('.ct-output').inputValue(),'方向合并');
- await task.locator('.ct-direction').focus();await task.locator('.ct-direction').selectOption('To Base64');
- assert.equal(await page.evaluate(()=>document.activeElement?.value),'To Base64','task direction choice keeps keyboard focus');
+ await task.locator('.ct-direction').focus();await page.evaluate(()=>window.__knowledgeRouteFocus=document.activeElement);await task.locator('.ct-direction').selectOption('To Base64');
+ assert.equal(await page.evaluate(()=>document.activeElement===window.__knowledgeRouteFocus&&document.activeElement.matches('.ui-select-trigger')),true,'task direction choice keeps keyboard focus on its visible trigger');
  // Old IDs that once owned one raw operation resolve to the new canonical
  // family, while preserving the exact operation originally bookmarked.
  for(const op of ['To Base64','From Base64','To Case Insensitive Regex','From Case Insensitive Regex']){
   const entry=registry.entries.find(entry=>entry.sourceOperationIds.includes(op));
   const panel=entry.open.panel;
   await go(entry.route+'?'+new URLSearchParams({task:'op:'+encodeURIComponent(op)}));
-  await page.waitForFunction(({panel,op})=>document.querySelector('#ct-'+panel)?.dataset.operation===op,{panel,op});
-  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),entry.id,'old op deep link canonicalises without losing identity');
+  const recipeOnly=['chain','recipe-only'].includes(entry.mode);
+  if(recipeOnly){
+   const label=await page.evaluate(async op=>(await import('./cyberchef-i18n.js')).operationName(op),op);
+   await page.waitForFunction(label=>document.querySelector('#cyberchef-stage')?.dataset.ready==='true'
+    &&document.querySelector('#chef-recipe .chef-step-heading strong')?.textContent===label,label);
+   assert.equal(await page.locator('#chef-recipe .chef-step').count(),1,'a recipe-only alias inserts its one real operation in the complete workspace');
+  }else await page.waitForFunction(({panel,op})=>document.querySelector('#ct-'+panel)?.dataset.operation===op,{panel,op});
+  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),recipeOnly?'native:cyberchef':entry.id,'old op deep link canonicalises without losing its actual workspace');
   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('op'),op);
  }
  await go('hanzi?'+new URLSearchParams({task:'native:hanzi-telegraph-decode'}));
@@ -271,7 +310,7 @@ async function discoveryAndAliases({page,go},registry){
  assert.equal(await page.locator('#chef-output').inputValue(),'ARG','the grouped palette produces a real two-operation roundtrip');
  assert.equal(await page.locator('#chef-directory').count(),0,'The recipe workspace has no duplicate tool directory');
 
- const article=registry.entries.find(entry=>entry.category==='knowledge'&&entry.open.articleId==='function-native:ascii');
+ const article=registry.entries.find(entry=>entry.category==='knowledge'&&entry.open.articleId==='function-topic:character-codes');
  assert.ok(article);
  await go('home');await page.locator('#home-search').fill(article.title);
  assert.equal(await page.locator('#panel-home [data-capability]').evaluateAll((nodes,id)=>nodes.filter(node=>node.dataset.capability===id).length,article.id),1);
@@ -287,8 +326,8 @@ async function discoveryAndAliases({page,go},registry){
  assert.equal(await page.locator('.directory-capability').count(),lessonCount,'continued display exposes every precise lesson');
  await page.keyboard.press('Escape');
  await go(routeFor(family,'To Base64'));await task.locator('.ct-input').fill('保留这条线索');
- await task.locator('.ct-direction').focus();await task.locator('.ct-direction').selectOption('From Base64');
- assert.equal(await page.evaluate(()=>document.activeElement?.value),'From Base64','canonical direction choice keeps focus while synchronising its route');
+ await task.locator('.ct-direction').focus();await page.evaluate(()=>window.__knowledgeRouteFocus=document.activeElement);await task.locator('.ct-direction').selectOption('From Base64');
+ assert.equal(await page.evaluate(()=>document.activeElement===window.__knowledgeRouteFocus&&document.activeElement.matches('.ui-select-trigger')),true,'canonical direction choice keeps visible focus while synchronising its route');
  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('op'),'From Base64');
  if(await page.locator('.layout>.workbench-sidebar').isHidden())await page.locator('.workbench-menu').click();
  const rail=page.locator('.rail-groups [data-route="browse/knowledge"]');
@@ -302,6 +341,94 @@ async function discoveryAndAliases({page,go},registry){
  await page.evaluate(()=>localStorage.setItem('arg.ui.favorites.v1',JSON.stringify(['encoding','hanzi','knowledge'])));
  await page.reload();await page.waitForSelector('#ct-encoding[data-operation]');
  assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('arg.ui.favorites.v1'))),['encoding','hanzi','knowledge'],'old favorites remain compatible alongside the new page ID');
+}
+
+async function knowledgeReferences({page,go},registry){
+ for(const id of ['function-op:Enigma','function-topic:base-family']){
+  const entry=registry.entries.find(item=>item.open.articleId===id);assert.ok(entry);
+  await go(entry.route+'?'+new URLSearchParams({task:entry.id}));
+  await page.waitForSelector('#knowledge-detail [data-knowledge-detail="'+id+'"]');
+  await page.waitForSelector('#knowledge-detail [data-knowledge-related]');
+  const article=await page.evaluate(async id=>(await import(new URL('./knowledge/content.js',location.href))).getArticle(id),id);
+  const reader=page.locator('#knowledge-detail article');
+  assert.equal(await reader.locator('[data-ui=reference-list]').count(),1,'one bibliography per article');
+  assert.equal(await reader.locator('.knowledge-section [data-ui=reference-list]').count(),0,'no repeated source cards between paragraphs');
+  assert.equal(await reader.evaluate(node=>node.lastElementChild.matches('.knowledge-references')),true,'bibliography follows the complete body and dynamically loaded related tools');
+  assert.deepEqual(await reader.locator('[data-reference-id]').evaluateAll(nodes=>nodes.map(node=>node.dataset.referenceId)),article.sources.map(source=>source.id),'each declared source is shown exactly once');
+  for(const source of article.sources)assert.equal(await reader.locator('[data-reference-id="'+source.id+'"]').getAttribute('href'),source.url.startsWith('/')?new URL('.'+source.url,page.url()).href:source.url,'original reference destination retained');
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ }
+}
+
+async function knowledgeEnigmaExample({page,go},registry,{runEngine=false}={}){
+ const entry=registry.entries.find(item=>item.open.articleId==='function-op:Enigma');assert.ok(entry);
+ await go(entry.route+'?'+new URLSearchParams({task:entry.id}));
+ await page.waitForSelector('#knowledge-detail [data-knowledge-detail="function-op:Enigma"]');
+ const article=await page.evaluate(async()=>(await import(new URL('./knowledge/content.js',location.href))).getArticle('function-op:Enigma'));
+ const body=await page.locator('#knowledge-detail').innerText();
+ for(const section of article.sections){
+  assert.ok(body.includes(section.title));
+  for(const paragraph of section.paragraphs)assert.ok(body.includes(paragraph),'complete article paragraph: '+section.title);
+  for(const example of section.examples)for(const key of ['input','output','explanation'])assert.ok(body.includes(example[key]),'complete worked example: '+example.label+' / '+key);
+ }
+ assert.equal(await page.locator('#knowledge-detail [data-knowledge-example]').count(),5);
+ assert.equal(await page.locator('.knowledge-catalogue').isVisible(),false);
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'the complete article stays inside the reading viewport');
+ await page.screenshot({path:resolve(artifacts,runEngine?'enigma-sample-desktop.png':'enigma-sample-mobile.png')});
+ if(!runEngine)return;
+ const related=page.locator('#knowledge-detail [data-knowledge-related]').first();await related.waitFor();await related.click();
+ const owner=registry.entries.find(item=>item.sourceOperationIds.includes('Enigma'));
+ const task=page.locator('#ct-'+owner.open.panel);await task.locator('.ct-run:enabled').waitFor();
+ const values=await task.locator('.ct-parameters').evaluate(root=>Object.fromEntries([...root.querySelectorAll('[data-arg]')].map(field=>{const control=field.querySelector('input,select');return[field.dataset.arg,control?.type==='checkbox'?control.checked:control?.value];})));
+ assert.equal(values[0],'3-rotor');assert.equal(values[4],'EKMFLGDQVZNTOWYHXUSPAIBRCJ<R');
+ assert.equal(values[7],'AJDKSIRUXBLHWTMCQGZNPYFVOE<F');assert.equal(values[10],'BDFHJLCPRTXVZNYEIWGAKMUSQO<W');
+ for(const index of [5,6,8,9,11,12])assert.equal(values[index],'A','all documented rings and starts are A');
+ assert.equal(values[13],'AY BR CU DH EQ FS GL IP JX KN MO TZ VW');assert.equal(values[14],'');assert.equal(values[15],true);
+ const results=[];
+ for(const [input,expected]of [['A','B'],['AA','BD'],['AAA','BDZ'],['AAAA','BDZG'],['AAAAA','BDZGO'],['BDZGO','AAAAA'],['HELLOWORLD','ILBDA AMTAZ'],['ILBDA AMTAZ','HELLO WORLD']]){
+  await task.locator('.ct-input').fill(input);await task.locator('.ct-run').click();
+  await page.waitForFunction(panel=>document.querySelector('#ct-'+panel+' .ct-status').dataset.state==='success'||document.querySelector('#ct-'+panel+' .ct-status').dataset.state==='error',owner.open.panel,{timeout:45000});
+  assert.equal(await task.locator('.ct-status').getAttribute('data-state'),'success',await task.locator('.ct-status').innerText());
+  const output=await task.locator('.ct-output').inputValue();assert.equal(output,expected,'real Enigma example: '+input);results.push({input,output});
+ }
+ console.log('PASS Enigma complete article and actual engine examples: '+JSON.stringify(results));
+}
+
+async function knowledgeLayout({page,go},registry){
+ const entry=registry.entries.find(item=>item.open.articleId==='function-op:Enigma');
+ assert.ok(entry,'the pictured article has its real registered route');
+ await go('knowledge');
+ await page.locator('[data-knowledge-category="codec"]').click();
+ await page.locator('#knowledge-query').fill('Enigma');
+ const selected=page.locator('[data-knowledge-article="'+entry.open.articleId+'"]');
+ await selected.focus();await selected.press('Enter');
+ await page.waitForFunction(id=>document.querySelector('#knowledge-detail')?.dataset.knowledgeSelected===id&&document.activeElement?.id==='knowledge-article-title',entry.open.articleId);
+ await page.evaluate(()=>window.__knowledgeReadingNode=document.querySelector('.knowledge-article'));
+ for(const width of [1440,800,390,320]){
+  await page.setViewportSize({width,height:950});
+  assert.equal(await page.locator('.knowledge-catalogue').isVisible(),false,'article has no catalogue column at '+width);
+  assert.equal(await page.locator('.knowledge-reader').isVisible(),true);
+  assert.equal(await page.locator('#knowledge-return-list').isVisible(),true,'return action exists on desktop and phone');
+  const geometry=await page.evaluate(()=>{const workspace=document.querySelector('.knowledge-workspace').getBoundingClientRect(),reader=document.querySelector('.knowledge-reader').getBoundingClientRect();return{workspace:workspace.width,reader:reader.width,overflow:document.documentElement.scrollWidth>innerWidth+1};});
+  assert.ok(Math.abs(geometry.workspace-geometry.reader)<2,'reader fills the complete workspace at '+width+': '+JSON.stringify(geometry));
+  assert.equal(geometry.overflow,false,'reader stays inside the viewport at '+width);
+  assert.equal(await page.evaluate(()=>document.querySelector('.knowledge-article')===window.__knowledgeReadingNode),true,'resizing retains the original article node');
+ }
+ await page.setViewportSize({width:1440,height:950});
+ await page.screenshot({path:resolve(artifacts,'full-page-reader-desktop.png')});
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:resolve(artifacts,'full-page-reader-mobile.png')});
+ await page.locator('#knowledge-return-list').focus();await page.keyboard.press('Enter');
+ await page.waitForFunction(id=>location.hash==='#knowledge'&&document.activeElement?.dataset.knowledgeArticle===id,entry.open.articleId);
+ assert.equal(await page.locator('.knowledge-reader').isVisible(),false,'catalogue view has no empty reader pane');
+ assert.equal(await page.locator('#knowledge-query').inputValue(),'Enigma','return retains the search');
+ assert.equal(await page.locator('[data-knowledge-category="codec"]').getAttribute('aria-pressed'),'true','return retains the category');
+ await go(entry.route+'?'+new URLSearchParams({task:entry.id}));
+ await page.waitForSelector('#knowledge-article-title');
+ await page.reload();await page.waitForSelector('#knowledge-detail [data-knowledge-detail="'+entry.open.articleId+'"]');
+ assert.equal(await page.locator('.knowledge-catalogue').isVisible(),false,'deep link reload opens the full article');
+ assert.ok(await page.locator('#knowledge-detail [data-knowledge-example]').count(),'complete examples remain rendered');
+ assert.ok(await page.locator('#knowledge-detail [data-reference-id]').count(),'section citations remain rendered');
 }
 
 async function knowledgeReader({page,go},registry,{allArticles=false}={}){
@@ -379,18 +506,21 @@ async function knowledgeReader({page,go},registry,{allArticles=false}={}){
   const snapshot=await page.locator('#knowledge-detail').evaluate(root=>({body:root.textContent,
    examples:root.querySelectorAll('[data-knowledge-example]').length,
    related:[...root.querySelectorAll('[data-knowledge-related]')].map(node=>node.dataset.knowledgeRelated),
-   sections:[...root.querySelectorAll('.knowledge-section')].map(section=>({title:section.querySelector('h3')?.textContent,
-    references:[...section.querySelectorAll('[data-ui=reference-list]')].map(node=>({text:node.textContent,
-     links:[...node.querySelectorAll('[data-reference-id]')].map(link=>({id:link.dataset.referenceId,href:link.getAttribute('href')}))}))})),
+   sections:[...root.querySelectorAll('.knowledge-section')].map(section=>({title:section.querySelector('h3')?.textContent})),
+   references:[...root.querySelectorAll('[data-ui=reference-list]')].map(node=>({text:node.textContent,
+    links:[...node.querySelectorAll('[data-reference-id]')].map(link=>({id:link.dataset.referenceId,href:link.getAttribute('href')}))})),
+   referencesLast:root.querySelector('article')?.lastElementChild.matches('.knowledge-references'),
   }));
   const body=snapshot.body;assert.ok(body.length>180,article.id+' contains explanatory content');
+  assert.equal(snapshot.references.length,1,'one consolidated reference list per article');
+  assert.equal(snapshot.referencesLast,true,'references are at the end of the article');
+  const references=snapshot.references[0];
+  assert.deepEqual(references.links.map(link=>link.id),article.sources.map(source=>source.id),'all references appear exactly once');
   assert.equal(await page.locator('#knowledge-article-title').textContent(),article.title,'reader uses the same simple function name');
-  for(const section of article.sections){
+  for(const section of [...(article.preface||[]),...article.sections]){
    assert.ok(body.includes(section.title),article.id+' section title is rendered');
    for(const paragraph of section.paragraphs)assert.ok(body.includes(paragraph),article.id+' renders the complete cited explanation');
    const rendered=snapshot.sections.find(part=>part.title===section.title);assert.ok(rendered);
-   assert.equal(rendered.references.length,1,'citations adjacent to '+section.title);
-   const references=rendered.references[0];
    for(const id of section.sourceIds){
     const source=article.sources.find(source=>source.id===id),link=references.links.find(link=>link.id===id);assert.ok(link);
     assert.equal(link.href,source.url.startsWith('/')?new URL('.'+source.url,page.url()).href:source.url);
@@ -436,6 +566,7 @@ async function knowledgeReader({page,go},registry,{allArticles=false}={}){
   await assertLayout('article '+width+' at '+textScale+'× text');
   if(await page.locator('#knowledge-return-list').isVisible()){
    await page.locator('#knowledge-return-list').click();
+   await page.waitForFunction(id=>document.activeElement?.dataset.knowledgeArticle===id,article.id);
    assert.equal(await page.evaluate(()=>document.activeElement?.dataset.knowledgeArticle),article.id,'back restores the chosen topic button, including large text/mobile');
   }
  }
@@ -451,12 +582,12 @@ async function knowledgeReader({page,go},registry,{allArticles=false}={}){
  const suffix=allArticles?'normal':'reduce';
  await page.setViewportSize({width:1440,height:950});await open(article);await settle();
  await page.waitForFunction(()=>{const rail=document.querySelector('.layout>.workbench-sidebar');if(!rail?.getClientRects().length)return true;const style=getComputedStyle(rail);return Number(style.opacity)>=.999&&(style.translate==='none'||Math.abs(parseFloat(style.translate))<.001);});
- await page.screenshot({path:'/tmp/mist-knowledge-pairs/article-desktop-'+suffix+'.png',fullPage:true});
+ await page.screenshot({path:resolve(artifacts,'article-desktop-'+suffix+'.png'),fullPage:true});
  await page.setViewportSize({width:390,height:844});await go('knowledge');await settle();
- await page.screenshot({path:'/tmp/mist-knowledge-pairs/catalogue-mobile-'+suffix+'.png',fullPage:true});
+ await page.screenshot({path:resolve(artifacts,'catalogue-mobile-'+suffix+'.png'),fullPage:true});
  await page.locator('#knowledge-list [data-knowledge-article="'+article.id+'"]').click();
  await page.waitForSelector('#knowledge-detail [data-knowledge-detail="'+article.id+'"]');await settle();
- await page.screenshot({path:'/tmp/mist-knowledge-pairs/article-mobile-'+suffix+'.png',fullPage:true});
+ await page.screenshot({path:resolve(artifacts,'article-mobile-'+suffix+'.png'),fullPage:true});
 }
 
 try{
@@ -471,14 +602,17 @@ try{
    const sources=registry.entries.flatMap(entry=>entry.sourceOperationIds);
    assert.equal(new Set(sources).size,505);assert.equal(sources.length,505,'each official operation has one canonical owner');
    assert.deepEqual(registry.coverage.missingOperationIds,[]);assert.deepEqual(registry.coverage.missingToolIds,[]);
-   if(settings.prefix==='/')await enginePairs(scope.page);
-   await taskCipherContinuation(scope);
-   await discoveryAndAliases(scope,registry);
-   await knowledgeReader(scope,registry,{allArticles:settings.prefix==='/'});
+   if((part==='all'||part==='engines')&&settings.prefix==='/')await enginePairs(scope.page);
+   if(part==='all'||part==='continuation')await taskCipherContinuation(scope);
+   if(part==='all'||part==='discovery')await discoveryAndAliases(scope,registry);
+   if(part==='all'||part==='reader')await knowledgeReader(scope,registry,{allArticles:settings.prefix==='/'});
+   if(part==='all'||part==='layout')await knowledgeLayout(scope,registry);
+   if(part==='all'||part==='enigma-example')await knowledgeEnigmaExample(scope,registry,{runEngine:settings.prefix==='/'});
+   if(part==='all'||part==='references')await knowledgeReferences(scope,registry);
    scope.assertClean();
-   console.log('PASS knowledge/pairs '+settings.prefix+': fifth category, unique real source ownership and actual bidirectional engines');
-  }catch(error){await scope.page.screenshot({path:'/tmp/mist-knowledge-pairs/failure.png'}).catch(()=>{});throw error;}
+   console.log('PASS knowledge/pairs '+part+' '+settings.prefix+': fifth category, unique real source ownership and selected behavior checks');
+  }catch(error){await scope.page.screenshot({path:resolve(artifacts,'failure.png')}).catch(()=>{});throw error;}
   finally{await scope.context.close();}
  }
-}catch(error){if(active&&!active.isClosed())await active.screenshot({path:'/tmp/mist-knowledge-pairs/failure.png'}).catch(()=>{});throw error;}
+}catch(error){if(active&&!active.isClosed())await active.screenshot({path:resolve(artifacts,'failure.png')}).catch(()=>{});throw error;}
 finally{await browser.close();}

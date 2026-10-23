@@ -12,7 +12,9 @@ await writeFile(dir+'sequence.js','/* SeqViz MIT; codon mapping adapted upstream
 const zh=JSON.parse(await readFile('upstream/science/element-names-zh.json','utf8'));
 const data=JSON.parse(await readFile('upstream/science/sources/periodic-table/PeriodicTableJSON.json','utf8'));
 // No remote image links or Wikipedia summaries are loaded by this tool.
-await writeFile(dir+'elements.json',JSON.stringify(data.elements.filter(e=>e.number<=118).map(({number,symbol,name,atomic_mass,category,period,group,xpos,ypos,electron_configuration})=>({number,symbol,name,zh:zh[number-1],atomic_mass,category,period,group,xpos,ypos,electron_configuration})))+'\n');
+// Keep every field of every selected element. Remote media URLs are metadata,
+// never fetched by the element viewer. No unannounced schema whitelist.
+await writeFile(dir+'elements.json',JSON.stringify(data.elements.filter(e=>e.number<=118).map(e=>({...e,zh:zh[e.number-1]})))+'\n');
 console.log('Science adapters built offline.');
 
 for(const [source,target]of [['lunar-javascript-1.7.7/LICENSE','lunar'],['seqviz/LICENSE','seqviz'],['periodic-table/LICENSE.md','elements'],['rdkit-LICENSE.txt','rdkit'],['ntseq-LICENSE.txt','ntseq']])await copyFile('upstream/science/sources/'+source,dir+target+'-LICENSE.txt');

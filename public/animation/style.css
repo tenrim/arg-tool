@@ -1,0 +1,6 @@
+#panel-video.animation-active > .hunt-workspace { grid-template-columns: minmax(0, 1fr); }
+#animation-workspace { display: grid; gap: 1rem; min-width: 0; }
+.animation-preview { display: grid; place-items: center; min-height: 200px; max-height: 65vh; overflow: auto; }
+#animation-canvas { height: auto; image-rendering: pixelated; background: repeating-conic-gradient(#d7d7d7 0% 25%, #fff 0% 50%) 0 0 / 16px 16px; }
+.animation-palette { max-height: 320px; overflow: auto; }
+#animation-summary { min-width: 0; }

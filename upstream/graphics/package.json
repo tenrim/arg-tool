@@ -1,0 +1,12 @@
+{
+  "name": "mist-graphics-vendor",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@excalidraw/excalidraw": "0.18.1",
+    "mind-elixir": "5.15.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {"esbuild": "0.28.2"}
+}

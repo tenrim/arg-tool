@@ -1,11 +1,45 @@
-> 当前状态（2026-10-11）：83 项来源许可登记；使用第三方代码、数据或素材的工具页脚列出实际来源，纯本站实现与浏览器内置接口不展示为项目；实际清单以 `public/project-licenses.js` 和 `upstream-manifest.json` 的 `components` 为准。旧纸笔编辑器以及图论路径、几何作图、数字电路和专用依赖已移除，相关旧记录仅供历史追溯；退役记录见 `retired_components`。当前原生纸笔工具使用 cspuz_core。验证数字与覆盖范围统一见 [VERIFICATION.md](VERIFICATION.md)。
-
 # 第三方代码与授权
+
+### 本地资料中文补充
+
+本轮中文名称、别名和说明作为附加层，保留原库所有记录、标准代码和原始字段，不是替换原库或自动翻译全文。具体覆盖与回退见 [中文适配说明](docs/REFERENCE_CHINESE_ADAPTATION.md)。
+
+- **Unicode CLDR 48.2.0**：Unicode License v3，署名 Unicode, Inc. and contributors。固定简繁中文城市、国家／地区、货币、文字系统与全部选定 Emoji／符号注释，以及英文地域名称精确匹配层；以 UCD 17.0.0 文字系统属性别名作代码关联。原始文件及摘要见 `upstream/cldr/PINS.json`，随包许可与使用范围见 `public/vendor/cldr/LICENSE.txt`、`NOTICE.txt`。不把补充范围称作全部 Unicode 字符或全部历史货币的中文译库。
+- **MDN contributors 中文参考**：固定 `e7abcf317df79ab57e6053f48c8b1fec01920836`，正文及派生说明 **CC-BY-SA-2.5**。按精确 HTTP 字段／MIME 标识抽取既有中文说明，剥离 Markdown 展示标记，不使用代码示例或媒体。完整选定来源见 `upstream/reference-mdn-zh/SOURCE.json`，派生中文说明继续适用同一许可，随包 `public/vendor/reference-mdn-zh/LICENSE.md`、`NOTICE.txt` 保留原文和改编说明。
+- **OpenCC-JS 1.4.2**：继续复用已固定运行包；代码 MIT、字典 Apache-2.0。本地资料检索新增繁简归一化消费者，原始字段与导出不改写。许可仍在 `public/vendor/round1/opencc-js/`。
+- **IOC World Bird List 15.2**：中文及繁体鸟名来自完整官方多语言工作簿，原页声明 CC BY 3.0 Unported。保留 Gill、Donsker、Rasmussen 及原表 Sources 所列中文鸟名编者的署名；中文派生层与 AviList 原表 CC BY 4.0 分别标明，详见 `public/vendor/atlas-life-culture/CHINESE-NOTICE.txt`、`IOC-CC-BY-3.0.txt` 和 [固定原件说明](docs/ATLAS_CHINESE_DATA.md)。
+- **Wikidata structured data**：已有中文标签、别名和身份对应数据采用 CC0-1.0，不抽取维基百科正文或图片。音乐按原文身份及生卒信息对应，首都／机场／运输地点／天体按严格标准代码及必要身份校验对应。社区数据不冒称官方命名标准；所有固定原响应、查询、未匹配记录与处理规则保留。随包原文见 `public/vendor/atlas-life-culture/Wikidata-CC0-1.0.txt`、`CHINESE-NOTICE.txt` 与 `public/licenses/REFERENCE-CHINESE-NOTICE.txt`、`REFERENCE-CHINESE-CC0-1.0.txt`。
+
+### 可选在线资料服务（E09、E11、E16、E17、E19、E20、E23、E34）
+
+本轮接入是用户明确提交后由本站原创后端适配器访问固定公开只读来源；不是下载完整数据库、复制原站软件、自动上传文件或任意网址代理。查询页常驻说明具体去向，关于页和实际页末同时列出下表来源，保存结果保留完整本次返回数据、条件、来源与检索时间。仅限相应已登记方法，不声称整站功能均已移植。
+
+| 来源 | 真实范围 | 许可、署名与随包原文 |
+| --- | --- | --- |
+| [CDS/SIMBAD](https://simbad.cds.unistra.fr/simbad/) | 名称/ICRS 天区、基本资料、别名、测光、文献；原单位和完整字段 | 各原资料许可；署名 CDS/SIMBAD 与原作者、论文/DOI。`public/licenses/CDS-ONLINE-TERMS.txt`、`SIMBAD-ONLINE-NOTICE.txt`。 |
+| [CDS/VizieR](https://vizier.cds.unistra.fr/) | 真实目录检索、字段模式、完整原始 TSV 和有界条件/天区记录；不恢复精选 HYG | 具体星表的 `rights_uri` 和数据集许可，署名 CDS/VizieR、原作者与论文/DOI。`public/licenses/CDS-ONLINE-TERMS.txt`、`VIZIER-ONLINE-NOTICE.txt`。 |
+| [COD](https://www.crystallography.net/cod/) | 组成/元素/空间群/论文检索、详情、显式获取原 CIF；不恢复旧样本库 | 数据 CC0；保留结构原作者及文献引用。`public/licenses/ONLINE-CC0-1.0.txt`、`COD-ONLINE-NOTICE.txt`。本轮本机连接超时，适配器已实现但真实上游可用性须按部署网络验证，不用样例代替。 |
+| [PubChem](https://pubchem.ncbi.nlm.nih.gov/) | PUG REST 名称/CID/分子式/SMILES/InChI、完整结构/同义词；PUG View 注释与来源 | NIH/NCBI 及各提供方条款，不能统一宣称所有注释 CC0。`public/licenses/PUBCHEM-POLICIES.txt`、`PUBCHEM-ONLINE-NOTICE.txt`。 |
+| [国家地名信息库](https://dmfw.mca.gov.cn/) | 7 个官方公开 API：行政区、地名搜索/详情、同名同音按区划/类别统计；CGCS2000 原坐标 | 民政部官方公开查询，不冒称整库开放再分发、底图或图片许可。`public/licenses/PLACENAMES-API-TERMS.txt`、`PLACENAMES-ONLINE-NOTICE.txt`。 |
+| [汉典](https://www.zdic.net/) | 仅固定 `/hans/字词` 的全部公开原文分节；**非官方 API**，不接动态 `/api/`、全文/拼音/会员或媒体 | 官方条款对相关字词等内容声明 CC0；仍保留来源与书证。`public/licenses/ZDIC-TERMS.txt`、`ONLINE-CC0-1.0.txt`、`ZDIC-ONLINE-NOTICE.txt`。 |
+| [知识图谱网 CNKGraph](https://cnkgraph.com/) | 诗文查询/详情、词牌查询/完整词谱、词句谱式匹配、韵书韵目字表；原始繁体与完整返回字段 | 官方开放接口仅限非商业研究、学习，不冒称 CC0。`public/licenses/CNKGRAPH-OPEN-TERMS.txt`、`CNKGRAPH-ONLINE-NOTICE.txt`；官方六组完整 Postman 示例 ZIP 在 `upstream/online-services/`。 |
+| [神奇宝贝百科 52poke](https://wiki.52poke.com/) | MediaWiki 文字搜索/完整 Wiki 原文、版本及作者；模板不执行、图片音频不取；至少 500 秒请求间隔 | 文字 CC BY-NC-SA 3.0，署名百科及贡献者、固定版本、作者历史；媒体权利独立。`public/licenses/52POKE-COPYRIGHT.txt`、`52POKE-CC-BY-NC-SA-3.0.txt`、`52POKE-ONLINE-NOTICE.txt`。 |
+
+固定官方接口、访问政策和许可原字节位于 `upstream/online-services/`，逐文件摘要及明确未能下载的 COD 文档见 `UPSTREAM.json`。公开条款 HTML 以 `.txt` 原字节随包供查看，不执行其脚本。本站自己的限频是保护措施，不冒称上游无限流量、永久免费、SLA 或授权额度；出现拒绝、格式变更或离线时明确失败且不自动重试。
+
+### OEIS（可选在线数列查询服务）
+
+- 来源：[The On-Line Encyclopedia of Integer Sequences](https://oeis.org/)。此项是用户主动请求的在线数据服务，不是离线全库、精选数据库或第三方软件引擎；原精选数列库仍已退役。查询适配器和中文界面为本站原创。
+- 仅在主动查询或翻页时，将本次查询经本站服务器提交给官方 `fmt=json` 查询接口；保留当前返回记录全部字段、作者、具体条目链接和查询时间，不后台抓取数据库或自动加载条目外链。
+- 数据许可：[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)；按[OEIS 最终用户许可](https://oeis.org/wiki/The_OEIS_End-User_License_Agreement)署名 The Online Encyclopedia of Integer Sequences、The OEIS Foundation Inc. 及各条目贡献者。保存和导出记录保留原文署名和许可，本站原创适配不改变数据许可。
+- 完整许可和通知：`public/licenses/OEIS-CC-BY-SA-4.0.txt`、`public/licenses/OEIS-EULA.txt`、`public/licenses/OEIS-NOTICE.txt`。关于页及 OEIS 实际工作区页脚均列明在线用途及条款。
+- 固定官方依据位于 `upstream/online-query/`，含 JSON 接口、搜索、offset、A000045 实例、EULA、robots 与许可原文字节；2026-10-17 获取信息与逐文件 SHA-256 见 `UPSTREAM.json`。这是接口和许可证据，不作为本地数列数据载入。
+- `robots.txt` 对搜索抓取有限制，官方另有交互 JSON 接口文档；本模块只接受玩家显式请求，整个本站每 10 秒最多向上游请求一次，不自动重试、不绕过拒绝访问。这是本站保护限制，不能声称 OEIS 承诺了此配额或无限第三方访问。
 
 ### Nodemailer（可选邮件反馈服务）
 
 - 固定版本：10.1.1，来源：https://github.com/nodemailer/nodemailer ，许可 MIT-0。
-- 用途：仅在独立服务端通过 SMTP 发送用户主动提交的问题报告；不进入浏览器运行包。
+- 用途：仅在服务端通过 SMTP 发送用户主动提交的问题报告，可随根目录 `npm start` 管理或独立部署；不进入浏览器运行包。
 - 依赖与完整性锁：`services/feedback/package-lock.json`；许可原文：`public/licenses/nodemailer-MIT-0.txt`。
 - 部署与数据边界：[结果联动与邮件反馈](docs/HANDOFF_FEEDBACK.md)。
 
@@ -284,17 +318,17 @@ npm 组件及传递依赖许可汇总于 `LICENSES.txt`，Python 原文在 `pyth
 | [Gearberry Tarot Cards WebP Collection](https://github.com/reginanka/tarot-cards) | 默认蓝金幻想牌面；78 张原始 WebP，按牌名对应 | CC BY 4.0（按上游明确牌面声明） |
 | [Color Names](https://github.com/meodai/color-names) | 颜色名称与 HEX | MIT |
 | [ICS chart](https://github.com/i-c-stratigraphy/chart) | 地质年代表派生索引，保留层级、中文名与边界 | CC-BY-4.0 |
-| [OEIS data](https://github.com/oeis/oeisdata) | 272 条精选数列的已知整数、名称、offset；原条目含原始引用 | CC-BY-SA-4.0；派生数列索引继续使用此许可 |
-| [Crystallography Open Database](https://www.crystallography.net/cod/) | 14 份 CIF 数据，经固定 cod-tools 测试数据快照取得；保留 CIF 作者及论文信息 | CC0-1.0 / public domain；没有引入 cod-tools 程序代码 |
 
-国家中文显示名在维护阶段由 Node Intl 生成并固定；Unicode 标准名称与专名保留来源写法。三维显示继续使用已登记的 Three.js（MIT）；CIF 解析、有限对称表达式计算和同页桥接为本站实现，不执行 CIF 中的代码，不把镜像程序的许可误套给数据。运行时不查询远程 OEIS、COD 或运输数据服务。
+国家中文显示名在维护阶段由 Node Intl 生成并固定；Unicode 标准名称与专名保留来源写法。三维显示继续使用已登记的 Three.js（MIT）；本机 CIF 解析与有限对称表达式计算为本站实现，由现有模型上传入口处理，不执行 CIF 中的代码，不把镜像程序的许可误套给数据。这些固定本地资料运行时不请求远程 OEIS、COD 或运输数据服务；独立的可选在线查询仅在玩家明确提交时访问其对应来源。
+
+V0.9 已退役本地 OEIS 精选与 COD 样本查询及其派生运行数据；两者不再登记为当前运行依赖。原始条目、样本、固定来源与许可保留在 `upstream/reference/` 供归属和历史审查：OEIS 原始数据为 CC BY-SA 4.0；COD 原始 CIF 为 CC0 1.0／公共领域，保留作者、论文及原有声明，来源为固定 cod-tools 测试快照，没有使用 cod-tools 程序代码。本机导入玩家自己的 CIF 不构成复用 COD 样本。
 
 
 ## 可视浏览地图（2026-10-09）
 
 [Natural Earth](https://github.com/nvkelso/natural-earth-vector) 固定提交 `ca96624a56bd078437bca8184e78163e5039ad19`，使用 `geojson/ne_110m_admin_0_countries.geojson` 的 177 个轮廓。上游明确将全部地图数据置于公共领域；完整声明位于 `upstream/reference/sources/natural-earth-LICENSE.txt` 与运行目录同名文件。源 GeoJSON 保存原始字节，派生路径保留所有多边形环、孔洞和跨日期变更线的分段，按等距圆柱投影生成本地 SVG 坐标。固定 URL 与摘要见 reference 的 pins/imports/UPSTREAM 清单；普通构建不抓取地图。
 
-世界地图用于国家、机场、运输地点三页，均补充了具体用途和许可页脚。机场坐标来自 OurAirports，运输地点坐标按 UN/LOCODE 度分记录换算，不由地图推断。八卦先天／后天排列为传统图式；塔罗叠牌、晶胞、字符表、连续色盘与数列图为本站界面实现；塔罗图片来源另列如下，运行时不请求外部图片服务。
+世界地图用于国家、机场、运输地点三页，均补充了具体用途和许可页脚。机场坐标来自 OurAirports，运输地点坐标按 UN/LOCODE 度分记录换算，不由地图推断。八卦先天／后天排列为传统图式；塔罗叠牌、字符表与连续色盘为本站界面实现；塔罗图片来源另列如下，运行时不请求外部图片服务。
 
 ## 塔罗公版牌面（2026-10-09）
 
@@ -314,11 +348,11 @@ Gearberry 为正义 VIII、力量 XI，对应 m08.webp、m11.webp。经典 RWS �
 
 ## 围棋、海事旗、货币与天体目录（2026-10-10）
 
-固定提交、原始文件、派生方式与边界见 [upstream/discovery/README.md](upstream/discovery/README.md)。`public/vendor/discovery/UPSTREAM.json` 登记原始文件、运行文件和维护脚本 SHA-256；总来源清单与工具页脚登记 Sabaki SGF（MIT）、doken（MIT）、Marine Signal Flags（MIT，保留 Panayiotis Lipiridis 原署名）、Currency Codes（PDDL 1.0 数据）、HYG Database（CC BY-SA 4.0）和 OpenNGC（CC BY-SA 4.0）。
+固定提交、原始文件、派生方式与边界见 [upstream/discovery/README.md](upstream/discovery/README.md)。`public/vendor/discovery/UPSTREAM.json` 登记原始文件、运行文件和维护脚本 SHA-256；当前总来源清单与工具页脚登记 Sabaki SGF（MIT）、doken（MIT）、Marine Signal Flags（MIT，保留 Panayiotis Lipiridis 原署名）、Currency Codes（PDDL 1.0 数据）和 OpenNGC（CC BY-SA 4.0）。
 
-HYG 筛选及 OpenNGC 坐标、索引和分包详情为派生数据，继续 CC BY-SA 4.0；完整原始字段保留在详情及保存的源表，牌面等既有数据许可不受影响。海事旗 SVG 原始分发，本站中文简述为独立事实整理。SGF 的 ESM 适配只移除 Node 文件/Buffer 接口，保留上游解析与 tokenizer；棋盘及基础规则由本站编写。货币关联使用已经登记的 Countries 与 flag-icons，天文联动使用已经登记的 Astronomy Engine；这些项目也在实际相关工具页脚展示。
+深空天体目录保留固定 OpenNGC 主表和补充表的全部 14,034 条记录；坐标、索引和分包详情为派生数据，继续 CC BY-SA 4.0，保留完整原始字段和字段来源。海事旗 SVG 原始分发，本站中文简述为独立事实整理。SGF 的 ESM 适配只移除 Node 文件/Buffer 接口，保留上游解析与 tokenizer；棋盘及基础规则由本站编写。货币关联使用已经登记的 Countries 与 flag-icons，天文联动使用已经登记的 Astronomy Engine；这些项目也在实际相关工具页脚展示。
 
-HYG 原始 33,932,548 字节 CSV 以确定性 gzip 归档保存在 `upstream/discovery/sources/hyg/hygdata_v41.csv.gz`，避免源码托管单对象限制。导入和离线生成保留全部原始内容，清单同时保存归档 SHA-256、解压原文 SHA-256 和原文大小；完整性审计核对两者。网页数据、引擎、许可和声明字节保持不变。
+V0.9 已移除 HYG 的 9,026 条筛选恒星运行库；HYG 不再作为当前运行依赖、来源页脚或恒星查询入口。其原始 33,932,548 字节 CSV 及原始 CC BY-SA 4.0 许可仅在 `upstream/discovery/sources/hyg/` 归档，CSV 为 `hygdata_v41.csv.gz`。归档摘要、解压原文摘要与原文大小继续用于来源核查；不将归档再生成或分发为筛选恒星查询库。
 
 
 ## 图灵机（2026-10-10）
@@ -345,12 +379,110 @@ ASCII／字符码／UTF-8字节／进制／转义／实体／A1Z26继续使用�
 - **IANA Protocol Registries**：五份协议登记表的固定镜像提交 `a3cbd401df5dd06cf60f7376fa0601bd5f426aec`；原始端口、协议号、HTTP 状态／字段和字符集数据为 **CC0 1.0**。CC0 不包括引用的 RFC 文档。保留原 XML、CC0 原文和 IANA 声明。
 - **mime-db 1.54.0**：**MIT**，固定 npm 原包及 integrity；复用媒体类型、扩展名、字符集和来源字段，保留许可原文。
 - **Public Suffix List**：固定提交 `3929462652695bad04f0a27afb600974014a3c8b`，**MPL-2.0**；完整 ICANN／PRIVATE 数据及派生后缀资料保留该许可。随站点提供原列表、完整 MPL 原文和源记录；匹配实现为本站代码，没有引入 tldts。
-- **RFC Editor Index**：固定 2026-07-31 索引镜像，只派生 56 项文档编号、短标题、状态及更新／替代事实；中文科普独立编写。未引入 RFC 正文、摘要或代码，也未把 RFC 文档标为 CC0／MIT。文档原许可依出版时版权声明和适用的 IETF Trust 条款；用途及链接见随包 RFC-NOTICE。
 
-原始字节与哈希保存在 [资料来源目录](upstream/it-reference/README.md)；`import-it-reference.py` 为联网维护入口，`build-it-reference.mjs` 完全离线验证并生成运行数据。`public/vendor/it-reference/UPSTREAM.json` 登记原始和派生文件。十六进制模型、搜索、ByteGrid 与指令基础文字均为本站实现，不增加外部项目署名。
+原始字节与哈希保存在 [资料来源目录](upstream/it-reference/README.md)；`import-it-reference.py` 为联网维护入口，`build-it-reference.mjs` 完全离线验证并生成四类完整选定资料。`public/vendor/it-reference/UPSTREAM.json` 登记保留的原始和派生文件。十六进制模型、搜索与 ByteGrid 为本站实现，不增加外部项目署名。
+
+V0.9 已移除 56 条精选 RFC 索引和手工 x86 指令／寄存器参考；RFC Editor Index 不再是当前运行依赖。固定 2026-07-31 原索引及原始许可声明留在 `upstream/it-reference/` 归档：当时只提取事实元数据，未引入 RFC 正文、摘要或代码，未将 RFC 文档改标为 CC0／MIT；文档原许可仍依出版时声明及适用的 IETF Trust 条款。独立的 CyberChef x86／ARM 反汇编引擎继续按其实际复用范围和许可证登记，不受资料目录退役影响。
 
 ## 逐功能科普的文献和站内原文
 
 科普使用基于原始标准、机构文档和作者实现的中文释读与演算，文献旁注不是把标准机构或本站代码登记为新软件依赖。固定 CyberChef 11.5.0 源码的只读副本按原字节保存在 `public/vendor/knowledge/cyberchef/`，Apache-2.0 原文、作者通知和上游固定提交均保留；已固定的 Esolang Park 作者 README 按 MIT 保存在同目录的独立子目录。两者继续使用现有项目许可登记，具体资料链接旁也显示真实许可。
 
 逐文件摘要及实际原文地址见 `public/vendor/knowledge/UPSTREAM.json`。维护进口脚本为 `scripts/import-knowledge-sources.py`；正常构建不联网，不替换官方运算资源。校验和、位提取、统计等已发现的运行兼容问题在本站共用 Worker 操作适配处理，固定 vendor 原始字节与摘要不变。没有将博客、百科、文献平台或浏览器 Web API 冒充已集成的软件项目。
+
+## 本机笔记本
+
+- **Vditor 4.0.0**：MIT，中文 Markdown 编辑；使用 npm 原始 dist 的编辑器、中文语言包、图标、暗色样式和随包 Lute。随包 **diff-match-patch 1.0.5** 保留独立 Apache-2.0 许可。
+- **Lute**：使用 Vditor 4.0.0 自带的固定运行文件（具体字节哈希在 UPSTREAM.json），MulanPSL-2.0；编译包中的 Go / GopherJS 运行时保留 BSD-3-Clause 许可。许可原文的固定来源记录在 upstream/notebook/license-sources.json。
+- **DOMPurify 3.4.17**：Apache-2.0 OR MPL-2.0，本项目选 Apache-2.0，用于本机笔记编辑器的 HTML 安全边界。
+
+npm 版本、下载地址和完整性值记录于 upstream/notebook/package-lock.json；选择复制的原始运行文件及 SHA-256 记录于 public/vendor/notebook/UPSTREAM.json。维护导入器为 scripts/import-notebook.mjs，普通构建不联网。本机笔记、附件和录音不进入服务端。
+
+Vditor 的本地图表资源现已接入：Mermaid（MIT）、ECharts（Apache-2.0）、highlight.js（BSD-3-Clause）、KaTeX 及字体（MIT；mhchem 原作 Apache-2.0）、Markmap（MIT，随包 D3 ISC）、flowchart.js / Raphael（MIT）、WaveDrom（MIT）、abcjs（MIT）、SmilesDrawer（MIT，随包 chroma.js 的 BSD 声明保留）、Viz.js（MIT；Graphviz EPL-1.0、Expat MIT、zlib Zlib）。逐项来源、许可文件、npm 完整性记录在 upstream/notebook/renderer-notices.json，额外字体与依赖声明在 license-sources.json；原分发文件内的其他依赖声明不删除。Vditor 的所有渲染运行字节不作修改，所需兼容与安全处理均在 public/notebook 适配层。PlantUML 外部服务器不启用。
+
+## 可编辑白板与脑图（2026-10-16）
+
+- Excalidraw 0.18.1：MIT；React / React DOM 19.0.0：MIT。仅将编辑器挂载到工具容器，上游源码依赖由固定 npm lock 重现，构建适配在 upstream/graphics/excalidraw-entry.js。
+- Mind Elixir 5.15.1：MIT，原始分发资源本地保留。
+- Excalidraw 随包字体：Assistant、Cascadia Code、Excalifont、Liberation Sans、Lilita One、Nunito、Virgil、Xiaolai 为 SIL OFL-1.1；Comic Shanns 为 MIT。字体字节未改写，原始通知及获取摘要位于 upstream/graphics/notices。
+- 运行包的 EXCALIDRAW-LICENSE.txt、FONTS-NOTICES.txt、DEPENDENCY-NOTICES.txt 和 LICENSES.txt 保留具体依赖许可（包括 MIT、ISC、BSD、Apache-2.0、MPL-2.0 / Apache-2.0 双许可、Zlib 等），不能将全部依赖统称为 MIT。
+- upstream/graphics/package-lock.json 固定来源、版本和 npm integrity；public/vendor/graphics/UPSTREAM.json 固定构建输入和输出 SHA-256。普通网站构建及运行无需 npm 安装或外部 CDN。
+## 2026-10 完整引擎与数据补全
+
+- **ChinesePuzzleTool**：固定 `8b4ebec728138981a94b4ff743026084e9e37ef5`，BSD-2-Clause。完整10份原文件保留在 `upstream/expansion/hunt/chinese-puzzle/`，本地查询使用完整词语、字属性、部件、拼音、成语与9562字端点数据；KM匹配由固定原始页面提取。
+- **cipher_machine**：固定 `29fa4ee1c60873484688c250b37c87d93f54cae4`，BSD-3-Clause。完整89份原文件保留在 `upstream/expansion/hunt/cipher-machine/`；完整六词库、词类及12行映射全部保留。复用原始查词、网格、SolverParser／SudokuSolver 与 SubstitutionSolver。数据收集来源与原项目声明保持原状，不把代码许可误说成独立取得了每个词条的额外授权。派生修正记录在维护生成脚本及约束核心README中，固定原文件不改写。
+- **Alpertron calculators**：GPL-3.0-or-later；musl MIT／Sun数学函数独立声明。当前只启用 `integer` 官方 WASM，承担整数表达式、素性检验、ECM／SIQS 因数分解、除数与批处理；其余九个高级数学任务已从登记、界面、请求协议和科普退役。十个官方 WASM 原始字节及摘要仍作为完整来源归档保留，不代表当前有十项活动功能。对应固定源码提交 `93c5c8189cb2f149c8dae898eb11997c5f2e7980` 的完整 `source.tar.gz` 随静态运行包提供，不声称已独立复现官方构建。许可与具体来源在 `public/vendor/expansion/alpertron/NOTICE.txt`、`UPSTREAM.json`。
+- **ggmorse**：固定 `7b4822a8cfdbb1addfe497f3ae8186f142a4ee79`，核心MIT；FFT引用部分另附CC-BY-SA-3.0／4.0，Emscripten、musl、libc++、compiler-rt原文也随包保留。完整源码、桥接与滤波边界修正在 `upstream/expansion/ggmorse/`，维护脚本编译真实WASM，普通使用不需要SDK。
+- **abcjs／Tonejs/Midi／Periodic-Table-JSON／QuickJS**：复用本站已固定的本地包，分别承担真实ABC排谱、标准MIDI输出、完整118元素资料与安全代码谓词；继续保留各自现有MIT／CC-BY-SA-3.0及附带许可。
+
+完整对照及明确范围见 [本轮接入说明](docs/EXPANSION_2026-10.md)。运行时不执行上游网页、分析脚本、Service Worker、Cunningham查询或后台请求。
+
+## 本地公开元数据搜索
+
+- **Fuse.js 7.5.0**：项目 <https://github.com/krisk/Fuse>，Apache-2.0；固定原包 `upstream/fuse/fuse-7.5.0.tgz`，原始模块、package.json 与许可位于 `upstream/fuse/source/`。
+- 实际使用未改写的 `public/vendor/fuse/fuse.js`，模块仅将原 `.mjs` 扩展名换成静态服务器通用的 `.js`，内容字节不变；许可原文为 `public/vendor/fuse/LICENSE.txt`；下载地址、npm integrity 与逐文件 SHA-256 在 `public/vendor/fuse/UPSTREAM.json`，维护导入器为 `scripts/import-fuse.mjs`。
+- `public/capabilities/search.js` 对公开工具名称、别名和操作元数据建立本地模糊索引，所有 `searchEntries` 调用复用该模型；严格名称与明确方向匹配优先。顶端、侧栏、首页及目录不自行建立另一套匹配规则。
+- 解谜输入、文件、结果、笔记和偏好不进入索引；不调用远程搜索服务、CDN 或运行时 npm。主构建保持离线且不需要 npm 安装依赖。作为共享搜索依赖，来源登记归网站关于页，不冒称每个计算工具都使用 Fuse.js 执行其算法。
+
+> 当前状态（2026-10-11）：83 项来源许可登记；使用第三方代码、数据或素材的工具页脚列出实际来源，纯本站实现与浏览器内置接口不展示为项目；实际清单以 `public/project-licenses.js` 和 `upstream-manifest.json` 的 `components` 为准。旧纸笔编辑器以及图论路径、几何作图、数字电路和专用依赖已移除，相关旧记录仅供历史追溯；退役记录见 `retired_components`。当前原生纸笔工具使用 cspuz_core。验证数字与覆盖范围统一见 [VERIFICATION.md](VERIFICATION.md)。
+
+## 五类完整固定资料（2026-10-17）
+
+- **IANA TZDB 2026e / PSF tzdata 2026.5**：IANA 数据公有领域，PSF 发行包 Apache-2.0。保留完整源包及默认编译的 598 个名称；自有 TZif/POSIX 解析器本地计算，optional backzone 原文仅供核对。原始许可在 `public/vendor/timezones/`。
+- **IAU 88 星座**：官方名称、属格和缩写、89 幅原始 GIF 与 89 份 J2000 边界文本；巨蛇座头尾两部分属于一个星座。图谱 CC-BY-4.0，署名 IAU and Sky & Telescope；原始授权、图例与完整说明在 `public/vendor/atlas-celestial/`。
+- **NASA GSFC 五千年日月食**：完整 100 张世纪表，合计 11,898 次日食及 12,064 次月食，覆盖天文年 −1999 至 3000。官方允许再版并要求署名 “Eclipse Predictions by Fred Espenak and Jean Meeus (NASA's GSFC)”。保留原列、原行、TD／ΔT、历法、图链接与官方授权说明；不声称提供任意地点食象计算。
+- **AviList v2025b Extended**：CC-BY-4.0；完整 33,684 条分类记录、26 列及 6 张表，保留原始空值、决议、文献、单元格注释／超链接。引用 AviList Core Team. 2026. AviList: The Global Avian Checklist, v2025b. DOI 10.2173/avilist.v2025b。原始 XLSX 可在本站下载，未使用照片或鸟鸣素材。
+- **Open Opus 数据**：2026-10-17 官方全量快照，220 位作曲家、24,975 部作品；数据为 CC0／公有领域。保留每个作曲家、作品与所有原字段，不调用 GPL 的 API 服务器代码，不导入录音、乐谱或肖像。快照没有稳定主键的行采用可复核快照标识，不冒充上游 ID。
+
+原始数据位于 `upstream/timezones/`、`upstream/atlas-celestial/` 与 `upstream/atlas-life-culture/`，派生运行数据位于对应 `public/vendor/`；各 UPSTREAM 清单固定源文件和运行文件 SHA-256。维护导入才联网，普通构建离线。浏览器只加载本地固定文件，用户线索、查询和笔记不会发送给资料供应方。
+
+## K13／K15／K16／K17／K27／K29／K30 补全（2026-10-17）
+
+固定来源统一存放在 `upstream/completion-20261017/`，原始归档和提取文件分别由 `SOURCES.json`、`SOURCE_FILES.json` 校验。离线生成器 `scripts/build-completion-vendor.mjs` 生成运行包，`public/vendor/completion/UPSTREAM.json` 逐文件固定摘要。没有运行时 CDN 或用户输入上传。
+
+- QRazyBox：MIT，保留其完整版本／纠错表、原始数据读取、Reed–Solomon 代码及帮助文档；本站适配器处理完整分块、擦除、格式 BCH 校验与明确采纳。来源仍挂在矩阵修复成员。
+- bwip-js 4.11.4／BWIPP：全部 111 种制式，MIT；随包 Inconsolata 字体另为 OFL，原许可完整保留。
+- OrigamiSimulator 固定提交：MIT；完整动态 GPU 求解、13 段着色器、直线／曲线 SVG 处理、90 份折痕文件。保留其原 FOLD fork 的接口，同时单独使用 FOLD 0.12.0（MIT）作格式处理。Three.js、jQuery、underscore、numeric、quadprog、svgpath、cdt2d、路径补全等 MIT，earcut ISC，seedrandom BSD，逐项许可在原项目 NOTICE 及 dependency-notices 中。
+- simple-keyboard 3.8.195、simple-keyboard-layouts 3.4.269：MIT；完整 46 套布局、全部层及上游候选定义。
+- Liblouis 3.39.0：核心 LGPL-2.1-or-later、JavaScript easy-api 0.4.0 GPL-3.0-or-later；完整 268 份翻译表及所有支持文件，保留核心／接口对应源码归档和许可。不是自写字符替换器。
+- GC Wizard 固定提交：GPL-3.0-or-later；保留完整普鲁士电报码本、原始 Dart 逻辑及六臂显示源文件；本站转换适配与图形规则使用同一许可。
+- basE91：BSD-3-Clause；仅将 Buffer 传输适配为 Uint8Array，算法不删减。Base65536：MIT，完整码点表。AAencode CLI：MIT；JJencode 源文件声明 MIT；仅移除命令行构建包装。逆向使用本站已有 QuickJS 独立上下文，不执行还原出的载荷。
+- NGA《International Code of Signals》1969（2020 修订）：美国政府作品，PDF 声明不主张美国版权；完整 159 页 PDF、逐页正文和原始旗图随站提供。原海事旗帜 SVG 继续保留自身来源和许可。GS8 七张原表只整理事实性的符号／点位对应，并在科普标明原作者及原表歧义，不复制无授权网页文章。
+
+完整入口、数据量、与原审计的逐项对应见 [本轮完整性说明](docs/completion-20261017/README.md)。关于页许可目录与工具页脚按当前实际成员／算法列项目；自有规则实现和标准文献不冒称第三方代码依赖。
+
+### 共享 UI 运行包
+
+真实使用 Animate UI 2.0.0（MIT + Commons Clause）、Motion 14.4.0、React / React DOM 19.3.1、Base UI 1.8.0（其余代码 MIT）。间接依赖的版本和许可原文完整列于 `public/vendor/ui-runtime/UPSTREAM.json`；固定 npm 解析与包校验值位于 `tools/ui-runtime/package-lock.json`。组件接口适配在 `public/ui/animate-ui.js`，不修改上游源码。作为网站整体的一部分发行，不把 Animate UI 组件作为独立商品或组件包再发行。关于页及实际页末均列界面来源，区别于各工具算法来源。
+
+## GIF / APNG 完整逐帧分析
+
+- gifuct-js 2.1.2、js-binary-schema-parser 2.0.3：MIT，完整 GIF 解码。
+- UPNG.js 2.1.0：MIT，PNG/APNG 原始像素解码；pako 1.0.11：MIT AND Zlib。
+- pako 完成有界解压校验与无损 PNG 压缩；复用已有 fflate 0.8.3（MIT）完成完整 ZIP 打包。
+- 固定原始包和源码：`upstream/animation/`；运行包与逐文件摘要：`public/vendor/animation/UPSTREAM.json`；维护导入器：`scripts/import-animation.mjs`。普通构建不联网、不安装依赖。全部许可随 `public/vendor/animation/` 提供。
+- 官方源码不修改。本站适配原始零延时、GIF 处置与 APNG Alpha 合成；绕开 UPNG 低位灰度逐行填充问题。RGBA8 预览不替代原始 16 位 PNG，完整导出保留原始帧和原文件。超出边界明确拒绝，不缩放或删帧。
+
+## Qalculate 完整计算内核
+
+- libqalculate 5.13.0：GPL-2.0-or-later，所有官方计算源文件及全部函数／单位／变量／前缀／数据集定义参与编译。中文来自同版本 `po-defs/zh_CN.po`，未人工精选。
+- GMP 6.3.0：LGPL-3.0-or-later 或 GPL-2.0-or-later；MPFR 4.2.1：LGPL-3.0-or-later；libxml2 2.9.12：MIT。组合 WASM 按 GPL-3.0-or-later 提供，完整核心、依赖对应源码、桥接与构建步骤附在 `public/vendor/qalculate/source.zip`。
+- Emscripten 3.1.67：MIT/NCSA；所链接 musl、libc++、libc++abi、compiler-rt 的独立许可证均随包保存。依赖静态库取自固定公开构建镜像，镜像中旧版 libqalculate 不参与链接；来源摘要、重建参数与相应源码均保留。
+- Gnuplot 5.4.10：自有许可。未改动的浏览器运行包来自 `qalc.steg.gy`，其构建配方固定为 `rfblock/qalculate-nb` 的 `dde3d0f08c18248c6f62d38838490b4c3ba3425a`。没有复制该网页的编辑器、网页 UI 或统计代码；绘图数据由真实 Qalculate 内核产生。
+- 完整摘要在 `public/vendor/qalculate/UPSTREAM.json`；关于页和当前计算工作区页末分别列出上述实际依赖。`source.zip` 可从许可目录下载。
+
+## 已有上游能力补齐（2026-10-20 至 21）
+
+- SeqViz 3.10.25 的真实 React 查看器、seqparse 及独立依赖固定在 `public/vendor/science/seqviz/`。React / React DOM 19.0.0 随该查看器独立打包，与共享 UI 包的版本分别登记。运行清单、锁文件摘要、构建输入及逐项原始许可见该目录 `UPSTREAM.json` 和 `DEPENDENCY-NOTICES.txt`，不自动下载远程字体或远程序列。
+- cnchar-all 3.2.6 与 cnchar-data 1.1.0 的完整插件和 draw／voice／words／explanation 资源本地发行；代码／资源包 MIT。Make Me a Hanzi 的完整字典为 LGPL-3.0-or-later，graphics 笔画图形及 cnchar 派生字形资源为文鼎 Public License，原文分别保留。完整图形固定提交为 `bddc96d41bef78427ed0e034e9f7e31d71fd1b92`。摘要及精确资源范围见 `public/vendor/hanzi-full/UPSTREAM.json`。
+- Tonal 6.5.0 全模块从原已归档的固定源码重新打包，保留 MIT 许可及构建摘要。RDKit MinimalLib、Astronomy Engine、lunar-javascript、cubing.js、QRazyBox 与 FFmpeg 沿用已固定的官方核心，新增原生接口和控制器，不把这些浏览器包说成对应桌面项目的全部模块。
+- StegOnline 数据嵌入原服务和图像嵌入原算法采用现有同项目许可，原始文件保留在 `upstream/stegonline/`，运行适配由 `scripts/build-image-vendor.mjs` 生成。CyberChef 官方 Worker 字节不修改，断点、高亮与 Magic 使用其原消息和结果。
+- 118 元素数据保持原项目许可，生成器完整保留每条原始字段。原生接口声明来自对应固定源码，仅作为真实工作表的参数参考，不替代实际执行。
+
+上述运行依赖和各自条款同步进入关于页及实际工具页末。离线维护脚本、功能边界与本次验证见 [补齐记录](docs/UPSTREAM_COMPLETION_2026-10-20.md)。
+
+## 2026-10-21 玩家工作区调整
+
+本轮没有升级或修改官方 vendor 运行字节。Qalculate 单位记号映射由 `scripts/build-qalculate-units.py` 从固定 `source.zip` 中的 units/currencies/prefixes XML 生成，输出 `public/qalculate/unit-definitions.json`，许可与来源见 `public/qalculate/UNIT-DEFINITIONS-NOTICE.txt`；完整对应源码和 GPL 原文继续随包。倍率、温标、前缀计算仍由官方内核执行。
+
+cubing.js 实际用于全部固定形状的状态与观察，cubejs 仅为普通三阶面转动生成兼容面色字符串，不加载求解器。Tonal 用于音符、和弦、音阶、音程及移调；cnchar 用于汉字属性、编码、笔顺、释义和组词。SeqViz 使用位置、搜索、翻译及本机文件原始记录，RDKit 使用结构图和结构标识，Astronomy Engine 使用真实观测及当地食象。专业原生工作表不再挂载；未用于当前操作的能力不冒称已经成为玩家功能。图片嵌入与 FFmpeg 命令保留在进阶折叠区。全部来源仍由关于页和实际任务页末共同展示。

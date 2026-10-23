@@ -1,10 +1,19 @@
 import {capabilityCategories, capabilityGroupDefinitions, toolPages} from '../navigation.js';
 import {getCatalogue, classifyCatalogue} from '../chef-tools/catalog.js';
 import {operationName} from '../cyberchef-i18n.js';
-import {TOOL_KEYWORDS, OPERATION_KEYWORDS, matchesSearch} from '../tool-search.js';
+import {TOOL_KEYWORDS, OPERATION_KEYWORDS, matchesSearch, searchText} from '../tool-search.js';
 import {LANGUAGES} from '../coderunner/catalog.js';
 import {TYPES} from '../round3/catalog.js';
-import {ARTICLES} from '../knowledge/content.js';
+import {ARTICLES,ARTICLE_ALIASES} from '../knowledge/content.js';
+import {EXPANSION_TASKS} from '../expansion/catalog.js';
+import {ATLAS_TOOLS,TIMEZONE_TOOL} from '../atlas/catalog.js';
+import {rankCapabilities} from './search.js';
+export {literalSearchEvidence} from './search.js';
+import {PRACTICAL_TASKS} from '../practical/catalog.js';
+import {UNIT_DISCIPLINES} from './unit-catalog.js';
+import {CAPABILITY_TOPICS} from './topics.js';
+import {CHAIN_ONLY_OPERATIONS} from './operation-policy.js';
+import {consolidateTopics} from './topic-model.js';
 // This registry is the canonical discovery index. Original route and operation
 // IDs, argument schemas, engines and caller-owned input nodes stay unchanged.
 export {capabilityCategories};
@@ -25,44 +34,27 @@ const operationGroups = {
   time: 'coordinates-time', network: 'network', maths: 'maths', units: 'maths', advanced: 'pipeline'
 };
 
-// Explicit directions share one discovery owner. A pair means that the engine
-// implements both directions; it does not promise a byte-exact round trip.
-// Signing/verifying, one-way hashes and unrelated cleanup stay separate.
-export const CHEF_OPERATION_PAIRS = Object.freeze([
-  ...['Base32', 'Base45', 'Base58', 'Base62', 'Base64', 'Base85', 'Base92',
-    'BCD', 'Base', 'Binary', 'Decimal', 'Float', 'Hex', 'Hex Content', 'Hexdump', 'Octal',
-    'Charcode', 'HTML Entity', 'Punycode', 'Quoted Printable', 'Braille', 'Morse Code',
-    'Bech32', 'COBS', 'Modhex', 'MessagePack'].map(name => [`To ${name}`, `From ${name}`]),
-  ['Encode text', 'Decode text'], ['Escape Unicode Characters', 'Unescape Unicode Characters'],
-  ['URL Encode', 'URL Decode'], ['Escape string', 'Unescape string'],
-  ['Encode NetBIOS Name', 'Decode NetBIOS Name'], ['Citrix CTX1 Encode', 'Citrix CTX1 Decode'],
-  ['To Case Insensitive Regex', 'From Case Insensitive Regex'],
-  ['VarInt Encode', 'VarInt Decode'], ['CSV to JSON', 'JSON to CSV'], ['JSON to YAML', 'YAML to JSON'],
-  ['BSON serialise', 'BSON deserialise'], ['PHP Serialize', 'PHP Deserialize'],
-  ['Hex to PEM', 'PEM to Hex'], ['JWK to PEM', 'PEM to JWK'],
-  ['Hex to Object Identifier', 'Object Identifier to Hex'],
-  ['To UNIX Timestamp', 'From UNIX Timestamp'],
-  ['UNIX Timestamp to Windows Filetime', 'Windows Filetime to UNIX Timestamp'],
-  ['Gzip', 'Gunzip'], ['Tar', 'Untar'], ['Raw Deflate', 'Raw Inflate'], ['Zlib Deflate', 'Zlib Inflate'],
-  ...['Bzip2', 'LZ4', 'LZMA', 'LZString'].map(name => [`${name} Compress`, `${name} Decompress`]),
-  ...['AES', 'Ascon', 'Blowfish', 'CipherSaber2', 'DES', 'GOST', 'LS47', 'PRESENT',
-    'RC2', 'RC6', 'SM4', 'TEA', 'Triple DES', 'Twofish', 'XTEA', 'XXTEA',
-    'PGP', 'RSA', 'SM2', 'Fernet'].map(name => [`${name} Encrypt`, `${name} Decrypt`]),
-  ['PGP Encrypt and Sign', 'PGP Decrypt and Verify'],
-  ...['Affine Cipher', 'Bacon Cipher', 'Bifid Cipher', 'Rail Fence Cipher',
-    'Cetacean Cipher', 'A1Z26 Cipher', 'Vigenère'].map(name => [`${name} Encode`, `${name} Decode`]),
-  ['AES Key Wrap', 'AES Key Unwrap'], ['GOST Key Wrap', 'GOST Key Unwrap'],
-  ...['AMF', 'CBOR', 'Protobuf', 'Rison'].map(name => [`${name} Encode`, `${name} Decode`])
-].map(pair => Object.freeze(pair)));
+import {CHEF_OPERATION_PAIRS} from './operation-pairs.js';
+export {CHEF_OPERATION_PAIRS} from './operation-pairs.js';
 
 const nativeDefinitions = [
+  ...PRACTICAL_TASKS.map(t=>[t.id,t.title,t.group,[t.id],'generic','',false,t.aliases]),
+  ...UNIT_DISCIPLINES.map(d=>['units-'+d.id,d.title,'unit-conversion',['unitconvert'],'generic','',false,['单位换算',...d.aliases]]),
+  ['qalculate','综合计算器','maths',['qalculate'],'generic','',false,['Qalculate','综合计算与单位换算','计算器','函数','复数','矩阵','微积分','方程','绘图','常数','RPN']],
+  ['simbad','SIMBAD 天体在线查询','sky',['simbad'],'generic','',false,['SIMBAD','天体别名','恒星查询','ICRS','坐标检索']],
+  ['vizier','VizieR 星表在线查询','sky',['vizier'],'generic','',false,['VizieR','星表','Hipparcos','天文目录','字段单位']],
+  ['cod','COD 晶体在线查询','matter',['cod'],'generic','',false,['COD','晶体','COD CIF','在线晶体检索','空间群','晶胞','Crystallography Open Database']],
+  ['pubchem','PubChem 物质在线查询','matter',['pubchem'],'generic','',false,['PubChem','CID','SMILES','InChI','化合物','分子式','同义词']],
+  ['placenames','国家地名在线查询','world',['placenames'],'generic','',false,['国家地名信息库','民政部','地名来历','同名地名','同音地名','CGCS2000']],
+  ['zdic','汉典字词原文查询','language-reference',['zdic'],'generic','',false,['汉典','zdic','字典','词典','字词释义']],
+  ['cnkgraph','搜韵诗文与词谱在线查询','language-reference',['cnkgraph'],'generic','',false,['搜韵','知识图谱网','CNKGraph','诗文','作者','韵部','词谱']],
+  ['pokewiki','神奇宝贝百科在线查询','culture-reference',['pokewiki'],'generic','',false,['52poke','宝可梦','神奇宝贝','Pokemon','皮卡丘','作品百科']],
+  ['oeis', 'OEIS 数列在线查询', 'sequences', ['oeis'], 'generic', '', false, ['OEIS', '整数序列', '数列', 'A编号', 'A000045', '斐波那契', 'Fibonacci', 'integer sequences', '在线数列查询']],
   ['hex-editor', '十六进制编辑器', 'files', ['file'], 'generic', '', false, ['hex editor', '编辑字节', '二进制编辑', '修改文件头', 'ASCII搜索', '偏移', '撤销重做']],
   ['it-ports', '端口与网络协议资料', 'technical', ['it-reference'], 'generic', '', false, ['IANA', 'TCP', 'UDP', '服务端口', '80', '443', 'protocol number']],
   ['it-http', 'HTTP 状态与字段资料', 'technical', ['it-reference'], 'generic', '', false, ['状态码', '404', '请求头', '响应头', 'HTTP headers', 'Content-Type']],
   ['it-formats', 'MIME 与字符集资料', 'technical', ['it-reference'], 'generic', '', false, ['文件类型', '扩展名', 'charset', 'UTF-8', 'GBK', 'application/json']],
   ['it-domains', '域名与公共后缀资料', 'technical', ['it-reference'], 'generic', '', false, ['PSL', '注册域', '顶级域', 'TLD', 'IDN', 'co.uk', '公共后缀']],
-  ['it-rfc', 'RFC 标准索引', 'technical', ['it-reference'], 'generic', '', false, ['Internet标准', 'RFC', '协议标准', '规范查询']],
-  ['it-instructions', '指令、寄存器与标志位', 'technical', ['it-reference'], 'generic', '', false, ['汇编基础', 'x86', 'assembly', 'MOV', 'JMP', 'EAX', '寄存器', '反汇编科普']],
   ['ascii', 'ASCII 文本与数字', 'characters', ['basics'], 'convert', 'ascii', true, ['字符转数字', '数字转字母', 'ASCII表', '控制字符']],
   ['utf8', 'UTF-8 字节与文字', 'characters', ['basics'], 'convert', 'utf8', true, ['文字转字节', '中文编码', 'UTF8', 'UTF-8']],
   ['a1z26', '字母与数字 A1Z26', 'characters', ['basics'], 'convert', 'a1z26', true, ['A=1', '字母序号', '数字转字母', 'A1Z26']],
@@ -87,10 +79,9 @@ const nativeDefinitions = [
   ['currencies', '货币代码', 'world', ['currencies'], 'world', 'world', false, ['ISO 4217', 'currency', '人民币', 'USD', 'CNY']],
   ['airports', '机场代码', 'world', ['airports'], 'world', 'world', false, ['IATA', 'ICAO', 'airport', '三字码', '四字码']],
   ['ports', '港口与运输地点代码', 'world', ['ports'], 'world', 'world', false, ['UN/LOCODE', 'port', '港口代码', '运输地点']],
-  ['sky', '恒星与深空天体目录', 'sky', ['sky'], 'generic', '', false, ['Messier', 'NGC', '星座', '恒星', '星云', '深空']],
+  ['sky', '深空天体目录', 'sky', ['sky'], 'generic', '', false, ['Messier', 'NGC', 'IC', '星座', '星云', '深空']],
   ['astronomy', '天体位置与升落', 'sky', ['astronomy'], 'generic', '', false, ['天文', '日出日落', '月相', '火星', '方位角', '高度角']],
   ['chemistry', '元素周期表与化学线索', 'matter', ['chemistry'], 'generic', '', false, ['periodic table', '元素符号', '原子序数', '分子式', 'SMILES']],
-  ['crystals', '晶体与矿物结构', 'matter', ['crystals'], 'generic', '', false, ['CIF', 'mineral', '晶胞', '矿物', '晶体结构']],
   ['sequence', '氨基酸与密码子对照', 'matter', ['sequence'], 'generic', '', false, ['DNA', 'RNA', '氨基酸', '密码子', '标准密码表']],
   ['unicode', 'Unicode 字符表', 'characters-reference', ['unicode'], 'generic', '', false, ['码点', '字符查询', 'U+', 'Unicode block', '字符区段']],
   ['marine', '海事信号旗', 'characters-reference', ['marine'], 'generic', '', false, ['ICS', 'signal flags', '信号旗', '船旗', '国际信号旗']],
@@ -99,28 +90,27 @@ const nativeDefinitions = [
   ['geology', '地质年代时间带', 'geology', ['geology'], 'generic', '', false, ['地质年代表', 'Ma', '纪', '世', '寒武纪', 'Jurassic']],
   ['iching', '八卦与六十四卦', 'traditions', ['iching'], 'generic', '', false, ['I Ching', '易经', '卦象', '先天', '后天', '上下卦']],
   ['tarot', '塔罗牌组与牌面', 'traditions', ['tarot'], 'generic', '', false, ['Tarot', '大阿尔卡那', '小阿尔卡那', '牌面', '花色']],
-  ['integerseq', '整数数列识别', 'sequences', ['integerseq'], 'generic', '', false, ['OEIS', '数列查询', '找规律', '整数序列']],
   ['image', '图片预览与编辑', 'image', ['image'], 'image', 'image', false, ['旋转图片', '裁剪图片', '调整尺寸', '图片编辑']],
-  ['image-steg', 'StegOnline 多位隐写提取', 'image', ['image'], 'image', '', false, ['StegOnline', 'LSB', '隐写', '通道', '低位提取']],
+  ['image-steg', '图片隐写提取', 'image', ['image'], 'image', '', false, ['StegOnline', 'LSB', '隐写', '通道', '低位提取']],
   ['image-compare', '图片比较与差值', 'image', ['image'], 'image', '', false, ['图片差异', '异或图片', '差值']],
-  ['image-qr', '二维码识别与修复', 'image', ['image'], 'image', '', false, ['QR code', '二维码矩阵', '破损二维码', '修补']],
+  ['image-qr', '二维码识别与修复', 'image', ['image'], 'image', '', false, ['QR code', '二维码矩阵', '二维码修复', '破损二维码', '修补']],
   ['image-stereo', '立体图隐藏轮廓', 'image', ['image'], 'image', '', false, ['Magic Eye', '随机点立体图', '立体图解码']],
   ['fragments', '碎片拼接台', 'fragments', ['fragments'], 'generic', '', false, ['拼图', '图像碎片', '拼接', '对齐', '旋转碎片']],
   ['file', '文件识别与字节查看', 'files', ['file'], 'generic', '', false, ['文件头', '十六进制编辑', '压缩包目录', 'hex viewer', 'ZIP']],
   ['audio-spectrum', '声音频谱与线索分析', 'audio', ['audio'], 'generic', '', false, ['声谱图', 'spectrogram', 'DTMF', 'SSTV', '频谱']],
   ['audio-music', '音高与乐理', 'audio', ['audio'], 'generic', '', false, ['音高检测', '音阶', '音程', '和弦', '乐理']],
   ['video', '指定时刻视频帧', 'video', ['video'], 'generic', '', false, ['单帧', '视频截图', '指定时间抽帧']],
-  ['model', '三维模型观察', 'models', ['model'], 'generic', '', false, ['STL', 'OBJ', 'GLTF', '3D', '线框', '截面']],
+  ['model', '三维模型观察', 'models', ['model'], 'generic', '', false, ['STL', 'OBJ', 'GLTF', '3D', '线框', '截面', 'CIF', '晶体结构', '晶体', '晶胞', '分数坐标']],
   ['go', '围棋棋谱复盘', 'boards', ['go'], 'generic', '', false, ['SGF', '围棋', '棋谱分支', 'go game']],
   ['chess', '国际象棋棋谱复盘', 'boards', ['chess'], 'generic', '', false, ['PGN', 'FEN', 'chess', '国际象棋']],
   ['paper', '标准数独求解', 'logic', ['paper'], 'generic', '', false, ['Sudoku', '数独', '网格逻辑']],
-  ['cube', '魔方模拟', 'simulation', ['cube'], 'generic', '', false, ['Rubik', '转动公式', '魔方打乱', '魔方求解']],
+  ['cube', '魔方观察', 'simulation', ['cube'], 'generic', '', false, ['Rubik', '转动公式', '异形魔方', '二阶魔方', '高阶魔方', '五魔方', '金字塔魔方', '二维展开图']],
   ['life', '生命游戏', 'simulation', ['life'], 'life', 'life', false, ['Game of Life', '细胞自动机', 'RLE', '生命游戏']],
   ['code', 'Brainfuck 代码运行', 'programming', ['code'], 'generic', '', false, ['Brainfuck', 'BF', '偏门语言', '解释器']],
   ['turing', '图灵机', 'programming', ['turing'], 'generic', '', false, ['Turing machine', '纸带', '状态转移', '单步运行']],
   ['sequence-processing', '蛋白质与核酸序列转换', 'sequence-processing', ['sequence'], 'generic', '', false, ['DNA', 'RNA', 'FASTA', '互补链', '反向互补', '转写', '阅读框', '氨基酸三字母']],
   ['coordinates', '坐标与时间', 'coordinates-time', ['coordinates'], 'generic', '', false, ['经纬度', '时区', 'UNIX时间戳', '距离', '坐标转换', 'Geohash', 'MGRS', 'UTM', '儒略日', 'JD', 'MJD']],
-  ['cyberchef', '完整 CyberChef 配方工作区', 'pipeline', ['cyberchef'], 'generic', '', false, ['CyberChef', '完整操作目录', '处理链', 'recipe', '配方']],
+  ['cyberchef', '完整 CyberChef 配方工作区', 'pipeline', ['cyberchef'], 'generic', '', false, ['CyberChef', '完整操作目录', '处理链', 'recipe', '配方', 'Fork', 'Merge', 'Subsection', 'Register', 'Conditional Jump', 'Label', 'Jump', 'Sleep', 'Return', 'Comment']],
   ['codepoint', 'Unicode 码点与文字', 'characters', ['basics'], 'convert', '', true, ['字符码', '码位', 'Unicode scalar', 'U+']],
   ['polybius', 'Polybius 坐标方阵', 'communication', ['tapcode'], 'generic', '', true, ['波利比奥斯', '行列密码', '5×5', '6×6', '关键词方阵']],
   ['invisible-clean', '隐藏字符清理', 'characters', ['invisible'], 'convert', '', false, ['删除零宽字符', '清理特殊空白', '去除不可见字符']],
@@ -152,15 +142,17 @@ const nativeDefinitions = [
   ['image-barcode', '二维码与条形码识别', 'image', ['image'], 'image', '', false, ['ZXing', '二维码识别', '条码', '条形码']],
   ['audio-sstv', 'SSTV 声音还原图片', 'audio', ['audio'], 'generic', '', false, ['慢扫描电视', 'SSTV', '声音转图片']],
   ['audio-play', '乐器弹奏与 MIDI', 'audio', ['audio'], 'generic', '', false, ['钢琴', 'piano', 'MIDI', '乐器模拟', '旋律']],
+  ['video-animation', 'GIF 与 APNG 逐帧分析', 'video', ['video'], 'generic', '', false, ['精灵图', 'sprite sheet', 'GIF帧', 'APNG', '动画逐帧', '动画切片']],
   ['video-frames', '视频连续帧提取', 'video', ['video'], 'generic', '', false, ['抽帧', '多帧', '逐帧']],
   ['video-audio', '视频音轨提取', 'video', ['video'], 'generic', '', false, ['视频转WAV', '提取声音', '音轨']],
   ['video-reverse', '视频片段倒放', 'video', ['video'], 'generic', '', false, ['反向播放', 'reverse video']],
   ['video-gif', '视频片段转 GIF', 'video', ['video'], 'generic', '', false, ['动画导出', '视频转GIF']],
+  ['video-native', '媒体格式转换', 'video', ['video'], 'generic', '', false, ['FFmpeg', '滤镜', '转码', '轨道映射', '完整核心能力', '原生命令']],
   ['escape-hex', '反斜杠十六进制转义', 'encoding', ['basics'], 'convert', '', true, ['\\x', '字符串转义', 'hex escape']],
   ['escape-unicode', 'Unicode 转义与还原', 'encoding', ['basics'], 'convert', '', true, ['\\u', 'Unicode escape', 'Unicode反转义']],
   ['escape-html', 'HTML 实体与文字', 'encoding', ['basics'], 'convert', '', true, ['字符实体', '&#', 'HTML entity']],
   ['escape-url', 'URL 百分号编码', 'encoding', ['basics'], 'convert', '', true, ['percent encode', '%E4', 'URL解码']],
-  ['chemistry-formula', '分子式与原子计数', 'matter', ['chemistry'], 'generic', '', false, ['Ca(OH)2', '分子量', '化学式']],
+  ['chemistry-formula', '摩尔质量与分子式', 'matter', ['chemistry'], 'generic', '', false, ['摩尔质量','molar mass','原子计数','Ca(OH)2', '分子量', '化学式','结晶水','质量占比']],
   ['chemistry-molecule', 'SMILES 分子结构', 'matter', ['chemistry'], 'generic', '', false, ['RDKit', 'SMILES', '二维分子图', 'CCO']]
 ];
 for(const [id,language] of Object.entries(LANGUAGES)) {
@@ -171,6 +163,9 @@ for(const [id,puzzle] of Object.entries(TYPES)) {
 }
 
 const representativePreferences = {
+  sequences: ['native:oeis'],
+  'language-reference':['native:zdic','native:cnkgraph'],
+  'culture-reference':['native:pokewiki'],
   characters: ['native:ascii', 'native:utf8', 'native:radix', 'native:a1z26', 'native:invisible'],
   encoding: ['pair:To%20Base64', 'native:escape-url', 'native:escape-html', 'pair:To%20COBS'],
   communication: ['native:morse', 'native:braille', 'native:semaphore', 'native:tapcode', 'native:baudot'],
@@ -181,10 +176,10 @@ const representativePreferences = {
   'text-language': ['native:extract-position', 'native:hanzi', 'native:hanzi-code', 'native:words', 'op:Diff'],
   formats: ['pair:CSV%20to%20JSON', 'op:JSON%20Beautify', 'op:XPath%20expression', 'op:Heatmap%20chart'],
   world: ['native:countries', 'native:currencies', 'native:airports', 'native:ports'],
-  sky: ['native:sky', 'native:astronomy'], matter: ['native:chemistry', 'native:crystals', 'native:sequence'],
+  sky: ['native:sky', 'native:astronomy','native:simbad','native:vizier'], matter: ['native:chemistry', 'native:sequence','native:cod','native:pubchem'],
   'characters-reference': ['native:unicode', 'native:marine'], colors: ['native:colors'], calendar: ['native:calendar'],
-  geology: ['native:geology'], traditions: ['native:iching', 'native:tarot'], sequences: ['native:integerseq'],
-  technical: ['native:it-ports', 'native:it-http', 'native:it-formats', 'native:it-domains', 'native:it-instructions'],
+  geology: ['native:geology'], traditions: ['native:iching', 'native:tarot'],
+  technical: ['native:it-ports', 'native:it-http', 'native:it-formats', 'native:it-domains'],
   image: ['native:image', 'native:image-steg', 'native:image-qr', 'native:image-compare', 'op:Extract%20EXIF'],
   fragments: ['native:fragments'], files: ['native:hex-editor', 'op:Detect%20File%20Type', 'op:Unzip', 'op:SHA2', 'op:MD5'],
   audio: ['native:audio-spectrum', 'native:audio-sstv', 'native:audio-music', 'native:audio-play', 'op:Extract%20Audio%20Metadata'],
@@ -195,7 +190,7 @@ const representativePreferences = {
   'sequence-processing': ['native:sequence-processing'],
   'coordinates-time': ['native:coordinates', 'pair:To%20UNIX%20Timestamp', 'op:Haversine%20distance'],
   network: ['op:Parse%20URI', 'op:Change%20IP%20format', 'op:Parse%20TCP', 'op:JA3%20Fingerprint'],
-  pipeline: ['native:cyberchef', 'op:Fork', 'op:Register', 'op:Conditional%20Jump']
+  pipeline: ['native:cyberchef']
 };
 
 const playerAliases = {
@@ -210,8 +205,14 @@ const playerAliases = {
 
 const control = (selector, value, event = 'change') => ({selector, value, event});
 const nativeTargets = {
+  ...Object.fromEntries(PRACTICAL_TASKS.map(t=>[t.id,{route:t.id}])),
+  ...Object.fromEntries(UNIT_DISCIPLINES.map(d=>['units-'+d.id,{route:'unitconvert',controls:[control('#unit-discipline',d.id)]}])),
+  qalculate:{route:'qalculate'},
+  oeis: {route:'oeis'},
+  simbad:{route:'simbad'},vizier:{route:'vizier'},cod:{route:'cod'},pubchem:{route:'pubchem'},placenames:{route:'placenames'},
+  zdic:{route:'zdic'},cnkgraph:{route:'cnkgraph'},pokewiki:{route:'pokewiki'},
   'hex-editor': {route:'file',slice:'hex'},
-  ...Object.fromEntries(['ports','http','formats','domains','rfc','instructions'].map(kind=>['it-'+kind,{route:'it-reference',slice:kind}])),
+  ...Object.fromEntries(['ports','http','formats','domains'].map(kind=>['it-'+kind,{route:'it-reference',slice:kind}])),
   ascii: {route:'basics/ascii'},
   utf8: {route:'basics/characters',controls:[control('#basics-format','hex')]},
   a1z26: {route:'basics/letters'},
@@ -231,10 +232,10 @@ const nativeTargets = {
   'word-grid': {route:'words',controls:[control('[data-word-tab="grid"]',undefined,'click')]},
   'text-extract': {route:'textlab'}, 'data-format':{route:'datalab'}, classical:{route:'crypto/classical'},
   countries:{route:'countries'}, currencies:{route:'currencies'}, airports:{route:'airports'}, ports:{route:'ports'},
-  sky:{route:'sky'}, astronomy:{route:'astronomy'}, chemistry:{route:'chemistry'}, crystals:{route:'crystals'},
+  sky:{route:'sky'}, astronomy:{route:'astronomy'}, chemistry:{route:'chemistry'},
   sequence:{route:'sequence',controls:[control('#seq-type','aa','input')]},
   unicode:{route:'unicode'},marine:{route:'marine'}, colors:{route:'colors'},calendar:{route:'calendar'},
-  geology:{route:'geology'},iching:{route:'iching'},tarot:{route:'tarot'},integerseq:{route:'integerseq'},
+  geology:{route:'geology'},iching:{route:'iching'},tarot:{route:'tarot'},
   image:{route:'image',tab:{panel:'image',id:'analysis'},engine:'basic',slice:'preview'},
   'image-steg':{route:'image',tab:{panel:'image',id:'analysis'},engine:'steg',slice:'extract'},
   'image-compare':{route:'image',tab:{panel:'image',id:'compare'},slice:'compare'},
@@ -264,6 +265,7 @@ for(const [id,format] of Object.entries({hex:'hex',unicode:'unicode',html:'html'
 }
 nativeTargets['chemistry-formula']={route:'chemistry',controls:[control('#chem-mode','formula','input')]};
 nativeTargets['chemistry-molecule']={route:'chemistry',controls:[control('#chem-mode','molecule','input')]};
+nativeTargets['video-native']={route:'video',controls:[control('#video-mode','native','input')]};
 for(const id of Object.keys(LANGUAGES)) {
   if(id!=='brainfuck')nativeTargets['code-'+id]={route:'code',controls:[control('#code-language',id)]};
 }
@@ -284,9 +286,12 @@ nativeTargets['word-grid'].controls.push(control('#word-grid-mode','straight'));
 for(const mode of ['first','last','indices','transpose']) {
   nativeTargets['extract-'+mode]={route:'extract',controls:[control('#extract-mode',mode)]};
 }
-for(const mode of ['frames','audio','reverse','gif']) {
+for(const mode of ['frames','audio','reverse','gif','animation']) {
   nativeTargets['video-'+mode]={route:'video',controls:[control('#video-mode',mode,'input')]};
 }
+
+for(const task of EXPANSION_TASKS){nativeDefinitions.push([task.id,task.title,task.group,[task.panel],'generic','',!!task.directions,task.aliases||[]]);nativeTargets[task.id]={route:task.panel,controls:task.controls||[],...(task.directions?{nativeDirections:task.directions}:{})};}
+for(const task of [...ATLAS_TOOLS,TIMEZONE_TOOL]){nativeDefinitions.push([task.id,task.title,task.group,[task.id],'generic','',false,task.aliases]);nativeTargets[task.id]={route:task.id,controls:[]};}
 
 function normalizeCatalogue(catalogue) {
   if (!catalogue || !catalogue.operations || Array.isArray(catalogue.operations)) {
@@ -327,7 +332,7 @@ export function createRegistry(catalogue) {
   const groupMap = new Map(groupDefinitions.map(group => [group.id, group]));
   const toolMap = new Map(catalogue.tools.map(tool => [tool.id, tool]));
   const operationMap = new Map(catalogue.operations.map(op => [op.id, op]));
-  const entries = [];
+  let entries = [];
   const usedOperations = new Set();
   const add = entry => {
     const group = groupMap.get(entry.group);
@@ -402,23 +407,37 @@ export function createRegistry(catalogue) {
 
   for (const operation of catalogue.operations) {
     if (usedOperations.has(operation.id)) continue;
-    const group = operationGroups[operation.group];
+    const group = operation.id==='Analyse UUID'?'formats':operationGroups[operation.group];
     if (!group) throw new Error(`Unassigned operation group: ${operation.group}`);
-    const open = operationTarget(operation);
+    const recipeOnly = CHAIN_ONLY_OPERATIONS.includes(operation.id);
+    const open = operationTarget(recipeOnly ? {...operation,mode:'chain'} : operation);
     add({ id: `op:${encodeURIComponent(operation.id)}`, title: operation.name, group,
       sourceToolIds: toolMap.has(operation.panel) ? [operation.panel] : [],
       sourceOperationIds: [operation.id], sourceModes: [operation.mode], aliases: [operation.op],
       workspace: group === 'image' ? 'image' : ['characters', 'encoding'].includes(group) ? 'convert' : 'generic',
       type: groupMap.get(group).category === 'media' ? 'media'
         : groupMap.get(group).category === 'other' ? 'utility' : 'transform',
-      reversible:false,engineName:operation.op,op:operation.op,mode:operation.mode,
-      route:open.route,panel:open.panel,open,tip:operation.reason || '',listed:operation.mode!=='retained',
-      ...(operation.mode === 'retained' || operation.mode === 'chain' ? {
+      reversible:false,engineName:operation.op,op:operation.op,mode:recipeOnly?'recipe-only':operation.mode,
+      route:open.route,panel:open.panel,open,tip:operation.reason || '',listed:!recipeOnly&&!['retained','chain'].includes(operation.mode),
+      ...(recipeOnly || operation.mode === 'retained' || operation.mode === 'chain' ? {
         execution: 'complete-workspace-only',
         tip: operation.reason || (operation.mode === 'chain' ? '处理链控制操作，需在完整配方中使用。' : '保留于完整 CyberChef；不是原生工具入口。')
       } : {}) });
     usedOperations.add(operation.id);
   }
+
+  // Paired primitives can also be recipe-only. Keep their unique original
+  // source ownership while excluding the whole family from discovery.
+  for (const entry of entries) {
+    const retired=entry.sourceOperationIds.filter(op=>CHAIN_ONLY_OPERATIONS.includes(op));
+    if (!retired.length) continue;
+    if (retired.length!==entry.sourceOperationIds.length) throw Error('配方范围不能拆开真实双向功能：'+entry.id);
+    entry.listed=false;entry.mode='recipe-only';entry.execution='complete-workspace-only';
+    entry.open=operationTarget({mode:'chain',op:entry.sourceOperationIds[0]});
+    entry.route=entry.open.route;entry.panel=entry.open.panel;
+  }
+  const consolidated=consolidateTopics(entries,CAPABILITY_TOPICS,CHAIN_ONLY_OPERATIONS);
+  entries=consolidated.entries.map(entry=>({...entry,category:groupMap.get(entry.group).category}));
 
   for(const article of ARTICLES){
     const topic=groupMap.get(article.topicGroup);
@@ -429,7 +448,9 @@ export function createRegistry(catalogue) {
   }
   const groupOrder=new Map(groupDefinitions.map((group,index)=>[group.id,index]));
   const representativeRank=item=>{
-    const index=(representativePreferences[item.group] || []).indexOf(item.id);
+    const preferred=representativePreferences[item.group] || [];
+    const ranks=[item.id,...item.memberIds||[]].map(id=>preferred.indexOf(id)).filter(index=>index>=0);
+    const index=ranks.length?Math.min(...ranks):-1;
     return index<0 ? Number.MAX_SAFE_INTEGER : index;
   };
   const labelOrder=new Intl.Collator('zh-Hans',{numeric:true,sensitivity:'base'});
@@ -440,7 +461,9 @@ export function createRegistry(catalogue) {
 
   const entryMap = new Map(entries.map(entry => [entry.id, entry]));
   const byOperation = new Map();
-  const aliases = new Map();
+  const aliases = new Map(consolidated.aliases);
+  aliases.set('topic:units',{id:'native:units-everyday'});
+  for(const [oldId,newId] of Object.entries(ARTICLE_ALIASES))aliases.set('learn:'+oldId,{id:'learn:'+newId});
   for (const entry of entries) {
     for (const op of entry.sourceOperationIds) {
       byOperation.set(op, entry);
@@ -455,19 +478,19 @@ export function createRegistry(catalogue) {
   aliases.set('native:hanzi-telegraph-decode', {id:'native:hanzi-telegraph',direction:'decode'});
   const linkedEntries = [
     ['native:hex-editor','native:file'],
-    ['native:it-ports','native:it-http','native:it-rfc'],
+    ['native:it-ports','native:it-http'],
     ['native:it-formats','native:ascii','native:utf8'],
     ['native:it-domains','op:Parse%20URI','pair:To%20Punycode'],
-    ['native:it-instructions','op:Disassemble%20x86','op:Disassemble%20ARM'],
     ['native:sequence', 'native:sequence-processing'], ['native:unicode', 'native:ascii'],
     ['native:marine', 'native:semaphore'], ['native:colors', 'native:image-compare'],
-    ['native:crystals', 'native:model'], ['native:sky', 'native:astronomy'],
+    ['native:sky', 'native:astronomy'],
     ['native:countries', 'native:currencies', 'native:airports', 'native:ports']
   ];
   for (const linked of linkedEntries) {
     for (const id of linked) {
-      const entry = entryMap.get(id);
-      if (entry) entry.relatedIds = linked.filter(other => other !== id && entryMap.has(other));
+      const canonical=key=>entryMap.has(key)?key:aliases.get(key)?.id;
+      const entry = entryMap.get(canonical(id));
+      if (entry) entry.relatedIds = [...new Set(linked.map(canonical).filter(other => other && other !== entry.id))];
     }
   }
   // Link knowledge to actual capabilities without duplicating engines or
@@ -495,6 +518,7 @@ export function createRegistry(catalogue) {
     const sourceMembers = entries.filter(entry=>entry.group === definition.id);
     const members = sourceMembers.filter(entry=>entry.listed !== false);
     const preferred = (representativePreferences[definition.id] || [])
+      .map(id => entryMap.has(id)?id:aliases.get(id)?.id)
       .filter(id => entryMap.get(id)?.group === definition.id && entryMap.get(id).listed !== false);
     const representatives = [...new Set([...preferred, ...members.map(entry => entry.id)])]
       .slice(0, Math.min(5, Math.max(preferred.length, Math.min(3, members.length))));
@@ -509,6 +533,8 @@ export function createRegistry(catalogue) {
     toolCount: catalogue.tools.length, coveredToolCount: coveredToolIds.size,
     operationCount: catalogue.operations.length, coveredOperationCount: coveredOperationIds.size,
     entryCount: entries.length,visibleEntryCount:entries.filter(entry=>entry.listed !== false).length,
+    visibleToolCount:entries.filter(entry=>entry.listed!==false&&entry.category!=='knowledge').length,
+    knowledgeCount:entries.filter(entry=>entry.listed!==false&&entry.category==='knowledge').length,
     groupCount: groups.length, missingToolIds, missingOperationIds,
     sourceModes: Object.fromEntries([...new Set(catalogue.operations.map(op => op.mode))]
       .map(mode => [mode, catalogue.operations.filter(op => op.mode === mode).length])),
@@ -520,18 +546,45 @@ export function createRegistry(catalogue) {
   if (new Set(entries.map(entry => entry.id)).size !== entries.length) throw new Error('Duplicate capability entry id');
   if (missingToolIds.length || missingOperationIds.length) throw new Error('The capability registry lost source inventory coverage');
   if (entries.flatMap(entry => entry.sourceOperationIds).length !== coveredOperationIds.size) throw new Error('An operation has multiple canonical owners');
-  return { categories, groups, entries, coverage,byId:entryMap,byOperation,aliases };
+  return { categories, groups, entries, coverage,byId:entryMap,byOperation,aliases,
+    operationTargets:new Map(catalogue.operations.map(operation=>[operation.id,operationTarget(operation)])) };
 }
 
 // A legacy direction link resolves to its canonical family and that exact
 // direction. Alias records are not inventory entries, so coverage stays unique.
-export function resolveCapability(registry, id, op, direction) {
+export function resolveCapability(registry, id, op, direction, variant) {
   const alias = registry.aliases?.get(id);
-  const entry = registry.byId.get(id) || registry.byId.get(alias?.id);
+  let entry = registry.byId.get(id) || registry.byId.get(alias?.id);
   if (!entry) return {entry:undefined,op:undefined,direction:undefined};
-  const operations = entry.sourceOperationIds;
+  // Flow-control rows own the original operation inventory, but they are not
+  // workspaces. A request to insert one opens the single complete recipe owner.
+  // Keep this request transient: ordinary entry into that owner preserves the
+  // player's existing recipe instead of resetting it to a default operation.
+  const requestedOperation=op||alias?.op;
+  const flow = ['chain','recipe-only'].includes(entry.mode) ? entry : entry.id === 'native:cyberchef' ? registry.byOperation.get(requestedOperation) : null;
+  if (['chain','recipe-only'].includes(flow?.mode)) {
+    const owner = registry.byId.get('native:cyberchef');
+    const operation = flow.sourceOperationIds.includes(requestedOperation) ? requestedOperation : flow.engineName || flow.sourceOperationIds[0];
+    if (!owner || owner.listed === false) return {entry:undefined,op:undefined,direction:undefined};
+    return {entry:{...owner,open:{...owner.open,kind:'recipe',operation,sourceMode:'chain'}},op:operation,direction:undefined};
+  }
+  let selectedVariant;
+  if (entry.topicKind === 'native'||entry.topicKind === 'mixed') {
+    const selected=entry.variants.find(item=>item.id===variant)
+      ||(!variant&&entry.variants.find(item=>item.sourceOperationIds.includes(requestedOperation)))
+      ||(!variant&&entry.variants.find(item=>item.id===alias?.variant))||entry.variants[0];
+    selectedVariant=selected;
+    entry={...entry,variantId:selected.id,taskId:selected.id,open:selected.open,
+      route:selected.route,panel:selected.panel,directions:selected.directions};
+  }
+  const operations = selectedVariant?.sourceOperationIds||entry.sourceOperationIds;
   const requested = operations.includes(op) ? op : operations.includes(alias?.op) ? alias.op
-    : entry.engineName || operations[0];
+    : selectedVariant?.engineName || (selectedVariant?operations[0]:entry.engineName || operations[0]);
+  if (entry.topicKind === 'operation') {
+    const source=registry.operationTargets.get(requested);
+    if (!source) throw Error('专题缺少真实操作工作区：'+requested);
+    entry={...entry,open:source,route:source.route,panel:source.panel};
+  }
   const nativeDirections = entry.open.nativeDirections || [];
   const requestedDirection = nativeDirections.some(item=>item.id===direction) ? direction
     : nativeDirections.some(item=>item.id===alias?.direction) ? alias.direction : nativeDirections[0]?.id;
@@ -539,35 +592,38 @@ export function resolveCapability(registry, id, op, direction) {
 }
 
 export function searchEntries(registry, query, category = '') {
-  const entries=registry.entries.filter(entry => (!category || entry.category === category)
-    && entry.listed !== false && matchesSearch(entry.aliases.join(' '),query));
+  const entries=rankCapabilities(registry.entries,query,category);
   if(!String(query).trim())return entries;
   // Vocabulary expands discovery, but broad group aliases must not bury an
   // exact name below a bounded search surface. Rank only the existing matches;
   // empty-query navigation and equal-score inventory order remain unchanged.
-  const normalize=value=>String(value).normalize('NFKC').toLowerCase().replace(/\s+/g,'');
-  const normalizedQuery=normalize(query);
-  const ranked=entries.map((entry,index)=>{
-    const names=[...entry.sourceOperationIds,
-      ...(entry.directions||[]).flatMap(item=>[item.op,item.label]),
-      ...(entry.open.nativeDirections||[]).flatMap(item=>[item.label,...(item.aliases||[])])]
-      .filter(Boolean);
-    const score=normalize(entry.title)===normalizedQuery?4
-      :[...names,...entry.aliases].some(name=>normalize(name)===normalizedQuery)?3
-      :matchesSearch(entry.title,query)?2
-      :names.some(name=>matchesSearch(name,query))?1:0;
-    return {entry,index,score};
-  });
-  ranked.sort((left,right)=>right.score-left.score||left.index-right.index);
   // A search result is still one family. Its transient direction preference
   // follows only an unambiguous direction-specific name, never shared page
   // vocabulary, and never mutates the registry's default or another search.
-  return ranked.map(({entry})=>{
-    const operations=(entry.directions||[]).filter(item=>matchesSearch(
+  return entries.map(entry=>{
+    const choices=[...new Map([...(entry.actions||entry.directions||[]),
+      ...(entry.variants||[]).flatMap(item=>item.directions||[])].map(item=>[item.op,item])).values()],term=searchText(query);
+    const exact=choices.filter(item=>[item.op,item.label].some(value=>searchText(value)===term));
+    const operations=exact.length?exact:choices.filter(item=>matchesSearch(
       [item.op,item.label,OPERATION_KEYWORDS[item.op]||''].join(' '),query));
     const native=(entry.open.nativeDirections||[]).filter(item=>matchesSearch(
       [item.label,...(item.aliases||[])].join(' '),query));
     if(operations.length===1)return {...entry,preferredOperation:operations[0].op};
+    // Bare algorithm names select their real pair, not another topic member.
+    const pair=CHEF_OPERATION_PAIRS.find(([a,b])=>entry.sourceOperationIds.includes(a)&&entry.sourceOperationIds.includes(b)&&
+      [a,b].some(name=>searchText(name.replace(/^(?:To|From)\s+/i,'').replace(/\s+(?:Encode|Decode|Encrypt|Decrypt)$/i,''))===term));
+    if(pair)return {...entry,preferredOperation:pair[0]};
+    const variants=(entry.variants||[]).map(item=>{
+      const title=searchText(item.title),aliases=(item.aliases||[]).map(searchText);
+      const score=title===term?8:title.startsWith(term)?7:title.includes(term)?6:aliases.includes(term)?5
+        :aliases.some(alias=>alias.startsWith(term))?4:matchesSearch([item.title,...item.aliases||[]].join(' '),query)?2:0;
+      return {item,score};
+    }).filter(item=>item.score).sort((a,b)=>b.score-a.score);
+    if(variants.length&&variants[0].score!==variants[1]?.score)return {...entry,preferredVariant:variants[0].item.id};
+    if(!variants.length&&entry.variants?.length){
+      const approximate=rankCapabilities(entry.variants,query);
+      if(approximate.length===1)return {...entry,preferredVariant:approximate[0].id};
+    }
     if(native.length===1)return {...entry,preferredDirection:native[0].id};
     return entry;
   });

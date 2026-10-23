@@ -1,4 +1,4 @@
-import {element as uiElement, Option as uiOption, Box, Button, Toolbar, tabsController, updateStatus, setState, animatePresence} from './ui/index.js';
+import {element as uiElement, Option as uiOption, Box, Button, Toolbar, Select, Input, Field, FormGrid, Textarea, setTextareaValue, onDisconnect, tabsController, updateStatus, setState, animatePresence} from './ui/index.js';
 import {parseInert} from './ui/index.js';
 import {schemas,defaults,renderParameters} from './chef-tools/schema.js';
 import { CyberChefClient } from './cyberchef-client.js';
@@ -6,7 +6,7 @@ import {operationName, operationDescription, categories, localizedError} from '.
 import {loadRegistry} from './capabilities/registry.js';
 import {classifyCatalogue} from './chef-tools/catalog.js';
 import {operationFamilies,matchFamilies} from './chef-tools/families.js';
-import {continueButton} from './handoff/button.js';
+import {resultRecording} from './result-recording.js';
 const $ = id => document.getElementById(id);
 const elem = uiElement;
 function download(data, filename, type) {
@@ -15,14 +15,15 @@ function download(data, filename, type) {
 export function initCyberChef() {
   const stage = $('cyberchef-stage'), input = $('chef-input'), output = $('chef-output'), status = $('cyberchef-status');
   let catalogue, families = [], client, loading, readingFile = false, fileRevision = 0, importRevision = 0, openRevision = 0, recipe = [], result = null, fileBytes = null, revision = 0, busy = false;
-  let handedResult;const next=continueButton({id:'chef-continue',source:'chef',read:()=>handedResult=result,isCurrent:()=>!!handedResult&&handedResult===result});$('chef-download').before(next);
+  let debugProgress=0,executedRecipe=null;
+  let recorded=null;const recording=resultRecording({id:'chef-result',anchor:$('chef-download'),source:'chef'});
   function message(text, error = false, tone = 'info') { updateStatus(status,text,error?'error':tone); $('cyberchef-retry').hidden = !error; }
   const panes=tabsController($('chef-tabs'),[...$('chef-tabs').children].map(tab=>[tab.dataset.pane,tab.textContent,$(tab.getAttribute('aria-controls')),tab]),{initial:'input',visibility:false,onSelect:pane=>{stage.dataset.pane=pane;}});
   const selectPane=(pane,focus=false)=>panes.select(pane,{focus});
-  function controls() { next.disabled=!result||busy;setState($('chef-run'), {busy: busy || readingFile}); $('chef-run').disabled = !catalogue || busy || readingFile; $('chef-cancel').hidden = !busy; $('chef-copy').disabled = !result; $('chef-download').disabled = !result; $('chef-to-input').disabled = !result; }
-  function invalidate(text = '输入或处理链已更改，点击执行查看结果') {
-    revision++; importRevision++; if (busy) { client?.close(); client = null; busy = false; }
-    result = null; output.value = ''; $('chef-output-info').textContent = '等待执行'; controls(); message(text);
+  function controls() { if(!result||busy){recorded=null;recording.clear();}else if(recorded!==result){recorded=result;recording.publish(result);}setState($('chef-run'), {busy: busy || readingFile}); $('chef-run').disabled = !catalogue || busy || readingFile; $('chef-cancel').hidden = !busy; $('chef-copy').disabled = !result; $('chef-download').disabled = !result; $('chef-to-input').disabled = !result; }
+  function invalidate(text = '') {
+    revision++; importRevision++;debugProgress=0;executedRecipe=null; if (busy) { client?.close(); client = null; busy = false; }
+    result = null; magicHost.hidden=true;magicCandidates=[];output.value = ''; $('chef-output-info').textContent = '等待执行'; controls(); message(text);
   }
   function createClient() { client = new CyberChefClient(text => { if (busy) message('正在执行 · '+text); }); return client; }
   function renderOperations() {
@@ -50,10 +51,10 @@ export function initCyberChef() {
       const card = elem('li',undefined,'chef-step'); card.classList.toggle('is-disabled',!!step.disabled); card.dataset.step = index;
       const heading = elem('div',undefined,'chef-step-heading'); heading.append(elem('span',String(index+1).padStart(2,'0'),'micro-label'),elem('strong',operationName(step.op)));
       const actions = elem('div',undefined,'chef-step-actions');
-      for (const [action,label] of [['up','↑'],['down','↓'],['toggle',step.disabled?'启用':'停用'],['delete','×']]) {
-        const b=elem('button',label,'quiet-button');b.type='button';b.dataset.action=action;b.setAttribute('aria-label',`${{up:'上移',down:'下移',toggle:step.disabled?'启用':'停用',delete:'删除'}[action]}第 ${index+1} 步`);
+      for (const [action,label] of [['up','↑'],['down','↓'],['toggle',step.disabled?'启用':'停用'],['breakpoint',step.breakpoint?'移除断点':'断点'],['delete','×']]) {
+        const b=elem('button',label,'quiet-button');b.type='button';b.dataset.action=action;b.setAttribute('aria-label',`${{up:'上移',down:'下移',toggle:step.disabled?'启用':'停用',delete:'删除',breakpoint:'断点'}[action]}第 ${index+1} 步`);
         b.disabled = action==='up'&&index===0 || action==='down'&&index===recipe.length-1;
-        b.onclick=()=>{ if(action==='delete')recipe.splice(index,1);else if(action==='toggle')step.disabled=!step.disabled;else {const dest=index+(action==='up'?-1:1);[recipe[index],recipe[dest]]=[recipe[dest],recipe[index]];} invalidate();renderRecipe(); }; actions.append(b);
+        b.onclick=()=>{ if(action==='breakpoint')step.breakpoint=!step.breakpoint;else if(action==='delete')recipe.splice(index,1);else if(action==='toggle')step.disabled=!step.disabled;else {const dest=index+(action==='up'?-1:1);[recipe[index],recipe[dest]]=[recipe[dest],recipe[index]];} invalidate();renderRecipe(); }; actions.append(b);
       }
       heading.append(actions);card.append(heading);
       const definition = catalogue.operations[step.op], fields=elem('div',undefined,'chef-args'), args=schemas(definition);
@@ -68,26 +69,43 @@ export function initCyberChef() {
     return list.map(step=>{
       if(!step||!Object.hasOwn(catalogue.operations,step.op)||!Array.isArray(step.args))throw Error('配方包含未知操作或无效参数');
       const args=defaults(catalogue.operations[step.op]);step.args.forEach((value,i)=>{if(i<args.length)args[i]=value;});
-      return {op:step.op,args,...(step.disabled?{disabled:true}:{})};
+      return {op:step.op,args,...(step.disabled?{disabled:true}:{}),...(step.breakpoint?{breakpoint:true}:{})};
     });
   }
-  async function run() {
-    if(!catalogue||busy||readingFile)return; const runRevision=revision; busy=true;result=null;output.value='';controls();message('正在执行处理链…');
+  async function run({step=false,ignoreBreakpoints=false}={}) {
+    if(!catalogue||busy||readingFile)return; const runRevision=revision; busy=true;result=null;magicHost.hidden=true;magicCandidates=[];output.value='';controls();message('正在执行处理链…');
     try {
-      const snapshot=structuredClone(recipe);const payload=fileBytes?fileBytes.slice().buffer:input.value;
+      const snapshot=structuredClone(recipe);if(ignoreBreakpoints)for(const op of snapshot)delete op.breakpoint;if(step){for(const op of snapshot)delete op.breakpoint;const next=Math.min(snapshot.length,debugProgress+1);if(next<snapshot.length)snapshot[next].breakpoint=true;}const payload=fileBytes?fileBytes.slice().buffer:input.value;
       const current=client&&!client.closed?client:createClient();const response=await current.bake(payload,snapshot);
       if(runRevision!==revision)return;
-      result=response; let presented=response.result;
+      executedRecipe=structuredClone(snapshot);debugProgress=response.progress;result=response; let presented=response.result;
       if(presented instanceof ArrayBuffer)presented=new TextDecoder().decode(presented);
       if(response.dish?.type===1)presented=response.dish.value;
+      else if(response.dish?.type===6&&Array.isArray(response.dish.value)&&snapshot[response.progress-1]?.op==='Magic'){
+        presented=JSON.stringify(response.dish.value,null,2);magicCandidates=response.dish.value;magicPrefix=snapshot.slice(0,response.progress-1);magicSuffix=snapshot.slice(response.progress);magicChoice.replaceChildren(...magicCandidates.map((candidate,i)=>uiOption(`${i+1}. ${candidate.recipe?.map(op=>operationName(op.op)).join(' → ')||'原始输入'} · ${String(candidate.data??'').slice(0,80)}`,String(i))));magicHost.hidden=!magicCandidates.length;
+      }
       else if(String(response.type).toLowerCase()==='html'){const template=parseInert(presented);presented=template.content.textContent;}
       output.value=String(presented??'').slice(0,200000);
       $('chef-output-info').textContent=`${response.bytes.length.toLocaleString()} 字节 · ${Math.round(response.duration)} ms${String(presented).length>200000?' · 仅预览前 20 万字符':''}`;
-      message(`处理完成 · ${recipe.filter(s=>!s.disabled).length} 个操作`,false,'success');selectPane('output');animatePresence(output,{kind:'feedback'});
+      message(`${snapshot[response.progress]?.breakpoint?'已在断点暂停':'处理完成'} · 执行位置 ${response.progress} / ${recipe.length}`,false,'success');selectPane('output');animatePresence(output,{kind:'feedback'});
     } catch(error) {if(runRevision===revision)message(localizedError(error.message),true);}
     finally {if(runRevision===revision){busy=false;controls();}}
   }
-  $('chef-run').onclick=run;$('chef-cancel').onclick=()=>invalidate('已停止执行，可调整处理链后重试');
+  $('chef-run').onclick=()=>run();$('chef-cancel').onclick=()=>invalidate('已停止执行，可调整处理链后重试');
+  const debugInfo=Box({tag:'p',attrs:{role:'status'},text:''}),debugToolbar=Toolbar({children:[Button({text:'单步执行',on:{click:()=>run({step:true})}}),Button({text:'忽略断点执行到底',on:{click:()=>run({ignoreBreakpoints:true})}}),Button({text:'Magic 自动识别',on:{click:()=>{if(!catalogue)return;recipe.push({op:'Magic',args:defaults(catalogue.operations.Magic)});invalidate('已加入官方 Magic，请执行查看候选。');renderRecipe();}}})]});
+  $('chef-run').parentElement.after(debugToolbar,debugInfo);
+  const highlights=async direction=>{if(!executedRecipe||!result||busy)return;try{const from=direction==='forward'?input:output,to=direction==='forward'?output:input;const data=await client.highlight(executedRecipe.slice(0,debugProgress).map(({breakpoint,...op})=>op),direction,[{start:from.selectionStart,end:from.selectionEnd}]);if(!data||!data.pos?.length){debugInfo.textContent='当前配方无法提供可靠的输入输出位置对应。';return;}const range=data.pos[0];to.focus();to.setSelectionRange(range.start,range.end);debugInfo.textContent='原生对应位置：'+JSON.stringify(data.pos);}catch(e){debugInfo.textContent=e.message;}};
+  debugToolbar.append(Button({text:'输入选区对应输出',on:{click:()=>highlights('forward')}}),Button({text:'输出选区对应输入',on:{click:()=>highlights('reverse')}}));
+  let magicCandidates=[],magicPrefix=[],magicSuffix=[];
+  const magicChoice=Select({id:'chef-magic-choice',attrs:{'aria-label':'Magic 候选配方'}});
+  const adoptMagic=()=>{try{const candidate=magicCandidates[Number(magicChoice.value)];if(!candidate)throw Error('请先选择候选');const next=checkedRecipe([...magicPrefix,...candidate.recipe,...magicSuffix]);recipe=next;invalidate('已采用候选配方，原始输入保持不变；点击执行验证结果。');renderRecipe();selectPane('recipe');}catch(e){message(e.message,true);}};
+  const magicHost=Box({children:[Field({label:'Magic 原生候选（完整数据、评分和匹配项见结果）',control:magicChoice}),Button({text:'采用候选配方',on:{click:adoptMagic}})]});magicHost.hidden=true;output.before(magicHost);
+  const inputTabs=Select({id:'chef-input-tabs',attrs:{'aria-label':'处理链输入标签'}}),addInput=Button({text:'新增输入'}),removeInput=Button({text:'删除当前输入'});let activeInput=0;const drafts=[{name:'输入 1',text:'',bytes:null}];
+  const refreshInputs=()=>{inputTabs.replaceChildren(...drafts.map((d,i)=>uiOption(d.name,String(i))));inputTabs.value=String(activeInput);};
+  const saveInput=()=>Object.assign(drafts[activeInput],{text:input.value,bytes:fileBytes?.slice()||null});
+  const switchInput=index=>{saveInput();activeInput=index;fileRevision++;readingFile=false;input.value=drafts[index].text;fileBytes=drafts[index].bytes?.slice()||null;$('chef-file').value='';$('chef-input-info').textContent=(fileBytes?.length??new TextEncoder().encode(input.value).length)+' 字节';invalidate();refreshInputs();};
+  inputTabs.onchange=()=>switchInput(Number(inputTabs.value));addInput.onclick=()=>{if(drafts.length>=32){message('最多 32 个输入标签',true);return;}drafts.push({name:'输入 '+(drafts.length+1),text:'',bytes:null});switchInput(drafts.length-1);};removeInput.onclick=()=>{if(drafts.length===1)return;saveInput();fileRevision++;readingFile=false;$('chef-file').value='';drafts.splice(activeInput,1);activeInput=Math.min(activeInput,drafts.length-1);input.value=drafts[activeInput].text;fileBytes=drafts[activeInput].bytes?.slice()||null;invalidate();refreshInputs();};refreshInputs();input.before(Toolbar({children:[inputTabs,addInput,removeInput]}));
+  const leave=({detail})=>{if(detail?.name!=='cyberchef'&&busy)invalidate();};document.addEventListener('arg:panelchange',leave);onDisconnect(stage,()=>{client?.close();document.removeEventListener('arg:panelchange',leave);});
   $('chef-clear-recipe').onclick=()=>{recipe=[];invalidate();renderRecipe();};
   $('chef-search').oninput=()=>catalogue&&renderOperations();$('chef-category').onchange=()=>catalogue&&renderOperations();
   input.oninput=()=>{fileRevision++;readingFile=false;fileBytes=null;$('chef-input-info').textContent=`${new TextEncoder().encode(input.value).length} 字节 / UTF-8`;$('chef-file').value='';invalidate();};

@@ -19,7 +19,7 @@ try {
     });
     const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
     await page.goto('https://arg.test/#home');
-    await page.waitForFunction(()=>Number(document.querySelector('.rail-badge')?.textContent)>500);
+    await page.waitForFunction(async()=>{const {loadRegistry}=await import('./capabilities/registry.js');const registry=await loadRegistry();return Number(document.querySelector('.rail-badge')?.textContent)===registry.coverage.visibleToolCount;});
     const openRail=async()=>{if(width<1100&&(await page.locator('.workbench-drawer').getAttribute('open'))===null)await page.locator('.workbench-menu').click();};
     await openRail();
     // A one-tool group must go straight to that real tool, never via browse.
@@ -37,15 +37,17 @@ try {
     await encoding.focus();await page.keyboard.press('Enter');
     assert.equal(await encoding.getAttribute('aria-expanded'),'true');
     assert.equal(new URL(page.url()).hash,'#browse/reference','expanding a sidebar group never navigates');
-    await page.locator('.rail-groups [data-capability="pair:To%20Base64"]:visible').click();
+    await page.locator('.rail-groups [data-capability="topic:base-family"]:visible').click();
+    await page.waitForFunction(()=>document.querySelector('#ct-encoding')?.dataset.operation==='To Base32');
+    await page.locator('#ct-encoding .ct-direction').selectOption('To Base64');
     await page.waitForFunction(()=>document.querySelector('#ct-encoding')?.dataset.operation==='To Base64');
     await page.locator('#ct-encoding .ct-input').fill('谜题');await page.locator('#ct-encoding .ct-run').click();
     await page.waitForFunction(()=>document.querySelector('#ct-encoding .ct-status')?.textContent.includes('处理完成'),null,{timeout:45000});
     assert.equal(await page.locator('#ct-encoding .ct-output').inputValue(),Buffer.from('谜题').toString('base64'));
     await openRail();
-    assert.equal(await page.locator('.rail-groups [data-capability="pair:To%20Base64"]').getAttribute('aria-current'),'page');
+    assert.equal(await page.locator('.rail-groups [data-capability="topic:base-family"]').getAttribute('aria-current'),'page');
     await page.locator('.rail-filter input').fill('From Base64');
-    const inverse=page.locator('.rail-groups [data-capability="pair:To%20Base64"]:visible');
+    const inverse=page.locator('.rail-groups [data-capability="topic:base-family"]:visible');
     assert.equal(new URLSearchParams((await inverse.getAttribute('href')).split('?')[1]).get('op'),'From Base64');
     await inverse.click();await page.waitForFunction(()=>document.querySelector('#ct-encoding')?.dataset.operation==='From Base64');
     assert.equal(await page.locator('#ct-encoding .ct-input').inputValue(),'谜题','navigation preserves the source input');
@@ -58,6 +60,16 @@ try {
     await openRail();await page.locator('.rail-filter input').fill('');
     assert.equal(await page.locator('[data-rail-expand="encoding"]').getAttribute('aria-expanded'),'true','search preserves browsing expansion');
     assert.equal(await page.locator('.rail-groups a[href^="#browse/"]').evaluateAll(nodes=>nodes.every(node=>node.getAttribute('href').split('/').length===2)),true,'no sidebar link opens a group overview');
+    const collection=await page.evaluate(async()=>{
+      const section=[...document.querySelectorAll('.rail-collection')].find(n=>n.querySelector('h2')?.textContent==='最近使用');
+      const links=[...section.querySelectorAll('a[data-route]')], identities=new Map(links.map(n=>[n.dataset.route,n]));
+      document.dispatchEvent(new CustomEvent('arg:collectionschange'));
+      const stable=[...section.querySelectorAll('a[data-route]')].every((n,i)=>n===links[i]);
+      const {recordTool,getRecentEntries}=await import('/preferences.js');const target=links.at(-1).dataset.route,selection=getRecentEntries().find(entry=>entry.route===target);recordTool(selection.toolRoute,selection);
+      const next=[...section.querySelectorAll('a[data-route]')];
+      return {stable,reordered:next[0].dataset.route===target,preserved:next.every(n=>n===identities.get(n.dataset.route))};
+    });
+    assert.deepEqual(collection,{stable:true,reordered:true,preserved:true},'sidebar recents retain real link identity through repeated events and reordered history');
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
     assert.deepEqual({errors,missing,external},{errors:[],missing:[],external:[]});
     await context.close();console.log(`PASS sidebar ${width}/${reducedMotion}: direct native/engine/article routes, category overview, keyboard, direction and preserved input.`);

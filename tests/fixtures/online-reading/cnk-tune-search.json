@@ -1,0 +1,33 @@
+{
+  "fixture": {
+    "sourceURL": "https://open.cnkgraph.com/api/ciTune/find",
+    "status": 200,
+    "capturedAt": "2026-10-17",
+    "scope": "A complete selected public record from the archived response; no record fields or article text truncated.",
+    "credit": "苏州图谱信息技术有限公司、作品作者及数据所列原始文献来源",
+    "termsURL": "https://cnkgraph.com/Home/OpenResources",
+    "notice": "Official read-only API; noncommercial research and study only. No claim of an unrestricted open-data license."
+  },
+  "record": {
+    "id": "516",
+    "title": "水調歌頭",
+    "fields": {
+      "Id": 516,
+      "Type": "Ping",
+      "Name": "水調歌頭",
+      "Aliases": [
+        "元会曲",
+        "凯歌"
+      ],
+      "Desc": "《碧雞漫志》屬中呂調。毛滂詞名《元會曲》，張榘詞名《凱歌》。按《水調》乃唐人大曲，凡大曲有歌頭，此必裁截其歌頭，另倚新聲也。",
+      "WritingCount": 1896
+    },
+    "sourceURL": "https://open.cnkgraph.com/api/ciTune/find"
+  },
+  "result": {
+    "provider": "cnkgraph",
+    "parameters": {
+      "mode": "tune-search"
+    }
+  }
+}

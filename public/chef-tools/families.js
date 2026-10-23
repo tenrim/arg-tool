@@ -18,14 +18,14 @@ export function operationFamilies(rows, registry) {
   }
   for (const family of families.values()) {
     const byOp = new Map(family.rows.map(row => [row.op,row]));
-    const declared = family.owner.directions || [];
+    const declared = family.owner.actions || family.owner.directions || [];
     const ordered = [...declared.map(direction => direction.op),...byOp.keys()];
     family.directions = [...new Set(ordered)].filter(op => byOp.has(op)).map(op => ({
       op, label:declared.find(direction => direction.op === op)?.label || operationName(op)
     }));
     // A native owner may additionally provide a visual form. This palette only
     // represents the actual Chef forms supplied by its caller.
-    if (family.rows.length === 1) family.title = operationName(family.rows[0].op);
+    if (family.rows.length === 1 && !family.owner.topic) family.title = operationName(family.rows[0].op);
   }
   return [...families.values()];
 }

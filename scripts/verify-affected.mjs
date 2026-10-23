@@ -1,5 +1,5 @@
 import {spawn} from 'node:child_process';
-import {writeFile} from 'node:fs/promises';
+import {readFile,writeFile} from 'node:fs/promises';
 import {resolve,delimiter} from 'node:path';
 import {changedFiles,planChecks} from './affected-plan.mjs';
 
@@ -12,7 +12,11 @@ for(let i=0;i<args.length;i++){
   else throw Error('Unknown argument '+arg);
 }
 if(options.unit&&options.static)throw Error('Choose --unit or --static');
-const plan=await planChecks(explicit.length?explicit:changedFiles({base:options.base}),{unitOnly:options.unit,staticOnly:options.static});
+// A JSON response file keeps a large, explicit scope usable on Windows without
+// switching to all dirty files or exceeding the shell command-line limit.
+const scoped=[];
+for(const file of explicit){if(file.startsWith('@')){const paths=JSON.parse(await readFile(file.slice(1),'utf8'));if(!Array.isArray(paths)||paths.some(path=>typeof path!=='string'||!path||path.startsWith('@')))throw Error('Invalid file scope response file');scoped.push(...paths);}else scoped.push(file);}
+const plan=await planChecks(explicit.length?scoped:changedFiles({base:options.base}),{unitOnly:options.unit,staticOnly:options.static});
 console.log(`${plan.mode}: ${plan.files.length} changed files; ${plan.checks.length} selected checks.`);
 for(const check of plan.checks)console.log(`  ${check.id}\n    because: ${check.reasons.slice(0,3).join(', ')}${check.reasons.length>3?` (+${check.reasons.length-3}; see JSON report)`:''}`);
 if(plan.unknown.length){console.error('Unmapped changes: add an owner in scripts/test-map.mjs or affected-plan.mjs before verification.\n'+plan.unknown.join('\n'));process.exitCode=1;}

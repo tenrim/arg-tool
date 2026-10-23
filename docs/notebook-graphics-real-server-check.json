@@ -1,0 +1,13 @@
+{
+  "run_at": "2026-10-16T07:02:42.374Z",
+  "passed": true,
+  "url": "http://localhost:16319/",
+  "checks": [
+    "empty notebook direct insertion creates one owning note",
+    "return to notebook shows preview",
+    "IR link reopens editable mindmap",
+    "actual HTTP resources with zero console/page errors or HTTP failures"
+  ],
+  "errors": [],
+  "failed": []
+}

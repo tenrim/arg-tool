@@ -7,8 +7,8 @@ import {aminoAcids} from '../science/core.js';
 
 export const REFERENCE_WORKSPACES = Object.freeze([
  {id:'world', title:'国家、货币与交通', tasks:[['countries','国家与国旗'],['currencies','货币代码'],['airports','机场'],['ports','港口与运输地点']]},
- {id:'sky', title:'天体目录与观测', tasks:[['sky','恒星与深空目录'],['astronomy','方位与升落']]},
- {id:'matter', title:'元素、物质与生命', tasks:[['chemistry','元素周期表'],['chemistry-formula','分子式'],['chemistry-molecule','分子结构'],['crystals','晶体与矿物'],['sequence','氨基酸与密码子']]},
+ {id:'sky', title:'天体目录与观测', tasks:[['sky','深空天体目录'],['astronomy','方位与升落']]},
+ {id:'matter', title:'元素、物质与生命', tasks:[['chemistry','元素周期表'],['chemistry-formula','分子式'],['chemistry-molecule','分子结构'],['sequence','氨基酸与密码子']]},
 ]);
 const WORLD_TASKS = new Set(REFERENCE_WORKSPACES[0].tasks.map(([id])=>id));
 const taskGroup = id=>REFERENCE_WORKSPACES.find(group=>group.tasks.some(([task])=>task===id));
@@ -91,7 +91,7 @@ function createPlacesOwner() {
  function syncIds(){root.id=active+'-browser';if(picker){picker.id=active==='currencies'?'currencies-country-picker':active+'-map-country';const label=picker.closest('label');if(label)label.htmlFor=picker.id;}}
  function moveTo(id){
   const entry=controllers.get(id);if(!entry||disposed)return;const changed=active!==id;
-  if(changed && active)controllers.get(active)?.api.invalidate?.('已切换任务，输入保留。');
+  if(changed && active)controllers.get(active)?.api.invalidate?.('');
   active=id;syncIds();entry.panel.querySelector('.ref-layout').before(root);
   if(changed){map?.setPoints([]);resetDetail();const latest=records.get(active);if(latest)showResult(latest);}
   activateBrowser();

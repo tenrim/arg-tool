@@ -1,0 +1,1252 @@
+{
+  "fixture": {
+    "sourceURL": "https://open.cnkgraph.com/api/rhyme/平水韵/青",
+    "status": 200,
+    "capturedAt": "2026-10-17",
+    "scope": "A complete selected public record from the archived response; no record fields or article text truncated.",
+    "credit": "苏州图谱信息技术有限公司、作品作者及数据所列原始文献来源",
+    "termsURL": "https://cnkgraph.com/Home/OpenResources",
+    "notice": "Official read-only API; noncommercial research and study only. No claim of an unrestricted open-data license."
+  },
+  "record": {
+    "id": "靑",
+    "title": "九靑",
+    "fields": {
+      "Name": "九靑",
+      "Id": "靑",
+      "Tone": "平",
+      "Chars": [
+        {
+          "Char": "靑",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "亭",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "星",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "經",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "靈",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "聽",
+          "Comment": null,
+          "Sames": "径"
+        },
+        {
+          "Char": "庭",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "冥",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "醒",
+          "Comment": "醉醒",
+          "Sames": "迥"
+        },
+        {
+          "Char": "形",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "停",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "屛",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "扃",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "零",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "寧",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "馨",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "齡",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "萍",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "溟",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "汀",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "銘",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "腥",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "甁",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "泠",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "刑",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "欞",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "廷",
+          "Comment": null,
+          "Sames": "径"
+        },
+        {
+          "Char": "坰",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "螢",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "翎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "霆",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "丁",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鈴",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "熒",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "苓",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "舲",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "型",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "廳",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "婷",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "惺",
+          "Comment": null,
+          "Sames": "迥"
+        },
+        {
+          "Char": "硎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蓂",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "聆",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "涇",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "瓴",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "軿",
+          "Comment": null,
+          "Sames": "先"
+        },
+        {
+          "Char": "鴒",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "俜",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "伶",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "玲",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "陘",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "渟",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蜓",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "醽",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "暝",
+          "Comment": "晦暝",
+          "Sames": null
+        },
+        {
+          "Char": "仃",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "竮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蛉",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "螟",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "釘",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "嚀",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "邢",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鉶",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "令",
+          "Comment": "脊令",
+          "Sames": null
+        },
+        {
+          "Char": "囹",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "町",
+          "Comment": null,
+          "Sames": "迥"
+        },
+        {
+          "Char": "莛",
+          "Comment": null,
+          "Sames": "迥"
+        },
+        {
+          "Char": "徑",
+          "Comment": "行過也",
+          "Sames": null
+        },
+        {
+          "Char": "筳",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "瞑",
+          "Comment": null,
+          "Sames": "径"
+        },
+        {
+          "Char": "鯖",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "駉",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鞓",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "輧",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鯹",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "軨",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "箵",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "玎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "篂",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "滎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蓱",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鼮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "娉",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "濙",
+          "Comment": null,
+          "Sames": "迥"
+        },
+        {
+          "Char": "猩",
+          "Comment": null,
+          "Sames": "庚"
+        },
+        {
+          "Char": "笭",
+          "Comment": null,
+          "Sames": "迥"
+        },
+        {
+          "Char": "綎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "頩",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "拎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㹶",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "羚",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "聹",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "嵤",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "駢",
+          "Comment": null,
+          "Sames": "先"
+        },
+        {
+          "Char": "叮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "酃",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蘦",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鈃",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "昤",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "嵉",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "桯",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "呤",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "狑",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "侀",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "娗",
+          "Comment": "娗娗，容也。",
+          "Sames": null
+        },
+        {
+          "Char": "竛",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "訂",
+          "Comment": null,
+          "Sames": "迥径"
+        },
+        {
+          "Char": "詅",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "葶",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "娙",
+          "Comment": "漢女官名",
+          "Sames": null
+        },
+        {
+          "Char": "楟",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "霝",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鉼",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "爧",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䋼",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㣔",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "疔",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "甹",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "簈",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "砱",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "絅",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "帲",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蕶",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "嫇",
+          "Comment": null,
+          "Sames": "庚"
+        },
+        {
+          "Char": "蝏",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "坽",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "姈",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "睲",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "銒",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䁝",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䖅",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "魿",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "跉",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "瑆",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "冂",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䈂",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𦀚",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䫤",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䴇",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𩵀",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "藀",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鉎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "郱",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𧖧",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "圊",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蛢",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "狌",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鋞",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "荓",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "駖",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "榠",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䄙",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鄍",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "朎",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鸋",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "蛵",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "帄",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "柃",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鵧",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䓑",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "耵",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "聤",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "靪",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鹷",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䯍",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "坙",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "耓",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "孁",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "閮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "邒",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "秢",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䉹",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "濴",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㯪",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𤬐",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䙥",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䶄",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㽮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鏻",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𧕝",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "衑",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䚖",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㦭",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𦉬",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "紷",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "呬",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㸳",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䣆",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㡵",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "朾",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䤰",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "帡",
+          "Comment": "帲覆也",
+          "Sames": "梗"
+        },
+        {
+          "Char": "諪",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䯕",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "巠",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䦺",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "熲",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䩠",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㤯",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "桱",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "聠",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "彾",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "猽",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䉁",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "龗",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㻂",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "艼",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "澪",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "涄",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "煋",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䆨",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䃏",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "𧕅",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䕘",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㼛",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䤯",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䅽",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鵛",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㩕",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "鎣",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䱓",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㝕",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䢛",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䗌",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㾉",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㭢",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㯏",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "褮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "顈",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "庁",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "閝",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "獜",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "奵",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㓅",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䉖",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䛣",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䌢",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㪮",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "榳",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "㼗",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "嬣",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "郬",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䡼",
+          "Comment": null,
+          "Sames": null
+        },
+        {
+          "Char": "䡿",
+          "Comment": null,
+          "Sames": null
+        }
+      ]
+    },
+    "sourceURL": "https://open.cnkgraph.com/api/rhyme/平水韵/青"
+  },
+  "result": {
+    "provider": "cnkgraph",
+    "parameters": {
+      "mode": "rhyme"
+    },
+    "raw": {
+      "Book": "平水韵"
+    }
+  }
+}

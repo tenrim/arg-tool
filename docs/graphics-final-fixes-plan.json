@@ -1,0 +1,89 @@
+{
+  "run_at": "2026-10-16T06:34:08.105Z",
+  "mode": "affected",
+  "files": [
+    "public/graphics/page.css",
+    "public/project-sources.js"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "integrity",
+      "command": [
+        "node",
+        "scripts/audit-integrity.mjs"
+      ],
+      "reasons": [
+        "public/project-sources.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.css",
+        "public/project-sources.js"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/project-sources.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/project-sources.js"
+      ],
+      "reasons": [
+        "public/project-sources.js"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.css"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.css"
+      ]
+    },
+    {
+      "id": "browser:project-licenses",
+      "command": [
+        "node",
+        "scripts/browser-project-licenses.mjs"
+      ],
+      "reasons": [
+        "public/project-sources.js"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

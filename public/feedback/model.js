@@ -1,4 +1,5 @@
-export const APP_VERSION='2026-10-15.handoff-feedback.1';
+import {APP_VERSION} from '../site-version.js';
+export {APP_VERSION};
 const events=[];
 const safeId=value=>typeof value==='string'&&/^[\w:%.-]{1,160}$/.test(value)?value:'';
 export function rememberAction(kind,id){

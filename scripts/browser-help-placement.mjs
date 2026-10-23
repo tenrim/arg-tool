@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {TASK_PROJECT_SOURCES} from '../public/project-source-contracts.js';
 
 export async function checkHelpPlacement(page,go) {
   const routes=await page.evaluate(async()=>{
@@ -23,7 +24,7 @@ export async function checkHelpPlacement(page,go) {
       }));
       assert.deepEqual(boundary.misplaced,[],id+' manual content ownership');
       assert.deepEqual(boundary.dangling,[],id+' accessible descriptions');
-      assert.equal(boundary.footer,!['extract','knowledge'].includes(id),id+' third-party provenance last; original tool has none');
+      assert.equal(boundary.footer,!(['extract','knowledge','keyboard-extra'].includes(id)||TASK_PROJECT_SOURCES['native:'+id]?.urls.length===0),id+' third-party provenance last; original tool has none');
       const snapshot=()=>panel.evaluate(root=>[...root.querySelectorAll('input,textarea,select')].map(node=>({id:node.id,value:node.value,checked:node.checked,files:node.files?.length})));
       const before=await snapshot();
       await button.click();
@@ -35,7 +36,7 @@ export async function checkHelpPlacement(page,go) {
       assert.deepEqual(await snapshot(),before,id+' help preserves controls');
       if(['tarot','image','crypto','code'].includes(id)){
         await page.evaluate(()=>scrollTo(0,0));
-        await page.screenshot({path:'/tmp/arg-ui-layout/cleanup-'+id+'-'+width+'.png'});
+        await page.screenshot({path:testTmpdir()+'/arg-ui-layout/cleanup-'+id+'-'+width+'.png'});
       }
     }
     console.log('PASS: '+routes.length+' tools, collapsed shared help, no duplicate prose, preserved controls/descriptions and provenance @'+width+'px');
@@ -60,3 +61,4 @@ export async function checkHelpPlacement(page,go) {
   assert.match(await footer.textContent(),/公共领域/);
   await go('crypto');
 }
+import {tmpdir as testTmpdir} from 'node:os';

@@ -1,0 +1,1448 @@
+{
+  "date": "2026-10-19T21:20:33.897373+08:00",
+  "passed": true,
+  "scope": "本轮真实 Animate UI / Motion 接入及发现的关联问题；不是全站发布审计",
+  "check_count": 23,
+  "results": [
+    {
+      "id": "integrity",
+      "exit_code": 0,
+      "duration_ms": 2446,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 108,
+      "run_at": "2026-10-19T13:11:30.187Z"
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 140,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 164,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 196,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 1819,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 219,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "unit:tests/image-scan.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 266,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "unit:tests/online-query-expansion-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 357,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "unit:tests/online-query-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 285,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "unit:tests/project-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 190,
+      "run_at": "2026-10-19T12:58:42.975Z"
+    },
+    {
+      "id": "browser:project-licenses",
+      "exit_code": 0,
+      "duration_ms": 65701,
+      "run_at": "2026-10-19T13:00:49.761Z"
+    },
+    {
+      "id": "browser:layout-balance",
+      "exit_code": 0,
+      "duration_ms": 11498,
+      "run_at": "2026-10-19T13:00:49.761Z"
+    },
+    {
+      "id": "browser:notebook-dock",
+      "exit_code": 0,
+      "duration_ms": 11092,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 10367,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 53164,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 114735,
+      "run_at": "2026-10-19T13:06:26.808Z"
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 12629,
+      "run_at": "2026-10-19T13:11:30.187Z"
+    },
+    {
+      "id": "browser:ui-runtime",
+      "exit_code": 0,
+      "duration_ms": 11475,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 28407,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    },
+    {
+      "id": "browser:capabilities",
+      "exit_code": 0,
+      "duration_ms": 51376,
+      "run_at": "2026-10-19T13:14:46.256Z"
+    },
+    {
+      "id": "browser:capability-resilience",
+      "exit_code": 0,
+      "duration_ms": 15825,
+      "run_at": "2026-10-19T13:14:46.256Z"
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "exit_code": 0,
+      "duration_ms": 5963,
+      "run_at": "2026-10-19T13:18:53.767Z"
+    }
+  ],
+  "runtime": {
+    "Animate UI": "2.0.0",
+    "Motion": "14.4.0",
+    "React": "19.3.1",
+    "Base UI": "1.8.0",
+    "source_manifest": "public/vendor/ui-runtime/UPSTREAM.json"
+  },
+  "build": {
+    "command": "npm run build",
+    "exit_code": 0,
+    "dist_runtime_and_adapter_bytes_match": true
+  },
+  "browser_local": {
+    "url": "http://localhost:16321/#crypto",
+    "console_errors": [],
+    "page_errors": [],
+    "desktop_mobile_visual_review": true,
+    "help_revisit": true
+  },
+  "notes": [
+    "初轮浏览器缺少 CHROMIUM_PATH，修正环境后续跑；之前通过的静态与单元检查保留。",
+    "复选框增加真实上游 Indicator 后，旧 span 定位变成两个元素；改为准确点击 field-label，并继续验证真实 ROT 输出。",
+    "发现并修复首次展开懒加载内容的 hidden 回调竞态，以及任务页重入时错误隐藏帮助动画外壳。",
+    "输入后立即按按钮的回归发现重挂载 ref 会误记按压位置；现在仅偏好变化刷新，并验证松开回到原比例。",
+    "ui-layout 分阶段续跑：初轮 505 组参数/1386 控件在 320、390、800、1440 全通过；随后 94 页面控件边界和 200% 字号通过；最终 UI_LAYOUT_PART=help 单独复查 94 页在 390、1440 的帮助与来源末尾。",
+    "每次失败仅续跑失败、未执行及新修改影响的检查；以下 runs 保留失败历史，不将失败运行伪装为一次全通过。",
+    "未提交、推送或部署，未发送邮件。"
+  ],
+  "runs": [
+    {
+      "run_at": "2026-10-19T12:58:42.975Z",
+      "mode": "affected",
+      "files": [
+        "README.md",
+        "THIRD_PARTY.md",
+        "docs/MODULE_BOUNDARIES.md",
+        "docs/UI_COMPONENTS.md",
+        "docs/UI_DEVELOPMENT_RULES.md",
+        "public/project-licenses.js",
+        "public/project-sources.js",
+        "public/ui/animate-ui.js",
+        "public/ui/components.css",
+        "public/ui/core.js",
+        "public/ui/motion.js",
+        "public/ui/overlays.js",
+        "public/vendor/ui-runtime/NOTICE.txt",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+        "public/vendor/ui-runtime/base-ui-react-LICENSE",
+        "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+        "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+        "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+        "public/vendor/ui-runtime/motion-LICENSE.md",
+        "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+        "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+        "public/vendor/ui-runtime/react-LICENSE",
+        "public/vendor/ui-runtime/react-dom-LICENSE",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "public/vendor/ui-runtime/scheduler-LICENSE",
+        "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+        "scripts/architecture-policy.mjs",
+        "scripts/audit-integrity.mjs",
+        "scripts/browser-ui-motion.mjs",
+        "scripts/browser-ui-runtime.mjs",
+        "scripts/build-ui-runtime.mjs",
+        "scripts/test-map.mjs",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js",
+        "tools/ui-runtime/package-lock.json",
+        "tools/ui-runtime/package.json",
+        "upstream-manifest.json"
+      ],
+      "unknown": [],
+      "checks": [
+        {
+          "id": "integrity",
+          "command": [
+            "node",
+            "scripts/audit-integrity.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js",
+            "public/project-sources.js",
+            "public/vendor/ui-runtime/NOTICE.txt",
+            "public/vendor/ui-runtime/UPSTREAM.json",
+            "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+            "public/vendor/ui-runtime/base-ui-react-LICENSE",
+            "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+            "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+            "public/vendor/ui-runtime/react-LICENSE",
+            "public/vendor/ui-runtime/react-dom-LICENSE",
+            "public/vendor/ui-runtime/runtime.js",
+            "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+            "public/vendor/ui-runtime/scheduler-LICENSE",
+            "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+            "scripts/audit-integrity.mjs",
+            "upstream-manifest.json"
+          ]
+        },
+        {
+          "id": "docs",
+          "command": [
+            "node",
+            "scripts/audit-docs.mjs"
+          ],
+          "reasons": [
+            "README.md",
+            "THIRD_PARTY.md",
+            "docs/MODULE_BOUNDARIES.md",
+            "docs/UI_COMPONENTS.md",
+            "docs/UI_DEVELOPMENT_RULES.md"
+          ]
+        },
+        {
+          "id": "architecture",
+          "command": [
+            "node",
+            "scripts/audit-architecture.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js",
+            "public/project-sources.js",
+            "public/ui/animate-ui.js",
+            "public/ui/core.js",
+            "public/ui/motion.js",
+            "public/ui/overlays.js",
+            "scripts/architecture-policy.mjs",
+            "scripts/test-map.mjs"
+          ]
+        },
+        {
+          "id": "ui-policy",
+          "command": [
+            "node",
+            "scripts/audit-ui.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js",
+            "public/project-sources.js",
+            "public/ui/animate-ui.js",
+            "public/ui/components.css",
+            "public/ui/core.js",
+            "public/ui/motion.js",
+            "public/ui/overlays.js"
+          ]
+        },
+        {
+          "id": "syntax",
+          "command": [
+            "node",
+            "scripts/check.mjs",
+            "--files",
+            "public/project-licenses.js",
+            "public/project-sources.js",
+            "public/ui/animate-ui.js",
+            "public/ui/core.js",
+            "public/ui/motion.js",
+            "public/ui/overlays.js",
+            "scripts/architecture-policy.mjs",
+            "scripts/audit-integrity.mjs",
+            "scripts/browser-ui-motion.mjs",
+            "scripts/browser-ui-runtime.mjs",
+            "scripts/build-ui-runtime.mjs",
+            "scripts/test-map.mjs",
+            "tools/ui-runtime/entry.js"
+          ],
+          "reasons": [
+            "public/project-licenses.js, public/project-sources.js, public/ui/animate-ui.js, public/ui/core.js, public/ui/motion.js, public/ui/overlays.js, scripts/architecture-policy.mjs, scripts/audit-integrity.mjs, scripts/browser-ui-motion.mjs, scripts/browser-ui-runtime.mjs, scripts/build-ui-runtime.mjs, scripts/test-map.mjs, tools/ui-runtime/entry.js"
+          ]
+        },
+        {
+          "id": "unit:tests/testing-policy.test.mjs",
+          "command": [
+            "node",
+            "--test",
+            "--test-reporter=spec",
+            "tests/testing-policy.test.mjs"
+          ],
+          "reasons": [
+            "scripts/architecture-policy.mjs",
+            "scripts/test-map.mjs"
+          ]
+        },
+        {
+          "id": "unit:tests/architecture.test.mjs",
+          "command": [
+            "node",
+            "--test",
+            "--test-reporter=spec",
+            "tests/architecture.test.mjs"
+          ],
+          "reasons": [
+            "scripts/architecture-policy.mjs",
+            "scripts/test-map.mjs"
+          ]
+        },
+        {
+          "id": "unit:tests/image-scan.test.mjs",
+          "command": [
+            "node",
+            "--test",
+            "--test-reporter=spec",
+            "tests/image-scan.test.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js"
+          ]
+        },
+        {
+          "id": "unit:tests/online-query-expansion-sources.test.mjs",
+          "command": [
+            "node",
+            "--test",
+            "--test-reporter=spec",
+            "tests/online-query-expansion-sources.test.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js"
+          ]
+        },
+        {
+          "id": "unit:tests/online-query-sources.test.mjs",
+          "command": [
+            "node",
+            "--test",
+            "--test-reporter=spec",
+            "tests/online-query-sources.test.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js"
+          ]
+        },
+        {
+          "id": "unit:tests/project-sources.test.mjs",
+          "command": [
+            "node",
+            "--test",
+            "--test-reporter=spec",
+            "tests/project-sources.test.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js"
+          ]
+        },
+        {
+          "id": "browser:project-licenses",
+          "command": [
+            "node",
+            "scripts/browser-project-licenses.mjs"
+          ],
+          "reasons": [
+            "public/project-licenses.js",
+            "public/project-sources.js"
+          ]
+        },
+        {
+          "id": "browser:ui-runtime",
+          "command": [
+            "node",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "public/vendor/ui-runtime/NOTICE.txt",
+            "public/vendor/ui-runtime/UPSTREAM.json",
+            "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+            "public/vendor/ui-runtime/base-ui-react-LICENSE",
+            "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+            "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+            "public/vendor/ui-runtime/react-LICENSE",
+            "public/vendor/ui-runtime/react-dom-LICENSE",
+            "public/vendor/ui-runtime/runtime.js",
+            "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+            "public/vendor/ui-runtime/scheduler-LICENSE",
+            "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+            "scripts/browser-ui-runtime.mjs",
+            "scripts/build-ui-runtime.mjs",
+            "tools/ui-runtime/bundle-inputs.json",
+            "tools/ui-runtime/entry.js",
+            "tools/ui-runtime/package-lock.json",
+            "tools/ui-runtime/package.json"
+          ]
+        },
+        {
+          "id": "browser:ui-motion",
+          "command": [
+            "node",
+            "scripts/browser-ui-motion.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "public/ui/components.css",
+            "public/ui/core.js",
+            "public/ui/motion.js",
+            "public/ui/overlays.js",
+            "public/vendor/ui-runtime/NOTICE.txt",
+            "public/vendor/ui-runtime/UPSTREAM.json",
+            "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+            "public/vendor/ui-runtime/base-ui-react-LICENSE",
+            "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+            "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+            "public/vendor/ui-runtime/react-LICENSE",
+            "public/vendor/ui-runtime/react-dom-LICENSE",
+            "public/vendor/ui-runtime/runtime.js",
+            "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+            "public/vendor/ui-runtime/scheduler-LICENSE",
+            "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+            "scripts/browser-ui-motion.mjs",
+            "scripts/build-ui-runtime.mjs",
+            "tools/ui-runtime/bundle-inputs.json",
+            "tools/ui-runtime/entry.js",
+            "tools/ui-runtime/package-lock.json",
+            "tools/ui-runtime/package.json"
+          ]
+        },
+        {
+          "id": "browser:ui-components",
+          "command": [
+            "node",
+            "scripts/browser-ui-components.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "public/ui/components.css",
+            "public/ui/core.js",
+            "public/ui/overlays.js",
+            "public/vendor/ui-runtime/NOTICE.txt",
+            "public/vendor/ui-runtime/UPSTREAM.json",
+            "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+            "public/vendor/ui-runtime/base-ui-react-LICENSE",
+            "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+            "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+            "public/vendor/ui-runtime/react-LICENSE",
+            "public/vendor/ui-runtime/react-dom-LICENSE",
+            "public/vendor/ui-runtime/runtime.js",
+            "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+            "public/vendor/ui-runtime/scheduler-LICENSE",
+            "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+            "scripts/build-ui-runtime.mjs",
+            "tools/ui-runtime/bundle-inputs.json",
+            "tools/ui-runtime/entry.js",
+            "tools/ui-runtime/package-lock.json",
+            "tools/ui-runtime/package.json"
+          ]
+        },
+        {
+          "id": "browser:ui-layout",
+          "command": [
+            "node",
+            "scripts/browser-ui-layout.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "public/ui/components.css",
+            "public/ui/core.js",
+            "public/ui/overlays.js",
+            "public/vendor/ui-runtime/NOTICE.txt",
+            "public/vendor/ui-runtime/UPSTREAM.json",
+            "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+            "public/vendor/ui-runtime/base-ui-react-LICENSE",
+            "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+            "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+            "public/vendor/ui-runtime/react-LICENSE",
+            "public/vendor/ui-runtime/react-dom-LICENSE",
+            "public/vendor/ui-runtime/runtime.js",
+            "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+            "public/vendor/ui-runtime/scheduler-LICENSE",
+            "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+            "scripts/build-ui-runtime.mjs",
+            "tools/ui-runtime/bundle-inputs.json",
+            "tools/ui-runtime/entry.js",
+            "tools/ui-runtime/package-lock.json",
+            "tools/ui-runtime/package.json"
+          ]
+        },
+        {
+          "id": "browser:notebook-dock",
+          "command": [
+            "node",
+            "scripts/browser-notebook-dock.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "public/vendor/ui-runtime/NOTICE.txt",
+            "public/vendor/ui-runtime/UPSTREAM.json",
+            "public/vendor/ui-runtime/animate-ui-react-LICENSE.md",
+            "public/vendor/ui-runtime/base-ui-react-LICENSE",
+            "public/vendor/ui-runtime/base-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/floating-ui-utils-LICENSE",
+            "public/vendor/ui-runtime/framer-motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-LICENSE.md",
+            "public/vendor/ui-runtime/motion-dom-LICENSE.md",
+            "public/vendor/ui-runtime/motion-utils-LICENSE.md",
+            "public/vendor/ui-runtime/react-LICENSE",
+            "public/vendor/ui-runtime/react-dom-LICENSE",
+            "public/vendor/ui-runtime/runtime.js",
+            "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+            "public/vendor/ui-runtime/scheduler-LICENSE",
+            "public/vendor/ui-runtime/use-sync-external-store-LICENSE",
+            "scripts/build-ui-runtime.mjs",
+            "tools/ui-runtime/bundle-inputs.json",
+            "tools/ui-runtime/entry.js",
+            "tools/ui-runtime/package-lock.json",
+            "tools/ui-runtime/package.json"
+          ]
+        },
+        {
+          "id": "browser:layout-balance",
+          "command": [
+            "node",
+            "scripts/browser-layout-balance.mjs"
+          ],
+          "reasons": [
+            "public/ui/components.css"
+          ]
+        }
+      ],
+      "executed": true,
+      "passed": false,
+      "results": [
+        {
+          "id": "integrity",
+          "exit_code": 0,
+          "duration_ms": 2446
+        },
+        {
+          "id": "docs",
+          "exit_code": 0,
+          "duration_ms": 100
+        },
+        {
+          "id": "architecture",
+          "exit_code": 0,
+          "duration_ms": 150
+        },
+        {
+          "id": "ui-policy",
+          "exit_code": 0,
+          "duration_ms": 173
+        },
+        {
+          "id": "syntax",
+          "exit_code": 0,
+          "duration_ms": 966
+        },
+        {
+          "id": "unit:tests/testing-policy.test.mjs",
+          "exit_code": 0,
+          "duration_ms": 1819
+        },
+        {
+          "id": "unit:tests/architecture.test.mjs",
+          "exit_code": 0,
+          "duration_ms": 219
+        },
+        {
+          "id": "unit:tests/image-scan.test.mjs",
+          "exit_code": 0,
+          "duration_ms": 266
+        },
+        {
+          "id": "unit:tests/online-query-expansion-sources.test.mjs",
+          "exit_code": 0,
+          "duration_ms": 357
+        },
+        {
+          "id": "unit:tests/online-query-sources.test.mjs",
+          "exit_code": 0,
+          "duration_ms": 285
+        },
+        {
+          "id": "unit:tests/project-sources.test.mjs",
+          "exit_code": 0,
+          "duration_ms": 190
+        },
+        {
+          "id": "browser:project-licenses",
+          "exit_code": 1,
+          "duration_ms": 272
+        }
+      ]
+    },
+    {
+      "run_at": "2026-10-19T13:00:49.761Z",
+      "mode": "affected",
+      "files": [
+        "scripts/browser-layout-balance.mjs",
+        "scripts/browser-notebook-dock.mjs",
+        "scripts/browser-project-licenses.mjs",
+        "scripts/browser-ui-components.mjs",
+        "scripts/browser-ui-layout.mjs",
+        "scripts/browser-ui-motion.mjs",
+        "scripts/browser-ui-runtime.mjs"
+      ],
+      "unknown": [],
+      "checks": [
+        {
+          "id": "syntax",
+          "command": [
+            "node",
+            "scripts/check.mjs",
+            "--files",
+            "scripts/browser-layout-balance.mjs",
+            "scripts/browser-notebook-dock.mjs",
+            "scripts/browser-project-licenses.mjs",
+            "scripts/browser-ui-components.mjs",
+            "scripts/browser-ui-layout.mjs",
+            "scripts/browser-ui-motion.mjs",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-layout-balance.mjs, scripts/browser-notebook-dock.mjs, scripts/browser-project-licenses.mjs, scripts/browser-ui-components.mjs, scripts/browser-ui-layout.mjs, scripts/browser-ui-motion.mjs, scripts/browser-ui-runtime.mjs"
+          ]
+        },
+        {
+          "id": "browser:layout-balance",
+          "command": [
+            "node",
+            "scripts/browser-layout-balance.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-layout-balance.mjs"
+          ]
+        },
+        {
+          "id": "browser:notebook-dock",
+          "command": [
+            "node",
+            "scripts/browser-notebook-dock.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-notebook-dock.mjs"
+          ]
+        },
+        {
+          "id": "browser:project-licenses",
+          "command": [
+            "node",
+            "scripts/browser-project-licenses.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-project-licenses.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-components",
+          "command": [
+            "node",
+            "scripts/browser-ui-components.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-components.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-layout",
+          "command": [
+            "node",
+            "scripts/browser-ui-layout.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-layout.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-motion",
+          "command": [
+            "node",
+            "scripts/browser-ui-motion.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-motion.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-runtime",
+          "command": [
+            "node",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-runtime.mjs"
+          ]
+        }
+      ],
+      "executed": true,
+      "passed": false,
+      "results": [
+        {
+          "id": "syntax",
+          "exit_code": 0,
+          "duration_ms": 567
+        },
+        {
+          "id": "browser:layout-balance",
+          "exit_code": 0,
+          "duration_ms": 11498
+        },
+        {
+          "id": "browser:notebook-dock",
+          "exit_code": 0,
+          "duration_ms": 12159
+        },
+        {
+          "id": "browser:project-licenses",
+          "exit_code": 0,
+          "duration_ms": 65701
+        },
+        {
+          "id": "browser:ui-components",
+          "exit_code": 0,
+          "duration_ms": 11497
+        },
+        {
+          "id": "browser:ui-layout",
+          "exit_code": 1,
+          "duration_ms": 3994
+        }
+      ]
+    },
+    {
+      "run_at": "2026-10-19T13:06:26.808Z",
+      "mode": "affected",
+      "files": [
+        "public/workbench-shell.js",
+        "scripts/browser-sidebar-routing.mjs",
+        "scripts/browser-ui-layout.mjs",
+        "scripts/browser-ui-motion.mjs",
+        "scripts/browser-ui-runtime.mjs"
+      ],
+      "unknown": [],
+      "checks": [
+        {
+          "id": "architecture",
+          "command": [
+            "node",
+            "scripts/audit-architecture.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js"
+          ]
+        },
+        {
+          "id": "ui-policy",
+          "command": [
+            "node",
+            "scripts/audit-ui.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js"
+          ]
+        },
+        {
+          "id": "syntax",
+          "command": [
+            "node",
+            "scripts/check.mjs",
+            "--files",
+            "public/workbench-shell.js",
+            "scripts/browser-sidebar-routing.mjs",
+            "scripts/browser-ui-layout.mjs",
+            "scripts/browser-ui-motion.mjs",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js, scripts/browser-sidebar-routing.mjs, scripts/browser-ui-layout.mjs, scripts/browser-ui-motion.mjs, scripts/browser-ui-runtime.mjs"
+          ]
+        },
+        {
+          "id": "browser:workspace",
+          "command": [
+            "node",
+            "scripts/browser-workspace.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js"
+          ]
+        },
+        {
+          "id": "browser:sidebar-routing",
+          "command": [
+            "node",
+            "scripts/browser-sidebar-routing.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js",
+            "scripts/browser-sidebar-routing.mjs"
+          ]
+        },
+        {
+          "id": "browser:task-lifecycle",
+          "command": [
+            "node",
+            "scripts/browser-task-lifecycle.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js"
+          ]
+        },
+        {
+          "id": "browser:notebook-dock",
+          "command": [
+            "node",
+            "scripts/browser-notebook-dock.mjs"
+          ],
+          "reasons": [
+            "public/workbench-shell.js"
+          ]
+        },
+        {
+          "id": "browser:ui-layout",
+          "command": [
+            "node",
+            "scripts/browser-ui-layout.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-layout.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-motion",
+          "command": [
+            "node",
+            "scripts/browser-ui-motion.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-motion.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-runtime",
+          "command": [
+            "node",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-ui-runtime.mjs"
+          ]
+        }
+      ],
+      "executed": true,
+      "passed": false,
+      "results": [
+        {
+          "id": "architecture",
+          "exit_code": 0,
+          "duration_ms": 150
+        },
+        {
+          "id": "ui-policy",
+          "exit_code": 0,
+          "duration_ms": 169
+        },
+        {
+          "id": "syntax",
+          "exit_code": 0,
+          "duration_ms": 419
+        },
+        {
+          "id": "browser:workspace",
+          "exit_code": 0,
+          "duration_ms": 114735
+        },
+        {
+          "id": "browser:sidebar-routing",
+          "exit_code": 1,
+          "duration_ms": 35373
+        }
+      ]
+    },
+    {
+      "run_at": "2026-10-19T13:11:30.187Z",
+      "mode": "affected",
+      "files": [
+        "docs/UI_COMPONENTS.md",
+        "public/capabilities/sidebar.js",
+        "public/ui/animate-ui.js",
+        "scripts/browser-sidebar-routing.mjs",
+        "scripts/browser-task-lifecycle.mjs",
+        "scripts/browser-ui-layout.mjs",
+        "scripts/browser-ui-runtime.mjs"
+      ],
+      "unknown": [],
+      "checks": [
+        {
+          "id": "docs",
+          "command": [
+            "node",
+            "scripts/audit-docs.mjs"
+          ],
+          "reasons": [
+            "docs/UI_COMPONENTS.md"
+          ]
+        },
+        {
+          "id": "architecture",
+          "command": [
+            "node",
+            "scripts/audit-architecture.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/sidebar.js",
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "ui-policy",
+          "command": [
+            "node",
+            "scripts/audit-ui.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/sidebar.js",
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "syntax",
+          "command": [
+            "node",
+            "scripts/check.mjs",
+            "--files",
+            "public/capabilities/sidebar.js",
+            "public/ui/animate-ui.js",
+            "scripts/browser-sidebar-routing.mjs",
+            "scripts/browser-task-lifecycle.mjs",
+            "scripts/browser-ui-layout.mjs",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/sidebar.js, public/ui/animate-ui.js, scripts/browser-sidebar-routing.mjs, scripts/browser-task-lifecycle.mjs, scripts/browser-ui-layout.mjs, scripts/browser-ui-runtime.mjs"
+          ]
+        },
+        {
+          "id": "browser:sidebar-routing",
+          "command": [
+            "node",
+            "scripts/browser-sidebar-routing.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/sidebar.js",
+            "scripts/browser-sidebar-routing.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-runtime",
+          "command": [
+            "node",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "scripts/browser-ui-runtime.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-motion",
+          "command": [
+            "node",
+            "scripts/browser-ui-motion.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:ui-components",
+          "command": [
+            "node",
+            "scripts/browser-ui-components.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:ui-layout",
+          "command": [
+            "node",
+            "scripts/browser-ui-layout.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "scripts/browser-ui-layout.mjs"
+          ]
+        },
+        {
+          "id": "browser:notebook-dock",
+          "command": [
+            "node",
+            "scripts/browser-notebook-dock.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:task-lifecycle",
+          "command": [
+            "node",
+            "scripts/browser-task-lifecycle.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-task-lifecycle.mjs"
+          ]
+        }
+      ],
+      "executed": true,
+      "passed": false,
+      "results": [
+        {
+          "id": "docs",
+          "exit_code": 0,
+          "duration_ms": 108
+        },
+        {
+          "id": "architecture",
+          "exit_code": 0,
+          "duration_ms": 155
+        },
+        {
+          "id": "ui-policy",
+          "exit_code": 0,
+          "duration_ms": 188
+        },
+        {
+          "id": "syntax",
+          "exit_code": 0,
+          "duration_ms": 514
+        },
+        {
+          "id": "browser:sidebar-routing",
+          "exit_code": 0,
+          "duration_ms": 12629
+        },
+        {
+          "id": "browser:ui-runtime",
+          "exit_code": 0,
+          "duration_ms": 11589
+        },
+        {
+          "id": "browser:ui-motion",
+          "exit_code": 0,
+          "duration_ms": 30238
+        },
+        {
+          "id": "browser:ui-components",
+          "exit_code": 0,
+          "duration_ms": 12765
+        },
+        {
+          "id": "browser:ui-layout",
+          "exit_code": 1,
+          "duration_ms": 109838
+        }
+      ]
+    },
+    {
+      "run_at": "2026-10-19T13:14:46.256Z",
+      "mode": "affected",
+      "files": [
+        "public/capabilities/native-workspaces.js",
+        "public/ui/animate-ui.js",
+        "public/ui/motion.js",
+        "scripts/browser-task-lifecycle.mjs",
+        "scripts/browser-ui-runtime.mjs"
+      ],
+      "unknown": [],
+      "checks": [
+        {
+          "id": "architecture",
+          "command": [
+            "node",
+            "scripts/audit-architecture.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/native-workspaces.js",
+            "public/ui/animate-ui.js",
+            "public/ui/motion.js"
+          ]
+        },
+        {
+          "id": "ui-policy",
+          "command": [
+            "node",
+            "scripts/audit-ui.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/native-workspaces.js",
+            "public/ui/animate-ui.js",
+            "public/ui/motion.js"
+          ]
+        },
+        {
+          "id": "syntax",
+          "command": [
+            "node",
+            "scripts/check.mjs",
+            "--files",
+            "public/capabilities/native-workspaces.js",
+            "public/ui/animate-ui.js",
+            "public/ui/motion.js",
+            "scripts/browser-task-lifecycle.mjs",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/native-workspaces.js, public/ui/animate-ui.js, public/ui/motion.js, scripts/browser-task-lifecycle.mjs, scripts/browser-ui-runtime.mjs"
+          ]
+        },
+        {
+          "id": "browser:capabilities",
+          "command": [
+            "node",
+            "tests/browser-capabilities.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/native-workspaces.js"
+          ]
+        },
+        {
+          "id": "browser:capability-resilience",
+          "command": [
+            "node",
+            "scripts/browser-capability-resilience.mjs"
+          ],
+          "reasons": [
+            "public/capabilities/native-workspaces.js"
+          ]
+        },
+        {
+          "id": "browser:ui-runtime",
+          "command": [
+            "node",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "scripts/browser-ui-runtime.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-motion",
+          "command": [
+            "node",
+            "scripts/browser-ui-motion.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js",
+            "public/ui/motion.js"
+          ]
+        },
+        {
+          "id": "browser:ui-components",
+          "command": [
+            "node",
+            "scripts/browser-ui-components.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:ui-layout",
+          "command": [
+            "node",
+            "scripts/browser-ui-layout.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:notebook-dock",
+          "command": [
+            "node",
+            "scripts/browser-notebook-dock.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:task-lifecycle",
+          "command": [
+            "node",
+            "scripts/browser-task-lifecycle.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-task-lifecycle.mjs"
+          ]
+        }
+      ],
+      "executed": true,
+      "passed": false,
+      "results": [
+        {
+          "id": "architecture",
+          "exit_code": 0,
+          "duration_ms": 150
+        },
+        {
+          "id": "ui-policy",
+          "exit_code": 0,
+          "duration_ms": 174
+        },
+        {
+          "id": "syntax",
+          "exit_code": 0,
+          "duration_ms": 426
+        },
+        {
+          "id": "browser:capabilities",
+          "exit_code": 0,
+          "duration_ms": 51376
+        },
+        {
+          "id": "browser:capability-resilience",
+          "exit_code": 0,
+          "duration_ms": 15825
+        },
+        {
+          "id": "browser:ui-runtime",
+          "exit_code": 1,
+          "duration_ms": 41571
+        }
+      ]
+    },
+    {
+      "run_at": "2026-10-19T13:18:53.767Z",
+      "mode": "affected",
+      "files": [
+        "public/ui/animate-ui.js",
+        "scripts/browser-task-lifecycle.mjs"
+      ],
+      "unknown": [],
+      "checks": [
+        {
+          "id": "architecture",
+          "command": [
+            "node",
+            "scripts/audit-architecture.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "ui-policy",
+          "command": [
+            "node",
+            "scripts/audit-ui.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "syntax",
+          "command": [
+            "node",
+            "scripts/check.mjs",
+            "--files",
+            "public/ui/animate-ui.js",
+            "scripts/browser-task-lifecycle.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js, scripts/browser-task-lifecycle.mjs"
+          ]
+        },
+        {
+          "id": "browser:ui-runtime",
+          "command": [
+            "node",
+            "scripts/browser-ui-runtime.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:ui-motion",
+          "command": [
+            "node",
+            "scripts/browser-ui-motion.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:ui-components",
+          "command": [
+            "node",
+            "scripts/browser-ui-components.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:ui-layout",
+          "command": [
+            "node",
+            "scripts/browser-ui-layout.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:notebook-dock",
+          "command": [
+            "node",
+            "scripts/browser-notebook-dock.mjs"
+          ],
+          "reasons": [
+            "public/ui/animate-ui.js"
+          ]
+        },
+        {
+          "id": "browser:task-lifecycle",
+          "command": [
+            "node",
+            "scripts/browser-task-lifecycle.mjs"
+          ],
+          "reasons": [
+            "scripts/browser-task-lifecycle.mjs"
+          ]
+        }
+      ],
+      "executed": true,
+      "passed": true,
+      "results": [
+        {
+          "id": "architecture",
+          "exit_code": 0,
+          "duration_ms": 140
+        },
+        {
+          "id": "ui-policy",
+          "exit_code": 0,
+          "duration_ms": 164
+        },
+        {
+          "id": "syntax",
+          "exit_code": 0,
+          "duration_ms": 196
+        },
+        {
+          "id": "browser:ui-runtime",
+          "exit_code": 0,
+          "duration_ms": 11475
+        },
+        {
+          "id": "browser:ui-motion",
+          "exit_code": 0,
+          "duration_ms": 28407
+        },
+        {
+          "id": "browser:ui-components",
+          "exit_code": 0,
+          "duration_ms": 10367
+        },
+        {
+          "id": "browser:ui-layout",
+          "exit_code": 0,
+          "duration_ms": 53164
+        },
+        {
+          "id": "browser:notebook-dock",
+          "exit_code": 0,
+          "duration_ms": 11092
+        },
+        {
+          "id": "browser:task-lifecycle",
+          "exit_code": 0,
+          "duration_ms": 5963
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 // Native elements are the component instances: existing files, focus and listeners
-// survive moving a component between layouts. No virtual DOM or upstream runtime.
+// survive moving a component between layouts. Imported UI shells never own tool data.
 import {installMotion, motionBatch} from './motion.js';
 const instances = new WeakMap();
 const subscribers = new WeakMap();
@@ -36,7 +36,12 @@ function visit(root, fn) {
 // it never turns page DOM into components or changes layout/attributes.
 function observe() {
   if (observer || !document.documentElement) return;
-  installMotion();
+  installMotion({registerControl(node,name){
+    // Ref callback at construction of an imported shared component. This is
+    // not a DOM scan: the same instance/lifecycle registry owns its real node.
+    if(!node||instances.has(node))return;
+    instances.set(node,{name,node,disconnect:new Set()});node.dataset.ui=name;
+  }});
   observer = new MutationObserver(records => {
     const mounts = new Set(), unmounts = new Set(), states = new Map(), content = new Set();
     for (const record of records) {
@@ -58,10 +63,10 @@ function observe() {
     }
     for (const node of mounts) if (node.isConnected && subscribers.get(node)?.has('mount')) emit(node, 'mount');
     for (const [node, keys] of states) if (subscribers.get(node)?.has('state')) emit(node, 'state', {attributes: [...keys]});
-    motionBatch({mounts, unmounts, states, content, componentOf});
+    motionBatch({mounts:new Set([...mounts].filter(node=>!unmounts.has(node))), unmounts, states, content, componentOf});
   });
   observer.observe(document.documentElement, {subtree: true, childList: true, attributes: true,
-    attributeFilter: ['hidden', 'disabled', 'aria-expanded', 'aria-selected', 'aria-pressed', 'aria-busy', 'data-state']});
+    attributeFilter: ['hidden', 'open', 'disabled', 'aria-expanded', 'aria-selected', 'aria-pressed', 'aria-busy', 'data-state']});
 }
 
 export function attributes(node, attrs = {}) {

@@ -1,6 +1,9 @@
 import {create} from './core.js';
 
 const paths={
+ notebook:'M5 3h14v18H5zM3 7h4M3 12h4M3 17h4M9 7h6M9 11h6',
+ whiteboard:'M3 3h18v14H3zM8 21l4-4 4 4M7 7h4v4H7zM14 8h4M14 12h3',
+ mindmap:'M3 9h6v6H3zM15 3h6v5h-6zM15 16h6v5h-6zM9 12h3V5h3M12 12v7h3',
  menu:'M4 6h16M4 12h16M4 18h16',
  search:'M21 21l-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0',
  grid:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',

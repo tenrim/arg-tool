@@ -1,0 +1,177 @@
+[
+  {
+    "id": "D0006",
+    "name": "明文 → 旗语",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "http://inter.scoutnet.org/semaphore/",
+    "status": "待核实"
+  },
+  {
+    "id": "D0062",
+    "name": "Monkey",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；对应符号录入和密码子资料已存在；原站把候选符号约束合并即时筛选的用法并非全部相同。",
+    "url": "http://www.npinsker.me/puzzles/monkey/",
+    "status": "待核实"
+  },
+  {
+    "id": "D0374",
+    "name": "Braille Alphabet",
+    "difference": "六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://www.dcode.fr/braille-alphabet",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0404",
+    "name": "Flag Semaphore / encode/decode",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.dcode.fr/semaphore-flag",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0459",
+    "name": "Navy Signals Code",
+    "difference": "字母/数字旗查询有；多旗语义、代用旗和图形输出需逐项扩展。",
+    "url": "https://www.dcode.fr/maritime-signals-code",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0475",
+    "name": "Semaphore Angle",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.dcode.fr/semaphore-angle",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0476",
+    "name": "Semaphore Clock",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.dcode.fr/semaphore-clock",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0477",
+    "name": "Semaphore Trousers Cipher",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.dcode.fr/semaphore-trousers-cipher",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0523",
+    "name": "GS8 Braille Code",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://www.dcode.fr/gs8-braille-code",
+    "status": "待核实"
+  },
+  {
+    "id": "D0545",
+    "name": "NATO Phonetic Alphabet",
+    "difference": "现有文本→北约拼读词；反向批量和其他拼读表不全。",
+    "url": "https://www.dcode.fr/nato-phonetic-alphabet",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1160",
+    "name": "Braille Translator – Two Blind Brothers",
+    "difference": "六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://twoblindbrothers.com/pages/braille",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1161",
+    "name": "braille.htm",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "http://www.translatum.gr/converter/braille.htm",
+    "status": "待核实"
+  },
+  {
+    "id": "D1162",
+    "name": "Braille - Wikipedia",
+    "difference": "六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "http://en.wikipedia.org/wiki/Braille",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1163",
+    "name": "braille.htm",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "http://www.omniglot.com/writing/braille.htm",
+    "status": "待核实"
+  },
+  {
+    "id": "D1192",
+    "name": "reference/explanation",
+    "difference": "字母/数字旗查询有；多旗语义、代用旗和图形输出需逐项扩展。",
+    "url": "http://en.wikipedia.org/wiki/International_maritime_signal_flags",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "E0118",
+    "name": "Braille Translator",
+    "difference": "六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://www.branah.com/braille-translator",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0030",
+    "name": "braille（GC Toolbox）",
+    "difference": "六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=braille",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0066",
+    "name": "prussian Semaphore System（GC Toolbox）",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=prussianSemaphoreSystem",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0072",
+    "name": "semaphore Flags（GC Toolbox）",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=semaphoreFlags",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0201",
+    "name": "Braille",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=braille",
+    "status": "待核实"
+  },
+  {
+    "id": "F0209",
+    "name": "Semaphore flags",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=semaphoreFlags",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0210",
+    "name": "Signal flags",
+    "difference": "字母/数字旗查询有；多旗语义、代用旗和图形输出需逐项扩展。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=signalFlags",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0235",
+    "name": "Braille",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；六点字母和文本转换有；缩写、语种与复杂视觉输入另核。",
+    "url": "https://rumkin.com/tools/cipher/braille/",
+    "status": "待核实"
+  },
+  {
+    "id": "F0239",
+    "name": "Flag Semaphore",
+    "difference": "双旗方向录入可用；批量图形、角度/时钟变体和动画导出另补。",
+    "url": "https://rumkin.com/tools/cipher/flag-semaphore/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0306",
+    "name": "nato-phonetic-alphabet",
+    "difference": "现有文本→北约拼读词；反向批量和其他拼读表不全。",
+    "url": "https://cryptii.com/pipes/nato-phonetic-alphabet",
+    "status": "部分覆盖"
+  }
+]

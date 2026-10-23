@@ -1,0 +1,105 @@
+{
+  "run_at": "2026-10-19T11:05:32.199Z",
+  "files": [
+    "docs/UI_COMPONENTS.md",
+    "docs/UI_DEVELOPMENT_RULES.md",
+    "public/chef-tools/task-view.js",
+    "public/notebook/page.js",
+    "public/site-pages.js",
+    "public/ui/components.css",
+    "public/ui/dock.js",
+    "public/ui/feedback.js",
+    "public/ui/motion.js",
+    "scripts/browser-chef-categories.mjs",
+    "scripts/browser-notebook-dock.mjs",
+    "scripts/browser-ui-motion.mjs"
+  ],
+  "passed": true,
+  "results": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 107
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 150
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 3934
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 219
+    },
+    {
+      "id": "browser:family-workspaces",
+      "exit_code": 0,
+      "duration_ms": 101273
+    },
+    {
+      "id": "browser:chef-tools",
+      "exit_code": 0,
+      "duration_ms": 41520
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 158
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 695
+    },
+    {
+      "id": "browser:chef-categories",
+      "exit_code": 0,
+      "duration_ms": 29405
+    },
+    {
+      "id": "browser:notebook",
+      "exit_code": 0,
+      "duration_ms": 51723
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 0,
+      "duration_ms": 77454
+    },
+    {
+      "id": "browser:notebook-dock",
+      "exit_code": 0,
+      "duration_ms": 12000
+    },
+    {
+      "id": "browser:site-pages",
+      "exit_code": 0,
+      "duration_ms": 35090
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 11943
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 114798
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 26073
+    },
+    {
+      "id": "browser:layout-balance",
+      "exit_code": 0,
+      "duration_ms": 11189
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {article as enigma} from './enigma.js';
 // Function-specific lessons with primary references and unaltered pinned source mirrors.
 export const articles = [
   {
@@ -209,86 +210,7 @@ export const articles = [
     ],
     "misconceptions": []
   },
-  {
-    "id": "function-op:Enigma",
-    "capabilityIds": [
-      "op:Enigma"
-    ],
-    "relatedIds": [
-      "op:Enigma"
-    ],
-    "topicGroup": "classical",
-    "title": "恩尼格玛密码机",
-    "summary": "每次按键改变转子位置，电流经过反射器再返回。",
-    "aliases": [
-      "Enigma",
-      "转子、反射器与逐键步进"
-    ],
-    "sources": [
-      {
-        "id": "enigma",
-        "title": "Enigma working principle",
-        "publisher": "Crypto Museum（设备复原研究）",
-        "url": "https://www.cryptomuseum.com/crypto/enigma/working.htm",
-        "language": "en",
-        "kind": "author-spec",
-        "locator": "Working principle / cipher wheels"
-      },
-      {
-        "id": "engine",
-        "title": "CyberChef 随站附带的操作说明与参数",
-        "publisher": "GCHQ CyberChef（Apache-2.0）",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "language": "en",
-        "kind": "implementation",
-        "locator": "Enigma"
-      },
-      {
-        "id": "bombe-guide",
-        "title": "Enigma, the Bombe, and Typex",
-        "publisher": "GCHQ CyberChef 操作作者",
-        "url": "https://github.com/gchq/CyberChef/wiki/Enigma,-the-Bombe,-and-Typex/ed7ab8b92789111139fb98d23a9bf2249311b6a7",
-        "language": "en",
-        "kind": "official-doc",
-        "locator": "Cribs / menus / loops / checking machine"
-      }
-    ],
-    "sections": [
-      {
-        "title": "机制与规则",
-        "paragraphs": [
-          "字母先经插线板和转子映射，再经反射器走反向路径返回；按键造成转子步进，所以同一字母在不同位置可得到不同输出。反射器让正确初始设置下的加密过程也可解密。"
-        ],
-        "sourceIds": [
-          "enigma",
-          "engine",
-          "bombe-guide"
-        ],
-        "examples": [
-          {
-            "label": "规则推演",
-            "input": "转子 I 的固定接线表，输入 A",
-            "output": "单个转子接线映射为 E",
-            "explanation": "这里只展示接线表的第一项，并非整台机器的输出；转子偏移、其它转子和反射器仍要继续参与。"
-          }
-        ]
-      },
-      {
-        "title": "参数与识读边界",
-        "paragraphs": [
-          "Model、转子顺序、Ring setting、Initial value、Reflector 和 Plugboard 分别规定机器结构及初始状态，解密前须复原整组参数。",
-          "环设置不同于窗口起始字母；普通军用型号不把字母加密成自己，中间转子存在连续两次步进。"
-        ],
-        "sourceIds": [
-          "engine",
-          "enigma",
-          "bombe-guide"
-        ],
-        "examples": []
-      }
-    ],
-    "misconceptions": []
-  },
+  enigma,
   {
     "id": "function-op:Atbash%20Cipher",
     "capabilityIds": [

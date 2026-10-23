@@ -11,7 +11,6 @@ for name in ['service-names-port-numbers','protocol-numbers','http-status-codes'
  jobs.append(('iana/'+name+'.xml','https://raw.githubusercontent.com/larseggert/iana-assignments/'+PINS['larseggert/iana-assignments']+'/'+name+'/'+name+'.xml'))
 jobs.append(('iana/CC0-1.0.txt','https://raw.githubusercontent.com/spdx/license-list-data/'+PINS['spdx/license-list-data']+'/text/CC0-1.0.txt'))
 for name in ['public_suffix_list.dat','LICENSE']:jobs.append(('psl/'+name,'https://raw.githubusercontent.com/publicsuffix/list/'+PINS['publicsuffix/list']+'/'+name))
-jobs.append(('rfc/rfc-index.txt','https://raw.githubusercontent.com/AlexMelanFromRingo/rfc-library/'+PINS['AlexMelanFromRingo/rfc-library']+'/indexes/rfc-index.txt'))
 jobs.append(('mime-db/package.tgz','https://registry.npmjs.org/mime-db/-/mime-db-'+MIME_VERSION+'.tgz'))
 def fetch(job):
  name,url=job;data=urllib.request.urlopen(url,timeout=45).read();path=BASE/'sources'/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data)
@@ -26,5 +25,8 @@ if __name__=='__main__':
    if member is None:raise RuntimeError('Missing pinned mime-db file: '+name)
    data=member.read();path=BASE/'sources/mime-db'/name;path.write_bytes(data)
    files.append({'path':str(path.relative_to(ROOT)),'url':jobs[-1][1],'sha256':hashlib.sha256(data).hexdigest(),'archive_path':'package/'+name})
+ # The retired RFC selection remains an original archive, not runtime data.
+ previous=json.loads((BASE/'imports.json').read_text()) if (BASE/'imports.json').exists() else {}
+ files.extend(record for record in previous.get('files',[]) if 'rfc-index' in record['path'])
  (BASE/'imports.json').write_text(json.dumps({'pins':PINS,'packages':{'mime-db':{'version':MIME_VERSION,'integrity':MIME_INTEGRITY}},'files':sorted(files,key=lambda file:file['path'])},indent=2)+'\n')
  print('Imported pinned IT sources:',len(files))

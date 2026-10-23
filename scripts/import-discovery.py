@@ -26,9 +26,6 @@ for local, repo, remote in [
     ('currency/codes-all.csv', 'datasets/currency-codes', 'data/codes-all.csv'),
     ('currency/README.md', 'datasets/currency-codes', 'README.md'),
     ('currency/datapackage.json', 'datasets/currency-codes', 'datapackage.json'),
-    ('hyg/hygdata_v41.csv.gz', 'astronexus/HYG-Database', 'hyg/CURRENT/hygdata_v41.csv'),
-    ('hyg/LICENSE', 'astronexus/HYG-Database', 'LICENSE'),
-    ('hyg/README.md', 'astronexus/HYG-Database', 'hyg/README.md'),
     ('ngc/NGC.csv', 'mattiaverga/OpenNGC', 'database_files/NGC.csv'),
     ('ngc/addendum.csv', 'mattiaverga/OpenNGC', 'database_files/addendum.csv'),
     ('ngc/NGC_guide.txt', 'mattiaverga/OpenNGC', 'NGC_guide.txt'),
@@ -73,6 +70,9 @@ if __name__ == '__main__':
     EXPECTED = {r['path']: r['sha256'] for r in previous.get('files', [])}
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         records = list(pool.map(fetch, JOBS))
+    # Retired HYG snapshot stays archived with its original hashes, but is no
+    # longer fetched or transformed into a partial runtime star catalogue.
+    records.extend(record for record in previous.get('files', []) if pathlib.PurePath(record['path']).as_posix().replace('\\', '/').startswith('upstream/discovery/sources/hyg/'))
     package = (BASE / 'sources/doken-1.0.0.tgz').read_bytes()
     if base64.b64encode(hashlib.sha512(package).digest()).decode() != DOKEN_INTEGRITY:
         raise RuntimeError('doken 1.0.0 package integrity mismatch')

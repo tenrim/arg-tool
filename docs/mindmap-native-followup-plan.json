@@ -1,0 +1,67 @@
+{
+  "run_at": "2026-10-16T07:51:53.767Z",
+  "mode": "affected",
+  "files": [
+    "public/graphics/engines.js"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/graphics/engines.js"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

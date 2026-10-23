@@ -1,0 +1,132 @@
+{
+  "run_at": "2026-10-16T06:30:48.631Z",
+  "reason": "Remaining affected checks; focused capability count regression; current syntax and large source validation.",
+  "results": [
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/graphics/bridge.js",
+        "public/graphics/engines.js",
+        "public/graphics/model.js",
+        "public/graphics/page.js",
+        "public/handoff/button.js",
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js",
+        "public/navigation.js",
+        "public/notebook/page.js",
+        "public/project-licenses.js",
+        "public/tool-help.js",
+        "public/ui/icons.js",
+        "scripts/architecture-policy.mjs",
+        "scripts/audit-integrity.mjs",
+        "scripts/browser-graphics.mjs",
+        "scripts/import-graphics.mjs",
+        "scripts/test-map.mjs",
+        "tests/browser-capabilities.mjs",
+        "tests/chef-tools.test.mjs",
+        "tests/graphics.test.mjs",
+        "upstream/graphics/excalidraw-entry.js"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 1479
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 183
+    },
+    {
+      "id": "browser:capabilities",
+      "command": [
+        "node",
+        "tests/browser-capabilities.mjs"
+      ],
+      "filter": "production capability registry",
+      "exit_code": 0,
+      "duration_ms": 2358
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 28227
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 28734
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "command": [
+        "node",
+        "scripts/browser-handoff-feedback.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 10593
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 50957
+    },
+    {
+      "id": "browser:responsive-smoke",
+      "command": [
+        "node",
+        "scripts/browser-responsive-smoke.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 6081
+    },
+    {
+      "id": "browser:project-licenses",
+      "command": [
+        "node",
+        "scripts/browser-project-licenses.mjs"
+      ],
+      "filter": null,
+      "exit_code": 0,
+      "duration_ms": 34308
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "filter": null,
+      "exit_code": 1,
+      "duration_ms": 6140
+    }
+  ]
+}

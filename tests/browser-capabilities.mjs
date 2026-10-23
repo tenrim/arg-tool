@@ -4,9 +4,12 @@ import {spawn} from 'node:child_process';
 import {once} from 'node:events';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {resolve} from 'node:path';
+import {resolve,join} from 'node:path';
+import {tmpdir} from 'node:os';
 import {appPages} from '../scripts/browser-host.mjs';
 import {capabilityCategories,capabilityGroupDefinitions,toolPages} from '../public/navigation.js';
+import {EXPANSION_TASKS} from '../public/expansion/catalog.js';
+import {resolveCapability} from '../public/capabilities/registry.js';
 
 // This suite serves actual production modules and pinned engines over localhost.
 // It complements (rather than replaces) the existing algorithm/worker suites.
@@ -14,9 +17,9 @@ const {chromium}=createRequire(import.meta.url)('playwright');
 const localPort=Number(process.env.CAPABILITIES_PORT||40000+(process.pid%20000));
 const address=process.env.CAPABILITIES_BASE_URL||'http://127.0.0.1:'+localPort;
 const ownServer=!process.env.CAPABILITIES_BASE_URL;
-const results=[],errors=[],missing=[],external=[],extraPages=[],screenshots='/tmp/mist-capabilities-production';
+const results=[],errors=[],missing=[],external=[],extraPages=[],screenshots=join(tmpdir(),'mist-capabilities-production');
 const scenarioFilter=process.env.CAPABILITIES_MATCH?new RegExp(process.env.CAPABILITIES_MATCH,'i'):null;
-const reportPath=process.env.CAPABILITIES_REPORT||(scenarioFilter?'/tmp/mist-capabilities-production-focused-report.json':'/tmp/mist-capabilities-production-report.json');
+const reportPath=process.env.CAPABILITIES_REPORT||join(tmpdir(),scenarioFilter?'mist-capabilities-production-focused-report.json':'mist-capabilities-production-report.json');
 let server,browser,activePage,registry;
 const origin=new URL(address).origin;
 await mkdir(screenshots,{recursive:true});
@@ -69,14 +72,20 @@ async function overview(page,category='codec',group=null){
   ||document.querySelector('#panel-browse [data-category="'+category+'"][aria-pressed="true"]')
   ||document.querySelector('#panel-browse')?.dataset.category===category,category);
 }
-function capability(id){const entry=registry.entries.find(entry=>entry.id===id);assert.ok(entry,'known capability '+id);return entry;}
+function capability(id){const {entry}=resolveCapability(registry,id);assert.ok(entry,'known capability or exact topic member '+id);return entry;}
 async function openCapability(page,id,rawOp){
- const e=capability(id),query=new URLSearchParams({task:e.id});
- const operation=rawOp||(e.mode!=='native'?e.sourceOperationIds[0]:'');if(operation)query.set('op',operation);
+ const resolved=resolveCapability(registry,id,rawOp),e=resolved.entry;
+ assert.ok(e,'request resolves to a registered task or topic '+id);
+ const query=new URLSearchParams({task:e.id});
+ const operation=resolved.op||'';if(operation)query.set('op',operation);
+ if(resolved.direction)query.set('dir',resolved.direction);
+ if(e.variantId)query.set('view',e.variantId);
+ const ownerId=await page.evaluate(async({id,op})=>{const {loadRegistry,resolveCapability}=await import('./capabilities/registry.js');return resolveCapability(await loadRegistry(),id,op).entry?.id;},{id,op:operation});
+ assert.ok(ownerId,'request resolves to a real workspace owner '+id);
  const route=e.route+'?'+query;
  await page.evaluate(route=>{location.hash=route;},route);
  await page.waitForFunction(id=>document.querySelector('.panel:not([hidden]) [data-current-capability="'+id+'"]')
-  ||document.querySelector('.panel:not([hidden])[data-current-capability="'+id+'"]'),id);
+  ||document.querySelector('.panel:not([hidden])[data-current-capability="'+id+'"]'),ownerId);
  return e;
 }
 async function noOverflow(page,label){
@@ -115,21 +124,36 @@ try{
  await serve();
  browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  const initial=await newPage();
- registry=await initial.page.evaluate(async()=>{const {loadRegistry}=await import('./capabilities/registry.js');return loadRegistry();});
+ registry=await initial.page.evaluate(async()=>{const {loadRegistry}=await import('./capabilities/registry.js');const registry=await loadRegistry();return {...registry,aliases:[...registry.aliases],operationTargets:[...registry.operationTargets]};});
+ registry.aliases=new Map(registry.aliases);registry.operationTargets=new Map(registry.operationTargets);
+ registry.byId=new Map(registry.entries.map(entry=>[entry.id,entry]));
+ registry.byOperation=new Map(registry.entries.flatMap(entry=>entry.sourceOperationIds.map(op=>[op,entry])));
  await initial.context.close();
 
  await scenario('production capability registry preserves legacy pages, exposes five categories including knowledge and covers all 505 operation identities',async()=>{
   assert.deepEqual(registry.categories.map(category=>category.id),['codec','reference','media','other','knowledge']);
   assert.deepEqual(registry.categories.map(category=>[category.id,category.title]),capabilityCategories.map(category=>[category.id,category.title]));
-  assert.equal(registry.categories.length,5);assert.equal(registry.groups.length,38);
+  assert.equal(registry.categories.length,5);assert.equal(registry.groups.length,42);
+  assert.ok(registry.groups.some(group=>group.id==='sequences'&&group.category==='reference'),'OEIS online queries have their own reference group');
+  for(const id of ['oeis','zdic','cnkgraph','simbad','vizier','cod','pubchem','placenames','pokewiki','timezones','constellations','eclipses','birds','classical-music']){
+   const entry=capability('native:'+id);assert.equal(entry.category,'reference');assert.equal(entry.route,id);assert.equal(entry.learningIds.length,1);
+  }
   assert.deepEqual(registry.groups.map(group=>group.id).sort(),capabilityGroupDefinitions.map(group=>group.id).sort());
-  assert.equal(registry.coverage.toolCount,52);assert.equal(registry.coverage.coveredToolCount,52);
+  assert.equal(registry.coverage.toolCount,toolPages.length);assert.equal(registry.coverage.coveredToolCount,toolPages.length);
+  for(const task of EXPANSION_TASKS){
+   const id='native:'+task.id,entry=capability(id);
+   assert.equal(entry.variantId||entry.id,id,'every original expansion task remains an exact executable task or native topic member '+task.id);
+  }
+  assert(!registry.groups.some(group=>group.id==='visual-notes'));
+  for(const id of ['whiteboard','mindmap'])assert(!registry.entries.some(entry=>entry.id==='native:'+id),'notebook views must not be tool capabilities');
   assert.equal(registry.coverage.toolCount,toolPages.length);
   assert.equal(registry.coverage.operationCount,505);assert.equal(registry.coverage.coveredOperationCount,505);
   assert.deepEqual(registry.coverage.missingToolIds,[]);assert.deepEqual(registry.coverage.missingOperationIds,[]);
   assert.deepEqual(registry.coverage.sourceModes,{task:489,existing:1,chain:10,retained:5});
+  assert.deepEqual(registry.groups.find(group=>group.id==='pipeline').entryIds,['native:cyberchef'],'recipe controls stay inside one complete workspace');
+  assert.ok(registry.entries.filter(entry=>entry.mode==='chain').every(entry=>entry.listed===false&&entry.learningIds.length===0));
   const owners=registry.entries.flatMap(e=>e.sourceOperationIds);assert.equal(owners.length,new Set(owners).size);
-  assert.deepEqual(capability('pair:To%20Base64').sourceOperationIds,['To Base64','From Base64']);
+  assert.deepEqual(capability('pair:To%20Base64').sourceOperationIds.filter(op=>/^(To|From) Base64$/.test(op)),['To Base64','From Base64']);
  });
 
  for(const [width,height] of [[320,950],[390,844],[800,950],[1440,950],[844,390]]){
@@ -164,9 +188,10 @@ try{
    await trigger.click();const dialog=page.locator('.tool-directory[open]');await dialog.waitFor();
    assert.equal(await page.locator('dialog[open]').count(),1,'drawer replaced rather than layered');
    const search=dialog.locator('input[type=search]').first();
-   for(const [query,id] of [['ASCII','native:ascii'],['Base92','pair:To%20Base92'],['机场','native:airports'],['图灵机','native:turing']]){
+   for(const [query,id] of [['ASCII','topic:character-codes'],['Base92','topic:base-family'],['机场','native:airports'],['图灵机','native:turing'],['CIF','native:model'],['Fork','native:cyberchef']]){
     await search.fill(query);assert.ok(await dialog.locator('[data-capability="'+id+'"]').isVisible(),'all-category discoverability '+query);
    }
+   assert.equal(await dialog.locator('[data-capability="op:Fork"]').count(),0,'internal flow operation is not another tool');
    assert.equal(await dialog.locator('dialog').count(),0,'no inner modal');
    await noOverflow(page,'full directory '+width);await page.keyboard.press('Escape');
    await page.waitForFunction(()=>!document.querySelector('dialog[open]'));
@@ -179,13 +204,15 @@ try{
   const {context,page}=await newPage(1440);
   await scenario('real ASCII to Base64 handoff preserves one current input and invalidates old results',async()=>{
    await openCapability(page,'native:ascii');await page.locator('#basics-input').fill('ARG\r\n');
+   const entered=await page.locator('#basics-input').inputValue();
+   assert.ok(['ARG\n','ARG\r\n'].includes(entered),'browser text entry retains a valid platform newline');
    await page.locator('#basics-run').click();await doneBasic(page,'basics');
-   assert.equal(await page.locator('#basics-output').inputValue(),'65 82 71 10','native textarea projection uses actual engine');
+   assert.equal(await page.locator('#basics-output').inputValue(),Array.from(entered,c=>c.charCodeAt(0)).join(' '),'native engine encodes the actual textarea input');
    await openCapability(page,'pair:To%20Base64');await page.locator('#ct-encoding[data-operation]').waitFor();
-   assert.equal(await page.locator('#ct-encoding .ct-input').inputValue(),'ARG\n','shared codec input carries across actual adapters');
+   assert.equal(await page.locator('#ct-encoding .ct-input').inputValue(),entered.replace(/\r\n?/g,'\n'),'textarea projects the adopted text with normalized newlines');
    assert.equal(await page.locator('#ct-encoding .ct-output').count(),0,'handoff does not revive a prior result');
    await page.locator('#ct-encoding .ct-run').click();await doneChef(page,'encoding');
-   assert.equal(await page.locator('#ct-encoding .ct-output').inputValue(),Buffer.from('ARG\n').toString('base64'));
+   assert.equal(await page.locator('#ct-encoding .ct-output').inputValue(),Buffer.from(entered).toString('base64'));
    await page.locator('#ct-encoding .ct-input').fill('changed');
    assert.equal(await page.locator('#ct-encoding .ct-output').count(),0,'editing clears result synchronously');
    assert.equal(await page.locator('#ct-encoding .ct-download').isDisabled(),true,'stale data cannot download');
@@ -206,7 +233,8 @@ try{
   await scenario('native inverse deep-link reload restores the actual format and direction controls',async()=>{
    await openCapability(page,'native:escape-url','URL Decode');await page.locator('#basics-input').waitFor();
    assert.equal(await page.locator('#basics-family').inputValue(),'escapes');assert.equal(await page.locator('#basics-format').inputValue(),'url');assert.equal(await page.locator('#basics-direction').inputValue(),'decode');
-   await page.reload();await page.locator('#panel-basics:not([hidden]) [data-current-capability="native:escape-url"]').waitFor();
+   await page.reload();await page.locator('#panel-basics:not([hidden]) [data-current-capability="topic:text-escapes"]').waitFor({state:'attached'});
+   assert.equal(await page.locator('#panel-basics').isVisible(),true);await page.locator('#basics-input').waitFor({state:'visible'});await page.locator('#basics-direction').waitFor({state:'visible'});
    await page.waitForFunction(()=>document.getElementById('basics-direction').value==='decode');assert.equal(await page.locator('#basics-format').inputValue(),'url');
    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('op'),'URL Decode');
    await page.locator('#basics-input').fill('%E8%B0%9C%E9%A2%98');await page.locator('#basics-run').click();await doneBasic(page,'basics');assert.equal(await page.locator('#basics-output').inputValue(),'谜题');
@@ -232,11 +260,12 @@ try{
    assert.equal(await page.locator('[data-reference-workspace="world"]').count(),1);
    for(const id of ['countries','currencies','airports','ports'])assert.equal(await page.locator('[data-reference-task="'+id+'"]:visible').count(),1,'one direct task control '+id);
   });
-  await scenario('sky catalogue and observation reuse the selected Sirius record through actual Astronomy Engine',async()=>{
+  await scenario('sky catalogue and observation reuse the selected M42 record through actual Astronomy Engine',async()=>{
    await openCapability(page,'native:sky');await page.locator('#sky-browser[data-ready="true"]').waitFor();
-   await page.locator('#sky-query').fill('Sirius');await page.locator('#sky-run').click();await queryDone(page,'sky');
+   await page.locator('#sky-query').fill('M42');await page.locator('#sky-run').click();await queryDone(page,'sky');
+   assert.match(await page.locator('#sky-results').textContent(),/NGC1976/);assert.match(await page.locator('#sky-results').textContent(),/5\.587911/);assert.match(await page.locator('#sky-results').textContent(),/-5\.389667/);
    await page.locator('[data-reference-task="astronomy"]:visible').click();await page.waitForFunction(()=>document.querySelector('#astronomy-status').textContent==='处理完成');
-   assert.equal(await page.locator('#astro-body').inputValue(),'Star1');assert.match(await page.locator('#astronomy-output').textContent(),/Sirius|天狼星/);
+   assert.equal(await page.locator('#astro-body').inputValue(),'Star1');assert.match(await page.locator('#astronomy-output').textContent(),/猎户座大星云|NGC1976/);
    await page.locator('[data-reference-task="sky"]:visible').click();await queryDone(page,'sky');assert.equal(await page.locator('#sky-results article').count(),1);
   });
   await scenario('real standard codon reference hands the selected amino acid to sequence conversion',async()=>{
@@ -273,7 +302,7 @@ try{
    await page.waitForFunction(()=>{const image=document.querySelector('#ct-image .ct-result-image');return image?.complete&&image.naturalWidth===1&&image.naturalHeight===1;});
    assert.equal(await page.locator('#image-info').textContent(),imageInfo,'engine uses retained original without replacing analysis input');
    assert.equal(await page.evaluate(()=>window.__capOriginalNode===document.getElementById('image-input')),true,'engine task does not clone original material input');
-   await page.evaluate(()=>{location.hash='image';});await page.waitForFunction(()=>document.querySelector('#panel-image .capability-workspace-context')?.dataset.currentCapability==='op:Resize%20Image');assert.equal(await page.locator('#panel-image .r2-tabs').isVisible(),false);
+   await page.evaluate(()=>{location.hash='image';});await page.waitForFunction(id=>document.querySelector('#panel-image .capability-workspace-context')?.dataset.currentCapability===id,capability('op:Resize%20Image').id);assert.equal(await page.locator('#panel-image .r2-tabs').isVisible(),false);
    assert.equal(await page.locator('#image-info').textContent(),imageInfo,'page preference returns to the same task and preserved original material');
    await openCapability(page,'op:SHA2');await page.locator('#ct-file[data-operation]').waitFor();
    await page.locator('#ct-file .ct-source').selectOption('shared');await page.locator('#ct-file [data-arg="0"] select').selectOption('256');
@@ -288,7 +317,7 @@ try{
   await scenario('native symbols share their output while task adapters expose only the chosen controls',async()=>{
    await openCapability(page,'native:morse');await page.locator('#morse-entry').waitFor({state:'visible'});
    await page.evaluate(()=>{window.__capSymbolsOutput=document.getElementById('symbols-output');});
-   for(const [id,visible,hidden] of [['native:braille','#braille-dots','#morse-entry'],['native:pigpen','#pigpen-keys','#braille-dots'],['native:morse','#morse-entry','#pigpen-keys']]){
+   for(const [id,visible,hidden] of [['native:braille','#braille-keyboard','#morse-entry'],['native:pigpen','#pigpen-keys','#braille-keyboard'],['native:morse','#morse-entry','#pigpen-keys']]){
     await openCapability(page,id);assert.ok(await page.locator(visible).isVisible());assert.equal(await page.locator(hidden).isVisible(),false,'other symbol controls are not mixed into chosen task');
     assert.equal(await page.evaluate(()=>window.__capSymbolsOutput===document.getElementById('symbols-output')),true,'one output node follows native symbol tasks');
    }
@@ -314,8 +343,22 @@ try{
   const {context,page}=await newPage(1440);await openCapability(page,'op:Fork');
   await page.waitForFunction(()=>document.getElementById('cyberchef-stage').dataset.ready==='true',{},{timeout:45000});
   await page.waitForFunction(()=>document.querySelectorAll('#chef-recipe .chef-step').length===1);
-  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'op:Fork','initializing a recipe must not rewrite the canonical route');
+  const route=new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
+  assert.equal(route.get('task'),'native:cyberchef','an internal operation uses the one canonical recipe task');assert.equal(route.get('op'),'Fork','the original insertion request remains explicit');
   const recipe=await exportedRecipe(page);assert.equal(recipe.length,1);assert.equal(recipe[0].op,'Fork');assert.ok(Array.isArray(recipe[0].args),'actual official operation arguments are serialized');
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector('#panel-cyberchef:not([hidden]) [data-current-capability="native:cyberchef"]'));
+  await page.waitForFunction(()=>document.getElementById('cyberchef-stage').dataset.ready==='true'&&document.querySelectorAll('#chef-recipe .chef-step').length===1,{},{timeout:45000});
+  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'native:cyberchef');
+  assert.equal((await exportedRecipe(page))[0].op,'Fork','canonical task plus raw op preserves insertion through reload');
+  await page.locator('#chef-input').fill('keep my recipe input');
+  await page.locator('#chef-category').selectOption('all');await page.locator('#chef-search').fill('To Base64');await page.locator('#chef-operations [data-operation="To Base64"]').click();
+  await openCapability(page,'native:ascii');await openCapability(page,'native:cyberchef');
+  assert.deepEqual((await exportedRecipe(page)).map(item=>item.op),['Fork','To Base64'],'ordinary entry preserves the existing user recipe');
+  assert.equal(await page.locator('#chef-input').inputValue(),'keep my recipe input');
+  await page.evaluate(()=>document.dispatchEvent(new CustomEvent('arg:openoperation',{detail:{op:'Fork'}})));
+  await page.waitForFunction(()=>new URLSearchParams(location.hash.split('?')[1]).get('task')==='native:cyberchef'&&new URLSearchParams(location.hash.split('?')[1]).get('op')==='Fork'&&document.querySelectorAll('#chef-recipe .chef-step').length===1);
+  assert.equal((await exportedRecipe(page))[0].op,'Fork','operation event resolves the same canonical recipe owner');
   await context.close();
  });
  await scenario('a late real recipe catalogue cannot steal navigation or overwrite the next active clue',async()=>{
@@ -327,7 +370,7 @@ try{
    await openCapability(page,'native:ascii');await page.locator('#basics-input').fill('new active clue');release();
    await page.waitForFunction(()=>document.getElementById('cyberchef-stage').dataset.ready==='true',{},{timeout:45000});
    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'native:ascii');assert.ok(await page.locator('#panel-basics:not([hidden])').isVisible());
+   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'topic:character-codes');assert.ok(await page.locator('#panel-basics:not([hidden])').isVisible());
    assert.equal(await page.locator('#basics-input').inputValue(),'new active clue');assert.equal(await page.locator('#chef-recipe .chef-step').count(),0,'abandoned request never installs a late recipe');
   }finally{release();await context.close();}
  });
@@ -354,21 +397,36 @@ try{
    await page.locator('#panel-encoding .tool-favorite').click();
    await page.locator('#ct-encoding .ct-input').evaluate(node=>window.__taskInput=node);
    const assertTask=async()=>{
-    await page.waitForSelector('#panel-encoding:not([hidden]) [data-current-capability="pair:To%20Base64"]');
+    await page.waitForSelector('#panel-encoding:not([hidden]) [data-current-capability="topic:base-family"]',{state:'attached'});
+    assert.equal(await page.locator('#panel-encoding').isVisible(),true);await page.locator('#ct-encoding .ct-input').waitFor({state:'visible'});
     assert.equal(await page.locator('#ct-encoding').getAttribute('data-operation'),'From Base64');
     assert.equal(await page.locator('#ct-encoding .ct-input').inputValue(),'同一个输入');
     assert.ok(await page.evaluate(()=>window.__taskInput===document.querySelector('#ct-encoding .ct-input')));
     assert.equal(await page.locator('.ct-picker,#chef-directory,.ct-jump').count(),0);
-    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'pair:To%20Base64');
+    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'topic:base-family');
+    const panel=page.locator('#panel-encoding');
+    assert.equal(await panel.locator('.capability-workspace-navigation,.capability-workspace-peers,.capability-native-directions,.capability-breadcrumb,.page-heading .eyebrow').count(),0,'compact tasks remove redundant taxonomy and duplicate direction rows at composition time');
+    const learning=panel.locator('.heading-actions [data-learning-link]');
+    assert.equal(await learning.count(),1);assert.equal(await learning.textContent(),'相关科普');
+    assert.equal(await learning.getAttribute('data-learning-link'),capability('pair:To%20Base64').learningIds[0]);
+    assert.equal(await panel.locator('.heading-actions .tool-help-button').count(),1,'help and the current lesson share the heading action row');
+    assert.equal(await panel.locator('.heading-actions [data-task-navigation]').count(),2,'directory and group returns do not create a separate navigation row');
+    assert.equal(await panel.locator('.capability-workspace-context').isVisible(),false,'an empty task status does not occupy a row');
+    await noOverflow(page,'compact heading '+width+' '+motion);
    };
    for(const index of [0,1]){
     await page.evaluate(()=>location.hash='home');await page.locator('#panel-home:not([hidden])').waitFor();
-    await page.locator('.home-collection').nth(index).locator('a[href="#encoding"]').click();await assertTask();
+    await page.locator('.home-collection').nth(index).locator(index?'a[href*="task=topic%3Abase-family"]':'a[href="#encoding"]').click();await assertTask();
    }
    if(width<1100)await page.locator('.workbench-menu').click();
    await page.locator('.rail-collection [data-route="encoding"]').first().click();await assertTask();
    await page.evaluate(()=>location.hash='encoding');await assertTask();
    await page.evaluate(()=>location.hash='encoding?task=missing');await assertTask();
+   await page.locator('#panel-encoding .heading-actions [data-learning-link]').click();
+   await page.waitForSelector('#panel-knowledge:not([hidden]) #knowledge-detail [data-knowledge-detail="function-topic:base-family"]');
+   assert.equal(await page.locator('#panel-encoding [data-learning-link]').count(),0,'leaving a task removes its lesson control rather than retaining a stale link');
+   await openCapability(page,'native:ascii');
+   assert.equal(await page.locator('#panel-basics .heading-actions [data-learning-link]').getAttribute('data-learning-link'),capability('native:ascii').learningIds[0],'the shared heading follows the newly selected real article');
    await openCapability(page,'native:cipher-detect');
    assert.equal(await page.locator('#panel-analysis .ct-extension').isVisible(),false,'native task cannot display the unrelated statistics form');
    await context.close();

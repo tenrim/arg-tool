@@ -1,3 +1,4 @@
+import {tmpdir as testTmpdir} from 'node:os';
 import {createRequire} from 'node:module';
 import {readFile, mkdir} from 'node:fs/promises';
 import {resolve, extname} from 'node:path';
@@ -5,7 +6,7 @@ import assert from 'node:assert/strict';
 import {checkHelpPlacement} from './browser-help-placement.mjs';
 const {chromium} = createRequire(import.meta.url)('playwright');
 const browser = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
-const screenshots = '/tmp/arg-ui-layout';
+const screenshots = testTmpdir()+'/arg-ui-layout';
 try {
   const context = await browser.newContext({viewport: {width: 390, height: 844}, isMobile: true, hasTouch: true, reducedMotion: 'reduce'});
   const errors = [], external = [];
@@ -39,6 +40,7 @@ try {
   };
   // Reproduce the reported form failure against EVERY official parameter schema,
   // without executing operations or changing the original worker/runtime.
+  if(process.env.UI_LAYOUT_PART!=='help'){
   if(process.env.UI_LAYOUT_PART!=='workspace')for (const width of [320, 390, 800, 1440]) {
     await page.setViewportSize({width, height: 950}); await go('crypto');
     const audit = await page.evaluate(async () => {
@@ -88,7 +90,7 @@ try {
   await page.locator('#ct-crypto .ct-input').fill('Abc123');
   // Click the label instead of the tiny native checkbox; actual execution proves
   // the UI still changes CyberChef's arguments rather than only its appearance.
-  await page.locator('#ct-crypto [data-arg="2"] span').click();
+  await page.locator('#ct-crypto [data-arg="2"] [data-ui=field-label]').click();
   await page.locator('#ct-crypto .ct-run').click();
   await page.waitForFunction(() => document.querySelector('#ct-crypto .ct-status').textContent.includes('处理完成'), null, {timeout: 45000});
   assert.equal(await page.locator('#ct-crypto .ct-output').inputValue(), 'Nop456');
@@ -103,7 +105,7 @@ try {
   assert.ok(resultBox.height<=outputBox.height+6,'Ready Result must not retain a large empty minimum height around its short editor');
   await page.screenshot({path: screenshots + '/encoding-mobile.png', fullPage: true});
   for (const width of [320, 390, 800, 1440]) {
-    await page.setViewportSize({width, height: 950}); await go('symbols');
+    await page.setViewportSize({width, height: 950}); await go('symbols');await page.locator('#braille-entry-mode').selectOption('dots');
     const geometry = await page.evaluate(() => {
       const dots = document.querySelector('#braille-dots'), result = document.querySelector('.symbol-result'), a = dots.getBoundingClientRect(), b = result.getBoundingClientRect();
       return {a: a.toJSON(), b: b.toJSON(), dots: [...dots.children].map(dot => dot.getBoundingClientRect().toJSON()), panel: document.querySelector('.symbol-compose').getBoundingClientRect().toJSON()};
@@ -154,11 +156,19 @@ try {
   assert.equal(await page.locator('.tool-directory').evaluate(node => node.style.getPropertyValue('--ui-viewport-height')), '', 'Close releases viewport state');
   await page.evaluate(() => {delete visualViewport.height; delete visualViewport.offsetTop;});
   await page.keyboard.press('Control+k');
-  await page.setViewportSize({width: 390, height: 420}); await page.locator('.workspace-search input').fill('Base64'); await page.waitForTimeout(80);
-  const searchBox = await page.locator('.workspace-search').boundingBox();
+  await page.setViewportSize({width: 390, height: 420}); await page.locator('#workspace-search-input').fill('Base64');
+  await page.waitForSelector('.workspace-search-popover:not([hidden]) [role=option]');
+  await assertSearch('.workspace-search-field');
+  assert.equal(await page.locator('#workspace-search-input').getAttribute('aria-expanded'),'true');
+  await page.keyboard.press('ArrowDown');
+  assert.ok(await page.locator('#workspace-search-input').getAttribute('aria-activedescendant'),'ArrowDown selects a real inline search result');
+  const searchBox = await page.locator('.workspace-search-popover').boundingBox();
   assert.ok(searchBox.y >= 0 && searchBox.y + searchBox.height <= 420, 'Global search also fits the keyboard viewport');
-  await page.keyboard.press('Escape'); await page.locator('.workspace-search').waitFor({state: 'hidden'});
-  await go('cyberchef'); await page.locator('#chef-tabs [data-pane="operations"]').click(); await assertSearch('.search-field');
+  await page.keyboard.press('Escape'); await page.locator('.workspace-search-popover').waitFor({state: 'hidden'});
+  assert.equal(await page.locator('#workspace-search-input').getAttribute('aria-expanded'),'false');
+  assert.equal(await page.locator('.workspace-search').isVisible(),true,'Escape closes results while keeping the header search available');
+  assert.equal(await page.locator('#workspace-search-input').evaluate(node=>document.activeElement===node),true,'Escape preserves the active header input');
+  await go('cyberchef'); await page.locator('#chef-tabs [role="tab"][data-pane="operations"]').click(); await assertSearch('.search-field');
   const routes = await page.evaluate(async () => (await import('/navigation.js')).toolGroups.flatMap(group => group.items).map(([id]) => id).filter(id => !id.includes('/')));
   for (const width of [320, 390, 800, 1440]) {
     await page.setViewportSize({width, height: 950});
@@ -182,6 +192,7 @@ try {
   await page.evaluate(() => document.documentElement.style.fontSize = '');
   await page.setViewportSize({width:1440,height:950});
   await go('crypto'); await page.screenshot({path: screenshots + '/crypto-desktop.png', fullPage: true});
+  }
   await checkHelpPlacement(page,go);
   assert.deepEqual(errors, []); assert.deepEqual(external, []);
   console.log('PASS screenshot regressions: single search focus frame, 505 real schemas, label-driven ROT13/Base64 execution, balanced Braille, keyboard viewport and tool control bounds.');

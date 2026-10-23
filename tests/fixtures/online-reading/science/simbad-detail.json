@@ -1,0 +1,96 @@
+{
+  "record": {
+    "id": "1575544:bibliography:1850CDT..1784..227M",
+    "title": "Catalogue des nebuleuses et des amas d'etoiles.",
+    "fields": {
+      "oidbib": 1,
+      "bibcode": "1850CDT..1784..227M",
+      "title": "Catalogue des nebuleuses et des amas d'etoiles.",
+      "year": 1850,
+      "journal": "CDT",
+      "page": 227,
+      "last_page": 269,
+      "volume": 1784,
+      "abstract": null,
+      "nbobject": 111,
+      "doi": null
+    },
+    "sourceURL": "https://simbad.u-strasbg.fr/simbad/sim-id?Ident=%401575544"
+  },
+  "result": {
+    "parameters": {
+      "mode": "detail",
+      "oid": 1575544,
+      "section": "bibliography",
+      "after": ""
+    },
+    "columns": [
+      {
+        "name": "oidbib",
+        "description": "Bibcode internal identifier",
+        "ucd": "meta.record",
+        "datatype": "LONG"
+      },
+      {
+        "name": "bibcode",
+        "description": "Bibcode",
+        "ucd": "meta.bib.bibcode",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "title",
+        "description": "Title",
+        "ucd": "meta.title",
+        "datatype": "UNICODECHAR"
+      },
+      {
+        "name": "year",
+        "description": "Publication year",
+        "ucd": "time.publiYear",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "journal",
+        "description": "Abbreviation for the journal",
+        "ucd": "meta.bib.journal",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "page",
+        "description": "page number",
+        "ucd": "meta.bib.page",
+        "datatype": "INT"
+      },
+      {
+        "name": "last_page",
+        "description": "Last page number",
+        "ucd": "meta.bib.page",
+        "datatype": "INT"
+      },
+      {
+        "name": "volume",
+        "description": "volume number",
+        "ucd": "meta.bib.volume",
+        "datatype": "INT"
+      },
+      {
+        "name": "abstract",
+        "description": "(revisited) Abstract of published paper",
+        "ucd": "meta.record",
+        "datatype": "UNICODECHAR"
+      },
+      {
+        "name": "nbobject",
+        "description": "Number of objects studied in",
+        "ucd": "meta.id;arith.sum",
+        "datatype": "INT"
+      },
+      {
+        "name": "doi",
+        "description": "DOI designation",
+        "ucd": "meta.ref.doi",
+        "datatype": "CHAR"
+      }
+    ]
+  }
+}

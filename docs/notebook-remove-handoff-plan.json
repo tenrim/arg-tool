@@ -1,0 +1,136 @@
+{
+  "run_at": "2026-10-16T08:20:34.480Z",
+  "mode": "affected",
+  "files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/GRAPHICS.md",
+    "public/graphics/page.js",
+    "public/tool-help.js",
+    "scripts/architecture-policy.mjs",
+    "scripts/browser-graphics.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "AGENTS.md",
+        "README.md",
+        "docs/GRAPHICS.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "public/tool-help.js",
+        "scripts/architecture-policy.mjs"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/graphics/page.js",
+        "public/tool-help.js",
+        "scripts/architecture-policy.mjs",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js, public/tool-help.js, scripts/architecture-policy.mjs, scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js"
+      ]
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/testing-policy.test.mjs"
+      ],
+      "reasons": [
+        "scripts/architecture-policy.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/architecture.test.mjs"
+      ],
+      "reasons": [
+        "scripts/architecture-policy.mjs"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/tool-help.js"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

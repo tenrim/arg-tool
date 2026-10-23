@@ -1,6 +1,6 @@
 import {
   Box, Button, Card, DataList, EmptyState, Icon, Input, Result,
-  ReferenceList, SearchField, SplitView, Status, ToolHeader, ToolPanel, Toolbar,
+  ReferenceList, SearchField, Status, ToolHeader, ToolPanel, Toolbar,
   animatePresence, cancelMotion, onDisconnect, setState, updateStatus,
 } from '../ui/index.js';
 import {capabilityCategories, capabilityGroupDefinitions} from '../navigation.js';
@@ -23,30 +23,28 @@ export function mountKnowledge(main, {navigate = route => {location.hash = route
   const summary = Status({id: 'knowledge-summary'});
   const list = Result({id: 'knowledge-list', className: 'knowledge-list', layout: 'collection',
     attrs: {'aria-label': '科普主题目录', 'data-state': 'ready'}});
-  const detail = Result({id: 'knowledge-detail', attrs: {'aria-label': '科普文章', 'data-state': 'empty'}});
+  const detail = Result({id: 'knowledge-detail', attrs: {'aria-label': '科普文章', 'data-variant': 'reading', 'data-state': 'empty'}});
   const status = Status({id: 'knowledge-status', hidden: true});
   const returnList = Button({id: 'knowledge-return-list', text: '返回科普目录', hidden: true});
   const catalogue = Card({className: 'surface knowledge-catalogue', children: [search, categoryFilters, topicFilters, summary, list]});
-  const reader = Card({className: 'surface knowledge-reader', children: [returnList, status, detail]});
-  const split = SplitView({className: 'knowledge-split', minPaneWidth: '360px', children: [catalogue, reader]});
+  const reader = Card({className: 'surface knowledge-reader', children: [Toolbar({children: [returnList]}), status, detail]});
+  const workspace = Box({className: 'knowledge-workspace', children: [catalogue, reader]});
   const panel = ToolPanel({id: 'panel-knowledge', className: 'panel knowledge-panel', hidden: true,
-    header: ToolHeader({className: 'page-heading', title: '科普'}), body: split});
+    header: ToolHeader({className: 'page-heading', title: '科普'}), body: workspace});
   main.append(panel);
 
-  let category = '', topic = '', selected = null, view = 'catalogue', wide = false;
+  let category = '', topic = '', selected = null, view = 'catalogue';
   let revision = 0, destroyed = false, currentReading = null;
   const articleButtons = new Map();
 
   function layout() {
     if (destroyed) return;
-    const width = split.clientWidth;
-    if (width > 0) wide = width >= 760;
     const focused = panel.ownerDocument.activeElement;
-    catalogue.hidden = !wide && view === 'article';
-    reader.hidden = !wide && view !== 'article';
-    returnList.hidden = wide || view !== 'article';
+    catalogue.hidden = view === 'article';
+    reader.hidden = view !== 'article';
+    returnList.hidden = view !== 'article';
     panel.dataset.knowledgeView = view;
-    panel.dataset.knowledgeLayout = wide ? 'split' : 'single';
+    panel.dataset.knowledgeLayout = 'single';
     if (catalogue.hidden && catalogue.contains(focused)) (detail.querySelector('#knowledge-article-title') || returnList).focus({preventScroll: true});
     if (reader.hidden && reader.contains(focused)) (articleButtons.get(selected) || query).focus({preventScroll: true});
   }
@@ -150,7 +148,7 @@ export function mountKnowledge(main, {navigate = route => {location.hash = route
       view = 'article';layout();
       if (focus) {
         currentReading.title.focus({preventScroll: true});
-        if (!wide) reader.scrollIntoView({block: 'start', behavior: 'instant'});
+        reader.scrollIntoView({block: 'start', behavior: 'instant'});
       }
       if (notify) onArticleChange?.(article.id);
       refreshRelated(currentReading, ownRevision);
@@ -161,18 +159,17 @@ export function mountKnowledge(main, {navigate = route => {location.hash = route
     const related = Toolbar({className: 'knowledge-related', attrs: {role: 'group', 'aria-label': '相关工具'}});
     const relatedSection = Box({className: 'knowledge-related-section', hidden: true,
       children: [Box({tag: 'h3', text: '相关工具'}), related]});
-    const sources = new Map(article.sources.map(source => [source.id, source]));
-    const sections = article.sections.map(section => Box({tag: 'section', className: 'knowledge-section', children: [
+    const sections = [...(article.preface || []), ...article.sections].map(section => Box({tag: 'section', className: 'knowledge-section', children: [
       Box({tag: 'h3', text: section.title}),
       ...section.paragraphs.map(paragraph => Box({tag: 'p', text: paragraph})),
       ...(section.examples || []).map(exampleNode),
-      ReferenceList({items: section.sourceIds.map(id => sources.get(id))}),
     ]}));
     const misconceptions = article.misconceptions?.length ? Box({tag: 'section', className: 'knowledge-section', children: [
       Box({tag: 'h3', text: '常见误区'}), Box({tag: 'ul', children: article.misconceptions.map(text => Box({tag: 'li', text}))}),
     ]}) : null;
     const node = Box({tag: 'article', className: 'knowledge-article', attrs: {'data-knowledge-detail': article.id}, children: [
       title, ...sections, misconceptions, relatedSection,
+      ReferenceList({items: article.sources, label: '参考资料', className: 'knowledge-references'}),
     ]});
     detail.replaceChildren(node);
     currentReading = {article, node, title, related, relatedSection, relatedReady: false};
@@ -183,7 +180,7 @@ export function mountKnowledge(main, {navigate = route => {location.hash = route
     animatePresence(detail, {kind: 'feedback'});
     if (focus) {
       title.focus({preventScroll: true});
-      if (!wide) reader.scrollIntoView({block: 'start', behavior: 'instant'});
+      reader.scrollIntoView({block: 'start', behavior: 'instant'});
     }
     if (notify) onArticleChange?.(article.id);
     refreshRelated(currentReading, ownRevision);
@@ -233,21 +230,29 @@ export function mountKnowledge(main, {navigate = route => {location.hash = route
   }
 
   const filter = () => {if (!destroyed) {view = 'catalogue';renderList();layout();}};
-  const backToList = () => {
+  const backToList = async () => {
     if (destroyed) return;
+    const previous = selected;
     view = 'catalogue';layout();
-    const target = articleButtons.get(selected) || query;
+    try {await navigate('knowledge');}
+    catch {
+      if (!destroyed && !panel.hidden) {
+        view = 'article';layout();status.hidden = false;
+        updateStatus(status, '科普目录暂时无法打开，请重试。', 'error');
+      }
+      return;
+    }
+    if (destroyed || panel.hidden || view !== 'catalogue') return;
+    const target = articleButtons.get(previous) || query;
     target.focus({preventScroll: true});
     catalogue.scrollIntoView({block: 'start', behavior: 'instant'});
   };
   query.addEventListener('input', filter);
   returnList.addEventListener('click', backToList);
-  const resize = new ResizeObserver(layout);
-  resize.observe(split);
   const cancel = () => {if (!destroyed) {revision++;cancelMotion(detail);}};
   const destroy = () => {
     if (destroyed) return;
-    cancel();destroyed = true;resize.disconnect();
+    cancel();destroyed = true;
     query.removeEventListener('input', filter);returnList.removeEventListener('click', backToList);
     articleButtons.clear();currentReading = null;releaseDisconnect();
   };

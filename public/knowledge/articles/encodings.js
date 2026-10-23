@@ -171,12 +171,12 @@ export const articles = [
       },
       {
         "id": "foundation",
-        "title": "ASCII／码点／字节输入的校验与操作映射",
+        "title": "2–64 进制整数转换",
         "publisher": "迷雾工具箱",
-        "url": "/basics/foundation.js",
+        "url": "/completion/codes.js",
         "language": "zh-CN",
         "kind": "implementation",
-        "locator": "foundationRecipe、validateCodes"
+        "locator": "radix、DIGITS"
       }
     ],
     "sections": [
@@ -184,7 +184,7 @@ export const articles = [
         "title": "是什么，怎样表示与还原",
         "paragraphs": [
           "r 进制中，从右到左的位权是 1、r、r²……。十六进制 FF 表示 15×16+15=255；二进制 11111111 表示 128+64+32+16+8+4+2+1。",
-          "转入新进制时不断除以目标基数，保存余数，最后倒序读余数。255 除 16 得 15 余 15，再除 16 得 0 余 15，所以是 FF。2–36 进制中 10–35 用字母 a–z 表示。"
+          "转入新进制时不断除以目标基数，保存余数，最后倒序读余数。255 除 16 得 15 余 15，再除 16 得 0 余 15，所以是 FF。本工具支持 2–64 进制。2–36 的字母不区分大小写；37–64 按 0–9、A–Z、a–z、+、/ 顺序且区分大小写。按任意精度整数运算，不通过浮点数近似。"
         ],
         "sourceIds": [
           "radix",

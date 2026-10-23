@@ -21,9 +21,9 @@
 | [oeis/oeisdata](https://github.com/oeis/oeisdata) | `693b5499c9d248f570dd2d979e8bd1d7eecf689b` |
 | [i-c-stratigraphy/chart](https://github.com/i-c-stratigraphy/chart) | `81618a865cdb04998355a302f3e859908a080c0e` |
 
-`imports.json` 保存每个原始文件的固定 URL 和 SHA-256，`sources/` 保存原始字节；`public/vendor/reference/UPSTREAM.json` 同时覆盖原始与派生文件。国家旗帜 250 份；OEIS 为 272 条精选记录；晶体实际分发 14 份；塔罗两套各 78 张：Gearberry WebP（848×1264）及经典 RWS JPG（720×1200）。具体数量见运行目录 META.json。
+`imports.json` 保存每个原始文件的固定 URL 和 SHA-256，`sources/` 保存原始字节；`public/vendor/reference/UPSTREAM.json` 同时覆盖原始与派生文件。国家旗帜 250 份；塔罗两套各 78 张：Gearberry WebP（848×1264）及经典 RWS JPG（720×1200）。具体数量见运行目录 META.json。2026-10-16 已撤下 272 条 OEIS 精选索引和 14 份 COD 晶体样本；表中这两个项目仅保留原始归档，不再生成或发布数据、导航和科普入口。
 
-地质运行数据实际只从 ICS chart 的 `chart.ttl` 提取，保留中文/英文名称、层级、边界和颜色。勘察时同时保存的 geologic-timescale-kg 及 gts2020 资料不参与运行数据合并，不应把不同版本边界混用。CIF 来自 cod-tools 仓库中 COD 数据快照；仅使用数据，没有使用该程序代码。其余暂未纳入严格解析范围的原始 CIF 仅保留用于来源追溯，不出现在工具样本列表。
+地质运行数据实际只从 ICS chart 的 `chart.ttl` 提取，保留中文/英文名称、层级、边界和颜色。勘察时同时保存的 geologic-timescale-kg 及 gts2020 资料不参与运行数据合并，不应把不同版本边界混用。历史 CIF 原件及许可保留用于来源追溯和解析器回归，来源为 cod-tools 的 COD 快照，未使用该程序代码。解析器已迁入 `public/round4/cif.js`，仅由模型页的本机文件导入使用。
 
 地图补充固定 [nvkelso/natural-earth-vector](https://github.com/nvkelso/natural-earth-vector) 提交 `ca96624a56bd078437bca8184e78163e5039ad19`。原文为 world.geojson 与 natural-earth-LICENSE.txt；生成器新增 world.json（177 个完整多边形环的等距圆柱路径）和 unicode-blocks.json（346 个 Unicode 17 区块）。地图保留源数据的简化轮廓与孔洞，仅用 ISO_A2_EH／ISO_A2 的有效国家代码匹配资料；未知地区保留独立 `ne:ADM0_A3` 标识且不可冒充已知国家，不能用 POSTAL 邮政缩写推断身份（北塞浦路斯的 CN 不代表中国）。此规则在 `scripts/reference_world.py` 由完整生成器和回归共用；不从轮廓推断机场或运输地点坐标。地图数据为公共领域，声明随原文和派生资料提供。
 
@@ -39,16 +39,16 @@ python scripts/import-reference.py
 # 从固定原文离线生成 JSON、许可与摘要：
 /tmp/arg-reference-venv/bin/python scripts/build-reference.py
 npm run audit:integrity
-npm run verify
+npm run verify -- --files scripts/build-reference.py
 ```
 
-升级提交前先审查上游许可和字段变化。当前导入器复用已经存在的原始文件；变更 pins 时必须先移除相应旧文件再导入，避免把旧字节记到新 URL 下。生成器将中文地区显示名固化，因此维护时 Node/ICU 版本变化可能产生名称差异，须审核 diff。Unicode 使用 17.0.0 的四份 UCD 原文件；连续范围压缩保存，运行时生成汉字及 Hangul 标准名称。OEIS 优先保留含符号的 V/W/X 行，按需回退 S/T/U，原始条目保留完整引用。
+升级提交前先审查上游许可和字段变化。当前导入器复用已经存在的原始文件；变更 pins 时必须先移除相应旧文件再导入，避免把旧字节记到新 URL 下。生成器将中文地区显示名固化，因此维护时 Node/ICU 版本变化可能产生名称差异，须审核 diff。Unicode 使用 17.0.0 的四份 UCD 原文件；连续范围压缩保存，运行时生成汉字及 Hangul 标准名称。退役 OEIS/COD 原件只保留已有哈希，不再重新抓取；离线生成会明确清理旧的派生数据和随站声明。
 
 ## 许可与边界
 
-许可证、具体来源用途见 [THIRD_PARTY](../../THIRD_PARTY.md#信息查询与晶体联动2026-10-09)，每页也有相同归属。OEIS 派生索引为 CC BY-SA 4.0，ICS 派生索引为 CC BY 4.0；不得统一改标为本站代码许可。Unicode、旗帜、机场、运输地点、塔罗等独立条款均随站点分发。CIF 保留作者、文章和原始声明，当前 COD 公开数据按 CC0 / public domain 使用，另有 cod-NOTICE.txt 说明镜像角色。
+许可证、具体来源用途见 [THIRD_PARTY](../../THIRD_PARTY.md)，每页也有相同归属。ICS 派生索引为 CC BY 4.0；不得统一改标为本站代码许可。Unicode、旗帜、机场、运输地点、塔罗等独立条款均随站点分发。历史 OEIS/COD 原文许可随 upstream 归档保留，不再声称它们是本站运行时依赖。
 
-这些是固定快照，不表示实时机场运行状态、港口服务或最新科学结论。数列查询覆盖精选条目的已知连续整数段，附加等差/整数等比候选；不是远程 OEIS 全库识别。CIF 仅支持自包含单块 CIF 1、分数坐标和明确对称操作，限额见主文档；三维球体不代表键长预测或矿物鉴定结果。
+这些是固定快照，不表示实时机场运行状态、港口服务或最新科学结论。完整数列和晶体检索应使用 OEIS 与 COD，见 [外站资料清单](../../docs/EXTERNAL_REFERENCE_GUIDE.md)。本机 CIF 导入的格式与限额见主文档；三维球体不代表键长预测或矿物鉴定结果。
 
 默认塔罗素材使用 Gearberry 的 78 张 WebP，按上游 README / LICENSE.md 的明确 CC BY 4.0 牌面声明分发，并保留原文与要求的署名“Tarot Cards WebP Collection by Gearberry”。上游未注明原始画师及图片创作方式，本站不推断为手绘或 AI；来源范围记录在 tarot-gearberry-NOTICE.txt。原 cards.json 完整保存在 sources/tarot-gearberry-cards.json，仅用于来源与牌名验证；其占卜解释和牌背未引入运行工具。源 WebP 与运行 WebP 字节一致。
 

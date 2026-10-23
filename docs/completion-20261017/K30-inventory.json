@@ -1,0 +1,695 @@
+[
+  {
+    "id": "E0017",
+    "name": "Home",
+    "difference": "字符表和部分汉字编码已有；无完整多语言虚拟键盘/输入法。已追到语言布局和相关工具子页。",
+    "url": "https://www.branah.com/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "E0018",
+    "name": "Akan",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/akan",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0019",
+    "name": "Albanian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/albanian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0020",
+    "name": "Amharic",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/amharic",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0021",
+    "name": "Arabic",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/arabic",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0022",
+    "name": "Armenian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/armenian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0023",
+    "name": "Assamese",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/assamese",
+    "status": "待核实"
+  },
+  {
+    "id": "E0024",
+    "name": "Azerbaijani",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/azerbaijani",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0025",
+    "name": "Bambara",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/bambara",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0026",
+    "name": "Bangla",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/bangla",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0027",
+    "name": "Bashkir",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/bashkir",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0028",
+    "name": "Belarusian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/belarusian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0029",
+    "name": "Bhutanese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/bhutanese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0030",
+    "name": "Bosnian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/bosnian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0031",
+    "name": "Buginese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/buginese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0032",
+    "name": "Bulgarian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/bulgarian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0033",
+    "name": "Cantonese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/cantonese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0034",
+    "name": "Cherokee",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/cherokee",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0035",
+    "name": "Chinese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/chinese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0036",
+    "name": "Coptic",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/coptic",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0037",
+    "name": "Croatian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/croatian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0038",
+    "name": "Czech",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/czech",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0039",
+    "name": "Danish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/danish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0040",
+    "name": "Dhivehi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/dhivehi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0041",
+    "name": "Dutch",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/dutch",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0042",
+    "name": "English",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/english",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0043",
+    "name": "Esperanto",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/esperanto",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0044",
+    "name": "Estonian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/estonian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0045",
+    "name": "Farsi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/farsi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0046",
+    "name": "Finnish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/finnish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0047",
+    "name": "French",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/french",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0048",
+    "name": "Fula",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/fula",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0049",
+    "name": "Georgian",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/georgian",
+    "status": "待核实"
+  },
+  {
+    "id": "E0050",
+    "name": "German",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/german",
+    "status": "待核实"
+  },
+  {
+    "id": "E0051",
+    "name": "Greek",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/greek",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0052",
+    "name": "Gujarati",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/gujarati",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0053",
+    "name": "Hausa",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/hausa",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0054",
+    "name": "Hebrew",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/hebrew",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0055",
+    "name": "Hindi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/hindi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0056",
+    "name": "Hungarian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/hungarian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0057",
+    "name": "Icelandic",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/icelandic",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0058",
+    "name": "Igbo",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/igbo",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0059",
+    "name": "Irish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/irish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0060",
+    "name": "Italian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/italian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0061",
+    "name": "Japanese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/japanese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0062",
+    "name": "Javanese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/javanese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0063",
+    "name": "Kannada",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/kannada",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0064",
+    "name": "Kazakh",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/kazakh",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0065",
+    "name": "Khmer",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/khmer",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0066",
+    "name": "Khowar",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/khowar",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0067",
+    "name": "Korean",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/korean",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0068",
+    "name": "Kurdish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/kurdish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0069",
+    "name": "Kyrgyz",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/kyrgyz",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0070",
+    "name": "Lao",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/lao",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0071",
+    "name": "Latvian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/latvian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0072",
+    "name": "Lisu",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/lisu",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0073",
+    "name": "Lithuanian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/lithuanian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0074",
+    "name": "Macedonian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/macedonian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0075",
+    "name": "Malayalam",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/malayalam",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0076",
+    "name": "Maltese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/maltese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0077",
+    "name": "Marathi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/marathi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0078",
+    "name": "Mongolian",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/mongolian",
+    "status": "待核实"
+  },
+  {
+    "id": "E0079",
+    "name": "Mossi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/mossi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0080",
+    "name": "Myanmar",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/myanmar",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0081",
+    "name": "Nepali",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/nepali",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0082",
+    "name": "Norwegian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/norwegian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0083",
+    "name": "Oriya",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/oriya",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0084",
+    "name": "Pashto",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/pashto",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0085",
+    "name": "Polish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/polish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0086",
+    "name": "Portuguese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/portuguese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0087",
+    "name": "Punjabi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/punjabi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0088",
+    "name": "Romanian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/romanian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0089",
+    "name": "Russian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/russian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0090",
+    "name": "Santali",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/santali",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0091",
+    "name": "Sindhi",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/sindhi",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0092",
+    "name": "Sinhala",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/sinhala",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0093",
+    "name": "Slovak",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/slovak",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0094",
+    "name": "Slovenian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/slovenian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0095",
+    "name": "Sora",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/sora",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0096",
+    "name": "Spanish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/spanish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0097",
+    "name": "Sundanese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/sundanese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0098",
+    "name": "Swedish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/swedish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0099",
+    "name": "Syriac",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/syriac",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0100",
+    "name": "Tagalog",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/tagalog",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0101",
+    "name": "Tajik",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/tajik",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0102",
+    "name": "Tamazight",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/tamazight",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0103",
+    "name": "Tamil",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/tamil",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0104",
+    "name": "Tatar",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/tatar",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0105",
+    "name": "Telugu",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/telugu",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0106",
+    "name": "Thai",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/thai",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0107",
+    "name": "Tibetan",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/tibetan",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0108",
+    "name": "Turkish",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/turkish",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0109",
+    "name": "Ukrainian",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/ukrainian",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0110",
+    "name": "Urdu",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/urdu",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0111",
+    "name": "Uyghur",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/uyghur",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0112",
+    "name": "Uzbek",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/uzbek",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0113",
+    "name": "Vietnamese",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/vietnamese",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0114",
+    "name": "Wolof",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/wolof",
+    "status": "未覆盖"
+  },
+  {
+    "id": "E0115",
+    "name": "Yoruba",
+    "difference": "没有此语言的屏幕键盘；字符表不能提供布局与输入法候选。",
+    "url": "https://www.branah.com/yoruba",
+    "status": "未覆盖"
+  }
+]

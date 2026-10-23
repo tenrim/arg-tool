@@ -1,4 +1,6 @@
 import {appPages} from './browser-host.mjs';
+import {chooseNativeTask} from './browser-navigation.mjs';
+import {tmpdir} from 'node:os';
 import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
@@ -12,7 +14,7 @@ try{
  assert.equal(requests.some(s=>s.includes('/vendor/coderunner/')),false,'runtimes load on demand');
  assert.equal(await page.locator('.rail-groups [data-rail-expand="programming"]').count(),1,'one inline programming group with actual task links');
  await page.getByRole('button',{name:'代码运行使用说明',exact:true}).click();assert.equal(await page.locator('#tool-help-code').isVisible(),true);
- const chooseLanguage=async lang=>{const id=lang==='brainfuck'?'native:code':'native:code-'+lang;await page.evaluate(id=>document.dispatchEvent(new CustomEvent('arg:opencapability',{detail:{id}})),id);await page.waitForFunction(({id,lang})=>document.querySelector('.capability-workspace-context')?.dataset.currentCapability===id&&document.getElementById('code-language').value===lang,{id,lang});};
+ const chooseLanguage=async lang=>{await chooseNativeTask(page,lang==='brainfuck'?'native:code':'native:code-'+lang);await page.waitForFunction(lang=>document.getElementById('code-language').value===lang,lang);};
  const select=async(lang,code,input='')=>{await chooseLanguage(lang);await page.fill('#code-source',code);if(lang!=='sql')await page.fill('#code-input',input);};
  const wait=async()=>{await page.waitForFunction(()=>/运行完成|执行失败|加载或执行失败|超时|已停止/.test(document.getElementById('code-status').textContent),{},{timeout:65000});};
  const output=()=>page.inputValue('#code-output');
@@ -55,7 +57,7 @@ try{
  await page.evaluate(()=>location.hash='code');await page.waitForSelector('#panel-code:not([hidden])');assert.equal(await page.inputValue('#code-source'),'print("QUJDSA==")');
  // Mobile symbols, source drafts, viewport bounds, help and provenance.
  await select('python','abc');await page.locator('#code-source').focus();await page.locator('#code-source').evaluate(e=>{e.setSelectionRange(3,3);e.dispatchEvent(new Event('select'));});await page.locator('#code-keypad button').filter({hasText:/^Tab$/}).click();assert.equal(await page.inputValue('#code-source'),'abc\t');
- for(const width of [320,390,768,1365]){await page.setViewportSize({width,height:900});for(const lang of ['python','brainfuck','whitespace','sql']){await chooseLanguage(lang);const bounds=await page.locator('#panel-code').evaluate((root,w)=>({scroll:document.documentElement.scrollWidth,bad:[...root.querySelectorAll('button,input,textarea,select')].filter(e=>{const r=e.getBoundingClientRect();if(!r.width||!r.height||r.left>=-.5&&r.right<=w+1)return false;for(let host=e.parentElement;host&&host!==root.parentElement;host=host.parentElement){const box=host.getBoundingClientRect();if(['auto','scroll'].includes(getComputedStyle(host).overflowX)&&host.scrollWidth>host.clientWidth&&box.left>=-.5&&box.right<=w+1)return false;}return true;}).map(e=>e.id)}),width);assert.ok(bounds.scroll<=width+1,`${width} ${lang} scroll ${bounds.scroll}`);assert.deepEqual(bounds.bad,[],`${width} ${lang}`);}await chooseLanguage('brainfuck');await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo(0,0);});await page.screenshot({path:`/tmp/arg-code-${width}.png`,fullPage:true});}
+ for(const width of [320,390,768,1365]){await page.setViewportSize({width,height:900});for(const lang of ['python','brainfuck','whitespace','sql']){await chooseLanguage(lang);const bounds=await page.locator('#panel-code').evaluate((root,w)=>({scroll:document.documentElement.scrollWidth,bad:[...root.querySelectorAll('button,input,textarea,select')].filter(e=>{const r=e.getBoundingClientRect();if(!r.width||!r.height||r.left>=-.5&&r.right<=w+1)return false;for(let host=e.parentElement;host&&host!==root.parentElement;host=host.parentElement){const box=host.getBoundingClientRect();if(['auto','scroll'].includes(getComputedStyle(host).overflowX)&&host.scrollWidth>host.clientWidth&&box.left>=-.5&&box.right<=w+1)return false;}return true;}).map(e=>e.id)}),width);assert.ok(bounds.scroll<=width+1,`${width} ${lang} scroll ${bounds.scroll}`);assert.deepEqual(bounds.bad,[],`${width} ${lang}`);}await chooseLanguage('brainfuck');await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo(0,0);});await page.screenshot({path:resolve(tmpdir(),`arg-code-${width}.png`),fullPage:true});}
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>document.documentElement.style.fontSize='200%');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=391),'200% text');
  assert.equal(await page.locator('#panel-code .tool-provenance').evaluate(e=>e===e.parentElement.lastElementChild),true);
  assert.equal(await page.locator('iframe').count(),0);assert.equal(appPages(context).length,1);assert.deepEqual({external,missing,errors},{external:[],missing:[],errors:[]});

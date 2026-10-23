@@ -1,0 +1,28 @@
+{
+  "description": "Complete selected records from saved real public query responses; test fixtures are not a runtime database.",
+  "sources": [
+    {
+      "files": [
+        "oeis-A001129.json",
+        "oeis-A027926.json"
+      ],
+      "source": "https://oeis.org/search?q=1,1,2,3,5&start=0&fmt=json",
+      "retrievedAt": "2026-10-17T02:54:48Z",
+      "credit": "The OEIS Foundation Inc. and sequence contributors",
+      "license": "CC-BY-SA-4.0",
+      "licenseURL": "https://oeis.org/wiki/The_OEIS_End-User_License_Agreement"
+    },
+    {
+      "files": [
+        "places-search.json",
+        "places-detail.json",
+        "places-divisions.json",
+        "places-same-name.json"
+      ],
+      "source": "https://dmfw.mca.gov.cn/baseHtmls/docfile/_1.htm",
+      "retrievedDate": "2026-10-17",
+      "credit": "中华人民共和国民政部 · 中国国家地名信息库",
+      "notice": "Selected complete saved public query responses. No whole-database redistribution permission is claimed; do not reuse as a standalone data catalogue. Empty same-name response is retained as actually returned."
+    }
+  ]
+}

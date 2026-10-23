@@ -66,7 +66,7 @@ with tempfile.TemporaryDirectory(prefix='knowledge-source-cache-') as directory:
 `;
 
 function exercise(manifest, options = {}) {
-  const child = spawnSync('python3', ['-c', pythonHarness, importer], {encoding: 'utf8',
+  const child = spawnSync(process.env.PYTHON || 'python3', ['-c', pythonHarness, importer], {encoding: 'utf8',
     input: JSON.stringify({manifest, currentCommit, path, relative, cachedContent, freshContent, ...options}),
     timeout: 10_000});
   assert.equal(child.error, undefined, String(child.error));

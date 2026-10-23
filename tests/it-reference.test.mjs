@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
+import {readFile,readdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {IT_CATEGORIES,searchITRecords,normalizeDomainInput,matchPublicSuffix} from '../public/it-reference/model.js';
@@ -52,18 +52,21 @@ test('Domain normalization accepts local IDNA/IPv6 and rejects ambiguous credent
  for(const input of ['', 'https://name:secret@example.org/', 'javascript:alert(1)', 'https://bad host/', 'https://a..b/', '-bad.example','https://a_b.example','example.org\\evil'])assert.throws(()=>normalizeDomainInput(input));
 });
 
-test('RFC continuation parsing retains authoritative status and replacement/update relationships',()=>{
- const rfc9110=datasets.rfc.records.find(row=>row.id==='rfc:9110');assert.equal(field(rfc9110,'快照中状态'),'互联网标准');assert.match(field(rfc9110,'替代'),/RFC7231/);assert.equal(field(rfc9110,'更新'),'RFC3864');
- const previous=datasets.rfc.records.find(row=>row.id==='rfc:7231');assert.equal(field(previous,'被替代'),'RFC9110');
- const uuid=datasets.rfc.records.find(row=>row.id==='rfc:9562');assert.match(field(uuid,'替代'),/RFC4122/);
- for(const row of datasets.rfc.records)assert.notEqual(field(row,'快照中状态'),'未登记',row.id);
- const xor=datasets.instructions.records.find(row=>row.id==='instruction:xor');assert.match(xor.summary,/异或/);assert.match(xor.related[0].route,/task=op%3ADisassemble%2520x86/);
- assert.match(datasets.instructions.records.find(row=>row.id==='flag:cf').summary,/无符号/);assert.match(datasets.instructions.records.find(row=>row.id==='flag:of').summary,/有符号/);
+test('Retired selected RFC and instruction references cannot be discovered or loaded',async()=>{
+ assert.deepEqual(kinds,['ports','http','formats','domains']);
+ const {loadITData}=await import('../public/it-reference/model.js');
+ for(const kind of ['rfc','instructions'])await assert.rejects(loadITData(kind),/未知的IT资料分类/);
+ const files=await readdir(new URL('../public/vendor/it-reference/',import.meta.url));
+ for(const file of ['rfc.json','instructions.json','RFC-NOTICE.txt'])assert.ok(!files.includes(file),'retired runtime file: '+file);
+ for(const data of Object.values(datasets))for(const row of data.records)for(const link of row.related)assert.doesNotMatch(link.route,/^it-reference\/(?:rfc|instructions)(?:[/?]|$)/,'retired related destination: '+row.id);
 });
 
 test('IT original sources and published derivations match the immutable SHA-256 ledger',async()=>{
  const manifest=JSON.parse(await readFile(new URL('../public/vendor/it-reference/UPSTREAM.json',import.meta.url),'utf8'));
- assert.ok(manifest.files.length>=25);for(const file of manifest.files){const data=await readFile(new URL('../'+file.path,import.meta.url));assert.equal(createHash('sha256').update(data).digest('hex'),file.sha256,file.path);}
+ const imports=JSON.parse(await readFile(new URL('../upstream/it-reference/imports.json',import.meta.url),'utf8'));
+ const runtime=(await readdir(new URL('../public/vendor/it-reference/',import.meta.url))).filter(name=>name!=='UPSTREAM.json').map(name=>'public/vendor/it-reference/'+name);
+ assert.deepEqual(manifest.files.map(file=>file.path).sort(),[...imports.files.map(file=>file.path),...runtime].sort(),'ledger covers every retained source and runtime file exactly once');
+ for(const file of manifest.files){const data=await readFile(new URL('../'+file.path,import.meta.url));assert.equal(createHash('sha256').update(data).digest('hex'),file.sha256,file.path);}
  assert.equal(manifest.packages['mime-db'].version,'1.54.0');
  assert.match(await readFile(new URL('../public/vendor/it-reference/IANA-NOTICE.txt',import.meta.url),'utf8'),/RFC documents are excluded/);
  assert.match(await readFile(new URL('../public/vendor/it-reference/PSL-LICENSE.txt',import.meta.url),'utf8'),/Mozilla Public License/);

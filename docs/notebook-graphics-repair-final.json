@@ -1,0 +1,122 @@
+{
+  "run_at": "2026-10-16T07:03:48.705Z",
+  "passed": true,
+  "files": [
+    "VERIFICATION.md",
+    "docs/GRAPHICS.md",
+    "docs/NOTEBOOK.md",
+    "public/app.js",
+    "public/capabilities/native-workspaces.js",
+    "public/graphics/page.js",
+    "public/notebook/editor.js",
+    "public/notebook/page.js",
+    "public/tool-help.js",
+    "scripts/browser-graphics.mjs"
+  ],
+  "results": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 90,
+      "report": "docs/notebook-graphics-repair-docs-verification.json"
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 152,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 162,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 565,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 187,
+      "report": "docs/notebook-graphics-repair-verification.json"
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 195,
+      "report": "docs/notebook-graphics-repair-verification.json"
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 62702,
+      "report": "docs/notebook-graphics-repair-verification.json"
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 9455,
+      "report": "docs/notebook-graphics-repair-verification.json"
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "exit_code": 0,
+      "duration_ms": 4211,
+      "report": "docs/notebook-graphics-repair-verification.json"
+    },
+    {
+      "id": "browser:capabilities",
+      "exit_code": 0,
+      "duration_ms": 33182,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "browser:capability-resilience",
+      "exit_code": 0,
+      "duration_ms": 11577,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 0,
+      "duration_ms": 35151,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "browser:notebook",
+      "exit_code": 0,
+      "duration_ms": 29621,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 49372,
+      "report": "docs/notebook-graphics-repair-final-checks.json"
+    }
+  ],
+  "attempt_reports": [
+    "docs/notebook-graphics-repair-verification.json",
+    "docs/notebook-graphics-repair-followup.json",
+    "docs/notebook-graphics-repair-final-checks.json",
+    "docs/notebook-graphics-repair-docs-verification.json"
+  ],
+  "actual_server": {
+    "run_at": "2026-10-16T07:02:42.374Z",
+    "passed": true,
+    "url": "http://localhost:16319/",
+    "checks": [
+      "empty notebook direct insertion creates one owning note",
+      "return to notebook shows preview",
+      "IR link reopens editable mindmap",
+      "actual HTTP resources with zero console/page errors or HTTP failures"
+    ],
+    "errors": [],
+    "failed": []
+  },
+  "scope": "Changed notebook/graphics source bridges, native registered direction metadata and affected UI/navigation contracts only. No full release verification or unrelated engine suites."
+}

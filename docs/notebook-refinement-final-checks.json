@@ -1,0 +1,165 @@
+{
+  "run_at": "2026-10-16T04:55:27.392Z",
+  "mode": "affected",
+  "files": [
+    "public/notebook/editor.js",
+    "public/notebook/page.css",
+    "public/notebook/page.js",
+    "public/notebook/recorder.js",
+    "public/notebook/renderers.js",
+    "public/ui/components.css",
+    "scripts/browser-notebook.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/page.js",
+        "public/notebook/recorder.js",
+        "public/notebook/renderers.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/recorder.js",
+        "public/notebook/renderers.js",
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/notebook/editor.js",
+        "public/notebook/page.js",
+        "public/notebook/recorder.js",
+        "public/notebook/renderers.js",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js, public/notebook/page.js, public/notebook/recorder.js, public/notebook/renderers.js, scripts/browser-notebook.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/recorder.js",
+        "public/notebook/renderers.js"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/recorder.js",
+        "public/notebook/renderers.js",
+        "scripts/browser-notebook.mjs"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 123
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 122
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 419
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 237
+    },
+    {
+      "id": "browser:notebook",
+      "exit_code": 0,
+      "duration_ms": 30172
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 6428
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 50643
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 17859
+    }
+  ]
+}

@@ -1,18 +1,18 @@
 // Offline fixed references. The only requests made here fetch the bundled datasets.
+import {withChineseIT} from './chinese.js';
+import {normalizeChineseSearch} from '../reference/chinese-search.js';
 export const IT_CATEGORIES=Object.freeze([
  {id:'ports',title:'端口与协议',summary:'端口定位服务，IP协议号定位网络层之上的协议；这两种编号不能混用。'},
  {id:'http',title:'HTTP状态与字段',summary:'状态码说明请求结果，字段描述正文类型、缓存、位置等信息。'},
  {id:'formats',title:'MIME与字符集',summary:'媒体类型说明数据是什么，字符集说明文字如何表示成字节。'},
- {id:'domains',title:'域名与公共后缀',summary:'公共后缀可能有多段；注册域不能简单地取网址最后两段。'},
- {id:'rfc',title:'RFC主题索引',summary:'RFC是互联网技术文档系列；其中既有标准，也有实验、信息与历史文档。'},
- {id:'instructions',title:'指令与寄存器',summary:'指令操作寄存器、内存与执行位置；相同字节在不同体系结构或模式下可能含义不同。'}
+ {id:'domains',title:'域名与公共后缀',summary:'公共后缀可能有多段；注册域不能简单地取网址最后两段。'}
 ]);
 const kinds=new Set(IT_CATEGORIES.map(item=>item.id));
 const cache=new Map();
 const searchCache=new WeakMap();
 const FETCH_TIMEOUT=30_000;
 const MAX_DATA_BYTES=24*1024*1024;
-const normalized=value=>String(value??'').normalize('NFKC').trim().toLocaleLowerCase('en');
+const normalized=value=>normalizeChineseSearch(value).trim();
 export async function loadITData(kind){
  if(!kinds.has(kind))throw new Error('未知的IT资料分类。');
  if(cache.has(kind))return cache.get(kind);
@@ -25,7 +25,7 @@ export async function loadITData(kind){
    if(Number.isFinite(length)&&length>MAX_DATA_BYTES)throw new Error('资料文件超过载入限额。');
    const text=await response.text();
    if(new TextEncoder().encode(text).length>MAX_DATA_BYTES)throw new Error('资料文件超过载入限额。');
-   const data=JSON.parse(text);
+   const data=withChineseIT(JSON.parse(text));
    if(data.kind!==kind||!Array.isArray(data.records)||data.records.length>30_000||!data.meta)throw new Error('资料格式不正确。');
    const ids=new Set();
    for(const r of data.records){

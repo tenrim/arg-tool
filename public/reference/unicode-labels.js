@@ -1,0 +1,2 @@
+// Existing site labels shared by the visual chooser and the Unicode index.
+export const UNICODE_BLOCK_LABELS=Object.freeze({'Basic Latin':'基本拉丁','Latin-1 Supplement':'拉丁补充','Greek and Coptic':'希腊字母与科普特字母','Cyrillic':'西里尔字母','General Punctuation':'常用标点','Mathematical Operators':'数学运算符','Arrows':'箭头','Miscellaneous Symbols':'杂项符号','Dingbats':'装饰符号','Braille Patterns':'盲文','CJK Unified Ideographs':'中日韩统一汉字','Yijing Hexagram Symbols':'六十四卦符号','Emoticons':'表情符号','Hiragana':'平假名','Katakana':'片假名','Hangul Syllables':'韩文音节'});

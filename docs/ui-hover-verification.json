@@ -1,0 +1,451 @@
+{
+  "run_at": "2026-10-19T15:26:35.726Z",
+  "mode": "affected",
+  "files": [
+    "tools/ui-runtime/entry.js",
+    "tools/ui-runtime/bundle-inputs.json",
+    "public/ui/animate-ui.js",
+    "public/ui/motion.js",
+    "public/ui/components.css",
+    "public/project-licenses.js",
+    "docs/UI_COMPONENTS.md",
+    "scripts/browser-ui-runtime.mjs",
+    "public/vendor/ui-runtime/runtime.js",
+    "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+    "public/vendor/ui-runtime/UPSTREAM.json",
+    "scripts/test-map.mjs",
+    "docs/UI_INTERACTION_AUDIT.md",
+    "docs/ui-hover-verification.json",
+    "VERIFICATION.md"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "integrity",
+      "command": [
+        "node",
+        "scripts/audit-integrity.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt"
+      ]
+    },
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "docs/UI_COMPONENTS.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js",
+        "public/ui/animate-ui.js",
+        "public/ui/motion.js",
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js",
+        "public/ui/animate-ui.js",
+        "public/ui/components.css",
+        "public/ui/motion.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/project-licenses.js",
+        "public/ui/animate-ui.js",
+        "public/ui/motion.js",
+        "scripts/browser-ui-runtime.mjs",
+        "scripts/test-map.mjs",
+        "tools/ui-runtime/entry.js"
+      ],
+      "reasons": [
+        "public/project-licenses.js, public/ui/animate-ui.js, public/ui/motion.js, scripts/browser-ui-runtime.mjs, scripts/test-map.mjs, tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/testing-policy.test.mjs"
+      ],
+      "reasons": [
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/architecture.test.mjs"
+      ],
+      "reasons": [
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/image-scan.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/image-scan.test.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js"
+      ]
+    },
+    {
+      "id": "unit:tests/online-query-expansion-sources.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/online-query-expansion-sources.test.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js"
+      ]
+    },
+    {
+      "id": "unit:tests/online-query-sources.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/online-query-sources.test.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js"
+      ]
+    },
+    {
+      "id": "unit:tests/project-sources.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/project-sources.test.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js"
+      ]
+    },
+    {
+      "id": "browser:project-licenses",
+      "command": [
+        "node",
+        "scripts/browser-project-licenses.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js"
+      ]
+    },
+    {
+      "id": "browser:ui-runtime",
+      "command": [
+        "node",
+        "scripts/browser-ui-runtime.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "scripts/browser-ui-runtime.mjs",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/ui/components.css",
+        "public/ui/motion.js",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/ui/components.css",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/ui/components.css",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:notebook-dock",
+      "command": [
+        "node",
+        "scripts/browser-notebook-dock.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "command": [
+        "node",
+        "scripts/browser-sidebar-routing.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/ui/animate-ui.js",
+        "public/vendor/ui-runtime/UPSTREAM.json",
+        "public/vendor/ui-runtime/runtime.js",
+        "public/vendor/ui-runtime/runtime.js.LEGAL.txt",
+        "tools/ui-runtime/bundle-inputs.json",
+        "tools/ui-runtime/entry.js"
+      ]
+    },
+    {
+      "id": "browser:layout-balance",
+      "command": [
+        "node",
+        "scripts/browser-layout-balance.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "integrity",
+      "exit_code": 0,
+      "duration_ms": 3661
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 1898
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 255
+    },
+    {
+      "id": "unit:tests/image-scan.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 303
+    },
+    {
+      "id": "unit:tests/online-query-expansion-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 372
+    },
+    {
+      "id": "unit:tests/online-query-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 326
+    },
+    {
+      "id": "unit:tests/project-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 181
+    },
+    {
+      "id": "browser:project-licenses",
+      "exit_code": 0,
+      "duration_ms": 74877
+    },
+    {
+      "id": "browser:ui-runtime",
+      "exit_code": 0,
+      "duration_ms": 16445,
+      "note": "最终独立复测通过：真实滑动插值、Shadow DOM 绘制层与原 children 数量、动态标签／列表、禁用、焦点、实时减少动态、连续 pointerover 不重复扫描。"
+    },
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 94
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 154
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 176
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 514
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 39916,
+      "note": "减少重复扫描／测量后独立复测通过；实际运行、输入抑制、实时动态偏好与清理保留。"
+    },
+    {
+      "id": "browser:ui-components",
+      "exit_code": 0,
+      "duration_ms": 22281
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 225769
+    },
+    {
+      "id": "browser:notebook-dock",
+      "exit_code": 0,
+      "duration_ms": 16916
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 17841
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 165415
+    },
+    {
+      "id": "browser:layout-balance",
+      "exit_code": 0,
+      "duration_ms": 19565
+    }
+  ],
+  "prior_passes": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 96
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 175
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 189
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 507
+    },
+    {
+      "id": "browser:ui-motion",
+      "exit_code": 0,
+      "duration_ms": 38660
+    }
+  ],
+  "failure_history": [
+    {
+      "id": "browser:ui-components",
+      "exit_code": 1,
+      "duration_ms": 17399
+    }
+  ],
+  "notes": [
+    "本轮只修改共享悬停及相关来源、测试、文档；保留原有未提交工作。",
+    "使用锁定 Animate UI 2.0.0 的 TriggerHighlightScope/useTriggerHighlight，与上游 SidebarHighlight 同源；不是另写 CSS 模拟滑动。",
+    "初版绘制层改变 light DOM 子节点导致四个页面来源页脚不再位于末尾，组件扫描拒绝；改为 Shadow DOM + slot 保留原节点和结构，复测通过。",
+    "侧栏和页头跨项悬停已在真实本地服务逐帧截图检查，文字保持可读，无页面错误。",
+    "正常／减少动态及键盘、手机、动态菜单、原始输入文件、真实 RSA 与编解码、笔记保存均由相关专项核验；未重跑不相关引擎。"
+  ],
+  "delivery": {
+    "build": "passed",
+    "dist_public_hash_match": [
+      "ui/animate-ui.js",
+      "ui/motion.js",
+      "ui/components.css",
+      "vendor/ui-runtime/runtime.js"
+    ],
+    "local_service_status": 200,
+    "committed": false,
+    "deployed": false
+  }
+}

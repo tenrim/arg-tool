@@ -1,0 +1,431 @@
+{
+  "run_at": "2026-10-16T08:12:07.554Z",
+  "mode": "affected",
+  "files": [
+    "AGENTS.md",
+    "docs/CAPABILITY_ARCHITECTURE.md",
+    "docs/GRAPHICS.md",
+    "docs/MODULE_BOUNDARIES.md",
+    "docs/NOTEBOOK.md",
+    "public/app.js",
+    "public/capabilities/registry.js",
+    "public/graphics/page.js",
+    "public/knowledge/articles/graphics.js",
+    "public/knowledge/content.js",
+    "public/navigation.js",
+    "public/notebook/page.css",
+    "public/notebook/page.js",
+    "public/tool-help.js",
+    "public/workbench-shell.js",
+    "public/workspace.js",
+    "scripts/browser-graphics.mjs",
+    "tests/browser-capabilities.mjs",
+    "tests/chef-tools.test.mjs",
+    "tests/notebook.test.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "AGENTS.md",
+        "docs/CAPABILITY_ARCHITECTURE.md",
+        "docs/GRAPHICS.md",
+        "docs/MODULE_BOUNDARIES.md",
+        "docs/NOTEBOOK.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/graphics/page.js",
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js",
+        "public/navigation.js",
+        "public/notebook/page.js",
+        "public/tool-help.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/graphics/page.js",
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js",
+        "public/navigation.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/tool-help.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/graphics/page.js",
+        "public/knowledge/content.js",
+        "public/navigation.js",
+        "public/notebook/page.js",
+        "public/tool-help.js",
+        "public/workbench-shell.js",
+        "public/workspace.js",
+        "scripts/browser-graphics.mjs",
+        "tests/browser-capabilities.mjs",
+        "tests/chef-tools.test.mjs",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/app.js, public/capabilities/registry.js, public/graphics/page.js, public/knowledge/content.js, public/navigation.js, public/notebook/page.js, public/tool-help.js, public/workbench-shell.js, public/workspace.js, scripts/browser-graphics.mjs, tests/browser-capabilities.mjs, tests/chef-tools.test.mjs, tests/notebook.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js"
+      ]
+    },
+    {
+      "id": "unit:tests/knowledge.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/knowledge.test.mjs"
+      ],
+      "reasons": [
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js",
+        "public/capabilities/registry.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/knowledge-sources.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/knowledge-sources.test.mjs"
+      ],
+      "reasons": [
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js"
+      ]
+    },
+    {
+      "id": "unit:tests/capabilities.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/capabilities.test.mjs"
+      ],
+      "reasons": [
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js",
+        "public/capabilities/registry.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "tests/notebook.test.mjs",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/chef-tools.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/chef-tools.test.mjs"
+      ],
+      "reasons": [
+        "tests/chef-tools.test.mjs",
+        "public/capabilities/registry.js",
+        "public/knowledge/content.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/basics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/basics.test.mjs"
+      ],
+      "reasons": [
+        "public/capabilities/registry.js",
+        "public/knowledge/content.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/preferences.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/preferences.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/reference.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/reference.test.mjs"
+      ],
+      "reasons": [
+        "public/capabilities/registry.js",
+        "public/knowledge/content.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/task-selection.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/task-selection.test.mjs"
+      ],
+      "reasons": [
+        "public/capabilities/registry.js",
+        "public/knowledge/content.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/tool-help.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "command": [
+        "node",
+        "scripts/browser-sidebar-routing.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/navigation.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "command": [
+        "node",
+        "scripts/browser-task-lifecycle.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/workbench-shell.js",
+        "public/workspace.js"
+      ]
+    },
+    {
+      "id": "browser:capabilities",
+      "command": [
+        "node",
+        "tests/browser-capabilities.mjs"
+      ],
+      "reasons": [
+        "public/capabilities/registry.js",
+        "public/navigation.js",
+        "tests/browser-capabilities.mjs"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/page.css",
+        "public/notebook/page.js"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/tool-help.js"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": false,
+  "results": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 86
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 119
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 123
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 959
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 219
+    },
+    {
+      "id": "unit:tests/knowledge.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 268
+    },
+    {
+      "id": "unit:tests/knowledge-sources.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 2254
+    },
+    {
+      "id": "unit:tests/capabilities.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 610
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 246
+    },
+    {
+      "id": "unit:tests/chef-tools.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 263
+    },
+    {
+      "id": "unit:tests/basics.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 258
+    },
+    {
+      "id": "unit:tests/preferences.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 163
+    },
+    {
+      "id": "unit:tests/reference.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 1275
+    },
+    {
+      "id": "unit:tests/task-selection.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 194
+    },
+    {
+      "id": "browser:workspace",
+      "exit_code": 0,
+      "duration_ms": 71655
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "exit_code": 0,
+      "duration_ms": 9285
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "exit_code": 0,
+      "duration_ms": 3891
+    },
+    {
+      "id": "browser:capabilities",
+      "exit_code": 0,
+      "duration_ms": 34493
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 1,
+      "duration_ms": 89395
+    }
+  ]
+}

@@ -1,5 +1,4 @@
-import {toolGroups} from '../public/navigation.js';
-import {go} from './browser-navigation.mjs';
+import {go,chooseNativeTask} from './browser-navigation.mjs';
 import { createRequire } from 'node:module';
 import { mkdir, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -32,6 +31,7 @@ try {
     catch { await route.fulfill({ status: 404, body: 'Not found' }); }
   });
   const page = await context.newPage();
+  const imageTask=engine=>chooseNativeTask(page,({basic:'native:image',steg:'native:image-steg',aperi:'native:image-planes',inspect:'native:image-exif',barcode:'native:image-barcode',png:'native:image-png'})[engine]);
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   await page.goto('https://arg-tools.test/#cyberchef');
   await page.evaluate(() => document.fonts.ready);
@@ -42,7 +42,7 @@ try {
     await page.waitForFunction(text => document.getElementById('chef-output').value === text, expected, { timeout: 30000 });
   }
   async function execute() { await page.locator('#chef-run').click(); await page.waitForFunction(() => document.getElementById('cyberchef-status').textContent.startsWith('处理完成'), null, {timeout:30000}); }
-  assert.equal(await page.locator('#chef-input').inputValue(),'');assert.equal(await page.locator('[data-chef-example]').count(),0);assert.equal(await page.locator('#panel-cyberchef h1').textContent(),'CyberChef 完整处理链');
+  assert.equal(await page.locator('#chef-input').inputValue(),'');assert.equal(await page.locator('[data-chef-example]').count(),0);assert.equal(await page.locator('#panel-cyberchef h1').textContent(),'完整 CyberChef 配方工作区');
   assert.equal(page.frames().length,1);assert.equal(await page.locator('a[href="https://github.com/tenrim/arg-tool"]').count(),0);
   async function importRecipe(recipe,input) {await page.locator('#chef-import-recipe').setInputFiles({name:'test.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(recipe))});await page.waitForFunction(n=>document.querySelectorAll('.chef-step').length===n,recipe.length);await page.locator('#chef-input').fill(input);await execute();}
   for(const [recipe,input,value]of [
@@ -65,8 +65,8 @@ try {
   await page.locator('#chef-clear-recipe').click();await page.locator('#chef-search').fill('维吉尼亚');await page.locator('#chef-operations [data-operation="Vigenère Decode"]').click();
   await page.locator('#chef-recipe [aria-label="维吉尼亚解码 密钥"]').fill('LEMON');await page.locator('#chef-input').fill('LXFOPVEFRNHR');await execute();await outputEquals('ATTACKATDAWN');
   await page.locator('#chef-clear-recipe').click();await page.locator('#chef-search').fill('AES Decrypt');await page.locator('#chef-operations [data-operation="AES Decrypt"]').click();
-  await page.locator('#chef-recipe input[aria-label="AES解密 密钥"]').fill('000102030405060708090a0b0c0d0e0f');await page.locator('#chef-recipe [aria-label="AES解密 模式"]').selectOption('ECB/NoPadding');await page.locator('#chef-recipe [aria-label="AES解密 输出格式"]').selectOption('Hex');await page.locator('#chef-input').fill('69c4e0d86a7b0430d8cdb78070b4c55a');await execute();await outputEquals('00112233445566778899aabbccddeeff');
-  await page.locator('#chef-clear-recipe').click();await page.locator('#chef-search').fill('SHA2');await page.locator('#chef-operations [data-operation="SHA2"]').click();await page.locator('#chef-recipe [aria-label="SHA2 哈希 大小"]').selectOption('256');await page.locator('#chef-input').fill('abc');await execute();await outputEquals('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad');
+  await page.locator('#chef-recipe input[aria-label="AES解密 密钥"]').fill('000102030405060708090a0b0c0d0e0f');await page.locator('#chef-recipe select[aria-label="AES解密 模式"]').selectOption('ECB/NoPadding');await page.locator('#chef-recipe select[aria-label="AES解密 输出格式"]').selectOption('Hex');await page.locator('#chef-input').fill('69c4e0d86a7b0430d8cdb78070b4c55a');await execute();await outputEquals('00112233445566778899aabbccddeeff');
+  await page.locator('#chef-clear-recipe').click();await page.locator('#chef-search').fill('SHA2');await page.locator('#chef-operations [data-operation="SHA2"]').click();await page.locator('#chef-recipe select[aria-label="SHA2 哈希 大小"]').selectOption('256');await page.locator('#chef-input').fill('abc');await execute();await outputEquals('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad');
   await page.locator('#chef-clear-recipe').click();await page.locator('#chef-search').fill('Gzip');await page.locator('#chef-operations [data-operation="Gzip"]').click();await execute();
   const gzipDownload=page.waitForEvent('download');await page.locator('#chef-download').click();const compressed=await readFile(await (await gzipDownload).path());assert.deepEqual([...compressed.subarray(0,2)],[31,139]);
   await page.locator('#chef-to-input').click();await page.locator('#chef-clear-recipe').click();await page.locator('#chef-operations [data-operation="Gunzip"]').click();await execute();await outputEquals('abc');
@@ -81,8 +81,9 @@ try {
   // A missing engine asset must show an inline error and recover using the same page.
   const recovery=await context.newPage();let failAsset=true;await recovery.route('**/vendor/cyberchef/ChefWorker.js',async route=>{if(failAsset){failAsset=false;await route.fulfill({status:503,body:'Temporarily unavailable'});}else await route.fallback();});
   await recovery.goto('https://arg-tools.test/#cyberchef');await recovery.waitForFunction(()=>document.getElementById('cyberchef-status').classList.contains('error'));await recovery.locator('#cyberchef-retry').click();await recovery.waitForFunction(()=>document.getElementById('cyberchef-stage').dataset.ready==='true',null,{timeout:30000});assert.equal(recovery.frames().length,1);await recovery.close();
-  const originalOnlyTools=new Set(['extract','knowledge']);
-  assert.equal(await page.locator('.panel:not(.site-page) > .tool-provenance').count(), new Set(toolGroups.flatMap(g=>g.items.map(i=>i[0].split('/')[0])).filter(id=>!originalOnlyTools.has(id))).size);
+  // Lazy task ownership cannot be checked by counting aggregate-page footers.
+  // The project-licenses suite checks every registered task against its contract.
+  assert.equal(await page.locator('#panel-cyberchef > .tool-provenance a[href="https://github.com/gchq/CyberChef"]').count(),1);
   assert.equal(await page.locator('#panel-about > .tool-provenance,#panel-extract > .tool-provenance,#panel-knowledge > .tool-provenance').count(),0,'Original-only tools omit third-party project footers');
   for (const footer of await page.locator('.tool-provenance').all()) {
     assert.ok(await footer.locator('a[href^="https://"]').count(), 'Every page should name and link its actual projects');
@@ -106,7 +107,7 @@ try {
   }
   await page.locator('#image-mode').selectOption('contrast');await page.locator('#image-contrast').evaluate(el=>{el.value='0';el.dispatchEvent(new Event('input'));});await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('图像调整 ·'));
   assert.deepEqual(await page.evaluate(()=>[...document.getElementById('image-canvas').getContext('2d').getImageData(0,0,1,1).data]),[128,64,32,255]);
-  await page.locator('[data-image-engine="steg"]').click();await page.locator('#lsb-run').click();await page.waitForFunction(()=>document.getElementById('image-output').value.includes('UTF-8'));
+  await imageTask('steg');await page.locator('#lsb-run').click();await page.waitForFunction(()=>document.getElementById('image-output').value.includes('UTF-8'));
   assert.match(await page.locator('#image-output').inputValue(),/UTF-8 预览：\nA/);
   const lsbDownload=page.waitForEvent('download');await page.locator('#lsb-download').click();assert.equal((await readFile(await(await lsbDownload).path()))[0],65);
   await page.locator('#lsb-offset').fill('1');await page.locator('#lsb-run').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('提取完成'));
@@ -116,14 +117,14 @@ try {
   await page.locator('#lsb-pixel-order').selectOption('Column');assert.equal(await page.locator('#image-output').inputValue(),'');assert.ok(await page.locator('#lsb-download').isDisabled());
   await page.locator('#image-mode').selectOption('r');await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('StegOnline ·'));
   assert.deepEqual(await page.evaluate(()=>[...document.getElementById('image-canvas').getContext('2d').getImageData(0,0,1,1).data]),[255,255,255,255]);
-  await page.locator('[data-image-engine="aperi"]').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('AperiSolve ·'));
+  await imageTask('aperi');await page.locator('#image-mode').selectOption('r');await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('AperiSolve ·'));
   assert.deepEqual(await page.evaluate(()=>[...document.getElementById('image-canvas').getContext('2d').getImageData(0,0,1,1).data]),[0,0,0,255]);
   await page.locator('#image-overview').click();await page.waitForFunction(()=>document.querySelectorAll('.image-plane-card').length===40,null,{timeout:30000});
   await page.locator('#image-remap').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent.includes('随机颜色重映射'));
   const imageDownload=page.waitForEvent('download');await page.locator('#image-download').click();const savedPNG=await readFile(await(await imageDownload).path());assert.deepEqual([...savedPNG.subarray(0,8)],[137,80,78,71,13,10,26,10]);
   await page.screenshot({path:join(artifacts,'image-desktop.png'),fullPage:true});
-  await page.locator('[data-image-engine="inspect"]').click();await page.locator('#image-qr').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent==='未找到二维码');
-  await page.locator('#image-png').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent==='数据块读取完成');
+  await imageTask('barcode');await page.locator('#barcode-read').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent==='未识别到条码。');
+  await imageTask('png');await page.locator('#image-png').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent==='数据块读取完成');
   assert.match(await page.locator('#image-output').inputValue(),/IHDR/);assert.match(await page.locator('#image-output').inputValue(),/IEND/);assert.ok(await page.locator('#lsb-download').isDisabled());
   const textDownload=page.waitForEvent('download');await page.locator('#image-save-text').click();assert.match((await readFile(await(await textDownload).path())).toString(),/IHDR/);
   const qrPNG=await page.evaluate(async()=>{
@@ -133,13 +134,13 @@ try {
   });
   assert.ok(qrPNG,'Official QR generator should return a PNG');
   await page.locator('#image-input').setInputFiles({name:'qr.png',mimeType:'image/png',buffer:Buffer.from(qrPNG,'base64')});await page.waitForFunction(()=>document.getElementById('image-status').textContent==='图片已载入');
-  await page.locator('#image-qr').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent==='二维码识别完成');assert.equal(await page.locator('#image-output').inputValue(),'ARG QR 12345');
-  await page.locator('[data-image-engine="basic"]').click();await page.locator('#image-mode').selectOption('invert');await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('图像调整 ·'));
-  await page.locator('[data-image-engine="inspect"]').click();await page.locator('#image-analysis-source').selectOption('view');await page.locator('#image-qr').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent==='二维码识别完成');assert.equal(await page.locator('#image-output').inputValue(),'ARG QR 12345');
+  await imageTask('barcode');await page.locator('#barcode-read').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('识别完成：'));assert.match(await page.locator('#image-output').inputValue(),/ARG QR 12345/);
+  await imageTask('basic');await page.locator('#image-mode').selectOption('invert');await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('图像调整 ·'));
+  await imageTask('barcode');await page.locator('#image-analysis-source').selectOption('view');await page.locator('#barcode-read').click();await page.waitForFunction(()=>document.getElementById('image-status').textContent.startsWith('识别完成：'));assert.match(await page.locator('#image-output').inputValue(),/ARG QR 12345/);
   // Transparent PNG RGB bytes must survive raw decoding and LSB extraction.
   const hiddenPixels=Uint8Array.from({length:32},(_,i)=>i%4===0?Number('01000001'[i/4]):0);
   await page.locator('#image-input').setInputFiles({name:'transparent.png',mimeType:'image/png',buffer:rawPNG(8,1,hiddenPixels)});await page.waitForFunction(()=>document.getElementById('image-status').textContent==='图片已载入');
-  await page.locator('[data-image-engine="steg"]').click();await page.locator('#lsb-pixel-order').selectOption('Row');await page.locator('#lsb-run').click();await page.waitForFunction(()=>document.getElementById('image-output').value.includes('UTF-8 预览：\nA'));
+  await imageTask('steg');await page.locator('#lsb-pixel-order').selectOption('Row');await page.locator('#lsb-run').click();await page.waitForFunction(()=>document.getElementById('image-output').value.includes('UTF-8 预览：\nA'));
   await page.locator('#image-input').setInputFiles({ name: 'broken.png', mimeType: 'image/png', buffer: Buffer.from('invalid image') });
   await page.waitForFunction(() => document.getElementById('image-status').classList.contains('error'));
   assert.equal(await page.locator('#image-output').inputValue(), ''); assert.ok(await page.locator('#lsb-run').isDisabled());
@@ -170,10 +171,12 @@ try {
   await page.waitForFunction(() => document.getElementById('audio-status').classList.contains('error'));
   assert.ok(await page.locator('#audio-export').isDisabled()); assert.equal(await page.locator('#audio-output').inputValue(), '');
   assert.equal(await page.locator('#audio-player').getAttribute('src'), null);
-  await go(page,'symbols'); await page.getByRole('button', { name: '盲文第 1 点', exact: true }).click(); assert.equal(await page.locator('#braille-letter').textContent(), 'A');
+  await chooseNativeTask(page,'native:braille'); await page.locator('#braille-entry-mode').selectOption('dots'); await page.getByRole('button', { name: '盲文第 1 点', exact: true }).click(); assert.equal(await page.locator('#braille-letter').textContent(), 'A');
   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('https://arg-tools.test/#pipeline');
   await page.waitForFunction(() => document.getElementById('cyberchef-stage').dataset.ready === 'true', null, { timeout: 90000 });
-  assert.equal(new URL(page.url()).hash, '#cyberchef', 'Legacy bookmarks should open CyberChef');
+  await page.waitForFunction(()=>location.hash==='#browse');
+  assert.equal(new URL(page.url()).hash,'#browse','Retired aggregate links lead to the tool directory');
+  await go(page,'cyberchef');
 
   await page.evaluate(() => document.fonts.ready);
    await page.keyboard.press('Escape');
@@ -185,7 +188,7 @@ try {
        await go(page,name);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${name} should fit a ${width}px viewport`);
       if(name === 'image') {
-        await page.locator('[data-image-engine="steg"]').click();
+        await imageTask('steg');
         assert.ok(await page.locator('#steg-bit-table').isVisible());
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `StegOnline bit matrix should fit a ${width}px viewport`);
         if(width <= 760) {
@@ -193,23 +196,22 @@ try {
           assert.ok(await page.locator('.steg-bit-row label').first().evaluate(el=>el.getBoundingClientRect().width >= 44 && el.getBoundingClientRect().height >= 44),'Bit selection should have usable touch targets');
         }
         for(const engine of ['basic','aperi','inspect']) {
-          await page.locator(`[data-image-engine="${engine}"]`).click();
+          await imageTask(engine);
           assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1),`${engine} image tab should fit ${width}px`);
         }
-        await page.locator('[data-image-engine="inspect"]').press('Home');
-        assert.equal(await page.locator('[data-image-engine="basic"]').getAttribute('aria-selected'),'true');
+        assert.equal(await page.locator('.image-engine-tabs:visible').count(),0,'Task shell must not restore aggregate image tabs');
       }
     }
     if (width <= 760) {
        await go(page,'cyberchef');
       for (const pane of ['operations', 'recipe', 'input', 'output']) {
-        await chef.locator(`#chef-tabs [data-pane="${pane}"]`).click();
+        await chef.locator(`#chef-tabs [role="tab"][data-pane="${pane}"]`).click();
         assert.ok(await chef.locator(`#chef-pane-${pane}`).isVisible());
         assert.ok(await chef.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `CyberChef ${pane} should fit ${width}px`);
       }
-      await chef.locator('#chef-tabs [data-pane="output"]').focus();
-      await chef.locator('#chef-tabs [data-pane="output"]').press('ArrowLeft');
-      assert.equal(await chef.locator('#chef-tabs [data-pane="input"]').getAttribute('aria-selected'), 'true');
+      await chef.locator('#chef-tabs [role="tab"][data-pane="output"]').focus();
+      await chef.locator('#chef-tabs [role="tab"][data-pane="output"]').press('ArrowLeft');
+      assert.equal(await chef.locator('#chef-tabs [role="tab"][data-pane="input"]').getAttribute('aria-selected'), 'true');
     }
   }
   await page.locator('.skip').focus(); await page.keyboard.press('Enter'); assert.equal(await page.evaluate(() => document.activeElement.id), 'main');

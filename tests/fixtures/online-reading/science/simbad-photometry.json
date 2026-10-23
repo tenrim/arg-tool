@@ -1,0 +1,81 @@
+{
+  "record": {
+    "id": "1575544:photometry:2007ApJS..173..185G",
+    "title": "2007ApJS..173..185G",
+    "fields": {
+      "flux_err_prec": 2,
+      "flux_prec": 2,
+      "oidref": 1575544,
+      "filter": "B",
+      "flux": 4.36,
+      "system": "V",
+      "flux_err": 0.02,
+      "qual": "D",
+      "bibcode": "2007ApJS..173..185G"
+    },
+    "sourceURL": "https://simbad.u-strasbg.fr/simbad/sim-id?Ident=%401575544"
+  },
+  "result": {
+    "parameters": {
+      "mode": "detail",
+      "oid": 1575544,
+      "section": "photometry",
+      "after": ""
+    },
+    "columns": [
+      {
+        "name": "flux_err_prec",
+        "description": "flux error precision",
+        "ucd": "stat.error;phot.flux",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "flux_prec",
+        "description": "flux precision",
+        "ucd": "phot.flux",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "oidref",
+        "description": "Object internal identifier",
+        "ucd": "meta.record",
+        "datatype": "LONG"
+      },
+      {
+        "name": "filter",
+        "description": "flux filter name",
+        "ucd": "instr.bandpass;instr.filter",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "flux",
+        "ucd": "phot.flux",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "system",
+        "description": "flux system A=AB V=Vega",
+        "ucd": "meta.id;phot.flux",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "flux_err",
+        "description": "flux error",
+        "ucd": "stat.error;phot.mag",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "qual",
+        "description": "flux quality flag",
+        "ucd": "meta.code.qual;phot.flux",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "bibcode",
+        "description": "flux reference",
+        "ucd": "meta.bib.bibcode;phot.flux",
+        "datatype": "CHAR"
+      }
+    ]
+  }
+}

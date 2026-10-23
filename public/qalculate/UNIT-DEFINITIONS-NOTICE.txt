@@ -1,0 +1,9 @@
+Qalculate! 5.13.0 unit notation adapter, generated 2026-10-21.
+Source: public/vendor/qalculate/source.zip (pinned corresponding source).
+Original files: core.tar.gz/data/units.xml.in, currencies.xml.in, prefixes.xml.in.
+Copyright and GPL-2.0-or-later terms of libqalculate and its data apply.
+Full upstream license: ../vendor/qalculate/CORE-LICENSE.
+Generator and adaptation source: ../../scripts/build-qalculate-units.py.
+The generated map expands composite units and avoids aliases marked avoid_input.
+It does not implement conversion factors or replace the official engine.
+All original vendor binaries, definition files and notices remain unchanged.

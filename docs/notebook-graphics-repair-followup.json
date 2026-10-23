@@ -1,0 +1,21 @@
+{
+  "run_at": "2026-10-16T06:56:45.306Z",
+  "reason": "Remaining graphics/notebook checks, IR asset link adapter repair and help wording/layout.",
+  "results": [
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 127
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 474
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 1,
+      "duration_ms": 14541
+    }
+  ]
+}

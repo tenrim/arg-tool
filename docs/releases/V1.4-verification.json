@@ -1,0 +1,22 @@
+{
+  "version": "V1.4",
+  "scope": "本次发布元数据、公告与直接受影响的本地加载路径，不重跑前序开发轮次及整站套件。",
+  "checks": [
+    "site-version.js 与 site-pages.js 语法检查",
+    "关于页当前版本与故障报告版本均为 V1.4",
+    "V1.3 历史记录保留并默认折叠",
+    "256 篇科普目录、全页正文与文末参考资料正常加载",
+    "实际工具工作区和 Animate UI 进入效果挂载",
+    "本地 CyberChef 内核将 ARG 转为 QVJH",
+    "提交文件差异空白检查"
+  ],
+  "passed": true,
+  "full_site_suite_run": false,
+  "static_dist_build_run": false,
+  "deployment_mode": "服务器现有源码仓库正常快进更新并重启原有容器，不使用纯静态 dist 替代后端服务。",
+  "known_limitations": [
+    "首次加载仍可能短暂卡顿；前序动效开发轮记录到一次约 50 毫秒播放长帧。本次发布未重跑性能采样。",
+    "GitHub 远程历史与当前发布分支不同，不强制覆盖；本次 Git 同步使用现有部署依赖的 Gitee origin。",
+    "部署和线上验证结果另存本机 outputs/release-v1.4-20261022，不以本地检查推断线上状态。"
+  ]
+}

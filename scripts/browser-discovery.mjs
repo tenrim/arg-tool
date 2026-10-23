@@ -1,3 +1,4 @@
+import {tmpdir} from 'node:os';
 import {createRequire} from 'node:module';
 import {readFile,mkdir} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
@@ -51,12 +52,12 @@ try{for(const scenario of ['native','blob','blob-subpath']){
  await page.locator('#countries-results [data-currency="CNY"]').click();await page.waitForSelector('#panel-currencies:not([hidden])');await done('currencies');assert.equal(await page.locator('#currencies-query').inputValue(),'CNY');
  await page.locator('#currencies-query').fill('008');await run('currencies');assert.match(await page.locator('#currencies-results').textContent(),/数字代码008/);
  await page.locator('#currencies-filter').selectOption('historic');await page.locator('#currencies-query').fill('');await run('currencies');assert.match(await page.locator('#currencies-results').textContent(),/历史／已退出/);assert.equal(await page.locator('#currencies-results [data-country]').count(),0);
- await go('sky');await page.waitForSelector('#sky-browser[data-ready="true"]');assert.ok(await page.locator('[data-sky-point]').count()>0);assert.equal(chunks.size,0,'detail files must be lazy');
+ await go('sky');await page.waitForSelector('#sky-browser[data-ready="true"]');assert.ok(await page.locator('[data-sky-point]').count()>0);assert.equal(chunks.size,0,'detail files must be lazy');assert.equal(await page.locator('#sky-mode').count(),0,'retired partial star catalogue has no mode selector');
  await page.locator('#sky-query').fill('M31');await run('sky');assert.equal(await page.locator('#sky-results article').count(),1);assert.match(await page.locator('#sky-results').textContent(),/NGC0224/);assert.equal(chunks.size,1);
  await page.locator('#sky-results [data-sky]').click();await page.waitForSelector('#panel-astronomy:not([hidden])');await page.waitForFunction(()=>document.querySelector('#astronomy-status').textContent==='处理完成');assert.match(await page.locator('#astronomy-output').textContent(),/NGC0224/);assert.match(await page.locator('#astronomy-output').textContent(),/方位角[\d.]+°/);assert.equal(await page.locator('#astronomy-output canvas').count(),1);
  const first=await page.locator('#astronomy-output').textContent();await page.locator('#astro-lon').fill('0');assert.equal(await page.locator('#astronomy-output').textContent(),'');await page.locator('#astronomy-run').click();await page.waitForFunction(()=>document.querySelector('#astronomy-status').textContent==='处理完成');assert.notEqual(await page.locator('#astronomy-output').textContent(),first);
  await page.locator('#astro-catalog').click();await page.waitForSelector('#panel-sky:not([hidden])');await done('sky');
- await page.locator('#sky-query').fill('天狼星');await run('sky');assert.match(await page.locator('#sky-results').textContent(),/6\.752481/);assert.equal(await page.locator('[data-sky-point]').count(),1);await page.locator('[data-sky-point]').press('Enter');await done('sky');assert.match(await page.locator('#sky-visual-detail').textContent(),/天狼星/);
+ await page.locator('#sky-query').fill('猎户座大星云');await run('sky');assert.match(await page.locator('#sky-results').textContent(),/5\.587911/);assert.equal(await page.locator('[data-sky-point]').count(),1);await page.locator('[data-sky-point]').press('Enter');await done('sky');assert.match(await page.locator('#sky-visual-detail').textContent(),/猎户座大星云/);
  await page.locator('#sky-query').fill('IC1064');await run('sky');assert.match(await page.locator('#sky-results').textContent(),/未提供/);assert.equal(await page.locator('#sky-results [data-sky]').count(),0);
  if(scenario==='blob-subpath'){
   for(const [id,file]of [['go','vendor/discovery/sgf.js'],['marine','vendor/discovery/marine-flags.json'],['currencies','vendor/discovery/currencies.json'],['sky','vendor/discovery/sky-index.json'],['sky','vendor/discovery/sky-records/ngc-011.json']]){
@@ -65,8 +66,8 @@ try{for(const scenario of ['native','blob','blob-subpath']){
   }
   await go('go');await page.evaluate(()=>{window.__originalWorker=Worker;window.Worker=class{constructor(){throw new DOMException('Blocked','SecurityError');}};});await page.locator('#go-load').click();assert.match(await page.locator('#go-status').textContent(),/无法启动/);await page.evaluate(()=>{window.Worker=window.__originalWorker;});await load();
  }
- await mkdir('/tmp/mist-discovery-shots',{recursive:true});
- for(const width of [320,390,768,1440,1920]){await page.setViewportSize({width,height:950});for(const id of ['go','marine','currencies','sky']){await go(id);assert.ok(await page.evaluate(w=>document.documentElement.scrollWidth<=w+1,width),id+' overflow '+width);assert.equal(await page.locator('#panel-'+id+' .tool-help-button').count(),1);assert.equal(await page.locator('#panel-'+id+' .tool-provenance').evaluate(n=>n===n.parentElement.lastElementChild),true);if(scenario==='native'&&[390,1440].includes(width))await page.screenshot({path:`/tmp/mist-discovery-shots/${id}-${width}.png`});}}
+ await mkdir(resolve(tmpdir(),'mist-discovery-shots'),{recursive:true});
+ for(const width of [320,390,768,1440,1920]){await page.setViewportSize({width,height:950});for(const id of ['go','marine','currencies','sky']){await go(id);assert.ok(await page.evaluate(w=>document.documentElement.scrollWidth<=w+1,width),id+' overflow '+width);assert.equal(await page.locator('#panel-'+id+' .tool-help-button').count(),1);assert.equal(await page.locator('#panel-'+id+' .tool-provenance').evaluate(n=>n===n.parentElement.lastElementChild),true);if(scenario==='native'&&[390,1440].includes(width))await page.screenshot({path:resolve(tmpdir(),'mist-discovery-shots',`${id}-${width}.png`)});}}
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>document.documentElement.style.fontSize='200%');for(const id of ['go','marine','currencies','sky']){await go(id);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=391),id+' 200% overflow');}
  await page.emulateMedia({reducedMotion:'reduce'});await go('go');assert.equal(await page.locator('#go-input').inputValue(),sgf);
  if(scenario!=='native')assert.ok(await page.evaluate(()=>window.__discoveryWorkers)>10);

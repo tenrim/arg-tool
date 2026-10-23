@@ -1,0 +1,732 @@
+{
+  "record": {
+    "id": "1575544",
+    "title": "M  31",
+    "summary": "距查询中心 7.879335328886527e-7°",
+    "fields": {
+      "main_id": "M  31",
+      "nbref": 13839,
+      "otype": "AGN",
+      "ra": 10.684708333333333,
+      "ra_prec": 7,
+      "dec": 41.268750000000004,
+      "dec_prec": 7,
+      "coo_err_maj": null,
+      "coo_err_maj_prec": -1,
+      "coo_err_min": null,
+      "coo_err_min_prec": -1,
+      "coo_err_angle": null,
+      "coo_qual": "C",
+      "coo_wavelength": "I",
+      "coo_bibcode": "2006AJ....131.1163S",
+      "hpx": 693520,
+      "pmra": null,
+      "pmra_prec": null,
+      "pmdec": null,
+      "pmdec_prec": null,
+      "pm_err_maj": null,
+      "pm_err_maj_prec": null,
+      "pm_err_min": null,
+      "pm_err_min_prec": null,
+      "pm_err_angle": null,
+      "pm_qual": null,
+      "pm_bibcode": null,
+      "plx_value": null,
+      "plx_prec": 32767,
+      "plx_err": null,
+      "plx_err_prec": 32767,
+      "plx_qual": null,
+      "plx_bibcode": null,
+      "rvz_type": "v",
+      "rvz_radvel": -300,
+      "rvz_radvel_prec": 1,
+      "rvz_redshift": -0.0010001920937326991,
+      "rvz_redshift_prec": null,
+      "rvz_err": 4,
+      "rvz_err_prec": 1,
+      "rvz_nature": "s",
+      "rvz_qual": "C",
+      "rvz_bibcode": "2012AJ....144....4M",
+      "vlsr": null,
+      "vlsr_err": null,
+      "vlsr_wavelength": null,
+      "vlsr_bibcode": null,
+      "vlsr_min": null,
+      "vlsr_max": null,
+      "sp_type": null,
+      "sp_qual": null,
+      "sp_bibcode": null,
+      "morph_type": "SA(s)b",
+      "morph_qual": "D",
+      "morph_bibcode": "2013AJ....146...67B",
+      "galdim_majaxis": 199.53,
+      "galdim_majaxis_prec": 2,
+      "galdim_minaxis": 70.79,
+      "galdim_minaxis_prec": 2,
+      "galdim_angle": 35,
+      "galdim_qual": "D",
+      "galdim_wavelength": "O",
+      "galdim_bibcode": "2003A&A...412...45P",
+      "update_date": "2026-10-15",
+      "oid": 1575544,
+      "otype_txt": "AGN",
+      "rvz_wavelength": null,
+      "cone": {
+        "distance": 7.879335328886527e-7,
+        "main_id": "M  31",
+        "ra": 10.6847083,
+        "dec": 41.26875,
+        "otype": "AGN",
+        "coo": "00 42 44.330 +41 16 07.50",
+        "coo_err_maja": null,
+        "coo_err_mina": null,
+        "coo_err_angle": null,
+        "pmra": null,
+        "pmdec": null,
+        "pm_err_maja": null,
+        "pm_err_mina": null,
+        "pm_err_angle": null,
+        "plx_value": null,
+        "rvz_radvel": -300,
+        "galdim_majaxis": 199.53,
+        "galdim_minaxis": 70.79,
+        "galdim_angle": 35,
+        "sp_type": null,
+        "morph_type": "SA(s)b",
+        "biblist": 13839,
+        "U": 4.86,
+        "B": 4.36,
+        "V": 3.44,
+        "R": null,
+        "G": null,
+        "I": null,
+        "J": 2.094,
+        "H": 1.283,
+        "K": 0.984
+      }
+    },
+    "sourceURL": "https://simbad.u-strasbg.fr/simbad/sim-id?Ident=%401575544"
+  },
+  "result": {
+    "parameters": {
+      "mode": "cone",
+      "ra": 10.684708333333333,
+      "dec": 41.26875,
+      "radius": 0.001,
+      "after": 0
+    },
+    "columns": [
+      {
+        "name": "main_id",
+        "description": "Main identifier for an object",
+        "utype": "mango:MangoObject.identifier",
+        "ucd": "meta.id;meta.main",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "nbref",
+        "description": "number of references",
+        "ucd": "meta.bib;arith.sum",
+        "datatype": "INT"
+      },
+      {
+        "name": "otype",
+        "description": "Object type",
+        "utype": "mango:Label.text[CT.vocabulary=https://www.ivoa.net/rdf/uat#classification]",
+        "ucd": "src.class",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "ra",
+        "unit": "deg",
+        "description": "Right ascension",
+        "utype": "mango:EpochPosition.longitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.eq.ra;meta.main",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "ra_prec",
+        "description": "Right ascension precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "dec",
+        "unit": "deg",
+        "description": "Declination",
+        "utype": "mango:EpochPosition.latitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.eq.dec;meta.main",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "dec_prec",
+        "description": "Declination precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "coo_err_maj",
+        "unit": "mas",
+        "description": "Coordinate error major axis",
+        "utype": "mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "phys.angSize.smajAxis;pos.errorEllipse;pos.eq",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "coo_err_maj_prec",
+        "description": "Coordinate error major axis precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "coo_err_min",
+        "unit": "mas",
+        "description": "Coordinate error minor axis",
+        "utype": "mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMinorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "phys.angSize.sminAxis;pos.errorEllipse;pos.eq",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "coo_err_min_prec",
+        "description": "Coordinate error minor axis precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "coo_err_angle",
+        "unit": "deg",
+        "description": "Coordinate error angle",
+        "utype": "mango:EpochPosition.errors.position/mango:error.PErrorEllipse.angle[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.posAng;pos.errorEllipse;pos.eq",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "coo_qual",
+        "description": "Coordinate quality",
+        "ucd": "meta.code.qual;pos.eq",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "coo_wavelength",
+        "description": "Wavelength class for the origin of the coordinates (R,I,V,U,X,G)",
+        "ucd": "instr.bandpass;pos.eq",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "coo_bibcode",
+        "description": "Coordinate reference",
+        "ucd": "meta.bib.bibcode;pos.eq",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "hpx",
+        "description": "Healpix number at ORDER=10",
+        "ucd": "meta.id",
+        "datatype": "LONG"
+      },
+      {
+        "name": "pmra",
+        "unit": "mas.yr-1",
+        "description": "Proper motion in RA",
+        "utype": "mango:EpochPosition.pmLongitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.pm;pos.eq.ra",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "pmra_prec",
+        "description": "Proper motion in RA precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "pmdec",
+        "unit": "mas.yr-1",
+        "description": "Proper motion in DEC",
+        "utype": "mango:EpochPosition.pmLatitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.pm;pos.eq.dec",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "pmdec_prec",
+        "description": "Proper motion in DEC precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "pm_err_maj",
+        "unit": "mas.yr-1",
+        "description": "Proper motion error major axis",
+        "utype": "mango:EpochPosition.errors.properMotion/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "phys.angSize.smajAxis;pos.errorEllipse;pos.pm",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "pm_err_maj_prec",
+        "description": "Proper motion error major axis precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "pm_err_min",
+        "unit": "mas.yr-1",
+        "description": "Proper motion error minor axis",
+        "utype": "mango:EpochPosition.errors.properMotion/mango:error.PErrorEllipse.semiMinorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "phys.angSize.sminAxis;pos.errorEllipse;pos.pm",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "pm_err_min_prec",
+        "description": "Proper motion error minor axis precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "pm_err_angle",
+        "unit": "deg",
+        "description": "Proper motion error angle",
+        "utype": "mango:EpochPosition.errors.properMotion/mango:error.PErrorEllipse.angle[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.posAng;pos.errorEllipse;pos.pm",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "pm_qual",
+        "description": "Proper motion quality",
+        "ucd": "meta.code.qual;pos.pm",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "pm_bibcode",
+        "description": "Proper motion reference",
+        "ucd": "meta.bib.bibcode;pos.pm",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "plx_value",
+        "unit": "mas",
+        "description": "Parallax",
+        "utype": "mango:EpochPosition.parallax[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "pos.parallax.trig",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "plx_prec",
+        "description": "Parallax precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "plx_err",
+        "unit": "mas",
+        "description": "Parallax error",
+        "ucd": "stat.error;pos.parallax.trig",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "plx_err_prec",
+        "description": "Parallax error precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "plx_qual",
+        "description": "Parallax quality",
+        "ucd": "meta.code.qual;pos.parallax.trig",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "plx_bibcode",
+        "description": "Parallax reference",
+        "ucd": "meta.bib.bibcode;pos.parallax.trig",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "rvz_type",
+        "description": "Radial velocity / redshift type",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "rvz_radvel",
+        "unit": "km.s-1",
+        "description": "Radial Velocity",
+        "utype": "mango:EpochPosition.radialVelocity[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "ucd": "spect.dopplerVeloc.opt",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "rvz_radvel_prec",
+        "description": "Radial velocity precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "rvz_redshift",
+        "description": "redshift",
+        "ucd": "src.redshift",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "rvz_redshift_prec",
+        "description": "redshift precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "rvz_err",
+        "unit": "km.s-1",
+        "description": "Radial velocity / redshift error",
+        "ucd": "stat.error;spect.dopplerVeloc",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "rvz_err_prec",
+        "description": "Radial velocity / redshift error precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "rvz_nature",
+        "description": "velocity / redshift nature",
+        "ucd": "meta.code;spect.dopplerVeloc",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "rvz_qual",
+        "description": "Radial velocity / redshift quality",
+        "ucd": "meta.code.qual;spect.dopplerVeloc",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "rvz_bibcode",
+        "description": "Radial velocity / redshift reference",
+        "ucd": "meta.bib.bibcode;spect.dopplerVeloc",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "vlsr",
+        "unit": "km.s-1",
+        "description": "velocity in Local Standard of Rest reference frame",
+        "ucd": "phys.veloc;pos.lsr;stat.mean",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "vlsr_err",
+        "unit": "km.s-1",
+        "description": "Error incertainty of the VLSR velocity",
+        "ucd": "stat.error;phys.veloc;pos.lsr",
+        "datatype": "DOUBLE"
+      },
+      {
+        "name": "vlsr_wavelength",
+        "description": "Wavelength class for the origin of the LSR velocity",
+        "ucd": "instr.bandpass;phys.veloc;pos.lsr",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "vlsr_bibcode",
+        "description": "Reference for the origin of the LSR velocity",
+        "ucd": "meta.bib.bibcode;phys.veloc;pos.lsr",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "vlsr_min",
+        "unit": "km.s-1",
+        "description": "Minimum for the mean value of the LSR velocity",
+        "ucd": "phys.veloc;pos.lsr;stat.min",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "vlsr_max",
+        "unit": "km.s-1",
+        "description": "Maximum for the mean value of the LSR velocity",
+        "ucd": "phys.veloc;pos.lsr;stat.max",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "sp_type",
+        "description": "MK spectral type",
+        "ucd": "src.spType",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "sp_qual",
+        "description": "Spectral type quality",
+        "ucd": "meta.code.qual;src.spType",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "sp_bibcode",
+        "description": "spectral type reference",
+        "ucd": "meta.bib.bibcode;src.spType",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "morph_type",
+        "description": "Morphological type",
+        "ucd": "src.morph.type",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "morph_qual",
+        "description": "Morphological type quality",
+        "ucd": "meta.code.qual;src.morph.type",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "morph_bibcode",
+        "description": "morphological type reference",
+        "ucd": "meta.bib.bibcode;src.morph.type",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "galdim_majaxis",
+        "unit": "arcmin",
+        "description": "Angular size major axis",
+        "ucd": "phys.angSize.smajAxis",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "galdim_majaxis_prec",
+        "description": "Angular size major axis precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "galdim_minaxis",
+        "unit": "arcmin",
+        "description": "Angular size minor axis",
+        "ucd": "phys.angSize.sminAxis",
+        "datatype": "FLOAT"
+      },
+      {
+        "name": "galdim_minaxis_prec",
+        "description": "Angular size minor axis precision",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "galdim_angle",
+        "unit": "deg",
+        "description": "Galaxy ellipse angle",
+        "ucd": "pos.posAng",
+        "datatype": "SHORT"
+      },
+      {
+        "name": "galdim_qual",
+        "description": "Galaxy dimension quality",
+        "ucd": "meta.code.qual;phys.angSize",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "galdim_wavelength",
+        "description": "Wavelength class for the origin of the Galaxy dimension",
+        "ucd": "instr.bandpass;phys.angSize",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "galdim_bibcode",
+        "description": "Galaxy dimension reference",
+        "ucd": "meta.bib.bibcode;phys.angSize",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "update_date",
+        "description": "Date of last modification",
+        "ucd": "time.processing",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "oid",
+        "description": "Object internal identifier",
+        "ucd": "meta.record",
+        "datatype": "LONG"
+      },
+      {
+        "name": "otype_txt",
+        "description": "Object type",
+        "ucd": "src.class",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "rvz_wavelength",
+        "description": "Wavelength class for the origin of the radial velocity/reshift",
+        "ucd": "instr.bandpass;spect.dopplerVeloc.opt",
+        "datatype": "CHAR"
+      }
+    ],
+    "coneColumns": [
+      {
+        "name": "distance",
+        "type": "double"
+      },
+      {
+        "name": "main_id",
+        "description": "Main identifier for an object",
+        "ucd": "meta.id;meta.main",
+        "utype": "mango:MangoObject.identifier",
+        "type": "string"
+      },
+      {
+        "name": "ra",
+        "description": "Right ascension",
+        "unit": "deg",
+        "ucd": "pos.eq.ra;meta.main",
+        "utype": "mango:EpochPosition.longitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "dec",
+        "description": "Declination",
+        "unit": "deg",
+        "ucd": "pos.eq.dec;meta.main",
+        "utype": "mango:EpochPosition.latitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "otype",
+        "type": "string"
+      },
+      {
+        "name": "coo",
+        "type": "string"
+      },
+      {
+        "name": "coo_err_maja",
+        "description": "Coordinate error major axis",
+        "unit": "mas",
+        "ucd": "phys.angSize.smajAxis;pos.errorEllipse;pos.eq",
+        "utype": "mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "coo_err_mina",
+        "description": "Coordinate error minor axis",
+        "unit": "mas",
+        "ucd": "phys.angSize.sminAxis;pos.errorEllipse;pos.eq",
+        "utype": "mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMinorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "coo_err_angle",
+        "description": "Coordinate error angle",
+        "unit": "deg",
+        "ucd": "pos.posAng;pos.errorEllipse;pos.eq",
+        "utype": "mango:EpochPosition.errors.position/mango:error.PErrorEllipse.angle[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "short"
+      },
+      {
+        "name": "pmra",
+        "description": "Proper motion in RA",
+        "unit": "mas.yr-1",
+        "ucd": "pos.pm;pos.eq.ra",
+        "utype": "mango:EpochPosition.pmLongitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "pmdec",
+        "description": "Proper motion in DEC",
+        "unit": "mas.yr-1",
+        "ucd": "pos.pm;pos.eq.dec",
+        "utype": "mango:EpochPosition.pmLatitude[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "pm_err_maja",
+        "description": "Proper motion error major axis",
+        "unit": "mas.yr-1",
+        "ucd": "phys.angSize.smajAxis;pos.errorEllipse;pos.pm",
+        "utype": "mango:EpochPosition.errors.properMotion/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "pm_err_mina",
+        "description": "Proper motion error minor axis",
+        "unit": "mas.yr-1",
+        "ucd": "phys.angSize.sminAxis;pos.errorEllipse;pos.pm",
+        "utype": "mango:EpochPosition.errors.properMotion/mango:error.PErrorEllipse.semiMinorAxis[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "pm_err_angle",
+        "description": "Proper motion error angle",
+        "unit": "deg",
+        "ucd": "pos.posAng;pos.errorEllipse;pos.pm",
+        "utype": "mango:EpochPosition.errors.properMotion/mango:error.PErrorEllipse.angle[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "short"
+      },
+      {
+        "name": "plx_value",
+        "description": "Parallax",
+        "unit": "mas",
+        "ucd": "pos.parallax.trig",
+        "utype": "mango:EpochPosition.parallax[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "rvz_radvel",
+        "description": "Radial Velocity",
+        "unit": "km.s-1",
+        "ucd": "spect.dopplerVeloc.opt",
+        "utype": "mango:EpochPosition.radialVelocity[CS.spaceSys=ICRS CT.epoch=J2000]",
+        "type": "double"
+      },
+      {
+        "name": "galdim_majaxis",
+        "description": "Angular size major axis",
+        "unit": "arcmin",
+        "ucd": "phys.angSize.smajAxis",
+        "type": "double"
+      },
+      {
+        "name": "galdim_minaxis",
+        "description": "Angular size minor axis",
+        "unit": "arcmin",
+        "ucd": "phys.angSize.sminAxis",
+        "type": "double"
+      },
+      {
+        "name": "galdim_angle",
+        "description": "Galaxy ellipse angle",
+        "unit": "deg",
+        "ucd": "pos.posAng",
+        "type": "short"
+      },
+      {
+        "name": "sp_type",
+        "description": "MK spectral type",
+        "ucd": "src.spType",
+        "type": "string"
+      },
+      {
+        "name": "morph_type",
+        "description": "Morphological type",
+        "ucd": "src.morph.type",
+        "type": "string"
+      },
+      {
+        "name": "biblist",
+        "type": "int"
+      },
+      {
+        "name": "U",
+        "type": "float"
+      },
+      {
+        "name": "B",
+        "type": "float"
+      },
+      {
+        "name": "V",
+        "type": "float"
+      },
+      {
+        "name": "R",
+        "type": "float"
+      },
+      {
+        "name": "G",
+        "type": "float"
+      },
+      {
+        "name": "I",
+        "type": "float"
+      },
+      {
+        "name": "J",
+        "type": "float"
+      },
+      {
+        "name": "H",
+        "type": "float"
+      },
+      {
+        "name": "K",
+        "type": "float"
+      }
+    ]
+  }
+}

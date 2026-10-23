@@ -5,3 +5,6 @@ public/vendor/** -text
 upstream/** -text
 public/licenses/** -text
 public/fonts/** -text
+
+# Importer source hashes must survive archive/checkout byte-for-byte.
+scripts/** -text whitespace=cr-at-eol

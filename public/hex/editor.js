@@ -1,5 +1,6 @@
 import {Box, Card, Toolbar, FormGrid, SplitView, Field, Input, Select, Option, Button, Status, Badge, DataList, Link, ByteGrid, byteGridController, onDisconnect, setState, updateStatus} from '../ui/index.js';
 import {HexDocument, parseHex, parseOffset, inspectBytes, MAX_HEX_BYTES} from './model.js';
+import {resultRecording} from '../result-recording.js';
 
 const address = value => `0x${value.toString(16).toUpperCase().padStart(8, '0')}`;
 const asHex = bytes => Array.from(bytes, byte => byte.toString(16).toUpperCase().padStart(2, '0')).join(' ');
@@ -51,11 +52,24 @@ export function mountHexEditor(parent, {onUseBytes} = {}) {
     layout
   );
   parent.append(root);
+  let recordedDocument = null;
+  const recording = resultRecording({id: 'hex-result', anchor: primary.querySelector('.hex-export-controls'), source: 'file', onLeave: () => {recordedDocument = null;}});
   let loaded = false, active = false, disposed = false, fileName = '文件.bin', fileGeneration = 0, uiRevision = 0, rangeValid = true;
   let selection = {offset: 0, start: 0, end: 0, length: 0}, worker = null, searchTimer, searchRequest = 0, lastMatch = null;
   const objectURLs = new Set();
 
+  function recordDocument() {
+    if (!loaded || !active || disposed) {recordedDocument = null;recording.clear();return;}
+    const revision = documentModel.revision, generation = fileGeneration, name = filename.value.trim() || editedName(fileName);
+    if (recordedDocument?.revision === revision && recordedDocument.generation === generation && recordedDocument.name === name) return;
+    recordedDocument = {revision, generation, name};
+    // Export the complete working document on explicit capture. The bounded
+    // byte grid and selected range never become the saved byte source.
+    recording.publish(() => ({bytes: documentModel.exportBytes(), name}));
+  }
+
   function updateControls() {
+    recordDocument();
     for (const control of [jumpValue, jump, selectionLength, editValue, insert, searchMode, searchValue, searchNext, searchPrevious, endian, filename, download, use]) control.disabled = !loaded;
     undo.disabled = !loaded || !documentModel.canUndo; redo.disabled = !loaded || !documentModel.canRedo;
     write.disabled = !loaded || !rangeValid || selection.offset >= documentModel.length;
@@ -204,6 +218,9 @@ export function mountHexEditor(parent, {onUseBytes} = {}) {
     }).then(applied => {if (applied && belongs()) updateStatus(status, '编辑内容已用于文件分析。', 'success');}).catch(error => {if (belongs()) updateStatus(status, error.message || '文件分析载入失败。', 'error');});
   };
   const invalidateUI = () => {uiRevision++;};
+  filename.addEventListener('input', recordDocument);
+  const onTask = ({detail}) => {if (detail?.panel === 'file' && detail.id === 'native:hex-editor' && active) recordDocument();};
+  document.addEventListener('arg:nativetaskchange', onTask);
   for (const event of ['input', 'change', 'click']) root.addEventListener(event, invalidateUI, {capture: true});
   const api = {
     root,
@@ -216,8 +233,8 @@ export function mountHexEditor(parent, {onUseBytes} = {}) {
       searchValue.value = ''; updateStatus(status, ''); updateStatus(searchStatus, '');
       refresh(0);
     },
-    setActive(value) {if (disposed) return;uiRevision++;active = !!value; root.hidden = !active; if (!active) {cancelSearch();lastMatch = null;} else gridController.refresh();},
-    cancel() {if (disposed) return;uiRevision++;cancelSearch();lastMatch = null;},
+    setActive(value) {if (disposed) return;uiRevision++;active = !!value; root.hidden = !active; if (!active) {cancelSearch();lastMatch = null;} else {gridController.refresh();recordDocument();}},
+    cancel() {if (disposed) return;uiRevision++;active = false;cancelSearch();lastMatch = null;},
     getEditedBytes() {return loaded ? documentModel.exportBytes() : null;},
     destroy() {
       if (disposed) return;
@@ -226,6 +243,7 @@ export function mountHexEditor(parent, {onUseBytes} = {}) {
       editValue.value = searchValue.value = filename.value = '';
       inspector.replaceChildren();
       for (const event of ['input', 'change', 'click']) root.removeEventListener(event, invalidateUI, {capture: true});
+      document.removeEventListener('arg:nativetaskchange', onTask);recording.clear();recordedDocument = null;
       for (const url of objectURLs) URL.revokeObjectURL(url);objectURLs.clear();
     }
   };

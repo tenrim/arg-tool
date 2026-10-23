@@ -1,6 +1,7 @@
+import {attachAnimateDisclosure} from './animate-ui.js';
 import {create, emit, uid, setState, onDisconnect} from './core.js';
 import {Button} from './controls.js';
-import {animatePresence, cancelMotion, motionAllowed, tabIndicator} from './motion.js';
+import {animatePresence, animateDialog, cancelMotion, motionAllowed, tabIndicator} from './motion.js';
 
 export function Dialog(options = {}) {
   const node = create('dialog', 'dialog', options);
@@ -36,6 +37,7 @@ export function dialogController(node, {trigger, closeButton, initialFocus, back
     exitRevision++;cancelAnimationFrame(exitFrame);leaving = false;node.inert = false;clearExitViewport();
     returnFocus = document.activeElement;
     node.showModal();
+    animateDialog(node,true);
     viewport?.addEventListener('resize', fitViewport);
     viewport?.addEventListener('scroll', fitViewport);
     window.addEventListener('resize', fitViewport);
@@ -52,13 +54,13 @@ export function dialogController(node, {trigger, closeButton, initialFocus, back
       node.style.setProperty('--ui-exit-height',node.style.getPropertyValue('--ui-viewport-height'));
       node.style.setProperty('--ui-exit-top',node.style.getPropertyValue('--ui-viewport-top'));
     }
-    node.inert = true;node.close();afterClose();
+    node.inert = true;animateDialog(node,false);node.close();afterClose();
     // This only coordinates visual cleanup (e.g. moving a sidebar back).
     // Native close, focus restoration and ARIA already happened above.
     exitFrame = requestAnimationFrame(() => {
       Promise.allSettled(node.getAnimations().map(animation => animation.finished)).then(() => {
         if (revision !== exitRevision || node.open) return;
-        leaving = false;clearExitViewport();emit(node, 'exitcomplete');
+        leaving = false;cancelMotion(node);clearExitViewport();emit(node, 'exitcomplete');
       });
     });
   };
@@ -84,6 +86,7 @@ export function dialogController(node, {trigger, closeButton, initialFocus, back
   const destroy = () => {
     if (destroyed) return;
     close();destroyed=true;exitRevision++;cancelAnimationFrame(exitFrame);leaving=false;
+    cancelMotion(node);
     for (const animation of node.getAnimations()) animation.cancel();
     clearExitViewport();stopViewport();closeButton?.removeEventListener('click', close);node.removeEventListener('click', dismiss);node.removeEventListener('keydown', escape);node.removeEventListener('close', afterClose);releaseDisconnect();
   };
@@ -96,28 +99,35 @@ export function Disclosure(options = {}) {
   return node;
 }
 export function disclosureController(trigger, panel, {closedLabel, openLabel, responsiveQuery} = {}) {
-  let destroyed = false;
+  let destroyed = false, animation, openState=!panel.hidden;
   const viewport=responsiveQuery?matchMedia(responsiveQuery):null;
-  panel.dataset.motion = 'collapse';
+  const motion=panel.dataset.motion||'collapse';
+  panel.dataset.motion = motion;
   if (!panel.id) panel.id = uid('disclosure');
   trigger.setAttribute('aria-controls', panel.id);
   const toggle = open => {
     if (destroyed) return;
-    panel.inert = !open;
-    setState(panel, {hidden: !open}); setState(trigger, {expanded: open});
+    const previous=openState;openState=!!open;
+    panel.inert = !open;setState(trigger, {expanded: open});
+    // Do not re-start a running expansion when routing reveals an already-open
+    // section. The imported Panel owns visual presence; inert owns availability.
+    if(panel.isConnected&&motion==='collapse'&&(!viewport||viewport.matches)){
+      animation??=attachAnimateDisclosure(panel,previous);
+      animation.set(open);
+    }else {animation?.destroy();animation=null;setState(panel,{hidden:!open});}
     if (closedLabel && openLabel) trigger.textContent = open ? openLabel : closedLabel;
     emit(panel, 'toggle', {open});
   };
-  const click = () => toggle(panel.hidden);
+  const click = () => toggle(!openState);
   const syncViewport=()=>{
     // A desktop container is not collapsing. Leaving collapse motion attached
     // clips nested floating menus even after the opening animation has settled.
-    if(viewport.matches)panel.dataset.motion='collapse';else delete panel.dataset.motion;
+    if(viewport.matches)panel.dataset.motion=motion;else delete panel.dataset.motion;
     toggle(!viewport.matches);
   };
   trigger.addEventListener('click', click);
   if(viewport){viewport.addEventListener('change',syncViewport);syncViewport();}else toggle(!panel.hidden);
-  const destroy = () => {if (destroyed) return;destroyed = true;trigger.removeEventListener('click', click);viewport?.removeEventListener('change',syncViewport);releaseTrigger();releasePanel();};
+  const destroy = () => {if (destroyed) return;destroyed = true;animation?.destroy();trigger.removeEventListener('click', click);viewport?.removeEventListener('change',syncViewport);releaseTrigger();releasePanel();};
   const releaseTrigger = onDisconnect(trigger, destroy), releasePanel = onDisconnect(panel, destroy);
   return {toggle, destroy};
 }

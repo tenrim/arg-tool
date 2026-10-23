@@ -1,6 +1,8 @@
-# 迷雾工具箱 · 1Panel 静态网站部署
+# 迷雾工具箱 · 1Panel 部署
 
-这是纯静态网站。正式服务器只提供网页、字体和本地运行包，无需安装 Node.js、PHP、数据库或业务后端。所选文件和普通工具输入在访客浏览器内计算；用户主动发起 HTTP/DNS 请求、打开外部服务，以及服务器的网页访问日志不属于此承诺。
+当前标准部署使用 Node.js 24 或更新版本，运行仓库根目录的 `npm start`，统一管理网站、在线资料查询及已配置的邮件反馈。更新通常是同步代码后重启原运行环境；具体配置保留、验收及回退限制见 [当前部署与恢复说明](../docs/DEPLOYMENT.md)。
+
+以下章节是**仅交付静态目录时的替代方案**，不能启动在线查询或邮件服务。普通工具输入和所选文件仍在访客浏览器内计算；主动联网查询、问题反馈和原站访问另有各自的数据去向说明。
 
 ## 1. 新建网站
 
@@ -16,6 +18,7 @@
 - 如已存在 `location /` 或 JavaScript/WASM 静态规则，请修改现有规则；避免重复 location。更新时完整替换发布包，不能只上传 `app.js`；当前页面还需要 `ui/` 中的组件模块与样式。取消 JS/CSS/HTML 的长期 `expires` 或 `immutable` 缓存，采用重新验证缓存。
 - 本站使用 `#crypto` 等 hash 路由，无需 SPA 伪静态回退。不要配置 `try_files ... /index.html`，否则缺失的 Worker/WASM 会收到 HTML 而运行失败。
 - OpenResty 标准 `mime.types` 应已包含 CSS、JSON、SVG、字体等。片段额外指定 JavaScript 模块和 WASM 类型。不要启用拒绝 Worker、blob: 或 WASM 执行的额外 CSP，除非经过完整浏览器回归。本站不需要开启跨域访问或添加 `Access-Control-Allow-Origin: *`。
+- 资料查询始终请求 `.json`，避免将 `.gz` 压缩包地址交给 IDM 等下载管理器。片段的 `gzip_static on` 仅在浏览器接受 gzip 时提供同名压缩副本，响应仍须为 `application/json`，并带 `Content-Encoding: gzip` 与 `Vary: Accept-Encoding`；不要设置 `Content-Disposition: attachment`。缺少 gzip_static 模块时移除该指令即可，完整 JSON 不依赖压缩或后台服务。
 - 在 1Panel 中申请或导入域名证书，开启 HTTPS，并按需要启用 HTTP 跳转 HTTPS。浏览器的部分加密与 Worker 能力要求安全上下文；IP 上的普通 HTTP 不能作为正式验收环境。
 - 保存时执行面板配置校验，通过后重载 OpenResty。该参考片段还需由目标服务器的实际配置校验，不能跳过。
 

@@ -1,0 +1,18 @@
+Crystallography Open Database (COD) online data
+Source: https://www.crystallography.net/cod/
+API: https://wiki.crystallography.net/RESTful_API/
+Data policy: https://www.crystallography.net/cod/new.html
+Citations: https://wiki.crystallography.net/cod/citing/
+
+COD database data are dedicated to the public domain under CC0 1.0. The complete
+CC0 legal text is bundled as ONLINE-CC0-1.0.txt. Scientific records retain the
+original structure authors, publication, identifier, retrieval time and all
+returned fields. Cite COD and the original publication when using a structure.
+
+This integration is an original fixed-endpoint query adapter, not COD server
+software. CIF files are retrieved only on explicit request. No selected sample
+database or automatic media/structure downloads are bundled. Connection failure
+is reported honestly; sample results are never substituted for an offline server.
+The full official COD website was not reachable by the local Node network during
+2026-10-17 verification; the REST route was checked against official documentation
+through the web reader. Live upstream verification remains deployment-dependent.

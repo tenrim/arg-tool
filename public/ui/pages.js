@@ -71,9 +71,9 @@ export function ImagePage() {
           <textarea id="image-output" class="standalone-editor" readonly aria-label="图片分析结果"></textarea>
           <div class="button-row wrap"><button id="image-copy" class="quiet-button" disabled>复制结果</button><button id="image-save-text" class="quiet-button" disabled>下载文本结果</button><button id="lsb-download" class="quiet-button" disabled>下载提取字节</button></div><p id="image-status" class="status" role="status" aria-live="polite"></p>
         </div>
-        <div class="surface image-deep-analysis"><h2>AperiSolve 深度分析</h2><a class="secondary-button" href="https://www.aperisolve.com/zh/" target="_blank" rel="noopener noreferrer">前往 AperiSolve 中文版</a></div>
+
         <footer class="tool-provenance" aria-label="使用的具体项目"><p class="micro-label">// 所用项目与来源</p><ul>
-          <li><a href="https://github.com/Zeecka/AperiSolve" target="_blank" rel="noopener noreferrer">AperiSolve</a><span>位平面分解、RGB 叠加和颜色重映射；完整扫描使用官方服务</span></li>
+          <li><a href="https://github.com/Zeecka/AperiSolve" target="_blank" rel="noopener noreferrer">AperiSolve</a><span>本地位平面分解、RGB 叠加和颜色重映射</span></li>
           <li><a href="https://github.com/Ge0rg3/StegOnline" target="_blank" rel="noopener noreferrer">StegOnline</a><span>位平面浏览、多位 LSB 提取与 PNG 原始像素解码（PngToy）</span></li>
           <li><a href="https://github.com/cozmo/jsQR" target="_blank" rel="noopener noreferrer">jsQR 1.4.0</a><span>二维码识别</span></li>
           <li><a href="https://github.com/MikeKovarik/exifr" target="_blank" rel="noopener noreferrer">exifr 7.1.3</a><span>EXIF / XMP / IPTC / GPS 元数据读取</span></li>

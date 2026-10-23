@@ -1,4 +1,6 @@
 import {appPages} from './browser-host.mjs';
+import {tmpdir} from 'node:os';
+import {chooseNativeTask} from './browser-navigation.mjs';
 import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
@@ -12,7 +14,7 @@ try{
  const click=id=>page.locator('#'+id).click(),fill=(id,value)=>page.locator('#'+id).fill(value),value=id=>page.locator('#'+id).inputValue();
  const cell=(y,x)=>page.locator(`#paper-board button[data-row="${y}"][data-col="${x}"]`);
  async function status(id,text){await page.waitForFunction(({id,text})=>document.getElementById(id)?.textContent.includes(text),{id,text},{timeout:30000});}
- async function type(kind,rows,cols){await page.locator('#paper-type').selectOption(kind);await fill('paper-rows',String(rows));await fill('paper-cols',String(cols));await click('paper-new');}
+ async function type(kind,rows,cols){await chooseNativeTask(page,kind==='sudoku'?'native:paper':'native:paper-'+kind);await fill('paper-rows',String(rows));await fill('paper-cols',String(cols));await click('paper-new');}
  async function input(text){if(!await page.locator('.paper-io').evaluate(e=>e.open))await page.locator('.paper-io summary').click();await fill('paper-text',text);await click('paper-import-text');await status('paper-io-status','已应用');}
  async function solve(text='唯一完整解'){await click('paper-solve');await status('paper-status',text);}
  await page.goto('https://arg.test/#paper');await page.waitForSelector('#panel-paper:not([hidden])');
@@ -28,7 +30,7 @@ try{
  await type('nurikabe',2,2);await input('1 .\n. .');await solve();assert.equal(await page.locator('#paper-board .paper-sea').count(),3);assert.equal(await value('paper-output'),'. #\n# #');
  await type('akari',2,2);await input('. #\n# .');await solve();assert.equal(await page.locator('#paper-board .paper-lamp').count(),2);assert.equal(await value('paper-output'),'● #\n# ●');
  await click('paper-extract');await page.waitForSelector('#panel-extract:not([hidden])');assert.equal(await value('extract-input'),'● #\n# ●');await page.evaluate(()=>location.hash='paper');await page.waitForSelector('#panel-paper:not([hidden])');
- await page.locator('#paper-type').selectOption('sudoku');assert.equal(await cell(0,0).textContent(),'1');await click('paper-new');await solve('多个解');assert.match(await value('paper-output'),/\?/);
+ await chooseNativeTask(page,'native:paper');assert.equal(await cell(0,0).textContent(),'1');await click('paper-new');await solve('多个解');assert.match(await value('paper-output'),/\?/);
  // Cancellation must settle the pending promise and never restore old output.
  await page.evaluate(()=>{document.getElementById('paper-solve').click();document.getElementById('paper-stop').click();});await status('paper-status','已停止');assert.equal(await page.locator('#paper-solve').isEnabled(),true);assert.equal(await value('paper-output'),'');
  // Import crosses puzzle types, retains other drafts, and rejects invalid dimensions.
@@ -36,7 +38,7 @@ try{
  await page.locator('#paper-file').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({...json,rows:999999999}))});await status('paper-io-status','无法读取');assert.equal(await cell(0,0).textContent(),'1');
  await page.reload();await page.waitForSelector('#panel-paper:not([hidden])');assert.equal(await cell(0,0).textContent(),'1');assert.equal(await value('paper-output'),'');
  const panel=page.locator('#panel-paper');await panel.locator('.tool-help-button').click();assert.equal(await panel.locator('.tool-provenance').evaluate(e=>e===e.parentElement.lastElementChild),true);assert.ok(await panel.locator('.tool-provenance').textContent().then(s=>s.includes('cspuz_core')));
- for(const width of [320,390,768,1365]){await page.setViewportSize({width,height:900});for(const [kind,n]of [['sudoku',9],['slitherlink',15],['nurikabe',15],['akari',15]]){await type(kind,n,n);await click('paper-larger');const bounds=await panel.evaluate((root,w)=>({scroll:document.documentElement.scrollWidth,clipped:[...root.querySelectorAll('button,input,textarea,select')].filter(e=>!e.closest('.paper-board-scroll')).filter(e=>{const r=e.getBoundingClientRect();return r.width&&r.height&&(r.left<-.5||r.right>w+1);}).map(e=>e.id||e.textContent.slice(0,20))}),width);assert.ok(bounds.scroll<=width+1,`${kind} ${width}: document ${bounds.scroll}`);assert.deepEqual(bounds.clipped,[],`${kind} ${width}`);}await type('sudoku',9,9);await page.screenshot({path:`/tmp/arg-r3-${width}.png`,fullPage:true});}
+ for(const width of [320,390,768,1365]){await page.setViewportSize({width,height:900});for(const [kind,n]of [['sudoku',9],['slitherlink',15],['nurikabe',15],['akari',15]]){await type(kind,n,n);await click('paper-larger');const bounds=await panel.evaluate((root,w)=>({scroll:document.documentElement.scrollWidth,clipped:[...root.querySelectorAll('button,input,textarea,select')].filter(e=>!e.closest('.paper-board-scroll')).filter(e=>{const r=e.getBoundingClientRect();return r.width&&r.height&&(r.left<-.5||r.right>w+1);}).map(e=>e.id||e.textContent.slice(0,20))}),width);assert.ok(bounds.scroll<=width+1,`${kind} ${width}: document ${bounds.scroll}`);assert.deepEqual(bounds.clipped,[],`${kind} ${width}`);}await type('sudoku',9,9);await page.screenshot({path:resolve(tmpdir(),`arg-r3-${width}.png`),fullPage:true});}
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>document.documentElement.style.fontSize='200%');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=391));
  assert.equal(appPages(context).length,1);assert.equal(await page.locator('iframe').count(),0);assert.deepEqual({missing,external,errors},{missing:[],external:[],errors:[]});console.log('PASS: four actual solver workers; unique/multiple/impossible; touch and keyboard entry; undo/redo; original/results; JSON/SVG; extraction; drafts; cancellation; Chinese help/sources; 320–1365 px and 200% text; no external requests or extra pages.');
 }finally{await browser.close();}

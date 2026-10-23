@@ -6,8 +6,15 @@ import csv,json,pathlib,hashlib,shutil,re,subprocess
 from reference_world import build_world
 from rdflib import Graph,Namespace
 ROOT=pathlib.Path(__file__).resolve().parents[1];S=ROOT/'upstream/reference/sources';O=ROOT/'public/vendor/reference';O.mkdir(exist_ok=True,parents=True)
+# Retire selected/sample catalogues from runtime output, including old builds.
+# Original source snapshots and their hashes remain archived under upstream/.
+for name in ['integerseq.json','crystals.json','cod-NOTICE.txt','cod-README-COPYING.txt','oeis-LICENSE.txt','crystals']:
+ target=(O/name).resolve()
+ if not target.is_relative_to(O.resolve()):raise RuntimeError('Unsafe retired output path')
+ if target.is_dir():shutil.rmtree(target)
+ elif target.exists():target.unlink()
 def save(name,rows):
- (O/(name+'.json')).write_text(json.dumps(rows,ensure_ascii=False,separators=(',',':'))+'\n')
+ (O/(name+'.json')).write_text(json.dumps(rows,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
  print(name,len(rows) if isinstance(rows,list) else 'object')
 def csvrows(name):return list(csv.DictReader((S/name).open(encoding='utf-8-sig',newline='')))
 def original(name):return json.loads((S/name).read_text())
@@ -67,9 +74,9 @@ save('tarot',tarot)
 shutil.copytree(S/'tarot-art',O/'tarot-art',dirs_exist_ok=True)
 shutil.copytree(S/'tarot-gearberry',O/'tarot-gearberry',dirs_exist_ok=True)
 shutil.copyfile(S/'tarot-gearberry-README.txt',O/'tarot-gearberry-README.txt')
-(O/'tarot-gearberry-NOTICE.txt').write_text('Tarot Cards WebP Collection by Gearberry - https://github.com/reginanka/tarot-cards\nLicense: Creative Commons Attribution 4.0 International (CC BY 4.0).\nhttps://creativecommons.org/licenses/by/4.0/\nPinned source: 83a25b0d4caeb24fa7d556796cf6244d8a55fd81.\n78 unmodified 848 x 1264 WebP card images, distributed byte-for-byte. No resizing, recolouring or cropping. The card back is not included.\nThe upstream README and LICENSE.md explicitly apply CC BY 4.0 to the images and require the attribution above. The repository does not identify an original illustrator or its image creation method; this site does not claim those details are verified.\nOriginal README and license are bundled as tarot-gearberry-README.txt and tarot-gearberry-LICENSE.txt. Original cards.json, including the unused back record and interpretations, is preserved only in upstream/reference/sources/tarot-gearberry-cards.json for provenance and name-to-file validation; the interpretation text is not used by the tool.\nChinese names and concise keywords remain local; identification fields remain sourced from Tarot Card Data. Match artwork by card name, not array position. Gearberry Justice VIII / Strength XI; classic RWS Strength VIII / Justice XI. The selected deck controls visible numbers, numeric queries, dropdown ordering and result images.\nPer-file pinned URLs and SHA-256: UPSTREAM.json.\n')
+(O/'tarot-gearberry-NOTICE.txt').write_text('Tarot Cards WebP Collection by Gearberry - https://github.com/reginanka/tarot-cards\nLicense: Creative Commons Attribution 4.0 International (CC BY 4.0).\nhttps://creativecommons.org/licenses/by/4.0/\nPinned source: 83a25b0d4caeb24fa7d556796cf6244d8a55fd81.\n78 unmodified 848 x 1264 WebP card images, distributed byte-for-byte. No resizing, recolouring or cropping. The card back is not included.\nThe upstream README and LICENSE.md explicitly apply CC BY 4.0 to the images and require the attribution above. The repository does not identify an original illustrator or its image creation method; this site does not claim those details are verified.\nOriginal README and license are bundled as tarot-gearberry-README.txt and tarot-gearberry-LICENSE.txt. Original cards.json, including the unused back record and interpretations, is preserved only in upstream/reference/sources/tarot-gearberry-cards.json for provenance and name-to-file validation; the interpretation text is not used by the tool.\nChinese names and concise keywords remain local; identification fields remain sourced from Tarot Card Data. Match artwork by card name, not array position. Gearberry Justice VIII / Strength XI; classic RWS Strength VIII / Justice XI. The selected deck controls visible numbers, numeric queries, dropdown ordering and result images.\nPer-file pinned URLs and SHA-256: UPSTREAM.json.\n',encoding='utf-8',newline='\n')
 for name in ['tarot-art-README.txt','tarot-art-SOURCES.txt','tarot-art-metadata.json']:shutil.copyfile(S/name,O/name)
-(O/'tarot-art-NOTICE.txt').write_text('Rider–Waite–Smith (1909), 78 card images. Public Domain.\nArtist: Pamela Colman Smith (1878–1951); design: Arthur Edward Waite; publisher: Rider & Company.\nOriginal 1909 Pam-A scans restored by Steve P.: https://steve-p.org/cards/RWSa.html\nImage mirror: https://github.com/mixvlad/TarotCards/tree/840b84d012c6b74dc1634fa2d00d1b21f5b28093/tarot/rider-waite/720px\nThese JPEGs are distributed byte-for-byte from the pinned mirror. No recolouring, cropping or resizing by this site.\nThe mirror explicitly designates this deck as Public Domain in metadata.json, README.md and SOURCES.md. Its documentation is MIT (tarot-art-LICENSE.txt); the artwork is not relabelled MIT.\nStrength VIII / Justice XI; minor ranks 01–10, 11 Page, 12 Knight, 13 Queen, 14 King.\nPer-file pinned URLs and SHA-256: UPSTREAM.json. Chinese names and concise keywords are authored locally.\n')
+(O/'tarot-art-NOTICE.txt').write_text('Rider–Waite–Smith (1909), 78 card images. Public Domain.\nArtist: Pamela Colman Smith (1878–1951); design: Arthur Edward Waite; publisher: Rider & Company.\nOriginal 1909 Pam-A scans restored by Steve P.: https://steve-p.org/cards/RWSa.html\nImage mirror: https://github.com/mixvlad/TarotCards/tree/840b84d012c6b74dc1634fa2d00d1b21f5b28093/tarot/rider-waite/720px\nThese JPEGs are distributed byte-for-byte from the pinned mirror. No recolouring, cropping or resizing by this site.\nThe mirror explicitly designates this deck as Public Domain in metadata.json, README.md and SOURCES.md. Its documentation is MIT (tarot-art-LICENSE.txt); the artwork is not relabelled MIT.\nStrength VIII / Justice XI; minor ranks 01–10, 11 Page, 12 Knight, 13 Queen, 14 King.\nPer-file pinned URLs and SHA-256: UPSTREAM.json. Chinese names and concise keywords are authored locally.\n',encoding='utf-8',newline='\n')
 save('colors',[[r['name'],r['hex']] for r in csvrows('colors.csv')])
 g=Graph().parse(S/'geology-chart.ttl',format='turtle');SK=Namespace('http://www.w3.org/2004/02/skos/core#');GT=Namespace('http://resource.geosciml.org/ontology/timescale/gts#');TM=Namespace('http://www.w3.org/2006/time#');DS=Namespace('https://data.stratigraphy.org/data/gts/');SC=Namespace('https://schema.org/');records=[]
 for subject,rank in g.subject_objects(GT['rank']):
@@ -78,26 +85,10 @@ for subject,rank in g.subject_objects(GT['rank']):
  labels={v.language:str(v) for v in g.objects(subject,SK.prefLabel)};rid=str(subject).split('/')[-1];rank=str(rank).split('/')[-1]
  records.append({'id':rid,'name':labels.get('zh',labels.get('en',rid)).replace(' ',''),'english':labels.get('en',rid),'rank':{'Eon':'宙','Era':'代','Period':'纪','Epoch':'世','Age':'期','SubPeriod':'亚纪','SubEpoch':'亚世'}.get(rank,rank),'start':float(begin),'end':float(end),'parent':str(g.value(subject,SK.broader) or '').split('/')[-1],'color':str(g.value(subject,SC.color) or '#7aa8b4')})
 save('geology',sorted(records,key=lambda x:(-x['start'],x['end'])))
-sequences=[]
-for f in sorted((S/'oeis').glob('*.seq')):
- lines=f.read_text().splitlines();id=f.stem;parts=lambda codes:[l.split(' ',2)[2] for l in lines if len(l.split(' ',2))==3 and l[:2] in codes]
- terms=''.join(parts(['%V','%W','%X']) or parts(['%S','%T','%U'])).strip(',').split(',');terms=[v.strip() for v in terms if re.fullmatch(r'-?\d+',v.strip())]
- if len(terms)<3:continue
- sequences.append({'id':id,'name':' '.join(parts(['%N'])),'terms':terms,'offset':(parts(['%O']) or ['0'])[0].split(',')[0]})
-save('integerseq',sequences)
-# Only keep self-contained COD records; the app's strict parser validates structure before display.
-crystals=[]
-zhmin={'9008564-diamond':'金刚石','9011575-diamond':'金刚石（另一记录）','9000019':'铁蛇纹石','9000020':'氟铝镁石','9000025':'黑云母','9000079':'蓝辉铜矿','9000195':'钠镁矾','9000251':'副菱铁矾','9000305':'水磷锰矿','9000307':'硅钒钙石','9000612':'针钠钙石','9007550':'钙铜矾','9008434':'钛磷铁锰矿','9008098':'三碘化砷'}
-for stem,zhname in zhmin.items():
- f=S/'crystals'/(stem+'.cif');raw=f.read_bytes();txt=raw.decode('utf8','replace');formula=re.search(r'^_chemical_formula_sum\s+([^\n]+)',txt,re.M);name=re.search(r'^_chemical_name_mineral\s+([^\n]+)',txt,re.M)
- crystals.append({'id':stem.split('-')[0],'name':zhname,'english':name[1].strip("'\"") if name else '', 'formula':formula[1].strip("'\"") if formula else '', 'file':f.name})
- (O/'crystals').mkdir(exist_ok=True);shutil.copyfile(f,O/'crystals'/f.name)
-save('crystals',crystals)
 for f in S.glob('*'):
- if f.is_file() and ('LICENSE' in f.name or f.name in ['tarot-README.txt','ports-README.txt']):shutil.copyfile(f,O/f.name)
-(O/'cod-NOTICE.txt').write_text('Crystallography Open Database (COD)\nData: CC0 1.0 / public domain. https://www.crystallography.net/cod/\nhttps://creativecommons.org/publicdomain/zero/1.0/\nOriginal CIF notices, publication authors, article title and journal remain in each CIF file.\nPinned snapshots from cod-developers/cod-tools tests/inputs; no cod-tools program code is included.\nPreserve attribution to the original crystallographic publications.\n')
-meta={'snapshot':'2026-10-09','counts':{k:len(json.loads((O/(k+'.json')).read_text())) for k in ['countries','airports','ports','tarot','colors','geology','integerseq','crystals']},'tarotDecks':{'gearberry':78,'rws':78},'unicode':'17.0.0','geology':'ICS chart pinned 81618a865cdb04998355a302f3e859908a080c0e'};save('META',meta)
+ if f.is_file() and f.name!='oeis-LICENSE.txt' and ('LICENSE' in f.name or f.name in ['tarot-README.txt','ports-README.txt']):shutil.copyfile(f,O/f.name)
+meta={'snapshot':'2026-10-09','counts':{k:len(json.loads((O/(k+'.json')).read_text())) for k in ['countries','airports','ports','tarot','colors','geology']},'tarotDecks':{'gearberry':78,'rws':78},'unicode':'17.0.0','geology':'ICS chart pinned 81618a865cdb04998355a302f3e859908a080c0e'};save('META',meta)
 imports=json.loads((ROOT/'upstream/reference/imports.json').read_text());files=imports['files'][:]
 for f in sorted(O.rglob('*')):
- if f.is_file() and f.name!='UPSTREAM.json':files.append({'path':str(f.relative_to(ROOT)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
-(O/'UPSTREAM.json').write_text(json.dumps({'pins':imports['pins'],'files':files},indent=2)+'\n')
+ if f.is_file() and f.name!='UPSTREAM.json':files.append({'path':f.relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
+(O/'UPSTREAM.json').write_text(json.dumps({'pins':imports['pins'],'files':files},indent=2)+'\n',encoding='utf-8',newline='\n')

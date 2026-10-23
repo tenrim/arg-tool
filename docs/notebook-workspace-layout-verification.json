@@ -1,0 +1,14 @@
+{
+  "run_at": "2026-10-16T08:15:27.703Z",
+  "id": "browser:ui-layout",
+  "command": [
+    "node",
+    "scripts/browser-ui-layout.mjs"
+  ],
+  "reasons": [
+    "remaining check from docs/notebook-workspace-plan.json: public/tool-help.js"
+  ],
+  "exit_code": 0,
+  "duration_ms": 54766,
+  "passed": true
+}

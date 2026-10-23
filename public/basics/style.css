@@ -1,7 +1,7 @@
 /* Composition and tool geometry only; control appearance belongs to ui/. */
 .basics-workspace{display:grid;gap:var(--ui-gap,16px);min-width:0}
 .basics-table-scroll{overflow:auto;max-height:420px;min-width:0}
-.basics-square{display:grid;grid-template-columns:repeat(var(--square-size,5),minmax(0,1fr));gap:8px;max-width:600px}
+.basics-square{display:grid;grid-template-columns:repeat(var(--square-size,5),minmax(0,1fr));gap:8px;width:min(100%,600px);margin-inline:auto}
 .basics-square button{display:grid;gap:2px}
 .basics-visible-text{white-space:pre-wrap;overflow-wrap:anywhere;unicode-bidi:plaintext;max-height:240px;overflow:auto}
 .basics-tape-scroll{display:flex;overflow:auto;max-width:100%;gap:4px;padding:4px 0}

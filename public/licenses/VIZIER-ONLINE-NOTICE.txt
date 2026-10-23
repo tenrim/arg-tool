@@ -1,0 +1,14 @@
+CDS/VizieR online catalogue data
+Source: https://vizier.cds.unistra.fr/
+Service terms: https://cds.unistra.fr/legals/
+
+The original site adapter makes explicit read-only ASU requests for catalogue
+metadata, table schema or bounded selected rows. It does not bundle a catalogue
+mirror or VizieR server software. A result window is not the complete database.
+
+Credit: CDS/VizieR and each catalogue's original authors, publication and DOI.
+All returned metadata, units, field definitions, reference and rights_uri values
+are retained. Licence conditions are dataset-specific; the CDS website terms do
+not replace the individual catalogue's licence. Records must not be labelled as
+uniformly CC0 or as a single site's original scientific measurements.
+Bundled original service terms: CDS-ONLINE-TERMS.txt.

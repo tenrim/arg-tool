@@ -1,0 +1,43 @@
+{
+  "fixture": {
+    "sourceURL": "https://open.cnkgraph.com/api/ciTune/pattern",
+    "status": 200,
+    "capturedAt": "2026-10-17",
+    "scope": "A complete selected public record from the archived response; no record fields or article text truncated.",
+    "credit": "苏州图谱信息技术有限公司、作品作者及数据所列原始文献来源",
+    "termsURL": "https://cnkgraph.com/Home/OpenResources",
+    "notice": "Official read-only API; noncommercial research and study only. No claim of an unrestricted open-data license."
+  },
+  "record": {
+    "id": "634",
+    "title": "木蘭花慢",
+    "fields": {
+      "MatchedIndex": 30,
+      "Tune": {
+        "Id": 634,
+        "Name": "木蘭花慢",
+        "Format": {
+          "FormatIndex": 0,
+          "Desc": "雙調一百一字，前段十句五平韻，後段十句七平韻",
+          "Comment": "此調押短韻者以柳詞二首為正體，若蔣詞之句讀小異，曹詞之句讀參差，乃變格也。\n此詞前段第六句、後段第一句、第七句皆押短韻。張炎詞前後段第八句“怕依然認得米家船”、“好林泉都在卧遊編”，又藏“然”、“泉”二韻於句中，此亦偶然，非定格也。\n按李萊老詞前後段第一句“向煙霞堆裏”，“堆”字平聲。張炎詞第二句“青未了、路婆娑”，“青”字平聲，“未”字仄聲。柳詞別首第三句“咏人物鮮明”，“人”字平聲。趙孟頫詞第四句“故家喬木”，“故”字仄聲，“喬”字平聲。李彭老詞第七句“滿階榆莢”，“榆”字平聲。李萊老詞第九句“曉色千松逗冷”，“曉”字仄聲；趙詞“拌却眼迷朱碧”，“眼”字仄聲，“朱”字平聲。第十句“慚無筆寫瓊瑰”，“慚”字平聲。張詞後段第二句“歌引巾車”，“歌”字、“巾”字俱平聲。吳文英詞第五句“一杼新詩”，“一”字仄聲。李彭老詞第七句“夢雲飛遠”，“飛”字平聲。吳詞第八句“更軟紅先有探芳人”，“軟”字仄聲，“先”字平聲。李詞第九句“三十六梯樹杪”，“六”字仄聲；趙詞“但願朱顏長在”，“長”字平聲。吳詞結句“落梅煙雨黃昏”，“煙”字平聲。譜內可平可仄據此，餘參柳詞別首及蔣、曹二詞。",
+          "SampleAuthor": "柳永",
+          "SampleContent": "坼桐花爛漫乍疏雨洗清明正豔杏燒林緗桃繡野芳景如屏傾城盡尋勝賞驟雕鞍紺幰出郊坰風暖繁絃脆管萬家競奏新聲盈盈鬭草踏青人豔冶遞逢迎向路旁往往遺簪墮珥珠翠縱橫歡情對佳麗地信金罍罄竭玉山傾拌却明朝永日畫堂一枕春酲",
+          "Definition": "●○○◎●句◎⊙●讀●○○韻●◎●○○句⊙○◎●句⊙●○○韻○○韻●○◎●句●○○●●●○○韻⊙●⊙○◎●句◎○◎●○○韻　　○○韻◎●◎○韻○●●讀●○○韻●●○讀●●○○●●句⊙●○○韻○○韻●○◎●句●⊙○◎●●○○韻⊙●⊙○◎●句◎○◎●○○韻",
+          "LeadingChars": [
+            11,
+            30,
+            81
+          ],
+          "FormatHtml": "<p class='mSize'>　　坼桐花爛漫　乍疏雨　洗清明　正豔杏燒林　緗桃繡野　芳景如屏　傾城　盡尋勝賞　驟雕鞍紺幰出郊坰　<br />\r\n<span class='comment'>　　仄平平中仄<span class='rhythm'>句</span>中中仄<span class='rhythm'>讀</span>仄平平<span class='rhythm'>韻</span>仄中仄平平<span class='rhythm'>句</span>中平中仄<span class='rhythm'>句</span>中仄平平<span class='rhythm'>韻</span>平平<span class='rhythm'>韻</span>仄平中仄<span class='rhythm'>句</span>仄平平仄仄仄平平<span class='rhythm'>韻</span></span></p>\r\n<p class='mSize'>風暖繁絃脆管　萬家競奏新聲　<br />\r\n<span class='comment'>中仄中平中仄<span class='rhythm'>句</span>中平中仄平平<span class='rhythm'>韻</span></span></p>\r\n<br /><p class='mSize'>　　盈盈　鬭草踏青　人豔冶　遞逢迎　向路旁　往往遺簪墮珥　珠翠縱橫　歡情　對佳麗地　信金罍罄竭玉山傾　<br />\r\n<span class='comment'>　　平平<span class='rhythm'>韻</span>中仄中平<span class='rhythm'>韻</span>平仄仄<span class='rhythm'>讀</span>仄平平<span class='rhythm'>韻</span>仄仄平<span class='rhythm'>讀</span>仄仄平平仄仄<span class='rhythm'>句</span>中仄平平<span class='rhythm'>韻</span>平平<span class='rhythm'>韻</span>仄平中仄<span class='rhythm'>句</span>仄中平中仄仄平平<span class='rhythm'>韻</span></span></p>\r\n<p class='mSize'>拌却明朝永日　畫堂一枕春酲　<br />\r\n<span class='comment'>中仄中平中仄<span class='rhythm'>句</span>中平中仄平平<span class='rhythm'>韻</span></span></p>\r\n"
+        }
+      }
+    },
+    "sourceURL": "https://open.cnkgraph.com/api/ciTune/pattern"
+  },
+  "result": {
+    "provider": "cnkgraph",
+    "parameters": {
+      "mode": "tune-pattern"
+    }
+  }
+}

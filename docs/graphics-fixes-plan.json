@@ -1,0 +1,102 @@
+{
+  "run_at": "2026-10-16T06:23:16.843Z",
+  "mode": "affected",
+  "files": [
+    "public/graphics/model.js",
+    "public/ui/components.css",
+    "tests/graphics.test.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/graphics/model.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/graphics/model.js",
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/graphics/model.js",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/model.js, tests/graphics.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/model.js",
+        "tests/graphics.test.mjs"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/model.js"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

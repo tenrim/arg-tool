@@ -1,0 +1,93 @@
+{
+  "run_at": "2026-10-16T07:53:06.899Z",
+  "mode": "affected",
+  "files": [
+    "public/graphics/engines.js"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/graphics/engines.js"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/engines.js"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": false,
+  "results": [
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 108
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 112
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 126
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 185
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 1,
+      "duration_ms": 47428
+    }
+  ]
+}

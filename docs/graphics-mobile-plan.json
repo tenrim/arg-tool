@@ -1,0 +1,45 @@
+{
+  "run_at": "2026-10-16T06:32:16.904Z",
+  "mode": "affected",
+  "files": [
+    "public/graphics/page.css"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.css"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.css"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.css"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

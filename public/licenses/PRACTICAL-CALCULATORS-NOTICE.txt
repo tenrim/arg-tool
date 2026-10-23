@@ -1,0 +1,17 @@
+迷雾工具箱：日期、几何、体质指数、摩尔质量与会议规划（2026-10-21）
+
+本轮不更新上游版本、不改动固定 vendor 字节，也不复制 IO Tools 的实现、页面或素材。
+Qalculate/libqalculate 5.13.0：原始完整计算内核新增几何表单、BMI 和单位定义消费者。
+复用 GMP 6.3.0、MPFR 4.2.1、libxml2 2.9.12、Emscripten 3.1.67；本轮专用表单不调用 Gnuplot。
+完整对应源码、独立许可证和原 NOTICE 仍在 vendor/qalculate/source.zip 及其同目录。
+
+IANA TZDB 2026e / PSF tzdata 2026.5：完整 598 个默认 TZif，新增倒计时及会议规划消费者。
+CLDR 与 OpenCC 保留原固定中文名称、别名和本地搜索用途，未新增或截取时区数据。
+原许可证分别在 vendor/timezones/、vendor/cldr/、vendor/round1/opencc-js/。
+
+Periodic-Table-JSON：继续使用随包完整 118 元素，不更新或删选原始数据。
+摩尔质量、原子数量和质量分数使用原表 atomic_mass；数据为 CC BY-SA 3.0，原文 vendor/science/elements-LICENSE.txt。
+本站中文附加层与原始字段保持，未复制上游图片或远程媒体。
+
+日期规则、会议规划、球面计算、表单、公式说明和几何示意为本站实现。
+所引 Python、CDC、OpenStax、IANA 和原作者公式页面仅作参考文献，不列为软件运行依赖。

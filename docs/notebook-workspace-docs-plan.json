@@ -1,0 +1,25 @@
+{
+  "run_at": "2026-10-16T08:18:06.371Z",
+  "mode": "affected",
+  "files": [
+    "README.md",
+    "VERIFICATION.md"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "README.md",
+        "VERIFICATION.md"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

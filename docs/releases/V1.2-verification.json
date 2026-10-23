@@ -1,0 +1,145 @@
+{
+  "run_at": "2026-10-20T18:30:44.815Z",
+  "mode": "affected",
+  "files": [
+    "docs/releases/V1.2-群公告.md",
+    "docs/releases/V1.2-论坛公告.md",
+    "public/site-pages.js",
+    "public/site-version.js",
+    "scripts/browser-site-pages.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "docs/releases/V1.2-群公告.md",
+        "docs/releases/V1.2-论坛公告.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/site-pages.js",
+        "public/site-version.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/site-pages.js",
+        "public/site-version.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/site-pages.js",
+        "public/site-version.js",
+        "scripts/browser-site-pages.mjs"
+      ],
+      "reasons": [
+        "public/site-pages.js, public/site-version.js, scripts/browser-site-pages.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/feedback.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/feedback.test.mjs"
+      ],
+      "reasons": [
+        "public/site-version.js"
+      ]
+    },
+    {
+      "id": "browser:site-pages",
+      "command": [
+        "node",
+        "scripts/browser-site-pages.mjs"
+      ],
+      "reasons": [
+        "public/site-pages.js",
+        "public/site-version.js",
+        "scripts/browser-site-pages.mjs"
+      ]
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "command": [
+        "node",
+        "scripts/browser-handoff-feedback.mjs"
+      ],
+      "reasons": [
+        "public/site-version.js"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "docs",
+      "exit_code": 0,
+      "duration_ms": 129
+    },
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 228
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 238
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 305
+    },
+    {
+      "id": "unit:tests/feedback.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 383
+    },
+    {
+      "id": "browser:site-pages",
+      "exit_code": 0,
+      "duration_ms": 55456
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "exit_code": 0,
+      "duration_ms": 23460
+    }
+  ],
+  "additional_checks": [
+    {
+      "name": "固定来源与许可完整性",
+      "executed_this_release": true,
+      "hashes": 28849,
+      "license_registrations": 151,
+      "exit_code": 0
+    }
+  ],
+  "historical_validation": "此前功能开发与标题修复的记录仅作历史依据，未计入本轮 7 项执行结果。",
+  "deployment": "本报告生成时尚未部署；实际服务器验证另存部署记录。"
+}

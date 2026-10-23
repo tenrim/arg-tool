@@ -94,10 +94,15 @@ export function FilePicker(options = {}) {
     if (options.triggerLabel) {
       options.input.hidden = true;
       const trigger = Button({className: options.buttonClass || 'secondary-button', text: options.triggerLabel});
-      const filename = create('file-name', 'span', {text: '尚未选择文件'});
       trigger.addEventListener('click', event => {event.preventDefault(); options.input.click();});
-      options.input.addEventListener('change', () => {filename.textContent = [...options.input.files].map(file => file.name).join('、') || '尚未选择文件';});
-      node.append(trigger, filename);
+      node.append(trigger);
+      if(options.showFilename !== false){
+        const filename = create('file-name', 'span', {text: '尚未选择文件'});
+        const changed=()=>{filename.textContent = [...options.input.files].map(file => file.name).join('、') || '尚未选择文件';};
+        options.input.addEventListener('change',changed);
+        onDisconnect(node,()=>options.input.removeEventListener('change',changed));
+        node.append(filename);
+      }
     }
   }
   return node;

@@ -1,0 +1,12 @@
+[
+  "public/expansion/morse-view.js",
+  "scripts/browser-expansion-microphone.mjs",
+  "scripts/test-map.mjs",
+  "tests/testing-policy.test.mjs",
+  "tests/expansion-models.test.mjs",
+  "public/expansion/help.js",
+  "README.md",
+  "THIRD_PARTY.md",
+  "docs/MODULE_BOUNDARIES.md",
+  "docs/EXPANSION_2026-10.md"
+]

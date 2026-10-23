@@ -6,6 +6,7 @@ import {
 } from '../ui/index.js';
 import {mountTaskLifecycle} from '../capabilities/task-lifecycle.js';
 import {IT_CATEGORIES, loadITData, parseDomain, searchITRecords} from './model.js';
+import {resultRecording} from '../result-recording.js';
 
 const PAGE_SIZE = 24;
 const valueText = value => value == null || value === '' ? '—' : Array.isArray(value) ? value.join('、') : String(value);
@@ -51,6 +52,8 @@ export function mountITReference(main, {navigate = route => {location.hash = rou
     footer: Provenance({className: 'tool-provenance'}),
   });
   main.append(panel);
+  const recordCapture = resultRecording({id: 'it-record', anchor: detail, onLeave: () => clearDetail()});
+  const domainCapture = resultRecording({id: 'it-domain', anchor: domainResult, onLeave: () => clearDomain()});
   let kind = 'ports', data = null, page = 0, total = 0, selected = null, facet = '';
   let revision = 0, domainRevision = 0, busy = false, domainBusy = false, activated = false, destroyed = false;
   let activating = false;
@@ -66,6 +69,7 @@ export function mountITReference(main, {navigate = route => {location.hash = rou
 
   function clearDetail(text = '从目录选择一项查看资料') {
     selected = null;
+    recordCapture.clear();
     detail.removeAttribute('data-it-selected');
     setState(detail, {state: 'empty'});
     detail.replaceChildren(EmptyState({text, size: 'compact'}));
@@ -76,6 +80,7 @@ export function mountITReference(main, {navigate = route => {location.hash = rou
   function clearDomain() {
     if (destroyed) return;
     domainRevision++;
+    domainCapture.clear();
     domainBusy = false;
     domainResult.replaceChildren();
     setState(domainResult, {state: 'empty'});
@@ -88,6 +93,7 @@ export function mountITReference(main, {navigate = route => {location.hash = rou
     revision++;
     busy = false;
     clearDomain();
+    clearDetail();
     sync();
   }
 
@@ -135,6 +141,7 @@ export function mountITReference(main, {navigate = route => {location.hash = rou
     }))}));
     const recordDetail = Box({tag: 'article', attrs: {'data-it-detail': record.id}, children: nodes});
     detail.replaceChildren(recordDetail);
+    recordCapture.publish({name: record.title + '.json', text: JSON.stringify({category: kind, record, meta: data.meta}, null, 2)});
     detail.dataset.itSelected = record.id;
     setState(detail, {state: 'ready'});
     returnList.hidden = false;
@@ -282,6 +289,7 @@ export function mountITReference(main, {navigate = route => {location.hash = rou
       if (parsed.rule) items.push(['匹配规则', parsed.rule]);
       if (parsed.asciiHostname) items.push(['ASCII / IDNA', parsed.asciiHostname]);
       domainResult.replaceChildren(DataList({items: items.map(([label, text]) => [label, valueText(text)])}));
+      domainCapture.publish({name: (parsed.hostname || value) + ' 域名层级.json', text: JSON.stringify({includePrivate: domainPrivate.checked, ...parsed, meta: data?.meta}, null, 2)});
       setState(domainResult, {state: 'ready'});
       updateStatus(domainStatus, '分析完成', 'success');
       sync();

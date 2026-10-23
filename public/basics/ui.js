@@ -15,7 +15,7 @@ function scrollTable(columns,rows){return Box({className:'basics-table-scroll',a
 function initFoundation() {
   const family=select('basics-family',Object.entries(FAMILIES)),dir=direction('basics');
   const base=select('basics-base',[['10','十进制'],['16','十六进制'],['2','二进制'],['8','八进制']]);
-  const from=Input({id:'basics-from',type:'number',value:10,attrs:{min:2,max:36,step:1}}),target=Input({id:'basics-target',type:'number',value:16,attrs:{min:2,max:36,step:1}});
+  const from=Input({id:'basics-from',type:'number',value:10,attrs:{min:2,max:64,step:1}}),target=Input({id:'basics-target',type:'number',value:16,attrs:{min:2,max:64,step:1}});
   const format=select('basics-format',[]),baseField=field('字符码进制',base),fromField=field('原进制',from),targetField=field('目标进制',target),formatField=field('表示形式',format);
   const view=ConversionWorkbench({id:'basics',settings:[field('转换类型',family),field('方向',dir),baseField,fromField,targetField,formatField]});
   const ascii=Box({tag:'details',children:[Box({tag:'summary',text:'ASCII 对照表（0–127）'})]}),letter=Box({tag:'details',children:[Box({tag:'summary',text:'字母编号表（A1Z26）'}),scrollTable(['字母','编号'],Array.from({length:26},(_,i)=>[String.fromCharCode(65+i),i+1]))]});

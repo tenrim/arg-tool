@@ -1,0 +1,16 @@
+知识图谱网 / CNKGraph（搜韵相关诗文资料）公开接口
+Provider: 苏州图谱信息技术有限公司 / 知识图谱网及原资料作者
+Official API: https://open.cnkgraph.com/
+Open-resource statement: https://cnkgraph.com/Home/OpenResources
+Schema: https://open.cnkgraph.com/Api/index.yaml
+Examples: https://open.cnkgraph.com/Api/postman.zip
+
+官方开放资源声明允许个人或机构集成数据与功能用于研究、学习，仅限非商业用途。
+这不是 CC0、MIT 或其他无条件开源数据许可，不将本站适配器的许可套到上游内容。
+本站免费、无付费功能或商业广告；保留上游原文、作者、版本/条件、来源及时间。
+再次使用或分享时遵守原提供方条件，不据公开接口作整库商业再分发。
+
+每个已接入方法保留真实请求、参数与完整返回数据；不将部分方法的实现冒称为
+全部古籍、字典、诗文、韵典和词曲谱已全部接入。Accept-Language: zh-hant 用于
+请求未经简体转换的原始文字；不执行返回的HTML或下载引用图片。
+CNKGRAPH-OPEN-TERMS.txt保存官方开放资源页原字节；接口示例ZIP完整保存在upstream。

@@ -32,7 +32,7 @@ export function initRoundFour() {
       id,
       title,
       `<div id="r4-${id}" class="r4-root"><p>正在准备本地工具…</p></div>${status(id + "-status")}${button(id + "-retry", "重新加载")}`,
-      [source(name, repo, role), ...(id === "model" ? [["Crystallography Open Database", "https://www.crystallography.net/cod/", "从晶体查询送入的结构数据及文献归属"]] : [])],
+      [source(name, repo, role)],
     );
     p.classList.add("r4-panel");
     $(id + "-retry").hidden = true;

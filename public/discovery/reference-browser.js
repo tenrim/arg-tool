@@ -50,13 +50,13 @@ export function mountDiscoveryBrowser(panel, tool, api) {
   }
   function drawSky() {
     if (!chart || !records) return;
-    const p={query:document.getElementById('sky-query').value,mode:document.getElementById('sky-mode').value,filter:document.getElementById('sky-filter').value,maxMagnitude:document.getElementById('sky-max-magnitude').value};
+    const p={query:document.getElementById('sky-query').value,filter:document.getElementById('sky-filter').value,maxMagnitude:document.getElementById('sky-max-magnitude').value};
     let items; try {items=filterSky(p,records);} catch(error){chart.replaceChildren();picker.replaceChildren(Option('条件无效',''));updateStatus(note,error.message,'error');return;}
     const plotted=items.filter(r=>r.ra!==null&&r.dec!==null&&!['Dup','NonEx'].includes(r.type)).sort((a,b)=>(a.mag??99)-(b.mag??99)).slice(0,300);
     chart.replaceChildren(); picker.replaceChildren(Option('选择天体查看资料',''));
     for(const dec of [-60,-30,0,30,60]){const y=30+(90-dec)/180*390;chart.append(svg('path',{d:`M45 ${y}H870`,class:'sky-gridline'}),svg('text',{x:4,y:y+5,class:'sky-gridlabel'},dec+'°'));}
     for(const ra of [0,6,12,18,24]){const x=45+(24-ra)/24*825;chart.append(svg('path',{d:`M${x} 30V420`,class:'sky-gridline'}),svg('text',{x:Math.min(845,x),y:443,class:'sky-gridlabel'},ra+'h'));}
-    for(const r of plotted){const x=45+(24-r.ra)/24*825,y=30+(90-r.dec)/180*390,c=svg('circle',{cx:x,cy:y,r:r.kind==='star'?Math.max(2,5-(r.mag??6)*.4):3,class:'sky-point'+(selected===r.id?' is-selected':''),'data-sky-point':r.id,tabindex:'0',role:'button','aria-label':skyName(r)+' '+r.id});c.append(svg('title',{},skyName(r)+' · '+r.id));const choose=()=>pick({query:'',recordId:r.id});c.onclick=choose;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}};chart.append(c);picker.append(Option(skyName(r)+' · '+r.id,r.id));}
+    for(const r of plotted){const x=45+(24-r.ra)/24*825,y=30+(90-r.dec)/180*390,c=svg('circle',{cx:x,cy:y,r:3,class:'sky-point'+(selected===r.id?' is-selected':''),'data-sky-point':r.id,tabindex:'0',role:'button','aria-label':skyName(r)+' '+r.id});c.append(svg('title',{},skyName(r)+' · '+r.id));const choose=()=>pick({query:'',recordId:r.id});c.onclick=choose;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}};chart.append(c);picker.append(Option(skyName(r)+' · '+r.id,r.id));}
     updateStatus(note,`匹配 ${items.length} 项 · 图中显示 ${plotted.length} 个最亮的有坐标记录`); picker.value=plotted.some(r=>r.id===selected)?selected:'';
   }
   function result(result) {

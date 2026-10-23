@@ -1,0 +1,93 @@
+{
+  "run_at": "2026-10-16T04:59:46.132Z",
+  "mode": "affected",
+  "files": [
+    "public/notebook/renderers.js"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/notebook/renderers.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/notebook/renderers.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/notebook/renderers.js"
+      ],
+      "reasons": [
+        "public/notebook/renderers.js"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/renderers.js"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/renderers.js"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 185
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 188
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 187
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 411
+    },
+    {
+      "id": "browser:notebook",
+      "exit_code": 0,
+      "duration_ms": 32397
+    }
+  ]
+}

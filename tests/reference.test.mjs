@@ -1,6 +1,7 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile,readdir} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
-import {queryRecords,sequenceMatches} from '../public/reference/core.js';import {parseCIF,expandCrystal,parseSymmetry} from '../public/reference/cif.js';
+import {queryRecords,REFERENCE_DATASETS} from '../public/reference/core.js';
+import {REFERENCE_TOOLS} from '../public/reference/catalog.js';
 const data=async id=>JSON.parse(await readFile(new URL('../public/vendor/reference/'+id+'.json',import.meta.url)));
 const countries=await data('countries');
 test('reference: real country/flag metadata and airport/location code matching',async()=>{
@@ -26,20 +27,18 @@ test('reference: perceptual colors and official Jurassic period numerical bounda
  const g=await data('geology'),jurassic=g.find(r=>r.id==='Jurassic');assert.equal(jurassic.start,201.4);assert.equal(jurassic.end,143.1);
  assert.ok(queryRecords('geology',{query:'150',mode:'age'},g).items.some(r=>r.id==='Jurassic'));assert.ok(queryRecords('geology',{query:'侏罗纪'},g).items.some(r=>r.id==='Jurassic'));assert.throws(()=>queryRecords('geology',{query:'-1',mode:'age'},g));
 });
-test('reference: exact sequence matching preserves large and negative integer precision',async()=>{
- const sequences=await data('integerseq');assert.equal(sequences.length,272);assert.ok(sequenceMatches('1, 1, 2, 3, 5, 8',sequences).some(r=>r.id==='A000045'));assert.ok(sequenceMatches('2 3 5 7 11',sequences).some(r=>r.id==='A000040'));
- const r=sequenceMatches('9007199254740993 9007199254740995 9007199254740997',[]);assert.match(JSON.stringify(r),/9007199254740999/);
- assert.ok(sequenceMatches('-1, 1, -1, 1',[{id:'signed',name:'test',terms:['-1','1','-1','1','-1'],offset:'0'}]).some(r=>r.id==='signed'));assert.throws(()=>sequenceMatches('1, 2, ...',sequences));
-});
-test('reference: actual COD diamond symmetry, nearest distance and unit-cell repeats',async()=>{
- const text=await readFile(new URL('../public/vendor/reference/crystals/9008564-diamond.cif',import.meta.url),'utf8'),crystal=parseCIF(text),m=expandCrystal(crystal,1);assert.equal(m.atoms.length,8);assert.equal(expandCrystal(crystal,2).atoms.length,64);
- const a=m.atoms[0].position,distances=m.atoms.slice(1).map(b=>Math.hypot(...b.position.map((x,i)=>x-a[i])));assert.ok(Math.abs(Math.min(...distances)-3.56679*Math.sqrt(3)/4)<1e-8);
- assert.throws(()=>parseSymmetry('alert(1),y,z'));assert.throws(()=>parseSymmetry('x,y,1/0'));assert.throws(()=>parseCIF(text+'\ndata_second\n'));
- assert.throws(()=>expandCrystal({...crystal,angles:[10,10,170]}),/晶胞角度/);
-});
-test('reference: every bundled CIF expands with finite positions; resource caps reject excess',async()=>{
- for(const item of await data('crystals')){const c=parseCIF(await readFile(new URL('../public/vendor/reference/crystals/'+item.file,import.meta.url),'utf8'));const m=expandCrystal(c,1);assert.ok(m.atoms.length);assert.ok(m.atoms.every(a=>a.position.every(Number.isFinite)));}
- const t=await readFile(new URL('../public/vendor/reference/crystals/9000251.cif',import.meta.url),'utf8');assert.throws(()=>expandCrystal(parseCIF(t),3),/2,000/);
+test('reference: retired sequence and crystal samples are absent and cannot be queried',async()=>{
+ for(const kind of ['integerseq','crystals','crystal-model']){
+  assert.equal(REFERENCE_TOOLS.some(tool=>tool.id===kind),false);
+  assert.equal(REFERENCE_DATASETS.includes(kind),false);
+  assert.throws(()=>queryRecords(kind,{query:''},[]),/未知资料库/);
+ }
+ assert.deepEqual(REFERENCE_TOOLS.filter(tool=>REFERENCE_DATASETS.includes(tool.id)).map(tool=>tool.id),REFERENCE_DATASETS);
+ const files=await readdir(new URL('../public/vendor/reference/',import.meta.url));
+ for(const file of ['integerseq.json','crystals.json','crystals','cod-NOTICE.txt','oeis-LICENSE.txt'])assert.ok(!files.includes(file),'retired runtime file: '+file);
+ const meta=await data('META');
+ assert.equal(Object.hasOwn(meta.counts,'integerseq'),false);
+ assert.equal(Object.hasOwn(meta.counts,'crystals'),false);
 });
 
 test('reference visual: map projection, source geometries and transport coordinates',async()=>{
@@ -83,12 +82,6 @@ test('reference visual: exact record selection keeps parent metadata and color v
  assert.equal(queryRecords('countries',{query:'CN',recordId:'CN'},countries).total,1);
  const d=await data('geology'),r=queryRecords('geology',{query:'Jurassic',recordId:'Jurassic'},d);assert.equal(r.total,1);assert.match(JSON.stringify(r),/中生/);assert.equal(geologicalName(d.find(r=>r.id==='Precambrian')),'前寒武时期');
 });
-test('reference visual: plot normalization preserves very large integers and negative differences',async()=>{
- const {sequencePlot}=await import('../public/reference/visual-core.js'),n=10n**80n;
- const p=sequencePlot([n,n+1n,n+2n].join(' '));assert.deepEqual(p.items.map(x=>x.y),[240,140,40]);assert.equal(p.items[1].value,(n+1n).toString());
- const d=sequencePlot('5 1 -7 -15',true);assert.deepEqual(d.items.map(x=>x.value),['-4','-8','-8']);assert.ok(d.items.every(x=>Number.isFinite(x.x)&&Number.isFinite(x.y)));assert.equal(sequencePlot('0 0 0').items[0].y,140);assert.throws(()=>sequencePlot('1 2 ...'),/整数/);
-});
-
 test('reference color wheel: HSV round trips, all sectors, greyscale and pointer bounds',async()=>{
  const {normalizeColorHex,hexToHsv,hsvToHex,colorWheelPoint,colorValues}=await import('../public/reference/visual-core.js');
  for(const hex of ['#ff0000','#00ff00','#0000ff','#123abc','#e9ad28','#808080','#ffffff','#000000']){const {h,s,v}=hexToHsv(hex);assert.equal(hsvToHex(h,s,v),hex.toUpperCase());}

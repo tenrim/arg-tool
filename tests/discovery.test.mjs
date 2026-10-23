@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,readdirSync} from 'node:fs';
 import vm from 'node:vm';
 import * as sgf from '../public/vendor/discovery/sgf.js';
 import {compileGo,goCoordinate,GO_LIMITS} from '../public/discovery/go-core.js';
@@ -48,16 +48,19 @@ test('discovery: 36 authentic flags, Chinese meanings and ordered repeated seque
  for(const query of ['', '中文', 'A!', 'A'.repeat(129)])assert.throws(()=>q({mode:'sequence',query}));
 });
 test('discovery: complete fixed sky index, catalogue aliases, Chinese names and missing data',()=>{
- assert.equal(sky.length,23060);assert.equal(sky.filter(r=>r.kind==='star').length,9026);assert.equal(new Set(sky.map(r=>r.id)).size,sky.length);assert.equal(Object.keys(CONSTELLATIONS).length,88);
+ assert.equal(sky.length,14034);assert.ok(sky.every(r=>r.kind==='deep'&&r.chunk.startsWith('sky-records/ngc-')));assert.equal(new Set(sky.map(r=>r.id)).size,sky.length);assert.equal(Object.keys(CONSTELLATIONS).length,88);
+ assert.ok(readdirSync(new URL('../public/vendor/discovery/sky-records/',import.meta.url)).every(file=>/^ngc-\d{3}\.json$/.test(file)),'no retired star chunks remain in runtime output');
+ assert.ok(!readdirSync(new URL('../public/vendor/discovery/',import.meta.url)).some(file=>file.startsWith('hyg-')),'archived HYG is not a published dependency');
  for(const query of ['M31','M 031','NGC224','NGC 0224','仙女座星系'])assert.deepEqual(filterSky({query},sky).map(r=>r.id),['NGC0224']);
- const sirius=filterSky({query:'HIP32349'},sky)[0];assert.equal(sirius.name,'Sirius');assert.equal(sirius.ra,6.752481);assert.equal(sirius.dec,-16.716116);assert.equal(filterSky({query:'天狼星'},sky)[0].id,sirius.id);
- assert.ok(filterSky({mode:'star',maxMagnitude:0},sky).every(r=>r.mag<=0));assert.ok(filterSky({mode:'deep',filter:'G'},sky).every(r=>r.kind==='deep'&&r.type==='G'));
+ const orion=filterSky({query:'M42'},sky)[0];assert.equal(orion.name,'Great Orion Nebula');assert.equal(orion.ra,5.587911111111111);assert.equal(orion.dec,-5.389666666666667);assert.equal(filterSky({query:'猎户座大星云'},sky)[0].id,orion.id);
+ assert.equal(filterSky({query:'天狼星'},sky).length,0);assert.equal(filterSky({query:'HYG:0'},sky).length,0);
+ const bright=filterSky({maxMagnitude:4},sky);assert.ok(bright.length>0);assert.ok(bright.every(r=>r.mag!==null&&r.mag<=4));assert.ok(filterSky({filter:'G'},sky).every(r=>r.kind==='deep'&&r.type==='G'));
  const missing=sky.filter(r=>r.ra===null||r.dec===null);assert.equal(missing.length,7);for(const r of missing)assert.equal(skyRows({recordId:r.id},sky).items[0].sky,null);
  const duplicate=sky.find(r=>r.type==='Dup');assert.equal(skyRows({recordId:duplicate.id},sky).items[0].sky,null);assert.throws(()=>filterSky({maxMagnitude:'NaN'},sky));
- const detail=read('discovery/'+sirius.chunk);const row=skyRows({recordId:sirius.id},sky,detail).items[0];assert.ok(row.fields.some(([k,v])=>k==='光谱类型'&&v!=='未收录'));assert.equal(row.sky.ra,sirius.ra);
+ const detail=read('discovery/'+orion.chunk);const row=skyRows({recordId:orion.id},sky,detail).items[0];assert.ok(row.fields.some(([k,v])=>k==='长轴／短轴（角分）'&&v==='90.00 / 60.00'));assert.ok(row.fields.some(([k,v])=>k==='来源字段归属'&&v.includes('Type:1')));assert.equal(row.sky.ra,orion.ra);
 });
 test('discovery: every lazy chunk retains index identifiers and coordinates',()=>{
- const files=new Set(sky.map(r=>r.chunk)),records=new Map();for(const file of files){assert.match(file,/^sky-records\/(stars|ngc)-\d{3}\.json$/);const rows=read('discovery/'+file);assert.ok(rows.length<=500);for(const r of rows)records.set(r.id,r);}
+ const files=new Set(sky.map(r=>r.chunk)),records=new Map();for(const file of files){assert.match(file,/^sky-records\/ngc-\d{3}\.json$/);const rows=read('discovery/'+file);assert.ok(rows.length<=500);for(const r of rows)records.set(r.id,r);}
  assert.equal(records.size,sky.length);for(const r of sky){const d=records.get(r.id);assert.equal(d.ra,r.ra,r.id);assert.equal(d.dec,r.dec,r.id);assert.ok(d.raw);}
 });
 test('discovery: catalogue directions use the actual engine and observing date/location',()=>{

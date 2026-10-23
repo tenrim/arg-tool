@@ -6,6 +6,7 @@ export class CyberChefClient {
   constructor(onStatus = () => {}) {
     this.onStatus = onStatus;
     this.pending = null;
+    this.highlightPending = null;
     this.worker = new Worker(new URL('./cyberchef-worker.js', import.meta.url));
     this.ready = new Promise((resolve, reject) => { this.resolveReady = resolve; this.rejectReady = reject; });
     // UI may create the client before the first bake. Keep failures handled.
@@ -34,6 +35,7 @@ export class CyberChefClient {
         clearTimeout(this.timer); const pending = this.pending; this.pending = null;
         const response=this.response;this.response=null;pending?.resolve({ ...response, bytes });
       } else if (message.action === 'bakeError') this.fail(new Error(data.error?.displayStr || String(data.error)));
+      else if (message.action === 'highlightsCalculated') {const task=this.highlightPending;this.highlightPending=null;task?.resolve(data);}
       else if (message.action === 'statusMessage') this.onStatus(String(data.message));
       else if (message.action === 'progressMessage') this.onStatus(`${data.progress} / ${data.total}`);
     };
@@ -47,7 +49,7 @@ export class CyberChefClient {
     // bitmap font pages. Passing https:// here gets reduced to https:/ by Jimp.
     this.worker.postMessage({ action: 'docURL', data: ROOT.pathname.replace(/\/$/, '') });
   }
-  async bake(input, recipeConfig, {structured=false}={}) {
+  async bake(input, recipeConfig, {structured=false,attemptHighlight=false}={}) {
     const size=typeof input==='string'?new TextEncoder().encode(input).length:input?.byteLength;
     if(!Number.isFinite(size)||size>MAX_BYTES)throw new Error('输入最多 32 MB，请缩小内容后重试。');
     await this.ready;
@@ -56,12 +58,18 @@ export class CyberChefClient {
     return new Promise((resolve, reject) => {
       this.pending = { resolve, reject, structured, recipeConfig:structuredClone(recipeConfig) };
       this.timer = setTimeout(() => this.fail(new Error('运行超过两分钟，已停止。请缩小输入或简化处理链后重试。')), 120000);
-      this.worker.postMessage({ action: 'bake', data: { input, recipeConfig, options: { attemptHighlight: false }, bakeId: 1, inputNum: 0 } });
+      this.worker.postMessage({ action: 'bake', data: { input, recipeConfig, options: { attemptHighlight }, bakeId: 1, inputNum: 0 } });
     });
   }
   fail(error) { this.close(error); }
+  async highlight(recipeConfig,direction,pos) {
+    await this.ready;if(this.closed)throw Error('运算已停止');if(this.pending||this.highlightPending)throw Error('请等待当前运算结束');
+    if(!['forward','reverse'].includes(direction)||!Array.isArray(pos))throw Error('无效高亮请求');
+    return new Promise((resolve,reject)=>{this.highlightPending={resolve,reject};this.worker.postMessage({action:'highlight',data:{recipeConfig,direction,pos}});});
+  }
   close(error = new Error('运算已停止')) {
     clearTimeout(this.timer); this.closed = true; this.worker.terminate();
     this.rejectReady(error); this.pending?.reject(error); this.pending = null;this.response=null;
+    this.highlightPending?.reject(error);this.highlightPending=null;
   }
 }

@@ -1,0 +1,15 @@
+CDS/SIMBAD online object data
+Source: https://simbad.cds.unistra.fr/simbad/
+Service terms: https://cds.unistra.fr/legals/
+
+This website obtains object, identifier, photometry and bibliography records only
+after an explicit user request. The adapter is original site code. No SIMBAD
+server software, offline database, sky images or logos are included.
+
+Credit: CDS/SIMBAD, Centre de Données astronomiques de Strasbourg, Université de
+Strasbourg / CNRS, and the original data authors and publications named in each
+returned record. Re-use must follow the licence applicable to each dataset.
+The CDS terms require acknowledgement of the service and original dataset/DOI.
+The data must not be described as uniformly CC0. Field units, reference codes,
+query conditions, full returned values and retrieval time remain attached.
+Bundled original service terms: CDS-ONLINE-TERMS.txt.

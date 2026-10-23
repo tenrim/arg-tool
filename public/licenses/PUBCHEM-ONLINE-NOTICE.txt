@@ -1,0 +1,16 @@
+PubChem online data
+Source: https://pubchem.ncbi.nlm.nih.gov/
+Providers: National Center for Biotechnology Information, National Library of
+Medicine, National Institutes of Health, and the contributors identified in the
+returned PubChem records and PUG View references.
+Policies: https://www.ncbi.nlm.nih.gov/home/about/policies/
+
+The original site adapter uses explicit PUG REST and PUG View requests for
+compound identifiers, complete records, annotations, synonyms and 2D/3D structure
+records. No PubChem server software or local curated substitute is bundled.
+
+NCBI aggregates material from several data providers. Do not infer that every
+annotation, chemical datum or referenced image is CC0 or free of third-party
+rights. Keep CID, the original references, contributor information, conditions,
+source links and retrieval time. Follow the licence of each material's provider.
+Bundled original NCBI policies: PUBCHEM-POLICIES.txt.

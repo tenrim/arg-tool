@@ -1,0 +1,33 @@
+{
+  "record": {
+    "id": "1575544:identifiers:2C   56",
+    "title": "2C   56",
+    "fields": {
+      "id": "2C   56",
+      "oidref": 1575544
+    },
+    "sourceURL": "https://simbad.u-strasbg.fr/simbad/sim-id?Ident=%401575544"
+  },
+  "result": {
+    "parameters": {
+      "mode": "detail",
+      "oid": 1575544,
+      "section": "identifiers",
+      "after": ""
+    },
+    "columns": [
+      {
+        "name": "id",
+        "description": "Identifier",
+        "ucd": "meta.id",
+        "datatype": "CHAR"
+      },
+      {
+        "name": "oidref",
+        "description": "Object internal identifier",
+        "ucd": "meta.record",
+        "datatype": "LONG"
+      }
+    ]
+  }
+}

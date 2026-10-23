@@ -140,7 +140,7 @@ try{
   });
   await page.locator('#turing-copy').click();await page.waitForFunction(()=>typeof window.__finishTuringCopy==='function');
   await page.locator('#turing-input').fill('changed during copy');
-  const invalidatedCopyStatus=await value('turing-status');assert.match(invalidatedCopyStatus,/输入已修改/);
+  const invalidatedCopyStatus=await value('turing-status');assert.equal(invalidatedCopyStatus,'','input invalidation is quiet');assert.equal(await page.locator('#panel-turing').getAttribute('data-phase'),'empty');assert.equal(await page.locator('#turing-copy').isDisabled(),true,'the old copy action is disabled synchronously');
   await page.evaluate(async()=>{
    window.__finishTuringCopy();await window.__turingCopyTask;
    navigator.clipboard.writeText=window.__originalTuringClipboard;document.querySelector('#turing-copy').onclick=window.__originalTuringCopyHandler;

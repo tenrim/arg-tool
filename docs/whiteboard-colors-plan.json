@@ -1,0 +1,89 @@
+{
+  "run_at": "2026-10-16T07:14:22.480Z",
+  "mode": "affected",
+  "files": [
+    "VERIFICATION.md",
+    "docs/GRAPHICS.md",
+    "public/ui/components.css",
+    "scripts/browser-graphics.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "VERIFICATION.md",
+        "docs/GRAPHICS.md"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-graphics.mjs"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

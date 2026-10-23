@@ -40,7 +40,7 @@ try{
    assert.equal(await page.locator('.panel:visible').count(),1,'failure shows one usable navigation panel');
    await fallback.getByRole('button',{name:'重新载入',exact:true}).click();
    await page.waitForFunction(()=>document.querySelector('#ct-encoding')?.dataset.operation==='From Base64'&&!document.getElementById('panel-encoding').hidden);
-   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'pair:To%20Base64');
+   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),'topic:base-family');
    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('op'),'From Base64','retry restores the original inverse');
    await page.locator('#ct-encoding .ct-input').fill(Buffer.from('谜题').toString('base64'));await page.locator('#ct-encoding .ct-run').click();
    await page.waitForFunction(()=>document.querySelector('#ct-encoding .ct-status').textContent.includes('处理完成'),null,{timeout:45000});
@@ -56,12 +56,12 @@ try{
     await page.goto('https://arg.test/#home');await requested;
     if(width<1100){await page.locator('.workbench-menu').click();await page.locator('.workbench-drawer[open]').waitFor();}
     await page.locator('.rail-filter input').fill('SM4');release();
-    const listed=await page.evaluate(async()=>{const {loadRegistry}=await import('./capabilities/registry.js');const registry=await loadRegistry();return registry.entries.filter(entry=>entry.listed!==false).length;});
+    const listed=await page.evaluate(async()=>{const {loadRegistry}=await import('./capabilities/registry.js');const registry=await loadRegistry();return registry.coverage.visibleToolCount;});
     await page.waitForFunction(count=>document.querySelector('.rail-badge')?.textContent===String(count),listed);
     assert.equal(await page.locator('.rail-filter input').inputValue(),'SM4');
     const tasks=await page.locator('.rail-groups a:visible').evaluateAll(nodes=>nodes.map(n=>n.dataset.capability));
-    assert.deepEqual(tasks,['learn:function-pair:SM4%20Encrypt','pair:SM4%20Encrypt'],
-     'deferred search ranks the exact SM4 title first and exposes both the individual lesson and actual cipher directly');
+    assert.deepEqual(tasks,['pair:SM4%20Encrypt','learn:function-pair:SM4%20Encrypt'],
+     'deferred search exposes the actual cipher first and its precise lesson without fuzzy algorithm substitutions');
     await page.locator('.rail-groups [data-capability="learn:function-pair:SM4%20Encrypt"]:visible').click();
     await page.locator('#knowledge-detail [data-knowledge-detail="function-pair:SM4%20Encrypt"]').waitFor();
     assert.equal(await page.locator('#knowledge-article-title').textContent(),'SM4','search reaches the precise algorithm lesson');

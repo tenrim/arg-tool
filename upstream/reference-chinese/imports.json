@@ -1,0 +1,240 @@
+{
+  "source": "https://query.wikidata.org/sparql",
+  "license": "CC0-1.0",
+  "retrievedAt": "2026-10-17T05:11:18.070Z",
+  "files": [
+    {
+      "kind": "airports",
+      "path": "upstream/reference-chinese/airports.json.gz",
+      "query": "SELECT ?item ?icao ?iata ?label ?coord WHERE { { ?item wdt:P239 ?icao } UNION { ?item wdt:P238 ?iata } ?item rdfs:label ?label. FILTER(LANG(?label) IN (\"zh\",\"zh-hans\",\"zh-hant\",\"zh-cn\",\"zh-tw\")) OPTIONAL { ?item wdt:P625 ?coord } }",
+      "sha256": "62411d6db365a9b120d2c717ea3478cbf6d978502bb928865d05b79afe1c50c3",
+      "contentSha256": "62517ad7ed838702527d9bc5445c4741f6f5cd5ad46bd0fd956e477e7351013d",
+      "bytes": 10702617
+    },
+    {
+      "kind": "capitals",
+      "path": "upstream/reference-chinese/capitals.json.gz",
+      "query": "SELECT ?country ?iso ?item ?label ?english WHERE { ?country wdt:P297 ?iso; wdt:P36 ?item. ?item rdfs:label ?label; rdfs:label ?english. FILTER(LANG(?english)=\"en\") FILTER(LANG(?label) IN (\"zh\",\"zh-hans\",\"zh-hant\",\"zh-cn\",\"zh-tw\")) }",
+      "sha256": "0de92578e1641198de7d48d8ad890161fc03bab38999b7efb29d1d03d6d176a4",
+      "contentSha256": "ed725a8a58248f5155d471793c96cc30b98301638530c54b97a69efe19d6d8d3",
+      "bytes": 560091
+    },
+    {
+      "kind": "sky",
+      "path": "upstream/reference-chinese/sky.json.gz",
+      "query": "SELECT ?item ?code ?label ?alias WHERE { VALUES ?catalog { wd:Q14534 wd:Q741672 wd:Q14530 } ?item p:P528 ?statement. ?statement pq:P972 ?catalog; ps:P528 ?code. ?item rdfs:label ?label. FILTER(LANG(?label) IN (\"zh\",\"zh-hans\",\"zh-hant\",\"zh-cn\",\"zh-tw\")) OPTIONAL { ?item skos:altLabel ?alias. FILTER(LANG(?alias) IN (\"zh\",\"zh-hans\",\"zh-hant\",\"zh-cn\",\"zh-tw\")) } }",
+      "sha256": "c6cada9d4b74be774f572b7ee6df475c2b9d1022cb3285a959ff69c6b88a9d35",
+      "contentSha256": "506e1f96e4b8b541b55c8cf93de48bd1c10fa357618eab7d71f962e8af8c479a",
+      "bytes": 285895
+    },
+    {
+      "kind": "ports-A",
+      "path": "upstream/reference-chinese/ports-A.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"A\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "7cac6addf464f1adb6025c252799ba7e711291bac5fe4cac4a64f3f53b144e61",
+      "contentSha256": "0c793c65498a484e7e78f0198c4bac5c11657ea9d5f17d0cb1d3f3b62bc4ded3",
+      "bytes": 643244
+    },
+    {
+      "kind": "ports-B",
+      "path": "upstream/reference-chinese/ports-B.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"B\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "6912d8402a962aad62c40a36cd3edc1f21b8795c12504da4a52ab60c61568a35",
+      "contentSha256": "7251446c0c87b0b855b0fa7c851b2749451375d08968ac38dfed32a14ce5ab0b",
+      "bytes": 467335
+    },
+    {
+      "kind": "ports-C",
+      "path": "upstream/reference-chinese/ports-C.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"C\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "7e2ef813e6367c9bd883d5e3d2d3febd16e5bb3fe7ed053bebcaf380a6ff037f",
+      "contentSha256": "1b782dc97985582b17d08adec1e39eadd7d1fdadfb0c5954462eb2af6a5acf33",
+      "bytes": 523302
+    },
+    {
+      "kind": "ports-D",
+      "path": "upstream/reference-chinese/ports-D.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"D\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "499e79238fa73ce9ac945d7a04a1a4923bbc95548fec601a0996fc814fa9a1f9",
+      "contentSha256": "0b93fd0aa0f2031ea103c98ac1d9c3726f540e11be300bee559b58bdd063a51a",
+      "bytes": 2133178
+    },
+    {
+      "kind": "ports-E",
+      "path": "upstream/reference-chinese/ports-E.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"E\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "ab99df1072409f98f0f59ba312c2761ce32718af2379c764cddbd6e93209a91e",
+      "contentSha256": "325e734540d979e9963051660464e1d1b23ce9dc69e7299f721ce9e03d276d3d",
+      "bytes": 80287
+    },
+    {
+      "kind": "ports-F",
+      "path": "upstream/reference-chinese/ports-F.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"F\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "51d1ce7829c9c4331d58fbe760af4a44c6d55ea43935feb5e60e624716c21799",
+      "contentSha256": "970cba3a444ffb9cb7caa43a7c5383779772424b759fec2b92c5db72f2042137",
+      "bytes": 86401
+    },
+    {
+      "kind": "ports-G",
+      "path": "upstream/reference-chinese/ports-G.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"G\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "51495669dbfaff3bbac5b2127b0ca6327bccf5c6528c8999546df49d849b6f9d",
+      "contentSha256": "e0c8ceda17bbf2b131533f1791dd77fd445701e63be447b6b08d6d78513e3252",
+      "bytes": 453142
+    },
+    {
+      "kind": "ports-H",
+      "path": "upstream/reference-chinese/ports-H.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"H\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "c509ac980d270168cf51a71b2a42ea6db7624fb164e93e6cd74ec81a1a4e6199",
+      "contentSha256": "bfa7b47d19a84cffaf5ca1dea2b15a3b4e5fd28269f814e260b228077c246471",
+      "bytes": 106055
+    },
+    {
+      "kind": "ports-I",
+      "path": "upstream/reference-chinese/ports-I.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"I\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "093c2775391c5d8b4d1453616067f774c57025607f95efe94a2004899f9e3d51",
+      "contentSha256": "d201264cdc4c38882eb96cce3743050ca95ea7f87e2ede472de868e985b44164",
+      "bytes": 1636895
+    },
+    {
+      "kind": "ports-J",
+      "path": "upstream/reference-chinese/ports-J.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"J\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "958c34cecb59169a55ac6eca0f11c77b9d39ed21797fa6dac41cdf7c0c1b8985",
+      "contentSha256": "d36f4477373248cc502a3e1493ae55133ccae74a8195d5b941a59c6bac1281f9",
+      "bytes": 222954
+    },
+    {
+      "kind": "ports-K",
+      "path": "upstream/reference-chinese/ports-K.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"K\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "eb8d7666924adb6ce5fd172692e130dde141a292e436a94bf4c4f3866f570db8",
+      "contentSha256": "a679921e149df8d191b96643537bbb029708f6053d1ed383d0ca11631addf18b",
+      "bytes": 52218
+    },
+    {
+      "kind": "ports-L",
+      "path": "upstream/reference-chinese/ports-L.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"L\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "a587cc90faa8809cc5db5e549fca801f23a627b29418962a27d9fa03cddd22d0",
+      "contentSha256": "79b8ca3a37dcf6e646da9e6bcf47e8203680a5c473cc6f1941bb02d6fc16810d",
+      "bytes": 36221
+    },
+    {
+      "kind": "ports-M",
+      "path": "upstream/reference-chinese/ports-M.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"M\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "3798ff8afd386d06179e1a7970b81a6b8bc810b8b3b5e7c077223e0ae43e3d4b",
+      "contentSha256": "153853bfd268d546e0495633083e85c45b3f79009959848626efa8b5e08e5276",
+      "bytes": 119033
+    },
+    {
+      "kind": "ports-N",
+      "path": "upstream/reference-chinese/ports-N.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"N\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "812e90bc3ed567f8c601879682d01da05d63f11899460e198e12806e7c19e572",
+      "contentSha256": "bd67dbb51a8ed64fb2988152fc20023296c0053189a22633c001daadb8edcd6f",
+      "bytes": 129544
+    },
+    {
+      "kind": "ports-O",
+      "path": "upstream/reference-chinese/ports-O.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"O\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "09b12da00e52411252d964a1d892081aeead27e7a9d055bced62ce3baae1c699",
+      "contentSha256": "e0ef9ba48721e3f0cf77c4624ddf2c8de83419c0ecd8ff451730fe094b785bb1",
+      "bytes": 3513
+    },
+    {
+      "kind": "ports-P",
+      "path": "upstream/reference-chinese/ports-P.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"P\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "590043bdd9b3e959d9e43405c4fffa24fb09c0eda558319445d8cc67f5e4019a",
+      "contentSha256": "b7767b246e7cda2c721741ce74894b12b3fd0a78dcc9eaf0c41cbc02ae390e79",
+      "bytes": 353099
+    },
+    {
+      "kind": "ports-Q",
+      "path": "upstream/reference-chinese/ports-Q.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"Q\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "1239642364a7cf218651a9433004e3a8207ad65c93f105bd32361fa9d40abf71",
+      "contentSha256": "8955d2a7e3a9351006f0fe2abc6d519a3d863fbee037d6d1b24fa6ba79ef598e",
+      "bytes": 1024
+    },
+    {
+      "kind": "ports-R",
+      "path": "upstream/reference-chinese/ports-R.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"R\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "957293309cd0f58b5e0dedf940e55e2765a50c02fb6c2453d47d9c8b53095802",
+      "contentSha256": "611cd3832344b66c9bb5a8c9159f8887056cf56426b0653a438778b1d366ae98",
+      "bytes": 197755
+    },
+    {
+      "kind": "ports-S",
+      "path": "upstream/reference-chinese/ports-S.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"S\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "d700e3d1df1e74d6a3d4a2ae19455eee8b9cb9e41e83aeff05cb08718cbc0e2b",
+      "contentSha256": "dcd2fdd1ca5468be0729d4e3a8990cd11b6ba541d746e66c0ace15344a6ed208",
+      "bytes": 98504
+    },
+    {
+      "kind": "ports-T",
+      "path": "upstream/reference-chinese/ports-T.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"T\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "0618e8750be3afa66ae63d3512e9124935d558e3be3c23d1d0ec1b99bfdec580",
+      "contentSha256": "871bdc8f5f138da910cdb991f9c6d3d01e974157e0203befa0fb3818b4b8fe94",
+      "bytes": 116182
+    },
+    {
+      "kind": "ports-U",
+      "path": "upstream/reference-chinese/ports-U.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"U\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "3b7d7e5737528e8aea1a9860cc2df611565bb7fcf91ad1968de854690c5b09f4",
+      "contentSha256": "8ff0dc9500a4533347ef89d3074a9b6ab1fd02b618a2fd9d78ee3cbf80fabf10",
+      "bytes": 3176957
+    },
+    {
+      "kind": "ports-V",
+      "path": "upstream/reference-chinese/ports-V.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"V\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "c30a6a8a90521cca21be26b96258c1bd9024f54d24982bbafc45a5b93f696d5a",
+      "contentSha256": "598e1299f6f14101c23972b4182eacf74dc64f990b9477e1713081e8ea71a43d",
+      "bytes": 34782
+    },
+    {
+      "kind": "ports-W",
+      "path": "upstream/reference-chinese/ports-W.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"W\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "3196512eb4698f746d683f9fc29056c218da2fb4138c0c867bf31362069a1ae1",
+      "contentSha256": "2ed6d0ac91bc085c371973fd65dfe14d6284ed01accfdeacfa910ce8d0b3e23b",
+      "bytes": 410
+    },
+    {
+      "kind": "ports-X",
+      "path": "upstream/reference-chinese/ports-X.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"X\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "2fa7fb3239ec82e5e02b89fe32d29b0b92f525445b1eae027f8a5a21cc6469b0",
+      "contentSha256": "0f446b19520f67ad18e60ce1655405dc1bcf780e15618e5f310d010ef2e8d111",
+      "bytes": 412
+    },
+    {
+      "kind": "ports-Y",
+      "path": "upstream/reference-chinese/ports-Y.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"Y\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "da50384503fb3cf1f84f398578433598728b864ef1b392e1d66771dcc07f8b32",
+      "contentSha256": "0a355414d39ba77da101205240d9f16c2c97d1f94f709b912ad5cdf61cb08313",
+      "bytes": 3811
+    },
+    {
+      "kind": "ports-Z",
+      "path": "upstream/reference-chinese/ports-Z.json.gz",
+      "query": "SELECT ?item ?code ?label WHERE { ?item wdt:P1937 ?code. FILTER(STRSTARTS(?code,\"Z\")) ?item rdfs:label ?label. FILTER(LANG(?label)=\"zh\") }",
+      "sha256": "8cddd7b5c82d52255650b4dd6fc0a0d92685246a04a3d58dffe8361c9618339c",
+      "contentSha256": "ea1a5a19d4f967abf7996e627c83d56b1d36e6d2895b47e449d87653c8c1721d",
+      "bytes": 80708
+    }
+  ],
+  "retrievalCompletedAt": "2026-10-17T05:18:52.528Z"
+}

@@ -29,15 +29,16 @@ function apply(){
  root.dataset.uiMotion=p.motion;root.dataset.uiText=p.textSize;root.dataset.uiDensity=p.density;root.dataset.uiScanlines=String(p.scanlines);
  emit('arg:preferenceschange');
 }
-export function setPreferences(patch){preferences=validatePreferences({...getPreferences(),...patch},{strict:true});const saved=write(PREFERENCES_KEY,JSON.stringify(preferences));if(preferences.startPage==='last'&&recent[0])write(LAST_KEY,recent[0]);apply();return saved;}
+export function setPreferences(patch){preferences=validatePreferences({...getPreferences(),...patch},{strict:true});const saved=write(PREFERENCES_KEY,JSON.stringify(preferences));if(preferences.startPage==='last'&&recent[0])write(LAST_KEY,recent[0].toolRoute);apply();return saved;}
 export function resetPreferences(){return setPreferences({...DEFAULT_PREFERENCES});}
 export function getFavorites(value){try{const raw=value??read(FAVORITES_KEY)??'[]';if(raw.length>65536)return new Set();const list=JSON.parse(raw);return new Set(Array.isArray(list)?list.filter(id=>typeof id==='string'&&validTools.has(id)):[]);}catch{return new Set();}}
 let sessionFavorites;
 export function favorites(){return new Set(sessionFavorites??=getFavorites());}
 export function setFavorites(ids){sessionFavorites=new Set([...ids].filter(id=>validTools.has(id)));const saved=write(FAVORITES_KEY,JSON.stringify([...sessionFavorites]));emit('arg:collectionschange');return saved;}
-export function getRecent(){return [...recent];}
+export function getRecent(){return recent.map(entry=>entry.toolRoute);}
+export function getRecentEntries(){return recent.map(entry=>({...entry}));}
 export function clearRecent(){recent=[];try{localStorage.removeItem(LAST_KEY);}catch{/* Session history still clears. */}emit('arg:collectionschange');}
-export function recordTool(route){if(!validTools.has(route))return;recent=[route,...recent.filter(id=>id!==route)].slice(0,6);if(getPreferences().startPage==='last')write(LAST_KEY,route);emit('arg:collectionschange');}
+export function recordTool(route,selection){if(!validTools.has(route))return;const entry=selection?{...selection,toolRoute:route}:{id:'page:'+route,title:toolPages.find(page=>page.route===route).title,route,toolRoute:route};recent=[entry,...recent.filter(old=>old.id!==entry.id)].slice(0,6);if(getPreferences().startPage==='last')write(LAST_KEY,route);emit('arg:collectionschange');}
 export function initialRoute(){const p=getPreferences();if(p.startPage==='last'){const id=read(LAST_KEY);return validTools.has(id)?id:'home';}return p.startPage;}
 export function exportPreferences(){return JSON.stringify({format:'arg-tool-preferences',version:1,preferences:getPreferences(),favorites:[...favorites()]},null,2);}
 export function parsePreferencesBackup(text){

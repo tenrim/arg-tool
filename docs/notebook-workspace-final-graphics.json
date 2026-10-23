@@ -1,0 +1,46 @@
+{
+  "run_at": "2026-10-16T08:17:12.077Z",
+  "mode": "affected",
+  "files": [
+    "scripts/browser-graphics.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "scripts/browser-graphics.mjs"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 145
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 0,
+      "duration_ms": 69576
+    }
+  ]
+}

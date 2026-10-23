@@ -3,10 +3,17 @@ import {onDisconnect} from '../ui/index.js';
 // A capability selects existing controls. It never constructs a second tool,
 // replaces a file input, or copies a simulator's rules into the navigation.
 export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference,getAudioFile,getFile,getFileFile,getVideoFile=()=>document.getElementById('video-file')?.files[0]}) {
-  const main=document.getElementById('main'),hidden=new Map();
+  const main=document.getElementById('main'),hidden=new Map(),directionFields=new Map();
+  let removeDirectionListeners=()=>{};
   let active=null,activePanel=null,destroyed=false,fileRevision=0,audioRevision=0,videoRevision=0,currentKind=null,currentReady=false,materialSelection=0;
   const hide=node=>{if(!node)return;if(!hidden.has(node))hidden.set(node,node.hidden);node.hidden=true;};
   function restore() {
+    removeDirectionListeners();removeDirectionListeners=()=>{};
+    for(const [control,{options,label,text}] of directionFields){
+      const value=control.value;control.replaceChildren(...options);control.value=value;
+      if(label)label.textContent=text;
+    }
+    directionFields.clear();
     if(activePanel&&main.isConnected) {
       document.dispatchEvent(new CustomEvent('arg:nativetaskchange',{detail:{panel:activePanel,id:null,reason:'leave'}}));
       if(activePanel==='image')imageTools.cancelTask();
@@ -19,6 +26,38 @@ export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference
       if(node.dataset.nativeSection!==selected&&!keep.includes(node.dataset.nativeSection))hide(node);
     }
   }
+  function selectDirectionFields(panel,entry,direction) {
+    const choices=entry.open.nativeDirections||[],selectors=new Map();
+    for(const choice of choices)for(const {selector,value,event} of choice.controls||[]){
+      if(event==='click')continue;
+      if(!selectors.has(selector))selectors.set(selector,new Set());
+      selectors.get(selector).add(String(value));
+    }
+    const fields=new Set();
+    for(const [selector,values] of selectors){
+      if(values.size<2)continue;
+      const control=panel.querySelector(selector);if(control?.tagName!=='SELECT')continue;
+      fields.add(selector);
+      const options=[...control.options],label=control.closest('label')?.querySelector(':scope>span'),value=control.value;
+      directionFields.set(control,{options,label,text:label?.textContent});
+      control.replaceChildren(...options.filter(option=>values.has(option.value)));
+      control.value=value;if(label)label.textContent='方向';
+    }
+    let selected=direction||choices[0]?.id;
+    const changed=()=>{
+      if(destroyed||active!==entry.id)return;
+      const choice=choices.find(item=>item.controls?.length&&item.controls.every(({selector,value,event})=>{
+        const node=panel.querySelector(selector);return event==='click'||node&&(node.type==='checkbox'?node.checked===Boolean(value):node.value===String(value));
+      }));
+      if(!choice||choice.id===selected)return;
+      selected=choice.id;
+      document.dispatchEvent(new CustomEvent('arg:capability-native-direction',{detail:{id:entry.id,direction:choice.id}}));
+    };
+    const nodes=[...fields].map(selector=>panel.querySelector(selector));
+    for(const node of nodes)node.addEventListener('change',changed);
+    removeDirectionListeners=()=>{for(const node of nodes)node.removeEventListener('change',changed);};
+    return fields;
+  }
   function activateOperation(entry) {
     if(destroyed||entry?.open?.kind!=='operation')return false;
     const panel=document.getElementById('panel-'+entry.open.panel),task=panel?.querySelector('.ct-tool');
@@ -28,7 +67,10 @@ export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference
     // tools on this controller's panel are separate registered tasks.
     const selectors={image:['#image-input','#image-info','#image-status'],audio:['#audio-input','#audio-info','#audio-status'],file:['[data-native-section="file-upload"]'],analysis:['#analysis-input'],video:['#video-file','#video-status']};
     const sources=(selectors[entry.open.panel]||[]).map(selector=>panel.querySelector(selector)).filter(Boolean).map(node=>node.closest('.upload-zone,label')||node);
-    const keep=[task,...sources,...panel.querySelectorAll(':scope>.page-heading,:scope>.tool-provenance,:scope>.capability-workspace-context,:scope>[data-tool-help],:scope>.tool-help-panel')];
+    // Shared help can live inside its animation shell. Preserve the actual
+    // help node and its ancestors, rather than assuming every shared surface
+    // remains a direct child of the workspace.
+    const keep=[task,...sources,...panel.querySelectorAll(':scope>.page-heading,:scope>.tool-provenance,:scope>.capability-workspace-context,:scope>.capability-topic-settings,:scope>[data-tool-help],.tool-help-panel')];
     function visit(parent){for(const child of parent.children){if(keep.includes(child))continue;if(keep.some(node=>child.contains(node)))visit(child);else hide(child);}}
     visit(panel);return true;
   }
@@ -38,7 +80,7 @@ export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference
     if(!panel)return false;
     restore();active=entry.id;activePanel=target.panel;
     for(const node of panel.querySelectorAll('.ct-tool'))hide(node.closest('.ct-extension')||node);
-    document.dispatchEvent(new CustomEvent('arg:nativetaskchange',{detail:{panel:target.panel,id:entry.id}}));
+    document.dispatchEvent(new CustomEvent('arg:nativetaskchange',{detail:{panel:target.panel,id:entry.taskId||entry.id,capabilityId:entry.id}}));
     if(target.panel==='image')imageTools.cancelTask();
     const tab=target.tab;
     if(tab?.panel==='image'&&!roundTwo.selectImage(tab.id))return false;
@@ -54,28 +96,45 @@ export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference
       if(event==='click'){control.click();continue;}
       if(control.tagName==='SELECT'&&![...control.options].some(option=>option.value===String(value)))return false;
       if(control.type==='checkbox')control.checked=Boolean(value);else control.value=String(value);
-      control.dispatchEvent(new Event(event,{bubbles:true}));
+      control.dispatchEvent(new CustomEvent(event,{bubbles:true,detail:{uiSource:'navigation'}}));
       // Original tools sometimes invalidate on input and configure on change.
-      // Both represent the same user edit and must reach the shared owner.
-      if(event==='change')control.dispatchEvent(new Event('input',{bubbles:true}));
+      // Both must reach the original owner. Navigation initialization is not
+      // continuous typing, so motion can distinguish these synthetic events.
+      if(event==='change')control.dispatchEvent(new CustomEvent('input',{bubbles:true,detail:{uiSource:'navigation'}}));
     }
     for(const selector of target.clicks||[]) {
       const control=panel.querySelector(selector);if(!control)return false;control.click();
     }
     // Mode discovery lives in the complete capability overview. Keep direction
     // and real algorithm parameters here, rather than another task dropdown.
-    const modeSelectors=new Set(['#basics-family','#basics-format','#tapcode-mode','#invisible-action','#hanzi-mode','#word-mode','#word-grid-mode','#extract-mode','#video-mode','#code-language','#paper-type']);
-    for(const option of nativeDirection?.controls||target.controls||[])if(modeSelectors.has(option.selector))hide(panel.querySelector(option.selector)?.closest('label'));
+    const modeSelectors=new Set(['#basics-family','#basics-format','#tapcode-mode','#invisible-action','#hanzi-mode','#word-mode','#word-grid-mode','#extract-mode','#video-mode','#code-language','#paper-type','#element-spelling-mode','#keyboard-mode']);
+    const directionSelectors=selectDirectionFields(panel,entry,nativeDirection?.id);
+    for(const option of nativeDirection?.controls||target.controls||[])if(modeSelectors.has(option.selector)&&!directionSelectors.has(option.selector))hide(panel.querySelector(option.selector)?.closest('label'));
     if(target.panel==='basics')hide(document.getElementById('basics-family')?.closest('label'));
     if(target.panel==='words')hide(panel.querySelector('.hunt-tabs'));
     if(target.panel==='hanzi') {
+      if((entry.taskId||entry.id)!=='native:hanzi')hide(document.getElementById('hanzi-full'));
       const mode=document.getElementById('hanzi-mode').value;
       if(!mode.startsWith('tele-'))hide(document.getElementById('hanzi-table').closest('label'));
       if(mode!=='info'){hide(document.getElementById('hanzi-property').closest('label'));hide(document.getElementById('hanzi-project'));}
     }
+    if(target.panel==='sequence'&&(entry.taskId||entry.id)!=='native:sequence-processing')hide(document.getElementById('sequence-native'));
+    if(target.panel==='chemistry'){
+      hide(document.getElementById('chem-mode')?.closest('label'));
+      if((entry.taskId||entry.id)==='native:chemistry')hide(document.getElementById('chemistry-form'));
+      else hide(document.getElementById('element-grid')?.closest('.science-card'));
+    }
     if(target.panel==='extract'&&['first','last','transpose'].includes(document.getElementById('extract-mode').value))hide(document.getElementById('extract-indices').closest('label'));
     if(target.panel==='video') {
       const mode=document.getElementById('video-mode').value;
+      if(!['native','capabilities'].includes(mode)){hide(document.getElementById('video-format-field'));hide(document.getElementById('video-advanced'));hide(document.getElementById('video-native-args')?.closest('label'));hide(document.getElementById('video-capabilities'));}
+      if(mode==='animation'){
+        for(const id of ['video-start','video-duration'])hide(document.getElementById(id).closest('label'));
+        hide(document.getElementById('video-run').parentElement);
+        hide(document.getElementById('video-status'));
+        hide(document.getElementById('video-results').closest('.hunt-results'));
+      }
+      if(['native','capabilities'].includes(mode)){hide(document.getElementById('video-start').closest('label'));hide(document.getElementById('video-duration').closest('label'));}
       if(mode==='frame')hide(document.getElementById('video-duration').closest('label'));
       if(!['frames','gif'].includes(mode))hide(document.getElementById('video-fps').closest('label'));
     }
@@ -172,6 +231,15 @@ export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference
     currentReady=true;
     document.dispatchEvent(new CustomEvent('arg:materialchange',{detail:{kind,ready:true}}));
   }
+  // Read only the controls named by the registered direction contract. Source
+  // links follow an actual edited direction without probing a computation API.
+  function getSelection(entry,fallback={}){
+    if(active!==entry?.id)return fallback;
+    const panel=document.getElementById('panel-'+entry.open.panel);
+    const matches=item=>item.controls?.length&&item.controls.every(({selector,value})=>{const control=panel?.querySelector(selector);return control&&(control.type==='checkbox'?control.checked===Boolean(value):control.value===String(value));});
+    const operation=entry.open.operationControls?.find(matches),direction=entry.open.nativeDirections?.find(matches);
+    return{...fallback,...(entry.variantId?{variant:entry.variantId}:{}),...(operation?{op:operation.op}:{}),...(direction?{direction:direction.id}:{})};
+  }
   const fileChanged=()=>{fileRevision++;materialChanged('file',false);},audioChanged=()=>{
     audioRevision++;materialChanged('audio',false);const selection=materialSelection;
     // audiochange also reports channel/direction edits. The original File is
@@ -185,5 +253,5 @@ export function mountNativeWorkspaces({roundTwo,imageTools,hexEditor,itReference
   for(const [event,listener] of listeners)document.addEventListener(event,listener);
   function destroy(){if(destroyed)return;restore();destroyed=true;for(const [event,listener] of listeners)document.removeEventListener(event,listener);release();}
   const release=onDisconnect(main,destroy);
-  return {activateNative,activateOperation,restore,getMaterial,destroy,get active(){return active;}};
+  return {activateNative,activateOperation,restore,getMaterial,getSelection,destroy,get active(){return active;}};
 }

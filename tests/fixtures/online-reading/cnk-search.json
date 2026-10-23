@@ -1,0 +1,298 @@
+{
+  "fixture": {
+    "sourceURL": "https://open.cnkgraph.com/api/Writing/Find",
+    "status": 200,
+    "capturedAt": "2026-10-17",
+    "scope": "A complete selected public record from the archived response; no record fields or article text truncated.",
+    "credit": "苏州图谱信息技术有限公司、作品作者及数据所列原始文献来源",
+    "termsURL": "https://cnkgraph.com/Home/OpenResources",
+    "notice": "Official read-only API; noncommercial research and study only. No claim of an unrestricted open-data license."
+  },
+  "record": {
+    "id": "26460",
+    "title": "靜夜思",
+    "fields": {
+      "Id": 26460,
+      "Classes": null,
+      "GroupIndex": 0,
+      "Froms": null,
+      "Allusions": null,
+      "Pictures": null,
+      "Dynasty": "盛唐",
+      "Author": "李白",
+      "AuthorId": 15188,
+      "AuthorDate": "727年",
+      "AuthorYears": [
+        727
+      ],
+      "AuthorPlace": "CN420982",
+      "Type": "絶句",
+      "TypeDetail": "WuJue",
+      "Rhyme": "阳",
+      "Rank": 1464,
+      "FirstClauseRhyme": "阳",
+      "Title": {
+        "Content": "靜夜思",
+        "Rhyme": null,
+        "Comments": null,
+        "BreakAfter": null
+      },
+      "SubTitle": null,
+      "Preface": null,
+      "Clauses": [
+        {
+          "Content": "牀前明月光，",
+          "Rhyme": null,
+          "Comments": [
+            {
+              "Category": null,
+              "Content": "一作看",
+              "Type": "Text",
+              "Index": 3
+            }
+          ],
+          "BreakAfter": null
+        },
+        {
+          "Content": "疑是地上霜。",
+          "Rhyme": null,
+          "Comments": [
+            {
+              "Category": null,
+              "Content": "{\"Text\":\"地上\",\"CountInPoem\":0,\"Categories\":[\"陆地\",\"地上\",\"人间\",\"阳世\",\"地面\"],\"Id\":5409,\"OriginWritingIdSpecified\":false,\"Spells\":\"dì shɑng\",\"Explains\":[\"(1).陆地上。<span class=\\\"book\\\">《周礼·春官·大司乐》</span>：“冬日至，於地上之圜丘奏之……夏日至，於泽中之方丘奏之。”亦指地面上。 唐 <a href='/People/15188' target='_blank'>李白</a> <a href='/Writing/26460' target='_blank'>《静夜思》</a>诗：“牀前明月光，疑是地上霜。” 鲁迅 <span class=\\\"book\\\">《呐喊·鸭的喜剧》</span>：“小鸭也诚然可爱，遍身松花黄，放在地上，便蹒跚的走，互相招呼，总是在一处。”\"],\"ContainsUnknownSpell\":false}",
+              "Type": "WordDictInJson",
+              "Index": 4
+            }
+          ],
+          "BreakAfter": null
+        },
+        {
+          "Content": "舉頭望山月，",
+          "Rhyme": null,
+          "Comments": [
+            {
+              "Category": null,
+              "Content": "一作明",
+              "Type": "Text",
+              "Index": 4
+            }
+          ],
+          "BreakAfter": null
+        },
+        {
+          "Content": "低頭思故鄉。",
+          "Rhyme": null,
+          "Comments": [
+            {
+              "Category": null,
+              "Content": "{\"Text\":\"低头\",\"CountInPoem\":0,\"Categories\":[\"低头\",\"垂下\",\"卑顺\",\"下头\",\"屈服\"],\"Id\":1958,\"OriginWritingIdSpecified\":false,\"Traditional\":\"低頭\",\"Spells\":\"dī tóu\",\"Explains\":[\"(1).垂下头。<span class=\\\"book\\\">《庄子·盗跖》</span>：“﹝ 孔子 ﹞色若死灰，据軾低头，不能出气。” 唐 <a href='/People/15188' target='_blank'>李白</a> <a href='/Writing/26460' target='_blank'>《静夜思》</a>诗：“举头望山月，低头思故乡。” 元 <a href='/People/元朝/%e8%90%a8%e9%83%bd%e5%89%8c' target='_blank'>萨都剌</a> <span class=\\\"book\\\">《北人冢上》</span>诗：“低头下拜襟尽血，行路人情为惨切。” 老舍 <span class=\\\"book\\\">《龙须沟》</span>第一幕：“南边中间是这个小杂院的大门，又低又窄，出来进去总得低头。”\"],\"ContainsUnknownSpell\":false}",
+              "Type": "WordDictInJson",
+              "Index": 2
+            },
+            {
+              "Category": null,
+              "Content": "{\"Text\":\"故乡\",\"CountInPoem\":0,\"Categories\":[\"故乡\",\"家乡\",\"出生\",\"长期\",\"居住\"],\"Id\":152,\"OriginWritingIdSpecified\":false,\"Traditional\":\"故鄉\",\"Spells\":\"gù xiāng\",\"Explains\":[\"家乡。出生或长期居住过的地方。<span class=\\\"book\\\">《荀子·礼论》</span>：“过故乡，则必徘徊焉，鸣号焉，躑躅焉，踟蹰焉，然后能去之。”<a href='/Writing/514' class='poemCommentLink' target='_blank'>《史记·高祖本纪》</a>：“大风起兮云飞扬，威加海内兮归故乡。” 唐 <a href='/People/15188' target='_blank'>李白</a> <a href='/Writing/26460' target='_blank'>《静夜思》</a>诗：“举头望明月，低头思故乡。” 冰心 <span class=\\\"book\\\">《晚晴集·我的故乡》</span>：“我生于一九○○年十月五日（农历庚子年闰八月十二日），七个月后，我就离开了故乡－－ 福建 福州 。”\"],\"ContainsUnknownSpell\":false}",
+              "Type": "WordDictInJson",
+              "Index": 5
+            }
+          ],
+          "BreakAfter": null
+        }
+      ],
+      "Note": null,
+      "Comments": [
+        {
+          "Book": "《唐诗品汇》",
+          "Section": null,
+          "Content": "刘云：自是古意，不须言笑。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗品汇》"
+        },
+        {
+          "Book": "《唐诗正声》",
+          "Section": null,
+          "Content": "百千旅情，妙复使人言说不得。天成偶语，讵由精炼得之？",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗正声》"
+        },
+        {
+          "Book": "《批点唐诗正声》",
+          "Section": null,
+          "Content": "乐府体。老炼着意作，反不及此。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《批点唐诗正声》"
+        },
+        {
+          "Book": "《增订评注唐诗正声》",
+          "Section": null,
+          "Content": "郭云：悄悄冥冥，千古旅情，尽此十字（末二句下）。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《增订评注唐诗正声》"
+        },
+        {
+          "Book": "《李杜诗选》",
+          "Section": null,
+          "Content": "范德机曰：五言短古，不可明白说尽，含糊则有余味，如此篇也。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《李杜诗选》"
+        },
+        {
+          "Book": "《唐诗广选》",
+          "Section": null,
+          "Content": "有第三句，自不意其末句忽转至此。便奇（“疑是”句下）。蒋仲舒曰：“举头”、“低头”，写出踌蹰踯躅之态。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗广选》"
+        },
+        {
+          "Book": "《诗薮》",
+          "Section": null,
+          "Content": "太白五言，如《静夜思》、《玉阶怨》等，妙绝古今，然亦齐、梁体格。他作视七言绝句，觉神韵小减，缘句短，逸气未舒耳。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《诗薮》"
+        },
+        {
+          "Book": "《唐诗归》",
+          "Section": null,
+          "Content": "钟云：忽然妙境，目中口中，凑泊不得，所谓不用意得之者。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗归》"
+        },
+        {
+          "Book": "《李诗钞》",
+          "Section": null,
+          "Content": "偶然得之，读不可了。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《李诗钞》"
+        },
+        {
+          "Book": "《李诗通》",
+          "Section": null,
+          "Content": "思归之辞，白自制名。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《李诗通》"
+        },
+        {
+          "Book": "《唐诗解》",
+          "Section": null,
+          "Content": "摹写静夜之景，字字真率，正济南所谓“不用意得之”者。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗解》"
+        },
+        {
+          "Book": "《增订唐诗摘钞》",
+          "Section": null,
+          "Content": "思乡诗最多，终不如此四语真率而有味。此信口语，后人复不能摹拟，摹拟便丑，语似极率，回环尽致。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《增订唐诗摘钞》"
+        },
+        {
+          "Book": "《古唐诗合解》",
+          "Section": null,
+          "Content": "此诗如不经意，而得之自然。故群服其神妙。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《古唐诗合解》"
+        },
+        {
+          "Book": "《唐诗别裁》",
+          "Section": null,
+          "Content": "旅中情思，虽说明却不说尽。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗别裁》"
+        },
+        {
+          "Book": "《唐诗选胜直解》",
+          "Section": null,
+          "Content": "此旅怀之思。月色侵床，凄清之景也，易动乡思。月光照地，恍疑霜白。举头低头，同此月也，一俯一仰间多少情怀。题云《静夜思》，淡而有味。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗选胜直解》"
+        },
+        {
+          "Book": "《唐宋诗醇》",
+          "Section": null,
+          "Content": "《诗薮》谓古今专门大家得三人焉，陈思之古、拾遗之律、翰林之绝，皆天授而非人力也，要是确论。至所云唐五言绝多法齐梁，体制自别；此则气骨甚高，神韵甚穆，过齐梁远矣。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐宋诗醇》"
+        },
+        {
+          "Book": "《唐诗笺注》",
+          "Section": null,
+          "Content": "即景即情，忽离忽合，极质直却自情至。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐诗笺注》"
+        },
+        {
+          "Book": "《网师园唐诗笺》",
+          "Section": null,
+          "Content": "得天趣（末二句下）。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《网师园唐诗笺》"
+        },
+        {
+          "Book": "《湖楼随笔》",
+          "Section": null,
+          "Content": "李太白诗“床前明月光”云云，王昌龄诗“闺中少妇不知愁”云云，此两诗体格不伦而意实相准。夫闺中少妇本不知愁，方且凝妆而上翠楼，乃“忽见陌头杨柳色”，则“悔教夫婿觅封侯”矣。此以见春色之感人者深也。“床前明月光”，初以为地上之霜耳，乃举头而见明月，则低头而思故乡矣。此以见月色之感人者深也。盖欲言其感人之深而但言如何相感，则虽深仍浅矣。以无情言情则情出，从无意写意则意真。知此者可以言诗乎！",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《湖楼随笔》"
+        },
+        {
+          "Book": "《诗境浅说续编》",
+          "Section": null,
+          "Content": "前二句，取喻殊新。后二句，往举头、低头俄顷之间，顿生乡思。良以故乡之念，久蕴怀中，偶见床前明月，一触即发，正见其乡心之切。且“举头”、“低头”，联属用之，更见俯仰有致。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《诗境浅说续编》"
+        },
+        {
+          "Book": "《李太白诗醇》",
+          "Section": null,
+          "Content": "谢云：直书衷曲，不着色相。徐增曰：因“疑”则“望”，因“望”则“思”，并无他念，真“静夜思”也。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《李太白诗醇》"
+        },
+        {
+          "Book": "《唐人绝句精华》",
+          "Section": null,
+          "Content": "李白此诗绝去雕采，纯出天真，犹是《子夜》民歌本色，故虽非用乐府古题，而古意盎然。",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "《唐人绝句精华》"
+        },
+        {
+          "Book": "唐诗鉴赏辞典",
+          "Section": null,
+          "Content": "胡应麟说：“太白诸绝句，信口而成，所谓无意于工而无不工者。”（《诗薮·内编》卷六）王世懋认为：“（绝句）盛唐惟青莲（李白）、龙标（王昌龄）二家诣极。李更自然，故居王上。”（《艺圃撷馀》）怎样才算“自然”，才是“无意于工而无不工”呢？这首《静夜思》就是个样榜。所以胡氏特地把它提出来，说是“妙绝古今”。<br />这首小诗，既没有奇特新颖的想象，更没有精工华美的辞藻；它只是用叙述的语气，写远客思乡之情，然而它却意味深长，耐人寻绎，千百年来，如此广泛地吸引着读者。<br />一个作客他乡的人，大概都会有这样的感觉吧：白天倒还罢了，到了夜深人静的时候，思乡的情绪，就难免一阵阵地在心头泛起波澜；何况是月明之夜，更何况是明月如霜的秋夜！<br />月白霜清，是清秋夜景；以霜色形容月光，也是古典诗歌中所经常看到的。例如梁简文帝萧纲《玄圃纳凉》诗中就有“夜月似秋霜”之句；而稍早于李白的唐代诗人张若虚在《春江花月夜》里，用“空里流霜不觉飞”来写空明澄澈的月光，给人以立体感，尤见构思之妙。可是这些都是作为一种修辞的手段而在诗中出现的。这诗的“疑是地上霜”，是叙述，而非摹形拟象的状物之辞，是诗人在特定环境中一刹那间所产生的错觉。为什么会有这样的错觉呢？不难想象，这两句所描写的是客中深夜不能成眠、短梦初回的情景。这时庭院是寂寥的，透过窗户的皎洁月光射到床前，带来了冷森森的秋宵寒意。诗人朦胧地乍一望去，在迷离恍惚的心情中，真好象是地上铺了一层白皑皑的浓霜；可是再定神一看，四周围的环境告诉他，这不是霜痕而是月色。月色不免吸引着他抬头一看，一轮娟娟素魄正挂在窗前，秋夜的太空是如此的明净！这时，他完全清醒了。<br />秋月是分外光明的，然而它又是清冷的。对孤身远客来说，最容易触动旅思秋怀，使人感到客况萧条，年华易逝。凝望着月亮，也最容易使人产生遐想，想到故乡的一切，想到家里的亲人。想着，想着，头渐渐地低了下去，完全浸入于沉思之中。<br />从“疑”到“举头”，从“举头”到“低头”，形象地揭示了诗人内心活动，鲜明地勾勒出一幅生动形象的月夜思乡图。<br />短短四句诗，写得清新朴素，明白如话。它的内容是单纯的，但同时却又是丰富的。它是容易理解的，却又是体味不尽的。诗人所没有说的比他已经说出来的要多得多。它的构思是细致而深曲的，但却又是脱口吟成、浑然无迹的。从这里，我们不难领会到李白绝句的“自然”、“无意于工而无不工”的妙境。<br />（马茂元）",
+          "IsComment": false,
+          "ReferrenceUrls": null,
+          "FullPath": "唐诗鉴赏辞典"
+        }
+      ]
+    },
+    "sourceURL": "https://open.cnkgraph.com/api/Writing/Find"
+  },
+  "result": {
+    "provider": "cnkgraph",
+    "parameters": {
+      "mode": "search"
+    }
+  }
+}

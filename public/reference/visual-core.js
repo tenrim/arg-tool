@@ -1,3 +1,4 @@
+import {CHINESE_GEOLOGY} from '../vendor/reference-chinese/geology.js';
 // Original presentation helpers; factual records stay in the pinned datasets.
 export const BAGUA_ORDERS={
  early:[1,6,4,5,2,3,7,8],
@@ -16,16 +17,15 @@ export function parsePortCoordinate(value){
  const lon=(Number(m[4])+Number(m[5])/60)*(m[6]==='W'?-1:1);
  return projectPoint(lon,lat)?[lon,lat]:null;
 }
-export function sequencePlot(input,differences=false){
- const parts=String(input).trim().split(/[\s,，;；]+/);
- if(parts.length<3||parts.length>100||parts.some(s=>!/^[-+]?\d{1,100}$/.test(s)))throw Error('输入 3–100 个整数即可预览曲线。');
- const values=parts.map(BigInt),items=differences?values.slice(1).map((v,i)=>v-values[i]):values;
- const min=items.reduce((a,b)=>a<b?a:b),max=items.reduce((a,b)=>a>b?a:b),span=max-min;
- return {min:min.toString(),max:max.toString(),items:items.map((v,i)=>({value:v.toString(),x:48+i*704/Math.max(1,items.length-1),y:span?240-Number((v-min)*200000n/span)/1000:140,index:i+(differences?2:1)}))};
-}
 export function geologicalName(r){
  if(r.id==='Precambrian')return '前寒武时期';
- return r.name.replace(/系$/,'纪').replace(/统$/,'世').replace(/阶$/,'期').replace(/界$/,'代').replace(/宇$/,'宙').replace(/^上/,'晚').replace(/^下/,'早');
+ return (CHINESE_GEOLOGY[r.id]?.name||r.name).replace(/系$/,'纪').replace(/统$/,'世').replace(/阶$/,'期').replace(/界$/,'代').replace(/宇$/,'宙').replace(/^上/,'晚').replace(/^下/,'早');
+}
+export function geologicalSearchNames(r){
+ const name=CHINESE_GEOLOGY[r.id]?.name||r.name;
+ // The two naming systems are generated from the same source record. This is
+ // terminology normalization, not a new factual chronology or translated list.
+ return [name,name.replace(/系$/,'纪').replace(/统$/,'世').replace(/阶$/,'期').replace(/界$/,'代').replace(/宇$/,'宙').replace(/^上/,'晚').replace(/^下/,'早')];
 }
 export function normalizeColorHex(value){
  const raw=String(value).trim().replace(/^#/,'');

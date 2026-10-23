@@ -1,0 +1,101 @@
+{
+  "fixture": {
+    "sourceURL": "https://open.cnkgraph.com/api/Writing/81185",
+    "status": 200,
+    "capturedAt": "2026-10-17",
+    "scope": "A complete selected public record from the archived response; no record fields or article text truncated.",
+    "credit": "苏州图谱信息技术有限公司、作品作者及数据所列原始文献来源",
+    "termsURL": "https://cnkgraph.com/Home/OpenResources",
+    "notice": "Official read-only API; noncommercial research and study only. No claim of an unrestricted open-data license."
+  },
+  "record": {
+    "id": "81185",
+    "title": "野廟",
+    "fields": {
+      "Id": 81185,
+      "Classes": null,
+      "GroupIndex": 0,
+      "Froms": null,
+      "Allusions": null,
+      "Pictures": null,
+      "Dynasty": "北宋",
+      "Author": "司馬光",
+      "AuthorId": 23461,
+      "AuthorDate": null,
+      "AuthorYears": null,
+      "AuthorPlace": null,
+      "Type": "律詩",
+      "TypeDetail": "WuLv",
+      "Rhyme": "阳",
+      "Rank": 0,
+      "FirstClauseRhyme": null,
+      "Title": {
+        "Content": "野廟",
+        "Rhyme": null,
+        "Comments": null,
+        "BreakAfter": null
+      },
+      "SubTitle": null,
+      "Preface": null,
+      "Clauses": [
+        {
+          "Content": "古廟崩榱在，",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "牆間雜樹荒。",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "依稀設餘像，",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "寂寞閟祠堂。",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "舊日牲豭地，",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "今晨狐兔鄉。",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "英靈如未滅，",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        },
+        {
+          "Content": "何以度凄凉。",
+          "Rhyme": null,
+          "Comments": null,
+          "BreakAfter": null
+        }
+      ],
+      "Note": null,
+      "Comments": null
+    },
+    "sourceURL": "https://open.cnkgraph.com/api/Writing/81185"
+  },
+  "result": {
+    "provider": "cnkgraph",
+    "parameters": {
+      "mode": "detail"
+    }
+  }
+}

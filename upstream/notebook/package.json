@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "description": "Pinned notebook maintenance dependencies; ordinary builds are offline",
+  "dependencies": {"vditor": "4.0.0", "dompurify": "3.4.17"}
+}

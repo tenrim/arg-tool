@@ -363,178 +363,6 @@ export const articles = [
     ]
   },
   {
-    "id": "function-native:it-instructions",
-    "capabilityIds": [
-      "native:it-instructions"
-    ],
-    "relatedIds": [
-      "native:it-instructions"
-    ],
-    "topicGroup": "technical",
-    "title": "指令、寄存器与标志位",
-    "summary": "按 Intel 语法分清目的与源操作数，理解位宽和条件标志。",
-    "aliases": [
-      "x86",
-      "x86-64",
-      "MOV",
-      "EAX",
-      "ZF",
-      "CF",
-      "汇编"
-    ],
-    "sources": [
-      {
-        "id": "intel",
-        "title": "Intel 64 and IA-32 Software Developer’s Manual",
-        "publisher": "Intel 官方手册",
-        "url": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
-        "language": "en",
-        "kind": "official-doc",
-        "locator": "Volume 1 寄存器和 EFLAGS；Volume 2 指令定义"
-      },
-      {
-        "id": "local",
-        "title": "本站基础指令、寄存器与标志资料",
-        "publisher": "迷雾工具箱 · 随站资料",
-        "url": "/vendor/it-reference/instructions.json",
-        "language": "zh-CN",
-        "kind": "implementation",
-        "locator": "记录采用 Intel 语法；按每条指令单独标明语义"
-      },
-      {
-        "id": "implementation",
-        "title": "本站功能实现与适用范围",
-        "publisher": "迷雾工具箱",
-        "url": "/it-reference/model.js",
-        "language": "zh-CN",
-        "kind": "implementation",
-        "locator": "当前随站版本；核对输入、输出与实现边界"
-      }
-    ],
-    "sections": [
-      {
-        "title": "x86 指令、寄存器与标志位怎样阅读",
-        "paragraphs": [
-          "Intel 语法通常把目的操作数放在前面：mov eax, 65 把十进制 65 写入 EAX；mov 是复制值，而非把源位置清空。EAX 是 32 位寄存器，RAX 是相关的 64 位寄存器。",
-          "算术标志记录运算条件，例如 ZF 表示结果为零，CF 与无符号进位或借位有关，OF 与有符号溢出有关。不同指令更新的标志不一样，不能把 INC 与 ADD 的全部标志行为视为相同。"
-        ],
-        "sourceIds": [
-          "intel",
-          "local"
-        ],
-        "examples": [
-          {
-            "label": "数值写法和操作数顺序",
-            "input": "mov eax, 65",
-            "output": "EAX 的值为 65，即 0x41",
-            "explanation": "65 和 0x41 是同一数值的十进制与十六进制表示；转成 ASCII 才是字母 A。"
-          }
-        ]
-      },
-      {
-        "title": "怎样阅读与验证结果",
-        "paragraphs": [
-          "查到指令后核对语法、位宽和受影响的标志；再结合反汇编里的操作数确认它是在读内存还是计算地址。",
-          "本资料入口只覆盖收录的基础 x86/x86-64 条目，不是 CPU 仿真器；具体编码、模式及扩展指令以厂商手册为准。"
-        ],
-        "sourceIds": [
-          "intel",
-          "local",
-          "implementation"
-        ],
-        "examples": []
-      }
-    ],
-    "misconceptions": [
-      "本资料入口只覆盖收录的基础 x86/x86-64 条目，不是 CPU 仿真器；具体编码、模式及扩展指令以厂商手册为准。"
-    ]
-  },
-  {
-    "id": "function-native:it-rfc",
-    "capabilityIds": [
-      "native:it-rfc"
-    ],
-    "relatedIds": [
-      "native:it-rfc"
-    ],
-    "topicGroup": "technical",
-    "title": "RFC 标准索引",
-    "summary": "沿 Updates、Obsoletes 和文档类别判断规范关系。",
-    "aliases": [
-      "RFC",
-      "IETF",
-      "Obsoletes",
-      "Updates",
-      "标准"
-    ],
-    "sources": [
-      {
-        "id": "search",
-        "title": "RFC Editor 文档检索",
-        "publisher": "RFC Editor",
-        "url": "https://www.rfc-editor.org/search/",
-        "language": "en",
-        "kind": "official-doc",
-        "locator": "编号、标题和状态检索"
-      },
-      {
-        "id": "process",
-        "title": "RFC 2026：The Internet Standards Process",
-        "publisher": "IETF · 南京大学开源镜像",
-        "url": "https://mirrors.nju.edu.cn/rfc/rfc2026.html",
-        "language": "en",
-        "kind": "standard",
-        "locator": "§4 Standards Track；§5 非标准轨道"
-      },
-      {
-        "id": "implementation",
-        "title": "本站功能实现与适用范围",
-        "publisher": "迷雾工具箱",
-        "url": "/it-reference/model.js",
-        "language": "zh-CN",
-        "kind": "implementation",
-        "locator": "当前随站版本；核对输入、输出与实现边界"
-      }
-    ],
-    "sections": [
-      {
-        "title": "RFC 编号、状态与替代关系怎样阅读",
-        "paragraphs": [
-          "RFC 是有连续编号的文档系列；编号是文档身份，并不表示内容越大越新就一定替代所有旧规则。RFC 可以属于标准轨道，也可以是信息性、实验性等文档，不是每一篇都是互联网标准。",
-          "Obsoletes 表示新文档替代旧文档，Updates 表示对既有内容作补充或修改。判断某项协议当前规定时，应同时读文档状态、勘误和这些引用关系。"
-        ],
-        "sourceIds": [
-          "search",
-          "process"
-        ],
-        "examples": [
-          {
-            "label": "追踪规范变化",
-            "input": "RFC 9110 的首页列出 Obsoletes: 7231",
-            "output": "理解 HTTP 语义时核对 RFC 9110 与相关后续更新",
-            "explanation": "替代关系来自文档首页和状态信息，不靠编号大小自行猜测。"
-          }
-        ]
-      },
-      {
-        "title": "怎样阅读与验证结果",
-        "paragraphs": [
-          "通过编号或标题检索，沿关联编号阅读对应文档；本站保存的是索引元数据，规范全文使用旁边的原始来源或高校镜像。",
-          "随站索引有版本时点；查询命中并不保证该条文是最新有效标准，需查看 RFC Editor 的当前状态。"
-        ],
-        "sourceIds": [
-          "search",
-          "process",
-          "implementation"
-        ],
-        "examples": []
-      }
-    ],
-    "misconceptions": [
-      "随站索引有版本时点；查询命中并不保证该条文是最新有效标准，需查看 RFC Editor 的当前状态。"
-    ]
-  },
-  {
     "id": "function-native:countries",
     "capabilityIds": [
       "native:countries"
@@ -896,10 +724,9 @@ export const articles = [
       "native:sky"
     ],
     "topicGroup": "sky",
-    "title": "恒星与深空天体目录",
+    "title": "深空天体目录",
     "summary": "把目录身份、赤经赤纬、亮度字段与当地天空位置分开。",
     "aliases": [
-      "恒星",
       "深空",
       "Messier",
       "NGC",
@@ -938,9 +765,9 @@ export const articles = [
     ],
     "sections": [
       {
-        "title": "星表编号、天球坐标和星等怎样阅读",
+        "title": "目录编号、天球坐标和星等怎样阅读",
         "paragraphs": [
-          "星表编号表示目录条目的身份，同一对象可能有多个目录名。赤经 RA 常用时、分、秒，24 小时对应 360°；赤纬 Dec 用角度，天赤道以北为正、以南为负。",
+          "目录编号表示目录条目的身份，同一对象可能有多个目录名。赤经 RA 常用时、分、秒，24 小时对应 360°；赤纬 Dec 用角度，天赤道以北为正、以南为负。",
           "视星等描述观测到的亮度，数值越小通常越亮，相差 5 星等对应 100 倍亮度。坐标必须带参考历元理解，目录 J2000 坐标并不是某时某地的方位角和高度角。"
         ],
         "sourceIds": [
@@ -1147,91 +974,6 @@ export const articles = [
     ]
   },
   {
-    "id": "function-native:crystals",
-    "capabilityIds": [
-      "native:crystals"
-    ],
-    "relatedIds": [
-      "native:crystals"
-    ],
-    "topicGroup": "matter",
-    "title": "晶体与矿物结构",
-    "summary": "读懂晶胞参数、原子位点和 CIF 结构记录。",
-    "aliases": [
-      "晶体",
-      "矿物",
-      "CIF",
-      "晶胞",
-      "分数坐标"
-    ],
-    "sources": [
-      {
-        "id": "cas",
-        "title": "科学家揭秘亚晶格尺度下晶体—非晶杂化结构",
-        "publisher": "中国科学院",
-        "url": "https://www.cas.cn/kj/202208/t20220812_4844446.shtml",
-        "language": "zh-CN",
-        "kind": "official-doc",
-        "locator": "晶态与非晶态的长程周期性"
-      },
-      {
-        "id": "iucr",
-        "title": "CIF Core Dictionary：atom_site_fract",
-        "publisher": "国际晶体学联合会 IUCr",
-        "url": "https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/Iatom_site_fract_.html",
-        "language": "en",
-        "kind": "standard",
-        "locator": "分数坐标 x、y、z 定义"
-      },
-      {
-        "id": "implementation",
-        "title": "本站功能实现与适用范围",
-        "publisher": "迷雾工具箱",
-        "url": "/reference/cif.js",
-        "language": "zh-CN",
-        "kind": "implementation",
-        "locator": "当前随站版本；核对输入、输出与实现边界"
-      }
-    ],
-    "sections": [
-      {
-        "title": "晶胞与分数坐标如何构成周期结构",
-        "paragraphs": [
-          "晶体的结构具有长程周期性。晶胞用三条边长 a、b、c 和三夹角 α、β、γ 描述重复单元；原子位点给出单元内部的位置，重复与对称操作生成更大的结构。",
-          "分数坐标不是米或埃：位置写作 x·a 向量 + y·b 向量 + z·c 向量。CIF 将晶胞参数和位点等结构信息保存为可读文本，分数坐标必须结合晶胞才能变成空间坐标。"
-        ],
-        "sourceIds": [
-          "cas",
-          "iucr"
-        ],
-        "examples": [
-          {
-            "label": "一个正交晶胞内的位置",
-            "input": "a=4 Å；位点 (0.5, 0, 0)",
-            "output": "沿 a 轴距原点 2 Å",
-            "explanation": "这只是说明分数坐标换算的示例，不代表某个真实矿物的完整晶体结构。"
-          }
-        ]
-      },
-      {
-        "title": "怎样阅读与验证结果",
-        "paragraphs": [
-          "查到矿物记录后阅读结构来源、化学式和晶胞参数，再送到三维观察工具旋转和查看原子排列。",
-          "三维展示取决于随站结构与对称处理；球棍里的连接线是展示约定，不能直接当作完整化学键、电子结构或真实表面。"
-        ],
-        "sourceIds": [
-          "cas",
-          "iucr",
-          "implementation"
-        ],
-        "examples": []
-      }
-    ],
-    "misconceptions": [
-      "三维展示取决于随站结构与对称处理；球棍里的连接线是展示约定，不能直接当作完整化学键、电子结构或真实表面。"
-    ]
-  },
-  {
     "id": "function-native:sequence",
     "capabilityIds": [
       "native:sequence"
@@ -1327,8 +1069,8 @@ export const articles = [
       "native:chemistry-formula"
     ],
     "topicGroup": "matter",
-    "title": "分子式与原子计数",
-    "summary": "逐层展开化学式，再按原子量求近似质量。",
+    "title": "摩尔质量与分子式",
+    "summary": "逐层展开化学式，计算摩尔质量、原子数和质量占比。",
     "aliases": [
       "分子式",
       "Ca(OH)2",
@@ -1390,7 +1132,7 @@ export const articles = [
         "title": "怎样阅读与验证结果",
         "paragraphs": [
           "检查规范元素符号大小写并核对原子数；质量求和得到相对式量，真正分子的分子式可称相对分子质量，两者均无量纲，摩尔质量常以 g/mol 表示。",
-          "本站解析普通式、整数下标、括号和结晶水，不支持电荷、同位素标注或小数下标；质量是平均原子量近似。"
+          "本站解析普通式、整数下标、圆括号、方括号和结晶水，也支持 Unicode 下标；不支持电荷、同位素标注或小数下标。摩尔质量以 g/mol 表示，各元素贡献为原子数乘原子量，除总和得到质量占比；数据为随包元素表的近似值。"
         ],
         "sourceIds": [
           "iupac",
@@ -1401,7 +1143,7 @@ export const articles = [
       }
     ],
     "misconceptions": [
-      "本站解析普通式、整数下标、括号和结晶水，不支持电荷、同位素标注或小数下标；质量是平均原子量近似。"
+      "本站解析普通式、整数下标、圆括号、方括号和结晶水，也支持 Unicode 下标；不支持电荷、同位素标注或小数下标。摩尔质量以 g/mol 表示，各元素贡献为原子数乘原子量，除总和得到质量占比；数据为随包元素表的近似值。"
     ]
   },
   {
@@ -2077,91 +1819,6 @@ export const articles = [
     ]
   },
   {
-    "id": "function-native:integerseq",
-    "capabilityIds": [
-      "native:integerseq"
-    ],
-    "relatedIds": [
-      "native:integerseq"
-    ],
-    "topicGroup": "sequences",
-    "title": "整数数列识别",
-    "summary": "用连续项匹配和索引核对候选，再检查递推定义。",
-    "aliases": [
-      "整数数列",
-      "OEIS",
-      "斐波那契",
-      "等差",
-      "等比"
-    ],
-    "sources": [
-      {
-        "id": "oeis",
-        "title": "A000045：Fibonacci numbers",
-        "publisher": "OEIS 基金会",
-        "url": "https://oeis.org/A000045",
-        "language": "en",
-        "kind": "official-doc",
-        "locator": "数列项、offset 与递推公式"
-      },
-      {
-        "id": "faq",
-        "title": "OEIS FAQ：Searching",
-        "publisher": "OEIS 基金会",
-        "url": "https://oeis.org/FAQ.html",
-        "language": "en",
-        "kind": "official-doc",
-        "locator": "按若干连续项查找与条目编号"
-      },
-      {
-        "id": "implementation",
-        "title": "本站功能实现与适用范围",
-        "publisher": "迷雾工具箱",
-        "url": "/reference/core.js",
-        "language": "zh-CN",
-        "kind": "implementation",
-        "locator": "当前随站版本；核对输入、输出与实现边界"
-      }
-    ],
-    "sections": [
-      {
-        "title": "有限整数怎样匹配数列而不误认规律",
-        "paragraphs": [
-          "数列查找把输入整数作为连续项，在收录的前缀中寻找同顺序匹配；匹配索引需要结合条目的 offset 解释。某组数字可能是数列中间片段，不一定从第 0 或第 1 项开始。",
-          "有限个数不能证明唯一生成规律。等差或整数等比只是可检验的简单候选，OEIS 条目还需核对定义、递推式和索引范围，再看新的项是否继续符合。"
-        ],
-        "sourceIds": [
-          "oeis",
-          "faq"
-        ],
-        "examples": [
-          {
-            "label": "一个递推候选",
-            "input": "0,1,1,2,3,5",
-            "output": "斐波那契候选；在 F(0)=0、F(1)=1 下，下一项是 8",
-            "explanation": "按照 F(n)=F(n−1)+F(n−2) 得到 3+5=8；这是候选定义，而非仅凭六项证明。"
-          }
-        ]
-      },
-      {
-        "title": "怎样阅读与验证结果",
-        "paragraphs": [
-          "输入至少三项完整整数，查看命中位置与收录后续项；用题目里其他数字或结构验证候选，不只比较开头几项。",
-          "本站仅匹配本地收录的数列前缀，并附简单规律候选；没有命中不表示 OEIS 完整数据库不存在该数列。"
-        ],
-        "sourceIds": [
-          "oeis",
-          "faq",
-          "implementation"
-        ],
-        "examples": []
-      }
-    ],
-    "misconceptions": [
-      "本站仅匹配本地收录的数列前缀，并附简单规律候选；没有命中不表示 OEIS 完整数据库不存在该数列。"
-    ]
-  },
-  {
     "id": "function-native:go",
     "capabilityIds": [
       "native:go"
@@ -2706,7 +2363,7 @@ export const articles = [
       "native:cube"
     ],
     "topicGroup": "simulation",
-    "title": "魔方模拟",
+    "title": "魔方观察",
     "summary": "按面、方向与转角读公式，并通过逆序求撤销动作。",
     "aliases": [
       "魔方",

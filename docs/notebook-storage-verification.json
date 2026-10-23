@@ -1,0 +1,102 @@
+{
+  "run_at": "2026-10-16T04:02:15.626Z",
+  "mode": "affected",
+  "files": [
+    "public/notebook/model.js",
+    "public/notebook/store.js",
+    "scripts/browser-notebook.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/notebook/model.js",
+        "public/notebook/store.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/notebook/model.js",
+        "public/notebook/store.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/notebook/model.js",
+        "public/notebook/store.js",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/model.js, public/notebook/store.js, scripts/browser-notebook.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/model.js",
+        "public/notebook/store.js"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/model.js",
+        "public/notebook/store.js",
+        "scripts/browser-notebook.mjs"
+      ]
+    }
+  ],
+  "executed": true,
+  "passed": true,
+  "results": [
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 127
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 117
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 269
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "exit_code": 0,
+      "duration_ms": 179
+    },
+    {
+      "id": "browser:notebook",
+      "exit_code": 0,
+      "duration_ms": 12255
+    }
+  ]
+}

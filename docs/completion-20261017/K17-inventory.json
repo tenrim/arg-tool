@@ -1,0 +1,184 @@
+[
+  {
+    "id": "D0102",
+    "name": "base91编码 / Base91编码 / 进入",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "http://www.hiencode.com/base91.html",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0130",
+    "name": "XXencode / 进入",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "http://www.hiencode.com/xxencode.html",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0131",
+    "name": "UUencode / 进入",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "http://www.hiencode.com/uu.html",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0133",
+    "name": "AAencode / 进入",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "http://www.hiencode.com/aaencode.html",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0134",
+    "name": "JJencode / 进入",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "http://www.hiencode.com/jjencode.html",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0513",
+    "name": "Base100 💯",
+    "difference": "没有Base100字节→emoji映射。",
+    "url": "https://www.dcode.fr/base100-emoji-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0590",
+    "name": "Base 26 Cipher",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/base-26-cipher",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0592",
+    "name": "Base 37 Cipher",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/base-37-cipher",
+    "status": "待核实"
+  },
+  {
+    "id": "D0856",
+    "name": "Fibonacci Encoding",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/fibonacci-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0860",
+    "name": "NegaFibonacci Encoding",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/negafibonacci-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0877",
+    "name": "Elias Delta Encoding",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/elias-delta-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0878",
+    "name": "Elias Gamma Encoding",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/elias-gamma-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0901",
+    "name": "Base-32 Crockford",
+    "difference": "可指定字母表；Crockford混淆字符归一和校验符不是默认完整协议。",
+    "url": "https://www.dcode.fr/crockford-base-32-encoding",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0906",
+    "name": "Base91 Encoding",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/base-91-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0908",
+    "name": "Base65536",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/base65536-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0910",
+    "name": "Bubble Babble Code",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/bubble-babble-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0911",
+    "name": "Chuck Norris Unary Code",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/chuck-norris-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0913",
+    "name": "Excess-3 Code (Stibitz)",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/excess-3-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0915",
+    "name": "Gray Code",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/gray-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0920",
+    "name": "UUencode / encode/decode",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/uu-encoding",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0923",
+    "name": "Z-Base-32",
+    "difference": "可自定字母表；变体约定/现成预设与原页不全相同。",
+    "url": "https://www.dcode.fr/z-base-32-encoding",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0935",
+    "name": "AAEncode (o^_^o)",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/aaencode",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0960",
+    "name": "Hamming Error-Correcting Code",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/hamming-error-correction",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0972",
+    "name": "Manchester Code",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://www.dcode.fr/manchester-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0977",
+    "name": "Shadoks Numeral System",
+    "difference": "数值进制转换没有Shadoks的专门符号字表。",
+    "url": "https://www.dcode.fr/shadoks-numeral-system",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1273",
+    "name": "uuencoding - Wikipedia",
+    "difference": "缺此专用字节/整数编码约定；任意数值进制不等于该编码。",
+    "url": "https://en.wikipedia.org/wiki/Uuencoding",
+    "status": "未覆盖"
+  }
+]

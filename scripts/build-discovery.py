@@ -27,10 +27,12 @@ for record in IMPORTS['files']:
 OUT.mkdir(parents=True, exist_ok=True)
 for old_chunk in (OUT / 'sky-records').glob('*.json'):
     old_chunk.unlink()
+for name in ['hyg-LICENSE.txt', 'hyg-README.txt']:
+    (OUT / name).unlink(missing_ok=True)
 
 def save(name, value):
     (OUT / name).parent.mkdir(parents=True, exist_ok=True)
-    (OUT / name).write_text(json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False) + '\n')
+    (OUT / name).write_text(json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False) + '\n',encoding='utf-8',newline='\n')
 
 def source_text(name):
     return (SOURCE / name).read_text()
@@ -79,29 +81,6 @@ for index, letter in enumerate('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'):
     shutil.copyfile(SOURCE / 'marine' / filename, OUT / filename)
 save('marine-flags.json', flags)
 
-stars = []
-source_star_count = 0
-for raw in csv_rows('hyg/hygdata_v41.csv.gz'):
-    source_star_count += 1
-    magnitude = number(raw['mag'])
-    ra, dec = number(raw['ra']), number(raw['dec'])
-    if raw['id'] == '0' or ra is None or dec is None:
-        continue
-    if not (magnitude is not None and magnitude <= 6.5) and not raw['proper'].strip():
-        continue
-    aliases = [raw[k].strip() for k in ['proper', 'bf', 'gl', 'var'] if raw[k].strip()]
-    for key, prefix in [('hip', 'HIP'), ('hd', 'HD'), ('hr', 'HR')]:
-        if raw[key]:
-            aliases.append(prefix + ' ' + raw[key])
-    stars.append({
-        'id': 'HYG:' + raw['id'], 'kind': 'star',
-        'name': raw['proper'] or raw['bf'] or (aliases[0] if aliases else 'HYG ' + raw['id']),
-        'aliases': list(dict.fromkeys(aliases)), 'ra': ra, 'dec': dec,
-        'mag': magnitude, 'type': 'Star', 'constellation': raw['con'],
-        'raw': raw,
-    })
-stars.sort(key=lambda row: (row['mag'] is None, row['mag'] or 0, int(row['raw']['id'])))
-
 def sexagesimal(value, declination=False):
     if not value.strip():
         return None
@@ -148,28 +127,25 @@ for row in deep:
 sky_index = []
 chunks = []
 chunk_size = 500
-for kind, records in [('stars', stars), ('ngc', deep)]:
-    for start in range(0, len(records), chunk_size):
-        file = f'sky-records/{kind}-{start // chunk_size:03d}.json'
-        chunk = records[start:start + chunk_size]
-        save(file, chunk)
-        chunks.append({'file': file, 'count': len(chunk)})
-        sky_index.extend({**{key: value for key, value in row.items() if key != 'raw'}, 'chunk': file} for row in chunk)
+for start in range(0, len(deep), chunk_size):
+    file = f'sky-records/ngc-{start // chunk_size:03d}.json'
+    chunk = deep[start:start + chunk_size]
+    save(file, chunk)
+    chunks.append({'file': file, 'count': len(chunk)})
+    sky_index.extend({**{key: value for key, value in row.items() if key != 'raw'}, 'chunk': file} for row in chunk)
 save('sky-index.json', sky_index)
 metadata = {
     'schema': 1, 'snapshot': '2026-10-10', 'counts': {
         'currencies': len(currencies),
         'currentCurrencyRows': sum(r['status'] == 'current' for r in currencies),
         'historicCurrencyRows': sum(r['status'] == 'historic' for r in currencies),
-        'marineFlags': len(flags), 'stars': len(stars), 'deep': len(deep),
+        'marineFlags': len(flags), 'deep': len(deep),
         'deepWithoutCoordinates': sum(r['ra'] is None for r in deep),
     },
     'sky': {
         'epoch': 'J2000.0', 'raUnit': 'hours', 'decUnit': 'degrees',
-        'starsVersion': 'HYG 4.1', 'sourceStarRows': source_star_count,
-        'starSelection': 'Apparent visual magnitude <= 6.5 OR nonempty proper name; valid coordinates; excludes Sol (id 0). This is a selected subset, not the complete HYG catalogue.',
         'deepSelection': 'All rows from pinned OpenNGC NGC.csv and addendum.csv; unknown positions remain null, not zero.',
-        'magnitude': 'HYG mag and OpenNGC V-Mag; absent visual magnitudes remain null (not substituted by B/J/H/K).',
+        'magnitude': 'OpenNGC V-Mag; absent visual magnitudes remain null (not substituted by B/J/H/K).',
         'chunks': chunks,
     },
 }
@@ -186,7 +162,7 @@ def esm_module(name, imports, body, names, default=False):
         text += '\nexport default Peekable;\n'
     else:
         text += '\n' + '\n'.join(f'export const {n} = exports.{n};' for n in names) + '\n'
-    path.write_text(text)
+    path.write_text(text,encoding='utf-8',newline='\n')
 
 esm_module('doken', '', source_text('doken/src/main.js'), ['regexRule', 'createTokenizer'])
 esm_module('helper', '', source_text('sgf/src/helper.js'), ['escapeString', 'unescapeString', 'parseDates', 'stringifyDates', 'parseVertex', 'stringifyVertex', 'parseCompressedVertices'])
@@ -208,10 +184,9 @@ esm_module('stringify', "import {escapeString} from './helper.js';", stringify, 
     "export {tokenize, tokenizeIter} from './sgf-internal/tokenize.js';\n"
     "export {stringify} from './sgf-internal/stringify.js';\n"
     "export {escapeString, unescapeString, parseVertex, stringifyVertex, parseCompressedVertices, parseDates, stringifyDates} from './sgf-internal/helper.js';\n"
-)
+,encoding='utf-8',newline='\n')
 for source, target in [
     ('currency/README.md', 'currency-README.txt'), ('currency/datapackage.json', 'currency-datapackage.json'),
-    ('hyg/LICENSE', 'hyg-LICENSE.txt'), ('hyg/README.md', 'hyg-README.txt'),
     ('ngc/CC-BY-SA-4.0.txt', 'ngc-LICENSE.txt'), ('ngc/README.md', 'ngc-README.txt'),
     ('ngc/NGC_guide.txt', 'ngc-FIELDS.txt'),
     ('marine/LICENSE', 'marine-LICENSE.txt'), ('marine/README.md', 'marine-README.txt'),
@@ -233,12 +208,6 @@ for source, target in [
     'MIT, copyright Panayiotis Lipiridis (2013), as stated by upstream. See marine-LICENSE.txt.\n'
     '36 unmodified SVG assets. Chinese labels and phonetic identification fields are locally assembled factual labels.\n'
     'No long single-flag or multi-flag signal meanings copied from an external text.\n\n'
-    'HYG Database 4.1: David Nash / Astronexus, https://github.com/astronexus/HYG-Database\n'
-    'CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/\n'
-    'Generated selected bright/named star catalogue, not the complete HYG database.\n'
-    'Selection and counts: META.json. Epoch/equinox J2000.0; RA hours and declination degrees.\n'
-    'HYG proper names with suffix B may be unofficial (see original README).\n'
-    'Adapted star index/details data remain licensed CC BY-SA 4.0.\n\n'
     'OpenNGC: Mattia Verga, https://github.com/mattiaverga/OpenNGC\n'
     'CC BY-SA 4.0. Complete pinned NGC.csv and addendum.csv records, including unavailable positions.\n'
     'Generated index converts J2000 sexagesimal coordinates; original raw fields/source references remain in detail chunks.\n'
@@ -251,14 +220,14 @@ for source, target in [
     'No runtime npm/CDN requests. Original complete downloaded source and both licenses are in upstream/discovery.\n\n'
     'Pinned commits, original source URLs, imported and generated SHA-256: UPSTREAM.json.\n'
     'Generator: scripts/build-discovery.py (offline); importer: scripts/import-discovery.py (maintenance-only network).\n'
-)
+,encoding='utf-8',newline='\n')
 files = IMPORTS['files'][:]
 for script in ['scripts/import-discovery.py', 'scripts/build-discovery.py']:
     files.append({'path': script, 'sha256': hashlib.sha256((ROOT / script).read_bytes()).hexdigest()})
 for path in sorted(OUT.rglob('*')):
     if path.is_file() and path.name != 'UPSTREAM.json':
-        files.append({'path': str(path.relative_to(ROOT)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
+        files.append({'path': path.relative_to(ROOT).as_posix(), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
 (OUT / 'UPSTREAM.json').write_text(json.dumps({
     'pins': IMPORTS['pins'], 'packages': IMPORTS['packages'], 'files': files,
-}, indent=2) + '\n')
+}, indent=2) + '\n',encoding='utf-8',newline='\n')
 print('Generated discovery data:', json.dumps(metadata['counts']))

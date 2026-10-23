@@ -1,0 +1,113 @@
+{
+  "run_at": "2026-10-16T06:34:30.768Z",
+  "reason": "Shared provenance owner repair, mobile toolbar visibility, and remaining UI contracts.",
+  "results": [
+    {
+      "id": "integrity",
+      "command": [
+        "node",
+        "scripts/audit-integrity.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 933
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 120
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 121
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/capabilities/registry.js",
+        "public/graphics/bridge.js",
+        "public/graphics/engines.js",
+        "public/graphics/model.js",
+        "public/graphics/page.js",
+        "public/handoff/button.js",
+        "public/knowledge/articles/graphics.js",
+        "public/knowledge/content.js",
+        "public/navigation.js",
+        "public/notebook/page.js",
+        "public/project-licenses.js",
+        "public/tool-help.js",
+        "public/ui/icons.js",
+        "scripts/architecture-policy.mjs",
+        "scripts/audit-integrity.mjs",
+        "scripts/browser-graphics.mjs",
+        "scripts/import-graphics.mjs",
+        "scripts/test-map.mjs",
+        "tests/browser-capabilities.mjs",
+        "tests/chef-tools.test.mjs",
+        "tests/graphics.test.mjs",
+        "upstream/graphics/excalidraw-entry.js"
+      ],
+      "exit_code": 0,
+      "duration_ms": 1630
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 203
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 29294
+    },
+    {
+      "id": "browser:project-licenses",
+      "command": [
+        "node",
+        "scripts/browser-project-licenses.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 34227
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 6383
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "exit_code": 0,
+      "duration_ms": 17459
+    }
+  ]
+}

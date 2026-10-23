@@ -1,0 +1,1 @@
+{"name":"mist-ui-runtime","private":true,"type":"module","dependencies":{"@animate-ui/react":"2.0.0","@base-ui/react":"1.8.0","esbuild":"0.25.12","motion":"14.4.0","react":"19.3.1","react-dom":"19.3.1"}}

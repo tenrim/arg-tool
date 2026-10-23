@@ -1,6 +1,7 @@
 import {Box, Card, Toolbar, FormGrid, SplitView, Field, Input, Textarea, Select, Option, Button, FilePicker, Status, DataList, Table, EmptyState, onDisconnect, setState, setTextareaValue, updateStatus} from '../ui/index.js';
 import {mount, download, copy} from '../round1/common.js';
 
+import {resultRecording} from '../result-recording.js';
 const templates = {
   flip: {name: '二进制取反', input: '00101', rules: "blank: '_'\nstart state: flip\ntable:\n  flip:\n    '0': {write: '1', R}\n    '1': {write: '0', R}\n    '_': {S: done}\n  done:\n"},
   unary: {name: '一元数加一', input: '111', rules: "blank: ' '\nstart state: scan\ntable:\n  scan:\n    '1': R\n    ' ': {write: '1', L: done}\n  done:\n"},
@@ -65,6 +66,7 @@ export function initTuring() {
     ]}),
     SplitView({minPaneWidth: '380px', children: [Card({title: '状态转移', children: [Field({label: '图示状态', control: graphSelect}), graph, transitionTable]}), Card({title: '执行记录', children: trace})]})
   ]}), panel.querySelector('.tool-provenance'));
+  const recording=resultRecording({id:'turing-result',anchor:saveOutput.parentElement,panel});
   let worker = null, revision = 0, requestId = 0, pending = null, timeout = null, runTimer = null, running = false, reading = false, definition = null, snapshot = null, runStart = 0, runSteps = 0;
   function sync() {
     const busy = Boolean(pending) || reading;
@@ -74,10 +76,12 @@ export function initTuring() {
     pause.disabled = !running;save.disabled = reading;
     copyOutput.disabled = saveOutput.disabled = !snapshot || busy || running;
     graphSelect.disabled = !definition;
+    if(snapshot&&!busy&&!running)recording.publish({text:JSON.stringify({rules:rules.value,input:input.value,head:Number(head.value),snapshot},null,2),name:'图灵机执行记录.json'});else recording.clear();
   }
   function stopScheduling() {running = false;clearTimeout(runTimer);runTimer = null;}
   function terminate() {worker?.terminate();worker = null;clearTimeout(timeout);timeout = null;if (pending) {pending.reject(Error('执行已停止。'));pending = null;}}
   function invalidate(text = '') {
+    recording.clear();
     revision++;stopScheduling();terminate();reading = false;definition = snapshot = null;panel.dataset.phase = 'empty';
     currentState.textContent = position.textContent = read.textContent = '—';steps.textContent = '0';setTextareaValue(output, '', {feedback: false});origin.textContent = '';
     tape.replaceChildren(EmptyState({text: '载入规则后显示纸带'}));graph.replaceChildren(EmptyState({text: '载入规则后显示状态转移'}));trace.replaceChildren(EmptyState({text: '执行后显示记录'}));transitionTable.replaceChildren();graphSelect.replaceChildren();updateStatus(message, text);sync();
@@ -147,7 +151,7 @@ export function initTuring() {
   }
   run.onclick = () => {if (!/^\d+$/.test(limit.value) || Number(limit.value) < 1 || Number(limit.value) > 100000) {updateStatus(message, '运行步数上限须为 1 至 100000 的整数。', 'error');return;}running = true;runSteps = 0;runStart = performance.now();panel.dataset.phase = 'running';updateStatus(message, '运行中');sync();void tick();};
   compile.onclick = load;pause.onclick = () => pauseRun();step.onclick = () => command('step');back.onclick = () => command('back');reset.onclick = () => command('reset');
-  for (const control of [rules, input, head]) control.addEventListener('input', () => {example.value = 'custom';invalidate('输入已修改，请重新载入规则。');});
+  for (const control of [rules, input, head]) control.addEventListener('input', () => {example.value = 'custom';invalidate();});
   limit.addEventListener('input', () => {if (running) pauseRun('运行上限已修改，已暂停');});
   graphSelect.onchange = drawGraph;
   example.onchange = () => {const template = templates[example.value];if (!template) return;invalidate();setTextareaValue(rules, template.rules);setTextareaValue(input, template.input);head.value = '0';};

@@ -8,7 +8,7 @@ const textSources=new Set(['text','hex','base64']);
 
 export function inputCompatibility(entry){
  if(!entry||entry.type!=='transform')return null;
- if(nativeTextTasks.has(entry.id))return 'text-conversion';
+ if(nativeTextTasks.has(entry.taskId||entry.id))return 'text-conversion';
  const target=entry.open;
  if(target?.kind==='operation'&&encodingGroups.has(target.group))return 'text-conversion';
  return null;

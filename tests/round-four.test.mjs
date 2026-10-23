@@ -105,3 +105,33 @@ test("Malformed binary STL is rejected before its declared huge allocation", () 
 
 import {zoomAt,pinchView} from '../public/round4/fragment-geometry.js';
 test('Fragment zoom preserves the point under the finger and pinch translates with its center',()=>{const v={x:10,y:20,scale:2},p={x:110,y:120},z=zoomAt(v,p,4);assert.deepEqual(z,{x:-90,y:-80,scale:4});const pinch=pinchView(v,[{x:60,y:120},{x:160,y:120}],[{x:30,y:130},{x:230,y:130}],.1,20);assert.deepEqual(pinch,{x:-70,y:-70,scale:4});assert.equal(pinchView(v,[{x:0,y:0},{x:10,y:0}],[{x:0,y:0},{x:1000,y:0}],1,5).scale,5);});
+
+// Former sample-browser regressions now belong to local CIF file processing.
+// Fixtures stay in upstream; no crystal catalogue is published to the site.
+import {readFile} from 'node:fs/promises';
+import {parseCIF,expandCrystal,parseSymmetry} from '../public/round4/cif.js';
+const cifFixture = name => readFile(new URL('../upstream/reference/sources/crystals/'+name,import.meta.url),'utf8');
+test('Local CIF: actual diamond symmetry, nearest distance and repeated cells',async()=>{
+ const crystal=parseCIF(await cifFixture('9008564-diamond.cif')),model=expandCrystal(crystal,1);
+ assert.equal(model.atoms.length,8);assert.equal(expandCrystal(crystal,2).atoms.length,64);
+ const first=model.atoms[0].position,distances=model.atoms.slice(1).map(atom=>Math.hypot(...atom.position.map((x,i)=>x-first[i])));
+ assert.ok(Math.abs(Math.min(...distances)-3.56679*Math.sqrt(3)/4)<1e-8);
+});
+test('Local CIF: all formerly supported raw fixtures retain finite expanded positions',async()=>{
+ const fixtures=['9008564-diamond.cif','9011575-diamond.cif','9000019.cif','9000020.cif','9000025.cif','9000079.cif','9000195.cif','9000251.cif','9000305.cif','9000307.cif','9000612.cif','9007550.cif','9008434.cif','9008098.cif'];
+ for(const file of fixtures){const model=expandCrystal(parseCIF(await cifFixture(file)),1);assert.ok(model.atoms.length,file);assert.ok(model.atoms.every(atom=>atom.position.every(Number.isFinite)),file);}
+});
+test('Local CIF: invalid expressions, data blocks and file sizes are rejected',async()=>{
+ const text=await cifFixture('9008564-diamond.cif');
+ assert.throws(()=>parseSymmetry('alert(1),y,z'));
+ assert.throws(()=>parseSymmetry('x,y,1/0'));
+ assert.throws(()=>parseCIF(text+'\ndata_second\n'));
+ assert.throws(()=>parseCIF('x'.repeat(1024*1024+1)),/1 MB/);
+ assert.throws(()=>parseCIF('data_bad\n_cell_length_a 1\n'));
+});
+test('Local CIF: invalid lattice and atom/repeat limits remain enforced',async()=>{
+ const crystal=parseCIF(await cifFixture('9008564-diamond.cif'));
+ assert.throws(()=>expandCrystal({...crystal,angles:[10,10,170]}),/晶胞角度/);
+ assert.throws(()=>expandCrystal(crystal,4),/重复/);
+ const dense=parseCIF(await cifFixture('9000251.cif'));assert.throws(()=>expandCrystal(dense,3),/2,000/);
+});

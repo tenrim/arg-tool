@@ -89,7 +89,7 @@ export const articles = [
       "native:image-steg"
     ],
     "topicGroup": "image",
-    "title": "StegOnline 多位隐写提取",
+    "title": "图片隐写提取",
     "summary": "LSB 隐写把消息的比特写入像素通道的低位；将颜色值改动 1，肉眼通常不易察觉。",
     "aliases": [
       "隐写",
@@ -97,6 +97,7 @@ export const articles = [
       "最低有效位"
     ],
     "sources": [
+      {"id": "aperisolve-server", "title": "AperiSolve 扫描器注册与执行实现", "publisher": "AperiSolve 项目", "url": "https://github.com/Zeecka/AperiSolve/tree/ab97840536ce82bc09dd3a3713b3864deb20eedd/aperisolve/analyzers", "language": "en", "kind": "author-spec", "locator": "registry.py、base_analyzer.py、binwalk.py"},
       {
         "id": "bits",
         "title": "按位与：提取指定二进制位",
@@ -126,6 +127,7 @@ export const articles = [
       }
     ],
     "sections": [
+      {"title": "原图扫描与像素提取的区别", "paragraphs": ["完整扫描读取文件的全部原始字节，而不是画布重新编码的图片。检测器按文件类型及深度选项执行，各自的错误和未适用状态分别保留。", "例如 PNG 的 IEND 块后附有 ZIP 数据，图片仍可能正常显示。重新保存像素会丢失尾部 ZIP；原图字节扫描可通过文件签名与文件提取器继续检查它。发现签名不等于提取成功，仍需核对扫描报告及提取文件。", "本站提供浏览器内 LSB 提取；原始文件的服务器端扫描可通过“图像与媒体分析外站”中的 AperiSolve 介绍前往原站。两者读取的对象不同，像素提取结果不能代替文件结构扫描报告。"], "sourceIds": ["aperisolve-server"]},
       {
         "title": "颜色通道怎样保存隐藏比特",
         "paragraphs": [
@@ -3208,12 +3210,16 @@ export const articles = [
     ],
     "topicGroup": "models",
     "title": "三维模型观察",
-    "summary": "三维模型以顶点和面描述几何，用节点变换放入场景，材质和纹理决定表面如何呈现。",
+    "summary": "区分网格几何与 CIF 晶体结构，理解相机、晶胞、分数坐标和对称展开。",
     "aliases": [
       "glTF",
       "网格",
       "顶点",
-      "三维"
+      "三维",
+      "CIF",
+      "晶体",
+      "晶胞",
+      "分数坐标"
     ],
     "sources": [
       {
@@ -3226,13 +3232,40 @@ export const articles = [
         "locator": "meshes、nodes、scenes 与 materials"
       },
       {
+        "id": "iucr",
+        "title": "CIF Core Dictionary：atom_site_fract",
+        "publisher": "国际晶体学联合会 IUCr",
+        "url": "https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/Iatom_site_fract_.html",
+        "language": "en",
+        "kind": "standard",
+        "locator": "分数坐标 x、y、z 与晶胞边长的关系"
+      },
+      {
+        "id": "iucr-symmetry",
+        "title": "CIF Core Dictionary：space_group_symop_operation_xyz",
+        "publisher": "国际晶体学联合会 IUCr",
+        "url": "https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/Ispace_group_symop_operation_xyz.html",
+        "language": "en",
+        "kind": "standard",
+        "locator": "X′ = WX + w；显式对称操作与晶胞内等价位置"
+      },
+      {
+        "id": "cif-implementation",
+        "title": "本站 CIF 解析与晶胞展开",
+        "publisher": "迷雾工具箱",
+        "url": "/round4/cif.js",
+        "language": "zh-CN",
+        "kind": "implementation",
+        "locator": "parseCIF、parseSymmetry 与 expandCrystal；实际格式和原子限额"
+      },
+      {
         "id": "implementation",
         "title": "本工具实现与操作定义",
         "publisher": "迷雾工具箱",
         "url": "/round4/model.js",
         "language": "zh-CN",
         "kind": "implementation",
-        "locator": "三维模型观察"
+        "locator": "三维模型观察的统一上传、CIF 参数、停止与保留旧模型"
       }
     ],
     "sections": [
@@ -3264,9 +3297,63 @@ export const articles = [
             "label": "按规则推演"
           }
         ]
+      },
+      {
+        "title": "CIF 晶胞与分数坐标如何构成结构",
+        "paragraphs": [
+          "CIF 保存的是结构参数和原子位点，不是现成的三角网格。本站读取晶胞边长 a、b、c、夹角 α、β、γ，以及原子位点的分数坐标，再生成三维位置。",
+          "分数坐标本身不是米或埃：空间位置为 x·a 向量 + y·b 向量 + z·c 向量。三个晶胞基向量不一定互相垂直，因此不能对任意晶胞都把 x、y、z 分别乘边长后当作直角坐标。"
+        ],
+        "sourceIds": [
+          "iucr",
+          "cif-implementation"
+        ],
+        "examples": [
+          {
+            "label": "正交晶胞内的位置",
+            "input": "a=b=c=4 Å，α=β=γ=90°；分数坐标 (0.5,0,0)",
+            "output": "直角坐标 (2 Å,0,0)",
+            "explanation": "沿 a 基向量走半个晶胞：0.5×4=2 Å。这是坐标换算示例，不代表某个真实矿物的完整结构。"
+          }
+        ]
+      },
+      {
+        "title": "显式对称操作与晶胞重复怎样展开",
+        "paragraphs": [
+          "对称操作用 x、y、z 的线性表达式表示旋转、反射及平移，例如 -x,-y,-z 将位点各分量取负；IUCr 将这一关系写作 X′=WX+w。读取器逐项应用文件列出的操作，把生成位置按晶胞周期归回 0≤分量<1，再按元素和位置去重。",
+          "晶胞重复是在已展开的单个晶胞基础上加入整数晶格平移。每条轴重复 n 次会铺出 n³ 个晶胞；不会根据空间群名称猜出文件未提供的完整对称操作，也不会计算化学键。"
+        ],
+        "sourceIds": [
+          "iucr-symmetry",
+          "cif-implementation"
+        ],
+        "examples": [
+          {
+            "label": "反演与两倍晶胞",
+            "input": "一个元素位点 (0.25,0,0)；操作 x,y,z 与 -x,-y,-z；每轴重复 2 次",
+            "output": "单胞有 (0.25,0,0)、(0.75,0,0) 两个位点；2×2×2 晶胞共 16 个原子位置",
+            "explanation": "反演得到 -0.25，按周期加 1 归为 0.75；两点不重合。每胞 2 个位置乘 8 个晶胞得 16，不把重复晶胞误当成新的物质记录。"
+          }
+        ]
+      },
+      {
+        "title": "本机 CIF 的参数与适用边界",
+        "paragraphs": [
+          "从三维模型观察的同一个上传入口选择自己的 CIF，文件只在浏览器解析；本站不附带晶体样本库或矿物检索。CIF 限 1 MB、单个数据块、500 个独立原子位点、192 项显式对称操作，使用分数坐标；只有明确的 P1 可省略对称操作。",
+          "每条轴可重复 1–3 次，展开后最多 2,000 个原子。读取可停止，超时或离页会中止，格式错误保留之前的模型。占位率保留并影响显示；球体大小只是示意，不能从图形推断真实原子半径、化学键、电子结构或矿物鉴定结论。"
+        ],
+        "sourceIds": [
+          "cif-implementation",
+          "implementation"
+        ],
+        "examples": []
       }
     ],
-    "misconceptions": []
+    "misconceptions": [
+      "旋转相机改变投影，不等于修改文件中的顶点或原子坐标。",
+      "CIF 位置必须结合晶胞及显式对称操作理解；本站不根据空间群名称补齐缺失的对称操作。",
+      "晶胞重复用于观察周期结构，不新增矿物数据库记录，也不预测化学键。"
+    ]
   },
   {
     "id": "function-native:hex-editor",

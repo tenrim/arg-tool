@@ -101,6 +101,8 @@ try {
       const disclosure = ui.disclosureController(trigger, help, {closedLabel: '说明', openLabel: '收起'});
       trigger.click(); check(!help.hidden && trigger.getAttribute('aria-expanded') === 'true' && trigger.textContent === '收起', '说明状态同步');
       disclosure.destroy(); trigger.click(); check(!help.hidden, '控制器解除监听');
+      const popupTrigger=ui.Button({text:'浮动属性'}),popupContent=ui.Box({text:'滚动内容'}),popup=ui.Card({hidden:true,attrs:{'data-motion':'popover'},children:[popupContent]});popup.style.maxHeight='64px';popup.style.overflow='auto';popupContent.style.height='200px';host.append(popupTrigger,popup);
+      const floating=ui.disclosureController(popupTrigger,popup);floating.toggle(true);popup.scrollTop=32;check(popup.dataset.motion==='popover'&&getComputedStyle(popup).overflowY==='auto'&&popup.scrollTop>0,'浮动属性面板保留滚动，不被折叠动画裁切');floating.destroy();
       const bar = ui.TabList({attrs:{'aria-label':'组件标签'}}), first = ui.TabPanel({attrs:{'aria-label':'第一面板'}}), second = ui.TabPanel(), third = ui.TabPanel(); host.append(bar, first, second, third);
       check(bar.getAttribute('role')==='tablist'&&first.getAttribute('role')==='tabpanel','属性扩展保留标签语义');
       const tabs = ui.tabsController(bar, [['a', '甲', first], ['b', '乙', second], ['c', '丙', third]]);
@@ -170,14 +172,26 @@ try {
       if (componentOf(panel.querySelector('.tool-help-panel')) !== 'tool-help') missed.push('ToolHelp');
       // These pages contain original logic/content. Every dependency-bearing
       // route still requires an actual component provenance footer at the end.
-      if (['extract', 'knowledge'].includes(id) ? Boolean(footer) : componentOf(footer) !== 'provenance' || panel.lastElementChild !== footer) missed.push('Provenance');
+      const {TASK_PROJECT_SOURCES}=await import('/project-source-contracts.js');
+      const original=['extract','knowledge','keyboard-extra'].includes(id)||TASK_PROJECT_SOURCES['native:'+id]?.urls.length===0;
+      if (original ? Boolean(footer) : componentOf(footer) !== 'provenance' || panel.lastElementChild !== footer) missed.push('Provenance');
       return {route: id, controls: controls.length, missed};
     }, route));
   }
   assert.deepEqual(coverage.filter(row => row.missed.length), [], '全部页面与按需加载控件使用组件');
   await page.evaluate(() => {location.hash = '#cyberchef';}); await page.waitForSelector('#panel-cyberchef', {state: 'visible'});
+  const fontList=value=>value.replace(/['"]/g,'').split(',').map(name=>name.trim()).join(',');
   for (const width of [1440, 800, 390, 320]) {
     await page.setViewportSize({width, height: 900});
+    const headings=await page.evaluate(async()=>{
+      const {ToolHeader}=await import('/ui/index.js');
+      return ['', 'page-heading'].map(className=>{
+        const header=ToolHeader({className,title:'动态标题 中文 Test'});document.body.append(header);
+        try{const style=getComputedStyle(header.querySelector('h1'));return {family:style.fontFamily,body:style.getPropertyValue('--body').trim(),weight:style.fontWeight,size:style.fontSize};}finally{header.remove();}
+      });
+    });
+    for(const heading of headings){assert.equal(fontList(heading.family),fontList(heading.body),'动态标题统一字体');assert.equal(heading.weight,'600');assert.equal(heading.size,width<=800?'21px':'25px',`动态标题响应式字号 ${width}`);}
+
     const sizes = await page.locator('#chef-input, #chef-output').evaluateAll(nodes => nodes.map(node => {
       const parent = node.parentElement, style = getComputedStyle(parent);
       return {width: node.getBoundingClientRect().width, content: parent.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)};

@@ -6,11 +6,26 @@ import {uid} from './core.js';
 
 // Public capability metadata only. Engines, private drafts and material state
 // never belong to discovery components.
+export function SearchHighlight({text='',ranges=[],tag='span',className=''}={}){
+  text=String(text);
+  const node=Box({tag,className}),parts=[];let cursor=0;
+  for(const [start,end] of ranges){
+    if(!Number.isInteger(start)||!Number.isInteger(end)||start<cursor||end<=start||end>text.length)continue;
+    parts.push(text.slice(cursor,start),Box({tag:'mark',className:'search-match',text:text.slice(start,end)}));cursor=end;
+  }
+  node.append(...parts,text.slice(cursor));return node;
+}
+export function SearchMatchDetails({match}={}){
+  return Box({tag:'span',className:'search-match-details',children:(match?.snippets||[]).map(snippet=>
+    Box({tag:'span',className:'search-match-snippet',children:[snippet.label+'：',SearchHighlight(snippet)]}))});
+}
 export function CapabilityButton({entry, onOpen, compact = false, selected = false} = {}) {
   const button = Button({className: 'capability-button' + (compact ? ' capability-button-compact' : ''),
     attrs: {'data-capability': entry.id, 'data-operation': entry.preferredOperation || entry.engineName || entry.sourceOperationIds?.[0] || '',
       'aria-current': selected ? 'true' : null}, on: {click: () => onOpen(entry)},
-    children: [Box({tag: 'span', className: 'capability-label', text: entry.title})]});
+    children: [Box({tag: 'span', className: 'capability-label', children:[
+      SearchHighlight({text:entry.title,ranges:entry.searchMatch?.title}),
+      ...(entry.searchMatch?.snippets.length?[SearchMatchDetails({match:entry.searchMatch})]:[])]})]});
   if (entry.reversible) button.append(Box({tag: 'span', className: 'capability-direction-mark', text: '⇄', attrs: {'aria-label': '双向操作'}}));
   return button;
 }

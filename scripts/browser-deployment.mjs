@@ -1,3 +1,4 @@
+import {chooseNativeTask} from './browser-navigation.mjs';
 // Serve built files over real HTTP. No route.fulfill, local source fallback or CDN.
 import {createServer} from 'node:http';
 import {readFile,stat} from 'node:fs/promises';
@@ -51,7 +52,7 @@ try{
   assert.match(await page.locator('#countries-results').textContent(),/CNY/);
   await page.waitForFunction(()=>document.querySelector('#countries-results img')?.naturalWidth>0);
   await go('code');const language=width===1440?'python':'javascript',id='native:code-'+language;
-  await page.evaluate(id=>document.dispatchEvent(new CustomEvent('arg:opencapability',{detail:{id}})),id);
+  await chooseNativeTask(page,id);
   await page.waitForFunction(language=>document.getElementById('code-language').value===language,language);
   await page.locator('#code-source').fill(language==='python'?"print('deploy', 6 * 7)":"print('deploy', 6 * 7);");
   await page.locator('#code-run').click();
@@ -63,6 +64,13 @@ try{
    await page.waitForFunction(()=>/完成|失败/.test(document.getElementById('video-status').textContent),null,{timeout:120000});
    assert.match(await page.locator('#video-status').textContent(),/完成/);assert.equal(await page.locator('#video-results img').count(),1);
    await page.waitForFunction(()=>document.querySelector('#video-results img')?.naturalWidth>0);
+  }
+  if(width===1440){
+   await chooseNativeTask(page,'native:qalculate');await page.locator('#qalculate-expression').fill('6*7');await page.locator('#qalculate-run').click();
+   await page.waitForFunction(()=>!document.getElementById('qalculate-download').disabled,null,{timeout:60000});assert.match(await page.locator('#qalculate-output').textContent(),/42/);
+   await go('notebook');await page.locator('#notebook-new').click();await page.locator('#notebook-title').fill('部署测试笔记');
+   const editor=page.locator('#notebook-editor .vditor-ir [contenteditable="true"]');await editor.fill('仅在本机保存的部署验证记录');
+   await page.waitForFunction(()=>document.getElementById('notebook-status').textContent.includes('已保存'));assert.equal(await page.locator('#notebook-title').inputValue(),'部署测试笔记');
   }
   await go('about');assert.ok(await page.locator('#about-source').isVisible());
   if(!await page.locator('#report-problem').isVisible())await page.getByRole('button',{name:'切换工具侧栏',exact:true}).click();

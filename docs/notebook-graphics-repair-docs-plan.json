@@ -1,0 +1,27 @@
+{
+  "run_at": "2026-10-16T07:02:19.376Z",
+  "mode": "affected",
+  "files": [
+    "VERIFICATION.md",
+    "docs/GRAPHICS.md",
+    "docs/NOTEBOOK.md"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "VERIFICATION.md",
+        "docs/GRAPHICS.md",
+        "docs/NOTEBOOK.md"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

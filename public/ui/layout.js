@@ -44,6 +44,7 @@ export function SplitView(options = {}) {
   const node = create('split-view', options.tag || 'div', options);
   node.dataset.layout = options.layout || 'responsive';
   if (options.minPaneWidth) node.style.setProperty('--ui-pane-min-width', options.minPaneWidth);
+  if (options.align === 'start') node.dataset.align = 'start';
   return node;
 }
 export function Result(options = {}) {

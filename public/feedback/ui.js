@@ -14,7 +14,7 @@ export function mountFeedback({getTask}) {
   const preview=Textarea({id:'report-preview',autoSize:true,maxRows:8,attrs:{readonly:true,'aria-label':'即将发送的报告预览'}});
   const details=Box({tag:'details',children:[Box({tag:'summary',text:'查看报告与诊断信息'}),preview]});
   const send=Button({id:'report-send',text:'发送报告',variant:'primary'}),copy=Button({text:'复制报告'}),save=Button({text:'下载报告'}),status=Status({id:'report-status'});
-  const dialog=Dialog({id:'report-dialog',className:'ui-flow-dialog',attrs:{'aria-labelledby':'report-title'},children:[Toolbar({children:[Box({tag:'h2',id:'report-title',text:'报告问题'}),close]}),Field({label:'问题类型',control:type}),Field({label:'发生了什么？',control:description}),Field({label:'原本期望什么？（选填）',control:expected}),Field({label:'如何复现？（选填）',control:steps}),Field({label:'联系方式（选填）',control:contact}),...(endpoint?[Field({label:'截图或示例文件（选填，最多 2 个，合计 4 MB）',control:attachment}),attachmentInfo]:[]),Box({tag:'p',text:endpoint?'点击发送后，报告和你主动选择的附件会发送到部署者配置的反馈服务。不会自动附上工具输入、文件、密钥或结果。':'报告只保留在本机。你可以复制或下载后自行分享，不会自动发送工具输入、文件、密钥或结果。'}),details,Toolbar({children:endpoint?[send,copy,save]:[copy,save]}),status]});
+  const dialog=Dialog({id:'report-dialog',className:'ui-flow-dialog',attrs:{'aria-labelledby':'report-title'},children:[Toolbar({children:[Box({tag:'h2',id:'report-title',text:'报告问题'}),close]}),Field({label:'问题类型',control:type}),Field({label:'发生了什么？',control:description}),Field({label:'原本期望什么？（选填）',control:expected}),Field({label:'如何复现？（选填）',control:steps}),Field({label:'联系方式（选填）',control:contact}),...(endpoint?[Field({label:'截图或示例文件（选填，最多 2 个，合计 4 MB）',control:attachment}),attachmentInfo]:[]),Box({tag:'p',text:endpoint?'报告和你主动选择的附件将发送到部署者配置的反馈服务。':'报告只保留在本机，可复制或下载后自行分享。'}),details,Toolbar({children:endpoint?[send,copy,save]:[copy,save]}),status]});
   document.body.append(dialog);const modal=dialogController(dialog,{trigger:open,closeButton:close,initialFocus:description});
   let id=crypto.randomUUID(),context=null,files=[],fileRevision=0,busy=false,submitted=false,attempted=false;
   const report=()=>({schema:1,id,type:type.value,description:description.value,expected:expected.value,steps:steps.value,contact:contact.value,diagnostics:context,attachments:files});
@@ -47,15 +47,38 @@ export function mountFeedback({getTask}) {
     }catch(error){updateStatus(status,error.name==='TimeoutError'?'发送结果暂未确认。保留当前报告重试，或复制后联系维护者。':error.message,'error');}
     finally{busy=false;setState(send,{busy:false});send.disabled=false;for(const field of [type,description,expected,steps,contact,attachment])field.disabled=false;}
   };
-  const errorButtons=new Map();let queued=false;
+  const errorButtons=new Map(),dirtyStatuses=new Set();let queued=false;
+  const statusSelector='[data-ui="status"],.status,#image-status';
+  const errorSelector='.panel [data-ui="status"][data-state="error"],.panel .status.error,#image-status.error';
   function scanErrors(){queued=false;
-    for(const [node,button]of errorButtons)if(!node.isConnected||!(node.classList.contains('error')||node.dataset.state==='error')){button.remove();errorButtons.delete(node);}
-    for(const node of document.querySelectorAll('.panel [data-ui="status"][data-state="error"],.panel .status.error,#image-status.error')){
+    for(const [node,button]of errorButtons)if(!node.isConnected||!node.matches(errorSelector)||!node.textContent.trim()){button.remove();errorButtons.delete(node);}
+    for(const node of dirtyStatuses){
+      if(!node.isConnected||!node.matches(errorSelector))continue;
       if(errorButtons.has(node)||!node.textContent.trim())continue;
       const button=Button({text:'报告此问题',attrs:{'data-report-error':node.id||'tool-status'},on:{click:()=>show(node.id)}});node.after(button);errorButtons.set(node,button);
     }
+    dirtyStatuses.clear();
   }
-  const observer=new MutationObserver(()=>{if(!queued){queued=true;queueMicrotask(scanErrors);}});observer.observe(document.getElementById('main'),{childList:true,subtree:true,attributes:true,attributeFilter:['class','data-state']});
+  const main=document.getElementById('main');
+  for(const node of main.querySelectorAll(statusSelector))dirtyStatuses.add(node);scanErrors();
+  // Animation refs change classes and add control nodes while a page enters.
+  // Inspect changed statuses/subtrees only, never rescan every hidden workspace
+  // for unrelated hover, layout or animation mutations.
+  const observer=new MutationObserver(records=>{
+    let removed=false;
+    for(const record of records){
+      const target=record.target.nodeType===1?record.target:record.target.parentElement;
+      const status=target?.closest(statusSelector);if(status)dirtyStatuses.add(status);
+      if(errorButtons.has(target))dirtyStatuses.add(target);
+      if(record.type!=='childList')continue;
+      removed ||= record.removedNodes.length>0;
+      for(const node of record.addedNodes)if(node.nodeType===1){
+        if(node.matches(statusSelector))dirtyStatuses.add(node);
+        for(const status of node.querySelectorAll(statusSelector))dirtyStatuses.add(status);
+      }
+    }
+    if(!queued&&(dirtyStatuses.size||removed&&errorButtons.size)){queued=true;queueMicrotask(scanErrors);}
+  });observer.observe(main,{childList:true,subtree:true,attributes:true,attributeFilter:['class','data-state']});
   const failed=event=>captureFailure(event.error||event.reason),changed=event=>rememberAction('task',event.detail?.capabilityId||event.detail?.name);
   const clicked=event=>{const b=event.target.closest('button');if(b?.id&&b.closest('.panel'))rememberAction('action',b.id);};
   window.addEventListener('error',failed);window.addEventListener('unhandledrejection',failed);document.addEventListener('arg:panelchange',changed);document.addEventListener('click',clicked);

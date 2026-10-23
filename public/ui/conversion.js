@@ -17,7 +17,7 @@ export function ConversionWorkbench({id, settings = [], inputLabel = '输入', r
   const run = Button({id: id + '-run', text: '转换', variant: 'primary'}), stop = Button({id: id + '-stop', text: '停止', disabled: true});
   const use = Button({id: id + '-use', text: '作为输入', disabled: true}), copy = Button({id: id + '-copy', text: '复制', disabled: true}), save = Button({id: id + '-save', text: '下载', disabled: true});
   const status = Status({id: id + '-status'}), details = Box({id: id + '-details'});
-  const parameters = FormGrid({minColumnWidth:'140px', children: settings});
+  const parameters = FormGrid({children: settings});
   const {root} = ConversionLayout({parameters, actions: [run, stop], status,
     input: Field({label: inputLabel, control: input}),
     result: [Field({label: resultLabel, control: output}), Toolbar({children: [use, copy, save]})], details});

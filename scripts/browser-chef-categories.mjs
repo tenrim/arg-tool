@@ -1,3 +1,4 @@
+import {tmpdir as testTmpdir} from 'node:os';
 import {chooseOperation} from './browser-navigation.mjs';
 import {appPages} from './browser-host.mjs';
 import {createRequire} from 'node:module';
@@ -6,6 +7,8 @@ import {resolve,extname} from 'node:path';
 import assert from 'node:assert/strict';
 import {toolGroups,capabilityCategories} from '../public/navigation.js';
 import {GROUPS} from '../public/chef-tools/catalog.js';
+import {completionImplementationSources} from '../public/completion/sources.js';
+import {TASK_PROJECT_SOURCES} from '../public/project-source-contracts.js';
 import {go} from './browser-navigation.mjs';
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});
@@ -37,7 +40,7 @@ try{
  assert.deepEqual(await group.locator('.capability-expanded-list [data-capability]').evaluateAll(nodes=>nodes.map(node=>node.dataset.capability).sort()),baseFamilies);
  await go(page,'crypto/publickey');await choose('crypto','RSA Encrypt');await page.locator('#panel-crypto .tool-help-button').click();assert.match(await page.locator('#tool-help-crypto .ct-instructions').textContent(),/密钥/);assert.equal(await page.locator('#tool-help-crypto .ct-instructions').isVisible(),true);await page.locator('#panel-crypto .tool-help-button').click();
  // Every navigation destination must exist, and subgroup links must select the promised task category.
- for(const [route]of toolGroups.flatMap(g=>g.items)){await go(page,route);const [panel,group]=route.split('/');await page.waitForSelector('#panel-'+panel+':not([hidden])');if(!['knowledge'].includes(panel))assert.ok(await page.locator('#panel-'+panel+' .capability-workspace-context').count(),'Page destination resolves to a task');if(['extract','knowledge'].includes(panel))assert.equal(await page.locator('#panel-'+panel+' .tool-provenance').count(),0);else assert.equal(await page.locator('#panel-'+panel+' .tool-provenance').evaluate(e=>e===e.parentElement.lastElementChild),true);}
+ for(const [route]of toolGroups.flatMap(g=>g.items)){await go(page,route);const [panel,group]=route.split('/');await page.waitForSelector('#panel-'+panel+':not([hidden])');if(!['knowledge'].includes(panel))assert.ok(await page.locator('#panel-'+panel+' .capability-workspace-context').count(),'Page destination resolves to a task');const selection=new URLSearchParams(new URL(page.url()).hash.split('?')[1]),sourceTask=selection.get('view')||selection.get('task');const implementation=await page.evaluate(id=>Object.fromEntries(['mode','codec','direction'].map(key=>[key,document.getElementById(id+'-'+key)?.value]).filter(([,value])=>value!==undefined)),panel);const sourceUrls=completionImplementationSources(panel,implementation)??TASK_PROJECT_SOURCES[sourceTask]?.urls;if(['extract','knowledge'].includes(panel)||sourceUrls?.length===0)assert.equal(await page.locator('#panel-'+panel+' .tool-provenance').count(),0,'original-only task has no invented dependency footer');else assert.equal(await page.locator('#panel-'+panel+' .tool-provenance').evaluate(e=>e===e.parentElement.lastElementChild),true);}
  for(const width of [320,390,768,820,1365]){
   await page.setViewportSize({width,height:900});
   for(const route of ['crypto','encoding','language']){
@@ -46,10 +49,15 @@ try{
    assert.ok(await page.evaluate(w=>document.documentElement.scrollWidth<=w+1,width),route+' '+width);
    assert.equal(await page.locator('.site-header .tool-category,.workbench-directory-trigger').count(),0);
    assert.equal((await page.locator('.header-inner').boundingBox()).height,64);
-   if(width>800){const rect=await page.locator('.workspace-search-trigger').boundingBox();assert.ok(Math.abs(rect.x+rect.width/2-width/2)<1,'Centered desktop search '+width);}
+   if(width>800){
+    const geometry=await page.evaluate(()=>{const box=node=>{const r=node.getBoundingClientRect();return{left:r.left,right:r.right,width:r.width};};const header=document.querySelector('.header-inner'),brand=header.querySelector('.brand');return{header:box(header),main:box(document.querySelector('main')),search:box(document.querySelector('.workspace-search-trigger')),menu:box(document.querySelector('.workbench-menu')),brand:brand?box(brand):null};});
+    assert.ok(Math.abs(geometry.header.left-geometry.main.left)<2&&Math.abs(geometry.header.right-geometry.main.right)<2,'B layout header follows the content boundaries '+width);
+    assert.ok(geometry.search.left>=Math.max(geometry.menu.right,geometry.brand?.right||0)+8&&geometry.search.right<=geometry.header.right-12,'Search does not overlap header controls '+width);
+    assert.ok(geometry.search.width>=240,'Inline search retains a usable input width '+width);
+   }
   }
-  await go(page,'crypto');await page.screenshot({path:`/tmp/arg-categories-${width}.png`,fullPage:true});
+  await go(page,'crypto');await page.screenshot({path:`${testTmpdir()}/arg-categories-${width}.png`,fullPage:true});
  }
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>document.documentElement.style.fontSize='200%');for(const route of ['crypto','encoding','language']){await go(page,route);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=391));}
- assert.equal(appPages(context).length,1,context.pages().map(p=>p.url()).join(' | '));assert.equal(await page.locator('iframe').count(),0);assert.deepEqual({errors,missing,external},{errors:[],missing:[],external:[]});console.log('PASS: 505-operation routing, native default, every catalogue destination through search, real ROT13/AES/Base64/URL flows, help and provenance, 64px header at 320–1365px, centered desktop search and 200% text.');
+ assert.equal(appPages(context).length,1,context.pages().map(p=>p.url()).join(' | '));assert.equal(await page.locator('iframe').count(),0);assert.deepEqual({errors,missing,external},{errors:[],missing:[],external:[]});console.log('PASS: 505-operation routing, native default, every catalogue destination through search, real ROT13/AES/Base64/URL flows, help and provenance, 64px header at 320–1365px, content-aligned desktop search and 200% text.');
 }finally{await browser.close();}

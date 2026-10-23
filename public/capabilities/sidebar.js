@@ -1,18 +1,18 @@
-import {Box, Button, IconButton, Icon, Link, Status, disclosureController} from '../ui/index.js';
-import {capabilityCategories, searchEntries} from './registry.js';
+import {Box, Button, IconButton, Icon, Link, Status, SearchHighlight, SearchMatchDetails, disclosureController} from '../ui/index.js';
+import {capabilityCategories, searchEntries, literalSearchEvidence} from './registry.js';
 import {capabilityRoute} from './routes.js';
 
 // The registry owns every task and its direction. The rail only controls how
 // much of that inventory is visible; expanding it never changes the workspace.
-export function mountCapabilitySidebar(host, {navigate, close}) {
+export function mountCapabilitySidebar(host, {navigate, close, categoryPages=[]}) {
   let registry, currentRoute='', currentId=null, query='', renderedQuery=null, searchLimit=60;
   const categories=new Map(), sections=new Map();
   const tree=Box({className:'rail-category-tree'}), results=Box({className:'rail-search-results',hidden:true});
   const status=Status({text:'正在载入功能目录…',className:'rail-empty'});
   host.append(tree,results,status);
-  function routeLink(route, title, icon, attrs={}) {
-    return Link({className:'rail-tool',attrs:{href:'#'+route,'data-route':route,...attrs},
-      children:[Icon(icon),Box({tag:'span',text:title})],on:{click:event=>{
+  function routeLink(route, title, icon, attrs={},match) {
+    return Link({className:'rail-tool',attrs:{href:'#'+route,'data-route':route,'data-sidebar':'menu-button',...attrs},
+      children:[Icon(icon),Box({tag:'span',children:[SearchHighlight({text:title,ranges:match?.title}),...(match?.snippets.length?[SearchMatchDetails({match})]:[])]})],on:{click:event=>{
         if(event.button||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
         event.preventDefault();close();navigate(route);
       }}});
@@ -20,7 +20,7 @@ export function mountCapabilitySidebar(host, {navigate, close}) {
   function taskLink(entry, location=false) {
     const group=registry.groups.find(group=>group.id===entry.group);
     const link=routeLink(capabilityRoute(entry,entry.preferredOperation,entry.preferredDirection),entry.title,group.icon,
-      {'data-capability':entry.id,'data-category':entry.category});
+      {'data-capability':entry.id,'data-category':entry.category},entry.searchMatch);
     if(location){
       const text=link.querySelector('span');
       text.append(Box({tag:'small',className:'rail-match-location',text:capabilityCategories.find(category=>category.id===entry.category).title+' / '+group.title}));
@@ -37,12 +37,16 @@ export function mountCapabilitySidebar(host, {navigate, close}) {
     root.append(Box({className:'rail-category-heading',children:[link,toggle]}),body);tree.append(root);
     categories.set(category.id,{root,body,controller});
   }
+  for(const page of categoryPages){
+    const category=capabilityCategories.find(category=>category.id===page.category);
+    if(category)categories.get(category.id).body.append(routeLink(page.route,page.title,category.icon));
+  }
   function addSection(group){
     const parent=categories.get(group.category).body;
     if(group.entries.length===1){parent.append(taskLink(group.entries[0]));return;}
     const root=Box({className:'rail-section',attrs:{'data-rail-group':group.id}});
     const toggle=Button({className:'rail-tool rail-section-toggle',variant:'quiet',
-      attrs:{'data-rail-expand':group.id},children:[Icon(group.icon),Box({tag:'span',text:group.title}),Box({tag:'span',className:'rail-group-count',text:String(group.count)})]});
+      attrs:{'data-rail-expand':group.id,'data-sidebar':'menu-button'},children:[Icon(group.icon),Box({tag:'span',text:group.title}),Box({tag:'span',className:'rail-group-count',text:String(group.count)})]});
     const list=Box({className:'rail-task-list',hidden:true,attrs:{'aria-label':group.title+'工具'}});
     const controller=disclosureController(toggle,list);
     let shown=0;
@@ -53,9 +57,9 @@ export function mountCapabilitySidebar(host, {navigate, close}) {
       if(!more.parentNode)list.append(more);
       markCurrent();
     }
-    toggle.addEventListener('click',()=>{if(!list.hidden&&!shown)appendEntries(40);});
+    toggle.addEventListener('click',()=>{if(toggle.getAttribute('aria-expanded')==='true'&&!shown)appendEntries(40);});
     root.append(toggle,list);parent.append(root);
-    sections.set(group.id,{root,controller,reveal(id){const index=group.entryIds.indexOf(id);if(index>=shown)appendEntries(index+1);controller.toggle(true);}});
+    sections.set(group.id,{root,controller,reveal(id){const index=group.entryIds.indexOf(id);if(index>=shown)appendEntries(Math.max(40,index+1));controller.toggle(true);}});
   }
   function markCurrent(){
     for(const link of host.querySelectorAll('a[data-route]')){
@@ -66,6 +70,8 @@ export function mountCapabilitySidebar(host, {navigate, close}) {
     for(const [id,section]of sections)section.root.dataset.current=String(id===entry?.group);
   }
   function revealCurrent(){
+    const page=categoryPages.find(page=>page.route===currentRoute);
+    if(page)categories.get(page.category)?.controller.toggle(true);
     const entry=registry?.byId.get(currentId);if(!entry)return;
     categories.get(entry.category).controller.toggle(true);sections.get(entry.group)?.reveal(entry.id);
   }
@@ -73,9 +79,11 @@ export function mountCapabilitySidebar(host, {navigate, close}) {
     results.replaceChildren();
     if(!registry){status.hidden=false;return;}
     const matches=searchEntries(registry,query);
+    const pages=categoryPages.filter(page=>[page.title,...page.aliases||[]].some(text=>text.toLocaleLowerCase().includes(query.toLocaleLowerCase())));
+    for(const page of pages)results.append(routeLink(page.route,page.title,capabilityCategories.find(category=>category.id===page.category).icon,{},literalSearchEvidence(page,query)));
     for(const entry of matches.slice(0,searchLimit))results.append(taskLink(entry,true));
     if(matches.length>searchLimit)results.append(Button({className:'rail-more',text:`继续显示（${searchLimit} / ${matches.length}）`,variant:'quiet',on:{click:()=>{searchLimit+=60;renderSearch();}}}));
-    status.textContent='没有匹配的工具';status.hidden=matches.length>0;markCurrent();
+    status.textContent='没有匹配的工具';status.hidden=matches.length>0||pages.length>0;markCurrent();
   }
   return {
     setRegistry(value){

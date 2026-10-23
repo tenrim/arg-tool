@@ -1,0 +1,65 @@
+[
+  {
+    "id": "D0013",
+    "name": "QWERTY ↔ DVORAK",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "http://wbic16.xedoloh.com/dvorak.html",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0534",
+    "name": "Keyboard Change Cipher",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "https://www.dcode.fr/keyboard-change-cipher",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0535",
+    "name": "Keyboard Coordinates",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "https://www.dcode.fr/keyboard-coordinates",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0551",
+    "name": "Phone Keypad Cipher",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "https://www.dcode.fr/phone-keypad-cipher",
+    "status": "待核实"
+  },
+  {
+    "id": "D0568",
+    "name": "T9 (Text Message)",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "https://www.dcode.fr/t9-cipher",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D0585",
+    "name": "Multi-tap Phone (SMS)",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "https://www.dcode.fr/multitap-abc-cipher",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1175",
+    "name": "dvorak/qwerty converter",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=dvorakKeyboard",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1218",
+    "name": "Telephone keypad - Wikipedia",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "http://en.wikipedia.org/wiki/Telephone_keypad",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1219",
+    "name": "T9 Converter (Text Message) - Online Phone SMS Decoder, Translator",
+    "difference": "缺专门布局/坐标/多击映射或预测字典；通用字符替换不能算现成工具。",
+    "url": "http://www.dcode.fr/t9-cipher",
+    "status": "未覆盖"
+  }
+]

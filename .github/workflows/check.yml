@@ -14,7 +14,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 60
     env:
       BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
       FULL_VERIFY: ${{ github.event_name == 'workflow_dispatch' && inputs.full }}

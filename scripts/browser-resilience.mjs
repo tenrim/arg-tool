@@ -2,6 +2,7 @@ import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
 import assert from 'node:assert/strict';
+import {chooseNativeTask} from './browser-navigation.mjs';
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});
 try{
@@ -10,7 +11,7 @@ try{
  await ctx.route('**/*',async route=>{const u=new URL(route.request().url());if(u.hostname!=='arg.test'){external.push(u.href);return route.abort();}if(u.pathname.endsWith('/zxing/index.js')&&barcodeGate)await barcodeGate;if(u.pathname.endsWith('ffmpeg-core.wasm.gz')&&videoGate){await videoGate;try{await route.fulfill({status:503,body:'Delayed failed load'});}catch{}return;}const file=resolve('public','.'+(u.pathname==='/'?'/index.html':u.pathname));await route.fulfill({body:await readFile(file),contentType:({'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.wasm':'application/wasm','.woff2':'font/woff2'})[extname(file)]||'application/octet-stream'});});
  const page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto('https://arg.test/#image');
  const png=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=c.height=16;return c.toDataURL().split(',')[1];});await page.locator('#image-input').setInputFiles({name:'clue.png',mimeType:'image/png',buffer:Buffer.from(png,'base64')});await page.waitForFunction(()=>document.getElementById('image-status').textContent==='图片已载入');
- await page.locator('[data-image-engine=inspect]').click();let releaseBarcode;barcodeGate=new Promise(r=>releaseBarcode=r);const barcodeRequest=page.waitForRequest('**/zxing/index.js');await page.locator('#barcode-read').click();await barcodeRequest;
+ await chooseNativeTask(page,'native:image-barcode');let releaseBarcode;barcodeGate=new Promise(r=>releaseBarcode=r);const barcodeRequest=page.waitForRequest('**/zxing/index.js');await page.locator('#barcode-read').click();await barcodeRequest;
  await page.evaluate(()=>{document.dispatchEvent(new Event('arg:imageviewchange'));document.getElementById('image-output').value='新的视图结果';document.getElementById('image-status').textContent='视图已更新';});releaseBarcode();await page.evaluate(async()=>{await import('./vendor/hunt/zxing/index.js');await new Promise(requestAnimationFrame);});assert.equal(await page.locator('#image-output').inputValue(),'新的视图结果');assert.equal(await page.locator('#image-status').textContent(),'视图已更新');
  // A current-view QR can have dimensions different from the original file.
  const qr=await page.evaluate(async()=>{const {CyberChefClient}=await import('./cyberchef-client.js');const client=new CyberChefClient();const r=await client.bake('DIMENSION CHECK',[{op:'Generate QR Code',args:['PNG',5,4,'Medium']}]);client.close();const blob=new Blob([r.bytes],{type:'image/png'}),image=await createImageBitmap(blob),canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);const {ImageInspector}=await import('./image-inspect.js');return new ImageInspector().run('qr',{width:1,height:1},{source:'view',canvas});});assert.equal(qr.text,'DIMENSION CHECK');

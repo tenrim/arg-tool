@@ -9,5 +9,7 @@ export * from './conversion.js';
 export * from './capabilities.js';
 export * from './byte-grid.js';
 export * from './references.js';
+export * from './records.js';
+export * from './dock.js';
 export {mountInitialLayout} from './pages.js';
 export {animatePresence, animateCollection, cancelMotion, motionAllowed} from './motion.js';

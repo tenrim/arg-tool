@@ -1,0 +1,1758 @@
+{
+  "snapshot": "2026-10-17",
+  "scope": "All 88 IAU constellations (89 charts/boundaries) and NASA 5000-year solar/lunar century tables, -1999..3000",
+  "files": [
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/and.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/and.txt",
+      "sha256": "00c148a632c2c833b03c4c43f96d2d80314826db25d5d9c8359f7d50f6d982fb",
+      "bytes": 1146
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ant.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ant.txt",
+      "sha256": "795b53ade527162e31fee27d28c6b9dcc7a83aac24efdefa66a8b3097fbae5ff",
+      "bytes": 402
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/aps.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/aps.txt",
+      "sha256": "74afb475ba8d67909b132310b3211330d5020b738e036467324ab2904202eafa",
+      "bytes": 310
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/aql.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/aql.txt",
+      "sha256": "b71cf96cde4fe74b83a3c9c70efbb961449c42a156997fdc664d647af004710f",
+      "bytes": 744
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/aqr.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/aqr.txt",
+      "sha256": "bbba932a0da5f9bd3e9385c97efb0946824fbc4adedd4a93597ee4a95210ba50",
+      "bytes": 713
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ara.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ara.txt",
+      "sha256": "d2b669a1bcc8f68a0a92871c3bdd5c30bb516d95002c882897a56c5797fdedd2",
+      "bytes": 465
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ari.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ari.txt",
+      "sha256": "268495f93a47eef2f63438e51f6062d230d309ad0e8fe0a6748b8a23ecf32fc8",
+      "bytes": 372
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/aur.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/aur.txt",
+      "sha256": "782812c33da9846ff765da480625875de256846f957471a5108de381740dd645",
+      "bytes": 651
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/boo.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/boo.txt",
+      "sha256": "7879570457ae512ba1ce87e5e5bf79fa545176af87cce86e081877096bef3ca8",
+      "bytes": 620
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cae.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cae.txt",
+      "sha256": "9151ba3666f26c17a6530811dea99ef233fed9e908253b9abee8b698d9b991ac",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cam.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cam.txt",
+      "sha256": "a2da3edb54e6cfa492522ab9c4b9bfbfa0008af01c896d66e2c0c9ef42b2f763",
+      "bytes": 1054
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cap.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cap.txt",
+      "sha256": "cc3fb3c009b9054472a819050dd8a44241c4b518a30874afa7d6725c1f4999d9",
+      "bytes": 372
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/car.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/car.txt",
+      "sha256": "4d5c0321b9032a63e226456090e5b7b023f07f2c27f4b98aef998575f764cd4a",
+      "bytes": 652
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cas.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cas.txt",
+      "sha256": "ea05d876791fdd92a237d2e79c7688e2227080c381e767afaac6294e5b9b9693",
+      "bytes": 961
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cen.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cen.txt",
+      "sha256": "90c7c416f86d8d0fa7c98c4276d41418e70b0f6ba92b22a425903530571fcb41",
+      "bytes": 620
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cep.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cep.txt",
+      "sha256": "bf851554426e50abbb1a332030ea87bc9ac006fe3fe42a62a6702ac1e9ae4269",
+      "bytes": 1207
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cet.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cet.txt",
+      "sha256": "5bf50c318ff879d9e69f319a147c2de644c68010ccb5820377f0dbf95ec90c7c",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cha.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cha.txt",
+      "sha256": "f09c85c8d005851b35e4aabe2877824da782e82cb5b4a0504846108547d87d66",
+      "bytes": 186
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cir.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cir.txt",
+      "sha256": "81dec4fa96f29ce5ae26f6d6a7611c9aae30e4adad7caeff748e68fbeb87db02",
+      "bytes": 496
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cma.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cma.txt",
+      "sha256": "6c739383b5f60b3450b18c981e3cefac697a5668e42ed2a5b1e495e3175ed638",
+      "bytes": 185
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cmi.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cmi.txt",
+      "sha256": "d2c333c38cea2bf8827f59136b007039808f3257341d2651b2236b8d0f4a7aa7",
+      "bytes": 465
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cnc.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cnc.txt",
+      "sha256": "6dda78fce685c5d57e4fba609663774638f9b339ae82ead52d75b399b30ebbde",
+      "bytes": 371
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/col.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/col.txt",
+      "sha256": "3ecc325c181b8a525b0abf32138d4034b5d2dcf42985341f1f714a9fa0b1aefc",
+      "bytes": 217
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/com.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/com.txt",
+      "sha256": "6f57b5ab91bafda3ca4d86d133195b8007e824416a217640a0f0a864a74df3f6",
+      "bytes": 372
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cra.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cra.txt",
+      "sha256": "1e22ee1497bf4caa52970e487dc03ea81655b40c2512413aed3fc63eecf34568",
+      "bytes": 155
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/crb.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/crb.txt",
+      "sha256": "7d532d6f5788e25ab4131a10f4d111b52a864380a72dd7c4e947294862d35769",
+      "bytes": 310
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/crt.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/crt.txt",
+      "sha256": "aa0cba8128c3da9caa8b9a144af92052f6d3c350081e18356958a19ca316c569",
+      "bytes": 279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cru.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cru.txt",
+      "sha256": "125b4855f89aa53ea12e31b72f025951452cd5a262d44daf52e42f2359bf3782",
+      "bytes": 124
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/crv.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/crv.txt",
+      "sha256": "37018ebfc493a1f58fa91646661c9a7f3b4c7f87948080e259fec690a112985b",
+      "bytes": 186
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cvn.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cvn.txt",
+      "sha256": "db4e8d9d2dc427573a72b3b3b96cab4eccf7e34586158da9fc3926dde57e071b",
+      "bytes": 464
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/cyg.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/cyg.txt",
+      "sha256": "9cce81e154d2baff01256581c7df52de6984193c3a961d536c379f0c1d013228",
+      "bytes": 1023
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/del.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/del.txt",
+      "sha256": "32e9c00ded0e1c40ba669c57d0b32df7624d39df9531efec2dd94bc5a0c0e852",
+      "bytes": 464
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/dor.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/dor.txt",
+      "sha256": "805044312fea09269470d0c6eea5bfaa6f9e2adfc2f697a331d8d61fa5897859",
+      "bytes": 682
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/dra.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/dra.txt",
+      "sha256": "837b6ca8995b1b2577df91efcf7c0fb5fd4d57b7fe24533ad909e2ea9f11ec48",
+      "bytes": 1549
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/equ.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/equ.txt",
+      "sha256": "18c65248d6a8ddc0d3f27f8fda588da99e16a6ccbeddd1068e4e536240c925a0",
+      "bytes": 279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/eri.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/eri.txt",
+      "sha256": "392053124f7aa69436729ef55e8171bc20299faac8090d3f65c14fd2540b774b",
+      "bytes": 1426
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/for.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/for.txt",
+      "sha256": "d545046b740d650a557f03ea83bad57c4c177a30058d813e30341a417d69ca83",
+      "bytes": 341
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/gem.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/gem.txt",
+      "sha256": "c5b47b29155e1505b8e48de5671a550014ff34f79dbce334f15e0948b78d0d40",
+      "bytes": 744
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/gru.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/gru.txt",
+      "sha256": "8422cce28f1ec990edeb6b11b710a08a04642af52a28b9c648cf56d8618342f5",
+      "bytes": 279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/her.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/her.txt",
+      "sha256": "235853724dcff8efc366721c224373e8edff11dd54e10655557cbb3f66df6273",
+      "bytes": 1023
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/hor.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/hor.txt",
+      "sha256": "d8a6f536ca0fbaa789867a1b33b7129f085d5bff4d30dda0ea1f186687335ac4",
+      "bytes": 713
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/hya.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/hya.txt",
+      "sha256": "4fcf4ea86510b4ca8c58410f217896747cdbc124ef0e4e6d1bff78a886082fa9",
+      "bytes": 1209
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/hyi.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/hyi.txt",
+      "sha256": "aed47cece5d79f5b7fade266d2dd9fe5653ebf2c6680ac0dfe114b089e437176",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ind.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ind.txt",
+      "sha256": "ba77dbe94ab60146d19a4014eabd3ac9ae8a0047ec4f9d0dd84df33c0d791e48",
+      "bytes": 374
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lac.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lac.txt",
+      "sha256": "e271d0b1c1acbf128aaabd4dd5d9de56dd34ea481266827cafd27f3a2cd82f54",
+      "bytes": 527
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/leo.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/leo.txt",
+      "sha256": "f8b70c2fe59853077021760018d089639faa0d30a1eccf783d2d638b60c125ba",
+      "bytes": 620
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lep.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lep.txt",
+      "sha256": "971cbcddb765c4fe980a226e1e189e87a30b12b1b3fc5007855eecda7a600dda",
+      "bytes": 279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lib.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lib.txt",
+      "sha256": "33a22d542e4388ded71d263e67beb81b96f7a78d7206d601f73ead606d002bd6",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lmi.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lmi.txt",
+      "sha256": "21960188b2aabff3fd7ca8d428afb5fc7313f2b3081158b0908d81f00d786863",
+      "bytes": 527
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lup.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lup.txt",
+      "sha256": "ed5c3bb0323aaa989b2280904d30b6a51b9ff124384845b404dd2a96189eaebd",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lyn.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lyn.txt",
+      "sha256": "b870e8328880371091f4fcf78a3302a87cd3c4568ac55440504b87fc9c19cb14",
+      "bytes": 713
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/lyr.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/lyr.txt",
+      "sha256": "c781ece11ae8403a5a120aa50f2a7c93fccf510ef51eb9e7a605f859ffbc8389",
+      "bytes": 527
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/men.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/men.txt",
+      "sha256": "6c032cec48ad2fbbfa7c140020c1b86dac45a025b97b1122cc6b9f0d39aa0573",
+      "bytes": 310
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/mic.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/mic.txt",
+      "sha256": "66dddeb89d79b0444ab5bbafd385ca26c9def932db7b8b598894565bfab314bf",
+      "bytes": 155
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/mon.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/mon.txt",
+      "sha256": "9b33e4effff870c5bb93bd2cd0a82ab73243b0abb3a30cf0a221e40243459a79",
+      "bytes": 589
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/mus.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/mus.txt",
+      "sha256": "e62dcad536e6f6f1860b591f07b83561c2b910fed2e9f269b09384293319e7e5",
+      "bytes": 279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/nor.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/nor.txt",
+      "sha256": "902bd23ecd9b0171db11f6781478f384a4b8f803efc34746ea0153ed576cadbb",
+      "bytes": 372
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/oct.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/oct.txt",
+      "sha256": "3ab1dd4ac91fb7fcd1b5325ee8c5a32431d1ef01cf39144ec7d40e4441f13ef7",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/oph.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/oph.txt",
+      "sha256": "3f806f1914c0505d60cfca8a51aac832b295186bb8c76b59598a533bee53fb8d",
+      "bytes": 1210
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ori.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ori.txt",
+      "sha256": "8454cd1d863b71902e7fd28a985096c15b970c50e37a905256e3841a1521a35a",
+      "bytes": 868
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/pav.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/pav.txt",
+      "sha256": "99d654fec75432ce39373b0d2ec74d8be304be0f243e84c46abfc26db8150e84",
+      "bytes": 279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/peg.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/peg.txt",
+      "sha256": "a61d4da69edeb8c29ffd33f534732a4423c166a8f8b4c2e1ec9f8555b0f217ee",
+      "bytes": 1272
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/per.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/per.txt",
+      "sha256": "6cb6e1fe4b92f089a4e0cbbe28679bd736599031ed6fb369591a3694af507530",
+      "bytes": 868
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/phe.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/phe.txt",
+      "sha256": "c63ab092dda4ee385c856959f8b2bc8cf2686fae3406888b8902fc4f629e5760",
+      "bytes": 372
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/pic.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/pic.txt",
+      "sha256": "0f6bdb26bc9aad00771fae298692c1171e3d789cc47b98b53276e5d27c9c78fe",
+      "bytes": 682
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/psa.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/psa.txt",
+      "sha256": "da7b4c4a7bf8780f2f316e84a9a562b0fccd129d16630921607d2377a503c797",
+      "bytes": 186
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/psc.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/psc.txt",
+      "sha256": "60a270eb42cb753f35d3659fa44f9562246be7af0376ceb7a758a7c8b458d85a",
+      "bytes": 806
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/pup.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/pup.txt",
+      "sha256": "447c04b89e5a7a52c962823bd055a90aa5ceefa63971aea3a52196e3bc6c117e",
+      "bytes": 403
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/pyx.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/pyx.txt",
+      "sha256": "ae82bee91e380da6aea3451250a453259779017bafd42040fad722b0972e0371",
+      "bytes": 248
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ret.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ret.txt",
+      "sha256": "fc385362a58982ae75381503d13ec96210841efdbb6770084fc9e6fc1b3d8afa",
+      "bytes": 341
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/scl.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/scl.txt",
+      "sha256": "297c3b4462e0315d9177e4805248b6b263766ac3c904195dceb9ab4e46eda45a",
+      "bytes": 217
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/sco.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/sco.txt",
+      "sha256": "3824170d01600ee9ea258dba05d45c0bcee04fe066a42b54b97f9ad57dcdaf3b",
+      "bytes": 620
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/sct.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/sct.txt",
+      "sha256": "25645746a8184ec075fdb07332b249f96a24a9c0a34bdf7074fadd10b818a64c",
+      "bytes": 186
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ser1.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ser1.txt",
+      "sha256": "defdef4839497fac79d3b593e2e416d9d48ff13df0966568caff3965bdcd0db2",
+      "bytes": 465
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/ser2.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/ser2.txt",
+      "sha256": "4c53ef186ca1d39bc19c85bc8bbfb2fdcc49e133c956906bfb09c5384691a232",
+      "bytes": 775
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/sex.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/sex.txt",
+      "sha256": "352761204192f83660cba9cc80c175eff4a703fa8010b3e62d1c4079b7e73cb8",
+      "bytes": 217
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/sge.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/sge.txt",
+      "sha256": "6e5a05e88f38ca6b101ee206a8820bb1eccfdaf57bf2480d305c1e5754751b22",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/sgr.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/sgr.txt",
+      "sha256": "965e29fa421db63cc78be2c307ad3eec6a771fd7de98485153f95a43c3e979de",
+      "bytes": 403
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/tau.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/tau.txt",
+      "sha256": "7ca7a13c5c1b52f4e91714cd28a43180ef0bf6252c3791e3fcba6366b21605f0",
+      "bytes": 837
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/tel.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/tel.txt",
+      "sha256": "23a7aa07093c194984d8dcbbed23baeccf49bdd0313c230ed36d49e408d61e9a",
+      "bytes": 155
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/tra.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/tra.txt",
+      "sha256": "24bf7c38217b7e9de62e7f70b9affea0a24a04155c47ec4ad46653c56d758a4c",
+      "bytes": 558
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/tri.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/tri.txt",
+      "sha256": "97e93b51a3174b183099a6f59cc71c515eaa0b3297f18fe32dd261cf53341b13",
+      "bytes": 496
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/tuc.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/tuc.txt",
+      "sha256": "166ec053ca5d4e349615b25fd2173c5e4ffc37e6fd4832d7724dd421c7967f22",
+      "bytes": 341
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/uma.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/uma.txt",
+      "sha256": "681a1db59fa563a15de88269bb000d6732b959652138b043128385a0d555aa10",
+      "bytes": 992
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/umi.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/umi.txt",
+      "sha256": "c644dc8bede98a0499343cab7a00251f2091ab38e1334f36e6264f4e55a76404",
+      "bytes": 682
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/vel.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/vel.txt",
+      "sha256": "fd8a427cca0270e454341e6a582616ca88d493b60a8e0d360b74ea21c5f7b04d",
+      "bytes": 434
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/vir.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/vir.txt",
+      "sha256": "057e4129798f8850eba9216be7d120d0b21e541f12a528676bdee747b1c6de5f",
+      "bytes": 589
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/vol.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/vol.txt",
+      "sha256": "9d0cc26a56431c495bdff5c0abd5b45ca521df13cd86fa4d61dd1e06a7afb4ec",
+      "bytes": 217
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/boundaries/vul.txt",
+      "url": "https://iauarchive.eso.org/static/public/constellations/txt/vul.txt",
+      "sha256": "0e435b788ee88d54ba67772820a4981c749261f4030ecc3662485a4627509c59",
+      "bytes": 651
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/calendar.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEhelp/calendar.html",
+      "sha256": "854a30121d8982ae6f58e8d3cef846093acd405c692386305e14f7ae68f35cd3",
+      "bytes": 4530
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/cc-by-4.0.txt",
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "bytes": 18657
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/and.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/AND.gif",
+      "sha256": "2ea24e6a7c44a1935db55563ea8bc8f22235e0196a86d42baf733db4985a2acc",
+      "bytes": 119526
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/ant.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/ANT.gif",
+      "sha256": "609617db4227ebcffbb6e82a503fded235a33e93553c932feafb9ef3a605aba4",
+      "bytes": 112782
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/aps.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/APS.gif",
+      "sha256": "410163a456f2a6b220439967a426321af308aa70f5d62cc9bdf9a71e1b979c9e",
+      "bytes": 158238
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/aql.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/AQL.gif",
+      "sha256": "7d8b1ebb6e05ff627840ced806c273bd3e42b7442b0e846c252cbdbadff3db9d",
+      "bytes": 110175
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/aqr.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/AQR.gif",
+      "sha256": "eb6307426feddb4802a1557d42270124ae2404d451ddc8b259ee5382fceed33a",
+      "bytes": 126473
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/ara.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/ARA.gif",
+      "sha256": "cd9f807c013147f0063ac6cd1d7f83a7b8dee320084af4ba2c0229a211d544cb",
+      "bytes": 116016
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/ari.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/ARI.gif",
+      "sha256": "829f1f730dfa7158b57fc8524e523bc50ab691b44002c5170d4db5f3b7040233",
+      "bytes": 119966
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/aur.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/AUR.gif",
+      "sha256": "e94d3dee705ec756e83effeaf5f4c309e5ec18c1a4fa15cf0be82dea82217581",
+      "bytes": 334326
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/boo.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/BOO.gif",
+      "sha256": "08d0b982a95f7073956b7be71c0a212da7ed02f612bd97b8fb608a683aa17325",
+      "bytes": 149555
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cae.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CAE.gif",
+      "sha256": "eeef048a165a7037c69857fd87a7a3306b32b8b80490e99b86afc9955120e4fd",
+      "bytes": 17454
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cam.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CAM.gif",
+      "sha256": "ca3bf936c1af6fb0ff404e2c94af48dc80f3ae8b59bffa38cb38a53878e753bc",
+      "bytes": 159053
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cap.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CAP.gif",
+      "sha256": "3e2cb250a4d4501bb52060e46c70c561dd78aafae9b25b8f2ab5de97e10319aa",
+      "bytes": 99666
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/car.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CAR.gif",
+      "sha256": "abcc1fcadd9cd68fc948e81cf27965795c8a2458c7d77b53a93896a2d8836104",
+      "bytes": 145829
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cas.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CAS.gif",
+      "sha256": "f054dee4a1684f8813a1e39f3a4715839fb1a4a011ec73cbcb89576cf000d182",
+      "bytes": 141535
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cen.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CEN.gif",
+      "sha256": "08bdb438fe6c7418818e107e0d6017e20652bade135947b63a180d8f50c0aa53",
+      "bytes": 181706
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cep.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CEP.gif",
+      "sha256": "c662e80467bc544728a5d2aa30371787283ce639ec76ef5276918c3bf2c2407f",
+      "bytes": 204574
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cet.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CET.gif",
+      "sha256": "14684e0d82d7d355a62a9484c33fc192e9afc8146fcb9d4b9cfeb432386adf3f",
+      "bytes": 123949
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cha.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CHA.gif",
+      "sha256": "e0b62b9dd96f3880340179f9e3559781ac322c9e7b12c1e6e35f075015b2fa8b",
+      "bytes": 186471
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cir.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CIR.gif",
+      "sha256": "61a576e55fe4f4ad671b9a5809957eafffe8d33b0d03f05b4a0cd0cc19830386",
+      "bytes": 133173
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cma.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CMA.gif",
+      "sha256": "db02fda945e4858bfe8aa61f6961559bb0f6934e159a72b25f8125c35f86d482",
+      "bytes": 136751
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cmi.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CMI.gif",
+      "sha256": "ed68d7442760e047e11da0977512b944dbbba5c542f41b8698630b4fc0385666",
+      "bytes": 84541
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cnc.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CNC.gif",
+      "sha256": "3a39b25ca62d8ffb1a752098970d099178ef83a787f378895f220928e45944e8",
+      "bytes": 109659
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/col.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/COL.gif",
+      "sha256": "51f0e093e16752d27e3728e90b70cd3744c42a7d84087477b5fbf6f4fdfe15e7",
+      "bytes": 100391
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/com.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/COM.gif",
+      "sha256": "494ec9cd5438d9902f0988084758800e332ae252bc2241ce57497fc5cf13a244",
+      "bytes": 103242
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cra.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CRA.gif",
+      "sha256": "c141c6027f9d23ea79ebbee999af4f30e9081efb51098149b99aa8fccb1008af",
+      "bytes": 109070
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/crb.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CRB.gif",
+      "sha256": "f1554b2824edecc0a8b923692f9266deaca3aad9635a022404cac314815e4555",
+      "bytes": 91117
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/crt.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CRT.gif",
+      "sha256": "dce66c101e6975daaa77789d9848a116e7f377e09b4fd96ec29aff68bbc56945",
+      "bytes": 76081
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cru.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CRU.gif",
+      "sha256": "ba1a4f67dcdbbfa1a001cd083dd41a09f84eb88239086047558a5d6a0b5a7489",
+      "bytes": 120861
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/crv.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CRV.gif",
+      "sha256": "4d0addc23cfc4366ba9a32133ba7578f04de7ad469110d30f93a5fe5b9cf0d67",
+      "bytes": 75051
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cvn.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CVN.gif",
+      "sha256": "83c6895ed6fb7b0cbc98530e74e9de8661d42f9f729b55919d969abe46c934c8",
+      "bytes": 107760
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/cyg.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/CYG.gif",
+      "sha256": "b762281779b637eaafb5d32b8c5585733ffd02770939d581480a543a1171d1d9",
+      "bytes": 177773
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/del.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/DEL.gif",
+      "sha256": "bced1140af4c966418d8d6c7566e0e3fb1e7506799f9351e1aacaaf0eb801158",
+      "bytes": 81925
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/dor.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/DOR.gif",
+      "sha256": "37210714c567b34c9ee83c54286f6ffdd6eef5871e72532deb5ada8beda04787",
+      "bytes": 109616
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/dra.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/DRA.gif",
+      "sha256": "bef2acfbf6183b8d1fc9bb22da478f7cd1fcf8b19a272504666c47bd963519bf",
+      "bytes": 156180
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/equ.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/EQU.gif",
+      "sha256": "07950f7815b9ffef80813efe9e3e74af60b7971ec5385c0d03fd6d8b5d5503dc",
+      "bytes": 70140
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/eri.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/ERI.gif",
+      "sha256": "55ae4e8fb4315ef20ae8c4d379a86dce3fc95d38eb39bb8e1120f260593b2cf1",
+      "bytes": 170796
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/for.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/FOR.gif",
+      "sha256": "980fb80b4ae5d837e37105471fd7f65623598f047c5adb405269953a2e3896fd",
+      "bytes": 110190
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/gem.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/GEM.gif",
+      "sha256": "3cbc991d68ff17bd0f83a75334d5b110fdc76e9ce75b07d1b6196eb73cfacb0c",
+      "bytes": 138509
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/gru.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/GRU.gif",
+      "sha256": "f1fed97ba5e610a76442d2967518bd567eca449b4c9130c66ba48302fe22c45b",
+      "bytes": 129862
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/her.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/HER.gif",
+      "sha256": "0b476c0ec3496a6cff25427900afd361474d10fbb2c0c9bcde6d3372811874ce",
+      "bytes": 159404
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/hor.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/HOR.gif",
+      "sha256": "6c479e8988849f102a59a9596b5bd8c41589b18a525879486392043243ca5840",
+      "bytes": 109052
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/hya.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/HYA.gif",
+      "sha256": "f8a5cf393945114003e036a0ef73f0e2efebe6ade5a497a2fe5dc8a1ecf84dd6",
+      "bytes": 129804
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/hyi.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/HYI.gif",
+      "sha256": "c2ad826ba7baf4b4cecd7c5d3b70e765344efa2b7af6a8f6af958b92464d235e",
+      "bytes": 145497
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/ind.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/IND.gif",
+      "sha256": "7bce63e984135dd957eb3b9beff8f4cbe62ac5e3ede66e91cfb0d0bf7156dbf8",
+      "bytes": 133148
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lac.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LAC.gif",
+      "sha256": "e85982455f97b1665fdf93f929be85d8efb06ad8816c9d4e6995f0e72d6d0942",
+      "bytes": 126431
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/legend.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/legend.gif",
+      "sha256": "d0373df5f35236d38e7f73dc2d993ac9eea7a021cc4fb23cdaad928d3a43c845",
+      "bytes": 3370
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/leo.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LEO.gif",
+      "sha256": "8c5d38a2544ccce7cccbf188b21290909fa32085a2e38af56c05982bc80246f2",
+      "bytes": 145121
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lep.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LEP.gif",
+      "sha256": "88524ab9ec10436a5ec54388d6a4273648a114c9cf6ec91edf392b26918490b1",
+      "bytes": 95656
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lib.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LIB.gif",
+      "sha256": "d37f9ace2e0620f6ef8385532d3a673de8ad0e6be80dca3cc9fcd83b5cd827a6",
+      "bytes": 112873
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lmi.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LMI.gif",
+      "sha256": "e5b5cc0cc729c8090a6665a02c5ce4cb3e95b0036a563ed508fa9072402314d8",
+      "bytes": 104786
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lup.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LUP.gif",
+      "sha256": "f4c5c3cf66fc6635662789b02915db290004533f17286e211bf8b599ffe62ebe",
+      "bytes": 139585
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lyn.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LYN.gif",
+      "sha256": "257d95440e3651b4ae0f26c09d2fa71ff0e86d58e11087ae7b1d9d020fa5ebb9",
+      "bytes": 112644
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/lyr.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/LYR.gif",
+      "sha256": "b152751b27d596d4dbb0b351bc04b888aa48ec1b0db1bea92e03c384d14788b2",
+      "bytes": 93029
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/men.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/MEN.gif",
+      "sha256": "31c2b38e8495297be1d6e81a991d6a79176997cec807095d39483f932947030f",
+      "bytes": 164551
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/mic.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/MIC.gif",
+      "sha256": "fa5873f2833d9352913856cbd793d3ffee175afc263e6210b9786273b05a2b60",
+      "bytes": 88226
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/mon.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/MON.gif",
+      "sha256": "2cc9d5402b7709c08ffa41e2abc164592c0ea97d791058187a8e6780a75a4c0a",
+      "bytes": 112045
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/mus.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/MUS.gif",
+      "sha256": "45a07ed345bd323c17e654eb1be49e847a5a534335485fdf35ab0ee09e386570",
+      "bytes": 136580
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/nor.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/NOR.gif",
+      "sha256": "42a8f97bce6fac623dba224b8891cf0e5ac63c1a72f06145a8fa3dccfc5172d9",
+      "bytes": 120571
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/oct.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/OCT.gif",
+      "sha256": "32d2333ee398fe3717efcd595d8769b099ae8b9948aa9305d9ec4457969d1d38",
+      "bytes": 143077
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/oph.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/OPH.gif",
+      "sha256": "02baa7d8158025308dc0f75f149b1af52b7b5ee075cdb28c72dc14ed2ade0d2f",
+      "bytes": 178903
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/ori.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/ORI.gif",
+      "sha256": "0bacc6624be63db3187641ea6fb971ffaa3d5c298d1755c9f04b9c8ef2a967a8",
+      "bytes": 185184
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/pav.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PAV.gif",
+      "sha256": "115f7e0cdb3f778493f92d13ada1d79d4ae2ecec898e84ab7540fe71641063ac",
+      "bytes": 145919
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/peg.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PEG.gif",
+      "sha256": "d2f44e2c39cfb12b26b4dff986bfd9accc94e800a3aea77592cace94b003d95d",
+      "bytes": 139070
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/per.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PER.gif",
+      "sha256": "e9ea5b737b772d9fbb76d6704e035d820a935c69d029880ae110e0ac56667514",
+      "bytes": 354659
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/phe.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PHE.gif",
+      "sha256": "0af3b13b4fcff73836d689a1f5c4f18fb44832d757505669952d2785d0997ee2",
+      "bytes": 121765
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/pic.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PIC.gif",
+      "sha256": "a71d569906cefdda31887920789bffccbace5acd16115079ac890cdd457adb74",
+      "bytes": 109964
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/psa.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PSA.gif",
+      "sha256": "0c4c3a8a7b96061d10562c64070dcd6984ceabbb71ed5fe3cdb95e1363554aee",
+      "bytes": 89072
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/psc.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PSC.gif",
+      "sha256": "da2f1df59ceac98cc657fc53882fd61b90180012bfd159dc2de24d784908950b",
+      "bytes": 130127
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/pup.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PUP.gif",
+      "sha256": "78ffc0318cfee9a1d56253b1911adaa8ba987442067e485a94eefd36174e2395",
+      "bytes": 188436
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/pyx.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/PYX.gif",
+      "sha256": "c9bf56c480e22d12f629395f534d041845995fa2408919b530d08f5f582a65b7",
+      "bytes": 85741
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/ret.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/RET.gif",
+      "sha256": "57950b73b1ddb03316be6c9090a86dd21e1c909b1a2329ae2f04add6bc0f47fe",
+      "bytes": 109137
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/scl.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SCL.gif",
+      "sha256": "be4dc9fc58c3ef7ff1dbcbd04fb71a0c230f34f8f0fe21de74da8d30021ee8bb",
+      "bytes": 121032
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sco.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SCO.gif",
+      "sha256": "43f839a1a8b3f90c2c02320dfc6aa8d082905c119a94a4772315729727a19ec2",
+      "bytes": 197752
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sct.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SCT.gif",
+      "sha256": "0a23731f93376a4e26756a9feab7faf60553dbf9a2f88e6347c4fa0ffbea1391",
+      "bytes": 122877
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sercd.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SERCD.gif",
+      "sha256": "00dfe2f0dcf7653dfb58a171af9c0d495ba13b6f763bebb69aaaff93c33f8996",
+      "bytes": 128247
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sercp.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SERCP.gif",
+      "sha256": "e536bf0f8515f8f94ac0a07d2f7c37b5f23c43472d2db3608ab0356348f14e03",
+      "bytes": 113726
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sex.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SEX.gif",
+      "sha256": "daf7f739448112b6e3a63e97ee3313b73643623d901ae870f592096ba324a6db",
+      "bytes": 84007
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sge.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SGE.gif",
+      "sha256": "af27611df97eab7fcc5a4524675e963c2e6051470a8379db91952df4dbaa6f36",
+      "bytes": 91725
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/sgr.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/SGR.gif",
+      "sha256": "50f74c7e90c47d86845b6422581e98ae20c7c7c97cefd54a6346c837c3b4da04",
+      "bytes": 165968
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/tau.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/TAU.gif",
+      "sha256": "9dd6113c6ea5195d926d2f56b344bb4f06211d51e73ba4d9dad0290c4f6a9d29",
+      "bytes": 116754
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/tel.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/TEL.gif",
+      "sha256": "62240b10a22851e932ee67d7727137ed2937ae99f6d14cec64ecca8e01840f5f",
+      "bytes": 151066
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/tra.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/TRA.gif",
+      "sha256": "7ac71d2d2210b7e4a33098b40d7028344954b92fe16f55108901c342101c71e2",
+      "bytes": 126065
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/tri.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/TRI.gif",
+      "sha256": "340f016bb255e03adc98f8e8871383a15b7a3d7f0f75d9d77375b1ff6da2b42f",
+      "bytes": 90812
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/tuc.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/TUC.gif",
+      "sha256": "83d2d39f2e5bbbde62e670f8ed942b915f9b9b980b70593aab325b013fba8844",
+      "bytes": 129727
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/uma.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/UMA.gif",
+      "sha256": "e2fc891879f6a1a14ca08d5fd6f0ff25006e9b38f04eb0d19b4afd64430131f8",
+      "bytes": 177304
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/umi.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/UMI.gif",
+      "sha256": "19fdf50f4d50b86fcdd22927e8afef7ea00bad83202fcffa9fd16f43e28dbaf9",
+      "bytes": 137392
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/vel.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/VEL.gif",
+      "sha256": "434c6654f441960c277a13b41ffa63e5a4b81ac6a4f1cbc6b521045c01ec2625",
+      "bytes": 134005
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/vir.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/VIR.gif",
+      "sha256": "16d95c6b6af221955c8dba40a9443554591960a16e5fcab3eba1c6db97a94af6",
+      "bytes": 99566
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/vol.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/VOL.gif",
+      "sha256": "412c9fc7bd489082893f702c366d106f32422ce710913d21ef87f25f1f83cdf4",
+      "bytes": 125486
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/charts/vul.gif",
+      "url": "https://iauarchive.eso.org/static/public/constellations/gif/VUL.gif",
+      "sha256": "bbb923db1621d108fe52113ccea20adf9978b8b0770caa9a79a0681d3fdd8e82",
+      "bytes": 126337
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/delta-t.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/deltat.html",
+      "sha256": "5dbd35cf96eb25034ea9c0ac73b2f3ce9c13c93aef792494768e630d2c603d09",
+      "bytes": 10425
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/iau-constellations.html",
+      "url": "https://iauarchive.eso.org/public/themes/constellations/",
+      "sha256": "bdd1ddc5215aece2c8d54df5e2682a9fc032b176ced8262776e975896d4a9c88",
+      "bytes": 171650
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/iau-copyright.html",
+      "url": "https://iauarchive.eso.org/copyright/",
+      "sha256": "861e412512a3d0021c7559ad977ec22fb9313e50dc5efb5b529c2254eba60b96",
+      "bytes": 83279
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar-ascii.txt",
+      "url": "https://eclipse.gsfc.nasa.gov/5MCLE/5MKLEcatalog.txt",
+      "sha256": "d47586fc9c1c59338f234b3c6634c31744739887169f58d411ac766f3861fcf2",
+      "bytes": 1400382
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar-index.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LEcatalog.html",
+      "sha256": "71b9b6a3f595adc70ff62ff39d406d6f4fbd97eac29ff9e12a38175933c317af",
+      "bytes": 23743
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar-key.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LEcatkey.html",
+      "sha256": "84013fdc74d8a8b114fdcd9dbc1b493493d7f07b3e2ad8bc45276dc2169308b4",
+      "bytes": 12756
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar-publication.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEpubs/5MKLE.html",
+      "sha256": "17c7b605c34f7fb76b8ad51a8d3d2da6dafdb8e554b7c3c0444b3103c455945e",
+      "bytes": 9587
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0099-0000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0099-0000.html",
+      "sha256": "0f20995a5014478b4754f2f2d8cb61568cf3b900f155bb58b64ed027b99f3151",
+      "bytes": 83578
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0199--0100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0199--0100.html",
+      "sha256": "17fb7afdfc1f2444bf333d5e1f81591e1dcc2fa50a45246c2d974571dba527e9",
+      "bytes": 81179
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0299--0200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0299--0200.html",
+      "sha256": "957a0f824eac061b8de99c234ffc5246a421810aa7b30f2b0a5a0a7a5755260c",
+      "bytes": 78567
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0399--0300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0399--0300.html",
+      "sha256": "acb7e0a003f67b673965d54d08094ad854a72d72e17fbafdcb3e9264df626282",
+      "bytes": 78586
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0499--0400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0499--0400.html",
+      "sha256": "e8aa7f658681fac50fc4442a6b8975e6911c5e8a74e95549dfa580d3ffb1cc9b",
+      "bytes": 81611
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0599--0500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0599--0500.html",
+      "sha256": "2dbd70dc78e3ee56236493dc27c941030d1e550ced00920d5c21a40e2112259f",
+      "bytes": 84384
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0699--0600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0699--0600.html",
+      "sha256": "b423db984e3ab409e413145424244460644665caf5c5dd503435324f5e92816a",
+      "bytes": 83818
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0799--0700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0799--0700.html",
+      "sha256": "a1a261b3e68576edd16bb881861804978e51f6c19494199c23fbfb419d6d903c",
+      "bytes": 80825
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0899--0800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0899--0800.html",
+      "sha256": "9efb6883698a3d5d584cbc5e89978c7bc3d30492bc407b204390ef025d0212f7",
+      "bytes": 77804
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-0999--0900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-0999--0900.html",
+      "sha256": "1b6f4bf368f03c762a31b53faef87f10aff08a008013d2dabf6f10b34a898052",
+      "bytes": 78956
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1099--1000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1099--1000.html",
+      "sha256": "11d7699fc7657278b47207c87cfd030fe3134a67b2adb8b74851f438da005d8d",
+      "bytes": 81773
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1199--1100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1199--1100.html",
+      "sha256": "6e347de7e5f61b722c4514b037e8cdebb6e9f538687b1efe76124a72d0a3e0ff",
+      "bytes": 83663
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1299--1200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1299--1200.html",
+      "sha256": "ad19b9c35e8bd0bc9f52b4e66646f87532b17a0d8ece93db535273c64f4e29bc",
+      "bytes": 83522
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1399--1300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1399--1300.html",
+      "sha256": "7aa54a2eafed8c6a1cf1768c934c4ecfe3052976b02c7a517039cba3d992e71d",
+      "bytes": 80748
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1499--1400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1499--1400.html",
+      "sha256": "7003b044ac8fb57474e9c74e9162a123e4d706dd5d532fb7d1e0185365388f4e",
+      "bytes": 78177
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1599--1500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1599--1500.html",
+      "sha256": "a14304aec6fa91c0c1c7a3192efd8ab17ecc902eba783109c854795d7c251c6d",
+      "bytes": 76645
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1699--1600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1699--1600.html",
+      "sha256": "702b3ade4367c3a9d4990029dd8e5f15f46d2bb2ad19c8b8c3860f75d7ba9d96",
+      "bytes": 79051
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1799--1700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1799--1700.html",
+      "sha256": "f6bd7555a6155bb17d96bbf9b9d0e02a81b537fce4432caf09a399a195ca1d8a",
+      "bytes": 80006
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1899--1800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1899--1800.html",
+      "sha256": "9f01f3a3eade2f20c9510dca06aacea60bebe52331a954dda2ed3aed3cee8c0a",
+      "bytes": 79392
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE-1999--1900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE-1999--1900.html",
+      "sha256": "d20347d595ccc7d3553678df4435da7d95cff4304121571de8013f94043a0a72",
+      "bytes": 75733
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0001-0100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0001-0100.html",
+      "sha256": "1119c4e98aa7ce2b5460146501b75a6ab23d17e9edc60ed675560b04f6e5f4be",
+      "bytes": 82709
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0101-0200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0101-0200.html",
+      "sha256": "32eca8edfe75e667fa0c65f902354f30a7684f08775cf6765c863ba4c1653e4e",
+      "bytes": 80054
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0201-0300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0201-0300.html",
+      "sha256": "f8bb40e5301ba95db3500257f6063e8927520ca636e32c50e4a8e65fd2447a53",
+      "bytes": 78444
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0301-0400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0301-0400.html",
+      "sha256": "23d020871f6d616ae4b206b77e19e25b2525f0c76c34eff518a7bfc5bb537735",
+      "bytes": 77595
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0401-0500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0401-0500.html",
+      "sha256": "a397c6f52cb49dfdad91d028497af69eaf2136be4e2a9fcf9ee9289b6ff20f04",
+      "bytes": 81369
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0501-0600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0501-0600.html",
+      "sha256": "68046266186fb02ab9089a22f068cb87c9aa8ffe1042ec36e9563942f75e81fb",
+      "bytes": 83281
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0601-0700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0601-0700.html",
+      "sha256": "49d8303806e74f619f9bc2ad29bfde222459a6c0654bc30a46ebf8d82b8eebfd",
+      "bytes": 83754
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0701-0800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0701-0800.html",
+      "sha256": "caa42884da57d04d9746fcb55e9bfcf40913091baa0dd3f54e53db15490e5748",
+      "bytes": 80599
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0801-0900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0801-0900.html",
+      "sha256": "320d4f190a986d0b94f8a3a3efb83d1079a1b148745f24b090c3b1c1d0d49c1f",
+      "bytes": 78089
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE0901-1000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE0901-1000.html",
+      "sha256": "24ee360211a7f01c70df493abbc528f09f19181889756a62b06eefefa33f155b",
+      "bytes": 78207
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1001-1100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1001-1100.html",
+      "sha256": "fc420891e40aa5598edcb9c6465d634c897a35ba9462f0ed164bd86d33f9fb1e",
+      "bytes": 81448
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1101-1200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1101-1200.html",
+      "sha256": "e81e4fc059c5bc066386239eb61d6884f71c6c5c2a40af480427d983a71442fd",
+      "bytes": 84440
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1201-1300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1201-1300.html",
+      "sha256": "5fae485561521fbbbbf72e25b0077adb23aefed2bfa1b90b9f3798c4456d4ec1",
+      "bytes": 82802
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1301-1400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1301-1400.html",
+      "sha256": "dcb500457608c32c987454be6ef8675221bcc4d958e6000aca09038a05e205bd",
+      "bytes": 79143
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1401-1500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1401-1500.html",
+      "sha256": "52f2197767b87357762428404801f937d2fb4a26538559ff732b8e22ff59cb53",
+      "bytes": 77631
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1501-1600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1501-1600.html",
+      "sha256": "4d9d2df33c9801125d0643b09d2028b9ea4a9e07340e7101431e19d4cfaaf56a",
+      "bytes": 78843
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1601-1700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1601-1700.html",
+      "sha256": "481865f3f1cef009b753eae670cbe2d2a326d99253c3447ce3753ff47b07d7c2",
+      "bytes": 82332
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1701-1800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1701-1800.html",
+      "sha256": "1e935371272e99e2cdc2b12dadb43e72a5893aaf7781423c9a088643e4a20a29",
+      "bytes": 83722
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1801-1900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1801-1900.html",
+      "sha256": "56be857a3c5c7088d2cc8f6370684ebabc61bb97b3209ee13602c9f1173cce34",
+      "bytes": 82260
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE1901-2000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE1901-2000.html",
+      "sha256": "972e37819ec3f8e8b3f48fd38a06984636f6733812a1fa2557e25600d2204532",
+      "bytes": 78539
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2001-2100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2001-2100.html",
+      "sha256": "0f640913669a640418f05c173cea0bdeca194fcac6b5b196b6b9ab1b08122792",
+      "bytes": 78017
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2101-2200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2101-2200.html",
+      "sha256": "3a6838aa16e5ebc775df2cff5a02dd955f0eafdfa3ec1b14fa122bd729041e73",
+      "bytes": 80274
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2201-2300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2201-2300.html",
+      "sha256": "d4691ebef2adf381c8eccfeaf2d2d64f5b36630a71814869e6b0aabe770ae1a1",
+      "bytes": 83052
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2301-2400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2301-2400.html",
+      "sha256": "d2c8e8e4530fc13900195b7c975851614a86844e3d176c548d864972b3ec47a2",
+      "bytes": 82925
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2401-2500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2401-2500.html",
+      "sha256": "ea3751130ef7b62f69da43caad0884b20bbf045f8bb55e05b66ec83218121e85",
+      "bytes": 80001
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2501-2600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2501-2600.html",
+      "sha256": "847dafdf99b217e07fa53cc1768c6d43e6fd1795f7b7665e647e34a83b685808",
+      "bytes": 77920
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2601-2700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2601-2700.html",
+      "sha256": "ea5356a89e2c82e571cc0fbb23e18fb4c1f81dc599720652c00e70aebdb0d747",
+      "bytes": 78162
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2701-2800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2701-2800.html",
+      "sha256": "d8ec56c7a34900d71bf2eedc0981e292b938b077dbe10e619624f330c47dd475",
+      "bytes": 80330
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2801-2900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2801-2900.html",
+      "sha256": "66fba56986a3ecd74e48dbff559121a4bb6a04c17302205b39926417700ca723",
+      "bytes": 84470
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/lunar/LE2901-3000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/LEcat5/LE2901-3000.html",
+      "sha256": "d981ca4aa0f8a67d17156716be2605b57fdb568c83adaecce55c942dae493469",
+      "bytes": 81824
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar-ascii.txt",
+      "url": "https://eclipse.gsfc.nasa.gov/5MCSE/5MKSEcatalog.txt",
+      "sha256": "c07e7b5e13af61a1d74eb3bee1a1824a197dc1ca393a3ac2a91c9e73bc2e0c58",
+      "bytes": 1380993
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar-index.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SEcatalog.html",
+      "sha256": "923dacef9a7d39012c576cf4ac8c938713a746a617604bbc4914348b20971322",
+      "bytes": 31533
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar-key.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SEcatkey.html",
+      "sha256": "714d4d35e9eebf335a5c9c651fd994911a8d1d5f82ebb7a9e7c4e1c59a8b9113",
+      "bytes": 14821
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar-publication.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEpubs/5MKSE.html",
+      "sha256": "b8116bc92dc95476355dfc2f4561b632387c3c94f5cd3125ad8230c2b179dbcd",
+      "bytes": 9693
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0099-0000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0099-0000.html",
+      "sha256": "5063fe92d1e1786fca49ac566777041e4feda55deb9fe84771cb389825b2afda",
+      "bytes": 112041
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0199--0100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0199--0100.html",
+      "sha256": "b071a0894719c78df4b506c164d8876b8863fa4e36a9fd5482032a933015d373",
+      "bytes": 108273
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0299--0200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0299--0200.html",
+      "sha256": "887873cd0a227f2951c9b35e6cbfad8d884d9390c14d1efdb653eff339d6b49e",
+      "bytes": 104125
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0399--0300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0399--0300.html",
+      "sha256": "643b021510e0d566e15ded0700ff3a46d2dd3191d7f736953edd4fc64be763db",
+      "bytes": 103986
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0499--0400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0499--0400.html",
+      "sha256": "d3737bf221b0c354e517d57390ee0a6692843f8ff5feef20aa2c094d0f8bc101",
+      "bytes": 109651
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0599--0500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0599--0500.html",
+      "sha256": "fbfe378c2a5b5c30be04886c81a45fec62d2b5708e7bdd9db44d86c5b6106679",
+      "bytes": 113956
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0699--0600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0699--0600.html",
+      "sha256": "8e1a892301e6fedb45b79015bd7d5acab690ec3870f121d45d5a4dd2f40977d1",
+      "bytes": 113188
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0799--0700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0799--0700.html",
+      "sha256": "f30bf3508c87e34524ae77dcee89a0e56daadf25bcbd1cbbd9ca82907b9aa085",
+      "bytes": 107502
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0899--0800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0899--0800.html",
+      "sha256": "b8ee0927eb26a75934c95b3cd94e52ad86c84204ad29fe54a3db25b27ad47cff",
+      "bytes": 103918
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-0999--0900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-0999--0900.html",
+      "sha256": "1e6f10afe3390740a7213e66a155387722a15fc78371b9b8e239e02965d32b54",
+      "bytes": 103975
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1099--1000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1099--1000.html",
+      "sha256": "866b1898bb7aab11b25cf33d9f5206d4497e236c0f9306e738453eae3285657d",
+      "bytes": 108852
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1199--1100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1199--1100.html",
+      "sha256": "cc65699fc2919d9347928286a7dd8dbe47670b9035bd75e789c80dad7b823cbb",
+      "bytes": 113399
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1299--1200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1299--1200.html",
+      "sha256": "44a523fa4039ae8c6915ef254e76bf3af68fdf3b919b624f2917d63b6cd2f141",
+      "bytes": 112554
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1399--1300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1399--1300.html",
+      "sha256": "2e5a6af2381886b45f97125ef2ceac84e305ba7866bb175c66ca3b3e27b5bf36",
+      "bytes": 107864
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1499--1400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1499--1400.html",
+      "sha256": "2338cce2f349fd2a508a6f6f5f2910bc6776025d4abc065c5d0b2d88f0fbe6e5",
+      "bytes": 104700
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1599--1500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1599--1500.html",
+      "sha256": "242f28207f6cf9b6d47adf1e1a817ffbb2ea843528e904c3508d2ed08f0fc319",
+      "bytes": 104552
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1699--1600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1699--1600.html",
+      "sha256": "1946572802f6fabf3d533ea71a8e7d16489014da09844971c77fa1b98fec2dfe",
+      "bytes": 106070
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1799--1700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1799--1700.html",
+      "sha256": "542d43c78434dc5b04e9dca4b5df847bceef174c916ffd8452d79388af229083",
+      "bytes": 111536
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1899--1800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1899--1800.html",
+      "sha256": "f10f34d47abe8b646081931c58c6cc7ac3e1009079e1b16dfb88e855745d6dd0",
+      "bytes": 110477
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE-1999--1900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE-1999--1900.html",
+      "sha256": "2c816860792df669c7b46f8561adb848d476657c7c1a2f25e737b45e83dfb24d",
+      "bytes": 105469
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0001-0100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0001-0100.html",
+      "sha256": "c31a617f5d66f53b2482fc8c9a5a38b5f1b17260b9abc482b9eae7f3460ea597",
+      "bytes": 110402
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0101-0200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0101-0200.html",
+      "sha256": "a8ccb04706a604752e4927b29907afceaf5352521953ae9523d18090f29d3173",
+      "bytes": 107169
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0201-0300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0201-0300.html",
+      "sha256": "34506587710b632a0fbac1d3f0a8dfb8952a2a2914b6f709b4b81a7d50bcba23",
+      "bytes": 103570
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0301-0400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0301-0400.html",
+      "sha256": "a453f3b048980b886bf7b198ab899a97701c82b35abf9417d54b2d6de820d504",
+      "bytes": 102273
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0401-0500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0401-0500.html",
+      "sha256": "15c4a72e71eefa0011bbb55a281e4b14bd110b4269e3035c414e582ac42226ef",
+      "bytes": 105892
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0501-0600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0501-0600.html",
+      "sha256": "c1ea0afd551f556d2f5e7181f72d066b73012891f1cd03f449ff614ff7c02f4b",
+      "bytes": 111473
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0601-0700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0601-0700.html",
+      "sha256": "19f359c3d986f3fc5603d536cf57d2135002204e3204f226fec8bf0afed11da9",
+      "bytes": 111664
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0701-0800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0701-0800.html",
+      "sha256": "998ab3fb3f90a99f279aa46f5f8a5acca7e136e629499509fb9868dd8fa4c2d1",
+      "bytes": 106037
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0801-0900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0801-0900.html",
+      "sha256": "956b0b181725290b535fd9d2cedc78021ed896c80a79decd1e32a00d1619d01e",
+      "bytes": 101859
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE0901-1000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE0901-1000.html",
+      "sha256": "008a4e5d7c760f346435f38e1787b894156ba8739e26faf2a5720ec177ec42d7",
+      "bytes": 103937
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1001-1100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1001-1100.html",
+      "sha256": "90f51615116237cbe407201b009c163b0eb70775684ef1fc48c6ad7ca27cc04d",
+      "bytes": 108741
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1101-1200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1101-1200.html",
+      "sha256": "1b7a6c0ae9ecd909bed2b58d1d64a94da9bef41215eaf6863374c6551bb0ca02",
+      "bytes": 111366
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1201-1300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1201-1300.html",
+      "sha256": "05a687e94985613fd569945ccf277b49a7b541a70e1d7f0adeff9c67e3248727",
+      "bytes": 110318
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1301-1400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1301-1400.html",
+      "sha256": "f4695772a98b1cecf5a2c08b38cbf98217746f8b092b23c9dd3b6bfac3c8b280",
+      "bytes": 104807
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1401-1500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1401-1500.html",
+      "sha256": "a21f322cd5f2df0b781c1d860d90f91f0d9e6db2099e278ee0ce0e20c1a925cc",
+      "bytes": 102138
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1501-1600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1501-1600.html",
+      "sha256": "5ce0b29108c519a637d744bbc75b812f345f37d0dcb11c9b7fbda22469e3071c",
+      "bytes": 104503
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1601-1700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1601-1700.html",
+      "sha256": "fe715ec1c0cfd76dac49c9f98243aa058d14d6a40f3ce87d562c11f1e3779bd7",
+      "bytes": 110888
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1701-1800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1701-1800.html",
+      "sha256": "7441b8551f0e9aa133485e75416954f4f7ad2da2b202a3066f2344f8bd7e5998",
+      "bytes": 111669
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1801-1900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1801-1900.html",
+      "sha256": "fad2174dd56b9c663db73975a83bedc1136a4bb3a79248f6ff0fcab9f51a848f",
+      "bytes": 109015
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE1901-2000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE1901-2000.html",
+      "sha256": "1daf90d8b3f1763a09b45cc0d838150fc09edbef711fe1be80f2e0c0d8f6d5ff",
+      "bytes": 129405
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2001-2100.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2001-2100.html",
+      "sha256": "a9c08f5b4b51d5c85ccfa18d8bfccd98ec8a7d93f06e2d40691943b4105acf9e",
+      "bytes": 127736
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2101-2200.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2101-2200.html",
+      "sha256": "ab4ce2a70cd658daf1aa932ea978ec35785101ecf35ef448738e05f07a9bc313",
+      "bytes": 106565
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2201-2300.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2201-2300.html",
+      "sha256": "be6f3baf8d4270130681529d99075a157a3966a13511213d5135308aeaf2cbc5",
+      "bytes": 110872
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2301-2400.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2301-2400.html",
+      "sha256": "f9aa0c96c68c1499b86e7f5dd42baacb8556541ffdf0b5b9e34c95949ecf0894",
+      "bytes": 111020
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2401-2500.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2401-2500.html",
+      "sha256": "fd75f5ca083bb25455dd2b39c34878b6cd7147a45005601b3c11d7bcdaac9b36",
+      "bytes": 107271
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2501-2600.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2501-2600.html",
+      "sha256": "c9f6891662fad9c7dfaea703119c6af553ac7b0ba8a8be16ad8f037dc61375ad",
+      "bytes": 102955
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2601-2700.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2601-2700.html",
+      "sha256": "4a50b4c26ae28da8759ce3ddd72f888620e22dd3111d2d95913a4c48fdceb817",
+      "bytes": 103909
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2701-2800.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2701-2800.html",
+      "sha256": "1c7021846a5cc366ef25ef1ed7c0f3fd232f06e9675cd74bdee564a1e083b14e",
+      "bytes": 108250
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2801-2900.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2801-2900.html",
+      "sha256": "5fc9b93afced87c217f3526f61a0d08f294f974339d1b71887c4b38b09260694",
+      "bytes": 110610
+    },
+    {
+      "path": "upstream/atlas-celestial/sources/solar/SE2901-3000.html",
+      "url": "https://eclipse.gsfc.nasa.gov/SEcat5/SE2901-3000.html",
+      "sha256": "38f866f3a11870a810625b35425a3423685bfc3df4a93e80ac5986144644ab2a",
+      "bytes": 107756
+    }
+  ]
+}

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 首屏主题设置（阻塞脚本，防 FOUC） -->
+  <script>
+  (function(){
+    try {
+      var t = localStorage.getItem('zdic-theme');
+      if (!t) {
+        t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    } catch(e) {}
+  })();
+  </script>
+
+  <title>服务条款 - 汉典</title>
+  <meta name="description" content="汉典服务条款与使用规范">
+  <meta property="og:title" content="服务条款 - 汉典">
+  <meta property="og:description" content="汉典服务条款与使用规范">
+  <meta property="og:image" content="//zdic.net/images/logo-zh-cn.png">
+  <meta property="og:url" content="//zdic.net/terms/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="汉典">
+  <link rel="canonical" href="//zdic.net/terms/">
+  <link rel="alternate" hreflang="x-default" href="//zdic.net/terms/">
+  <link rel="alternate" hreflang="zh" href="//zdic.net/terms/">
+
+  <!-- 预加载关键资源 -->
+  <link rel="preload" href="/css/main.css?v=1778583720" as="style">
+  <link rel="preload" href="/js/app.js?v=1777213357" as="script" crossorigin>
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5789084355642416" crossorigin="anonymous"></script>
+
+  <!-- 主样式表 -->
+  <link rel="stylesheet" href="/css/main.css?v=1778583720">
+  <!-- 搜索系统样式 -->
+  <link rel="stylesheet" href="/css/search/suggest.css?v=1778939433">
+  <link rel="stylesheet" href="/css/search/hot.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <style>
+  /* ── 页面整体：页脚贴底 ── */
+  html { height: 100%; }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .page-layout { flex: 1 0 auto; }
+  .site-footer  { flex-shrink: 0; }
+
+  /* ── 隐藏右侧栏，主内容全宽 ── */
+  .page-layout { display: block; }
+  .sidebar { display: none !important; }
+
+  /* ── 压缩 footer 高度 ── */
+  .site-footer { margin-top: 0; }
+  .site-footer__inner { padding: 12px var(--sp-lg); }
+  .site-footer__links { margin-bottom: 4px; }
+
+  /* ── 列表页包装盒 ── */
+  .fulu-box {
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--c-border-light);
+    box-shadow: 0 1px 4px var(--c-shadow);
+    padding: 15px 15px 20px;
+  }
+  .fulu-box .fulu-nav { margin: 0 0 12px; font-size: var(--fs-sm); color: var(--c-text-secondary); }
+  .fulu-box .fulu-nav a { color: var(--c-text-secondary); text-decoration: none; }
+  .fulu-box .fulu-nav a:hover { color: var(--c-primary); }
+  .fulu-box h1 { margin: 0 0 16px; font-size: 1.3em; color: var(--c-text); border-bottom: 1px solid var(--c-border-light); padding-bottom: 10px; }
+  .fulu-pages { margin: 16px 0 0; text-align: center; font-size: var(--fs-sm); color: var(--c-text-secondary); }
+
+  /* ── 卡片网格（EmpireCMS 输出 .lie_x > .yczsl 结构） ── */
+  .fulu-box > .lie_x,       /* 直接子节点 */
+  .fulu-box .lie_x { min-width: 0; display: flex; flex-direction: column; }
+
+  /* 网格容器：EmpireCMS 逐个输出 .lie_x，用 CSS Grid 包住它们 */
+  .fulu-box {
+    /* 把直接子 .lie_x 排成网格 */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--sp-md, 16px);
+    /* 但 fulu-nav / h1 / fulu-pages 独占一行 */
+  }
+  .fulu-nav, .fulu-box h1, .fulu-pages {
+    grid-column: 1 / -1;
+  }
+
+  /* 卡片样式 */
+  .yczsl {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 4px var(--c-shadow);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: box-shadow .18s, transform .18s;
+    margin-bottom: 0;
+    min-height: 0 !important;
+  }
+  a.yczsl { display: flex; }
+  .yczsl:hover {
+    box-shadow: 0 4px 12px var(--c-shadow);
+    transform: translateY(-2px);
+  }
+  .yczsl-img {
+    flex-shrink: 0;
+    height: 160px;
+    background-size: cover;
+    background-position: center center;
+    background-color: var(--c-surface-alt);
+  }
+  .yczsl-content {
+    flex: 1;
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .yczsl-title {
+    font-size: 1.05em;
+    font-weight: bold;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    color: var(--c-text);
+  }
+  .yczsl-content > div {
+    font-size: var(--fs-sm);
+    color: var(--c-text-secondary);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+.script-switch { display: inline-flex; align-items: center; gap: 4px; margin-left: 12px; font-size: 0.85em; }
+.script-switch a { color: var(--c-text-secondary); text-decoration: none; padding: 2px 6px; border-radius: 4px; }
+.script-switch a.is-active { background: var(--c-primary); color: #fff; }
+.script-switch a:hover:not(.is-active) { color: var(--c-primary); }
+
+</style>
+</head>
+<style>
+  /* ── 页面整体：页脚贴底 ── */
+  html { height: 100%; }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .page-layout { flex: 1 0 auto; }
+  .site-footer  { flex-shrink: 0; }
+
+  /* ── 隐藏右侧栏，主内容全宽 ── */
+  .page-layout { display: block; }
+  .sidebar { display: none !important; }
+
+  /* ── 压缩 footer 高度 ── */
+  .site-footer { margin-top: 0; }
+  .site-footer__inner { padding: 12px var(--sp-lg); }
+  .site-footer__links { margin-bottom: 4px; }
+
+  /* ── 列表页包装盒 ── */
+  .fulu-box {
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--c-border-light);
+    box-shadow: 0 1px 4px var(--c-shadow);
+    padding: 15px 15px 20px;
+  }
+  .fulu-box .fulu-nav { margin: 0 0 12px; font-size: var(--fs-sm); color: var(--c-text-secondary); }
+  .fulu-box .fulu-nav a { color: var(--c-text-secondary); text-decoration: none; }
+  .fulu-box .fulu-nav a:hover { color: var(--c-primary); }
+  .fulu-box h1 { margin: 0 0 16px; font-size: 1.3em; color: var(--c-text); border-bottom: 1px solid var(--c-border-light); padding-bottom: 10px; }
+  .fulu-pages { margin: 16px 0 0; text-align: center; font-size: var(--fs-sm); color: var(--c-text-secondary); }
+
+  /* ── 卡片网格（EmpireCMS 输出 .lie_x > .yczsl 结构） ── */
+  .fulu-box > .lie_x,       /* 直接子节点 */
+  .fulu-box .lie_x { min-width: 0; display: flex; flex-direction: column; }
+
+  /* 网格容器：EmpireCMS 逐个输出 .lie_x，用 CSS Grid 包住它们 */
+  .fulu-box {
+    /* 把直接子 .lie_x 排成网格 */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--sp-md, 16px);
+    /* 但 fulu-nav / h1 / fulu-pages 独占一行 */
+  }
+  .fulu-nav, .fulu-box h1, .fulu-pages {
+    grid-column: 1 / -1;
+  }
+
+  /* 卡片样式 */
+  .yczsl {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 4px var(--c-shadow);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: box-shadow .18s, transform .18s;
+    margin-bottom: 0;
+    min-height: 0 !important;
+  }
+  a.yczsl { display: flex; }
+  .yczsl:hover {
+    box-shadow: 0 4px 12px var(--c-shadow);
+    transform: translateY(-2px);
+  }
+  .yczsl-img {
+    flex-shrink: 0;
+    height: 160px;
+    background-size: cover;
+    background-position: center center;
+    background-color: var(--c-surface-alt);
+  }
+  .yczsl-content {
+    flex: 1;
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .yczsl-title {
+    font-size: 1.05em;
+    font-weight: bold;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    color: var(--c-text);
+  }
+  .yczsl-content > div {
+    font-size: var(--fs-sm);
+    color: var(--c-text-secondary);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+.script-switch { display: inline-flex; align-items: center; gap: 4px; margin-left: 12px; font-size: 0.85em; }
+.script-switch a { color: var(--c-text-secondary); text-decoration: none; padding: 2px 6px; border-radius: 4px; }
+.script-switch a.is-active { background: var(--c-primary); color: #fff; }
+.script-switch a:hover:not(.is-active) { color: var(--c-primary); }
+
+</style><style>
+.article-page { max-width: 860px; margin: 20px auto; padding: 0 var(--sp-lg); }
+.article-page__inner { background: var(--c-surface); border-radius: var(--radius-lg); border: 1px solid var(--c-border-light); box-shadow: 0 1px 4px var(--c-shadow); padding: 24px 28px 28px; }
+.article-page__inner h1 { font-size: 1.4em; margin: 0 0 20px; padding-bottom: 12px; border-bottom: 1px solid var(--c-border-light); color: var(--c-text); }
+.article-page__inner h2 { font-size: 1.1em; margin: 24px 0 12px; color: var(--c-primary); }
+.article-page__body { font-size: var(--fs-base); line-height: 1.8; color: var(--c-text); }
+.article-page__body p { margin: 0 0 12px; }
+.article-page__body ul { margin: 8px 0 16px; padding-left: 20px; }
+.article-page__body li { margin-bottom: 6px; }
+.page-layout { display: block; }
+.sidebar { display: none !important; }
+.site-footer { margin-top: 0; }
+.site-footer__inner { padding: 12px var(--sp-lg); }
+.site-footer__links { margin-bottom: 4px; }
+
+.script-switch { display: inline-flex; align-items: center; gap: 4px; margin-left: 12px; font-size: 0.85em; }
+.script-switch a { color: var(--c-text-secondary); text-decoration: none; padding: 2px 6px; border-radius: 4px; }
+.script-switch a.is-active { background: var(--c-primary); color: #fff; }
+.script-switch a:hover:not(.is-active) { color: var(--c-primary); }
+
+</style>
+<body>
+<div class="header-wrap">
+
+  <!-- 桌面端顶部导航条 -->
+  <div class="top-bar">
+    <div class="top-bar__inner">
+      <nav class="top-bar__nav" aria-label="站点导航">
+        <a href="//zdic.net">汉典</a>
+        <span class="top-bar__sep">|</span>
+        <a href="//gj.zdic.net">古籍</a>
+        <span class="top-bar__sep">|</span>
+        <a href="//sc.zdic.net">诗词</a>
+        <span class="top-bar__sep">|</span>
+        <a href="//sf.zdic.net">书法</a>
+        <span class="top-bar__sep">|</span>
+        <a href="/ts/" class="is-active">通識</a>
+      </nav>
+      <div class="top-bar__actions"><span class="script-switch"><a href="/hant/terms/">繁體</a></span>
+        <div class="dropdown" id="index-dropdown">
+          <button class="top-bar__link dropdown__trigger" type="button"
+                  aria-expanded="false" aria-haspopup="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" style="vertical-align:-2px">
+              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+            查詢索引
+          </button>
+          <div class="dropdown__panel" role="menu">
+            <a href="/zd/ids/" role="menuitem">漢字拆分查詢</a>
+            <a href="/zd/hanseeker/" role="menuitem">漢字部件檢索</a>
+            <a href="/zd/bs/" role="menuitem">字典部首索引</a>
+            <a href="/zd/fbs/" role="menuitem">繁體部首索引</a>
+            <a href="/zd/py/" role="menuitem">字典拼音索引</a>
+            <a href="/zd/zy/" role="menuitem">字典注音索引</a>
+            <a href="/zd/kx/" role="menuitem">康熙部首索引</a>
+            <a href="/zd/sw/" role="menuitem">說文部首索引</a>
+          </div>
+        </div>
+        <button class="theme-toggle top-bar__link" type="button" aria-label="切換深色模式">
+          <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主 Header -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <button class="nav-toggle" type="button"
+              aria-label="打開導航" aria-expanded="false" aria-controls="main-nav">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <a class="site-logo" href="/" title="汉典首頁">
+        <img src="/images/logo.png" alt="" width="110" height="41"
+             class="site-logo__seal site-logo__seal--light" title="汉典">
+        <img src="/images/logo_dark.png" alt="" width="110" height="41"
+             class="site-logo__seal site-logo__seal--dark" title="汉典">
+      </a>
+
+      <form class="search-bar" action="/search/" role="search" aria-label="漢字搜尋">
+        <div class="search-bar__type">
+          <select name="sclb" class="search-bar__select" aria-label="搜尋類型">
+            <optgroup label="條目">
+              <option value="tm" selected data-placeholder="請輸入漢字或詞語">條目</option>
+              <option value="zi" data-placeholder="請輸入漢字">漢字</option>
+              <option value="ci" data-placeholder="請輸入詞語">詞語</option>
+              <option value="cy" data-placeholder="請輸入成語">成語</option>
+            </optgroup>
+            <optgroup label="字典">
+              <option value="ids" data-placeholder="請輸入漢字部件">拆分</option>
+              <option value="py" data-placeholder="請輸入拼音">拼音</option>
+              <option value="bis" data-placeholder="請輸入筆順編號">筆順</option>
+              <option value="wb" data-placeholder="請輸入五筆編碼">五筆</option>
+              <option value="cj" data-placeholder="請輸入倉頡編碼">倉頡</option>
+              <option value="fc" data-placeholder="請輸入四角號碼">四角</option>
+              <option value="uno" data-placeholder="請輸入UNICODE">Unicode</option>
+            </optgroup>
+          </select>
+          <svg class="search-bar__arrow" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+            <path d="M0 0l5 6 5-6z" fill="currentColor"/>
+          </svg>
+        </div>
+        <input type="search" name="q" class="search-bar__input"
+               placeholder="請輸入漢字或詞語" autocomplete="off" spellcheck="false">
+        <button type="submit" class="search-bar__btn" aria-label="搜尋">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </header>
+  <div class="header-ornament" aria-hidden="true"></div>
+</div>
+
+<nav class="drawer" id="main-nav" aria-label="主导航" aria-hidden="true">
+  <div class="drawer__overlay" data-drawer-close></div>
+  <div class="drawer__panel">
+    <button class="drawer__close" type="button" aria-label="关闭导航" data-drawer-close>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="drawer__section">
+      <div class="drawer__title">导航</div>
+      <ul class="drawer__links">
+        <li><a href="/">首页</a></li>
+        <li><a href="/zd/bs/">字典部首索引</a></li>
+        <li><a href="/zd/bs/zbh/">总笔画索引</a></li>
+        <li><a href="/zd/py/">拼音索引</a></li>
+        <li><a href="/zd/zy/">注音索引</a></li>
+        <li><a href="/zd/kx/">康熙部首索引</a></li>
+      </ul>
+    </div>
+    <div class="drawer__section">
+      <div class="drawer__title">查询索引</div>
+      <ul class="drawer__links">
+        <li><a href="/zd/ids/">汉字拆分</a></li>
+        <li><a href="/zd/hanseeker/">汉字部件检索</a></li>
+        <li><a href="/zd/fbs/">繁体部首索引</a></li>
+        <li><a href="/zd/sw/">说文部首索引</a></li>
+        <li><a href="/cd/bs/">词典部首索引</a></li>
+      </ul>
+    </div>
+    <div class="drawer__footer">
+      <a href="/hant/" class="drawer__footer-link">繁體</a>
+      <button class="theme-toggle drawer__footer-link" type="button">深色模式</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-layout">
+  <main class="content" id="main-content">
+  <article class="article-page">
+    <div class="article-page__inner">
+      <h1>条款</h1>
+      <div class="article-page__body">
+<h2>一、字书所据</h2>
+<p>粗解泛采网络、百科诸编；详解宗王氏同亿《高级汉语词典》；国语辞典本台湾《重编国语辞典修订本》；康熙字典据清武英殿本；说文解字依清陈昌治刻本。</p>
+<p>音韵方言：博考小学堂、汉语大字典、中文大辞典，及《广韵》《集韵》诸书。近代宗《中原音韵》，中古宗《广韵》，上古则准王力、黄侃二家之学。</p>
+<p>字源字形：广征甲骨、金文、楚简、秦牍之编，若《甲骨文编》《金文编》《战国古文字典》之属；及《说文》诸家疏证，若《诂林》《新证》之属。</p>
+<p>若夫点画先后、异体辨识，皆取资万国码（Unicode）。</p>
+
+<h2>二、词书所据</h2>
+<p>粗解亦采网络、百科，兼取王氏《高级汉语词典》；国语辞典亦本台湾《重编国语辞典修订本》。</p>
+
+<h2>三、附识</h2>
+<p>右列诸编，或经采掘爬梳，或赖众手修缮，增删改易，未必尽同原帙，阅者察之。</p>
+
+<h2>四、归公宣告</h2>
+<p>汉典奉行 CC0 1.0 公约，将本站字词、古籍、诗词、书法诸作，悉数贡献天下，放弃著作专权及邻接法益，任人取用，以公无穷。</p>
+      </div>
+    </div>
+  </article>
+</main>
+</div>
+<footer>
+  <div class='footer_top'></div>
+  <div class='footer_content'>
+    <div class="main-content">
+      <div class="footer_block lesp">
+        <ul>
+          <li><a href="/about/">关于</a></li>
+          <li><a href="/terms/">条款</a></li>
+          <li><a href="https://support.qq.com/products/315677">反馈</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class='footer_bottom'>© 2004-2026 汉典 ZDIC.NET</div>
+</footer>
+<script type="module" src="/js/app.js?v=1777213357" defer></script>
+<script src="/js/ad-guard.js" defer></script>
+
+<script type="module" src="/js/ads.js" defer></script>
+
+</body>
+</body>
+</html>

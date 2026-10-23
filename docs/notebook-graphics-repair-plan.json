@@ -1,0 +1,194 @@
+{
+  "run_at": "2026-10-16T07:03:34.234Z",
+  "mode": "affected",
+  "files": [
+    "VERIFICATION.md",
+    "docs/GRAPHICS.md",
+    "docs/NOTEBOOK.md",
+    "public/app.js",
+    "public/capabilities/native-workspaces.js",
+    "public/graphics/page.js",
+    "public/notebook/editor.js",
+    "public/notebook/page.js",
+    "public/tool-help.js",
+    "scripts/browser-graphics.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "VERIFICATION.md",
+        "docs/GRAPHICS.md",
+        "docs/NOTEBOOK.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/capabilities/native-workspaces.js",
+        "public/graphics/page.js",
+        "public/notebook/editor.js",
+        "public/notebook/page.js",
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/capabilities/native-workspaces.js",
+        "public/graphics/page.js",
+        "public/notebook/editor.js",
+        "public/notebook/page.js",
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/capabilities/native-workspaces.js",
+        "public/graphics/page.js",
+        "public/notebook/editor.js",
+        "public/notebook/page.js",
+        "public/tool-help.js",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/app.js, public/capabilities/native-workspaces.js, public/graphics/page.js, public/notebook/editor.js, public/notebook/page.js, public/tool-help.js, scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/graphics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/graphics.test.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "public/notebook/editor.js",
+        "public/notebook/page.js"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/page.js"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/tool-help.js"
+      ]
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "command": [
+        "node",
+        "scripts/browser-sidebar-routing.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "command": [
+        "node",
+        "scripts/browser-task-lifecycle.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:capabilities",
+      "command": [
+        "node",
+        "tests/browser-capabilities.mjs"
+      ],
+      "reasons": [
+        "public/capabilities/native-workspaces.js"
+      ]
+    },
+    {
+      "id": "browser:capability-resilience",
+      "command": [
+        "node",
+        "scripts/browser-capability-resilience.mjs"
+      ],
+      "reasons": [
+        "public/capabilities/native-workspaces.js"
+      ]
+    },
+    {
+      "id": "browser:graphics",
+      "command": [
+        "node",
+        "scripts/browser-graphics.mjs"
+      ],
+      "reasons": [
+        "public/graphics/page.js",
+        "public/notebook/editor.js",
+        "public/notebook/page.js",
+        "scripts/browser-graphics.mjs"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/page.js"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/tool-help.js"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

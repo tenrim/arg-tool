@@ -1,8 +1,8 @@
 import {Box, Button, Toolbar, Input, SearchField, Icon, Status, EmptyState, CapabilityGroup, CapabilityButton, updateStatus} from '../ui/index.js';
 import {loadRegistry, searchEntries, capabilityCategories} from './registry.js';
 
-export function requestCapability(entry, op) {
-  document.dispatchEvent(new CustomEvent('arg:opencapability', {detail: {id: entry.id, op:op||entry.preferredOperation,direction:entry.preferredDirection}}));
+export function requestCapability(entry, op, variant = entry.preferredVariant || entry.variantId) {
+  document.dispatchEvent(new CustomEvent('arg:opencapability', {detail: {id: entry.id, op:op||entry.preferredOperation,direction:entry.preferredDirection,preferredVariant:variant}}));
 }
 
 // The same browser is used by the homepage and category overview. Full lists
@@ -39,7 +39,7 @@ export function mountCapabilityBrowser(host, {category = '', group = '', onOpen 
       }
     }
     if (!groups.children.length) groups.append(EmptyState({text: '没有匹配功能，请尝试其他名称或用途'}));
-    updateStatus(count, term ? `${matches.length} 项匹配` : `${matches.length} 项功能 · ${registry.groups.filter(item => !selected || item.category === selected).length} 个功能组`);
+    updateStatus(count, term ? `${matches.length} 项匹配` : `${matches.filter(e=>e.category!=='knowledge').length} 项工具 · ${matches.filter(e=>e.category==='knowledge').length} 篇科普 · ${registry.groups.filter(item => !selected || item.category === selected).length} 个功能组`);
     if (selectedGroup) groups.querySelector(`[data-capability-group="${selectedGroup}"]`)?.scrollIntoView({block: 'start'});
   }
   let previousQuery = '';

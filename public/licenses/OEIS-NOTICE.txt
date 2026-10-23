@@ -1,0 +1,39 @@
+The On-Line Encyclopedia of Integer Sequences (OEIS)
+https://oeis.org/
+
+Data attribution: The Online Encyclopedia of Integer Sequences,
+The OEIS Foundation Inc., and the contributors credited in each sequence entry.
+Retain the authors, record-specific URL and retrieval time when saving a result.
+
+OEIS sequence content is made available under the Creative Commons
+Attribution-ShareAlike 4.0 International license (CC BY-SA 4.0).
+https://creativecommons.org/licenses/by-sa/4.0/
+The complete license text is bundled as OEIS-CC-BY-SA-4.0.txt.
+The official OEIS End-User License Agreement snapshot is OEIS-EULA.txt.
+Current agreement:
+https://oeis.org/wiki/The_OEIS_End-User_License_Agreement
+
+This integration uses the documented OEIS JSON query service only after an
+explicit user query or page request. Queries pass through the Mist Toolbox
+server to the fixed OEIS endpoint. The site does not bundle an offline OEIS
+database, a selected sequence catalogue, OEIS server software, or a mirror of
+all linked b-files, images, sounds, references or external resources.
+The query adapter and Chinese UI are original site code; they are not OEIS
+software. Returned sequence content retains its original attribution and
+CC BY-SA 4.0 obligations. Merely composing the UI does not relicense OEIS data.
+The complete record means all fields in the selected record returned by this
+request, not every resource hosted or linked by OEIS.
+
+Official documentation and license evidence were retrieved on 2026-10-17.
+The pinned evidence files and their SHA-256 values are recorded in
+upstream/online-query/UPSTREAM.json. They are maintenance documentation,
+not a fixed runtime sequence database. No user query is archived there.
+
+The official robots.txt snapshot includes Crawl-Delay: 10 and Disallow: /search.
+The JSON format is separately documented by OEIS. This implementation performs
+only explicit interactive requests to that documented endpoint, not crawling
+or bulk harvesting. The site limits the entire service to one upstream request
+per 10 seconds and does not auto-retry. This is a site policy, not an official
+OEIS quota or a grant of unrestricted automated access. Upstream refusal,
+rate limiting or changed terms must be respected; the UI offers an explicit
+original-site link rather than bypassing access controls.

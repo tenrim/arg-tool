@@ -23,14 +23,14 @@
     "verify:all": "node scripts/verify-all.mjs",
     "test:plan": "node scripts/verify-affected.mjs --plan",
     "audit:architecture": "node scripts/audit-architecture.mjs",
+    "setup": "npm run deps:install && npm run build",
     "deps:install": "python scripts/source-dependencies.py install",
     "deps:check": "python scripts/source-dependencies.py check",
     "deps:export": "python scripts/source-dependencies.py export",
-    "predev": "npm run deps:check",
+    "deps:fetch": "python scripts/source-dependencies.py fetch",
     "prestart": "npm run deps:check",
-    "prebuild": "npm run deps:check && npm run audit:integrity",
-    "setup": "npm run deps:install && npm run build",
-    "deps:fetch": "python scripts/source-dependencies.py fetch"
+    "predev": "npm run deps:check",
+    "prebuild": "npm run deps:check && npm run audit:integrity"
   },
   "license": "GPL-3.0-or-later"
 }

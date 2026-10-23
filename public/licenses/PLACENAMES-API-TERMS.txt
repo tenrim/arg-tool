@@ -1,0 +1,230 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name=Generator content="younghua.com">
+<link href="doc.css" type="text/css" rel="stylesheet" rev="stylesheet" />
+
+	
+<script language="JavaScript" src="../js/commonjs.js" type="text/javascript"></script>
+<link href="../css/navigation.css" type="text/css" rel="stylesheet" rev="stylesheet" />
+	<script>
+setCurTitleIndex( 0 );
+localFrame( 0);
+
+</script>
+
+<title>概述</title>	
+</head>
+<body><div id='helpdiv'>
+<h1><span style='font-size:16px;
+line-height:150%;font-family:"微软雅黑","sans-serif"'>概述</span></h1>
+
+<p class=MsoNormal align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left'><b><span style='font-size:
+16px;font-family:"微软雅黑","sans-serif"'>服务简介</span></b></p>
+
+<p class=MsoNormal align=left style='text-align:left;text-indent:32.0pt;
+line-height:200%'><span style='font-size:16px;line-height:200%;font-family:
+"微软雅黑","sans-serif"'>本服务为用户提供访问地名相关数据的<span lang=EN-US>API</span>接口，即开发者可利用该服务提供的接口获取中国·国家地名信息库相关的公开数据。</span></p>
+
+<p class=MsoNormal align=left style='text-align:left;text-indent:32.0pt;
+line-height:200%'><span style='font-size:16px;line-height:200%;font-family:
+"微软雅黑","sans-serif"'>本服务提供的<span lang=EN-US>API</span>接口包括：</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:0cm;text-align:left;
+text-indent:0cm'><span lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>行政区划搜索</span></b></p>
+
+<p class=MsoListParagraph align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left;text-indent:0cm'><span
+lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>地名搜索</span></b></p>
+
+<p class=MsoListParagraph align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left;text-indent:0cm'><span
+lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>地名详情获取</span></b></p>
+
+<p class=MsoListParagraph align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left;text-indent:0cm'><span
+lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>同名区划统计</span></b></p>
+
+<p class=MsoListParagraph align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left;text-indent:0cm'><span
+lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>同名类别统计</span></b></p>
+
+<p class=MsoListParagraph align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left;text-indent:0cm'><span
+lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>同音区划统计</span></b></p>
+
+<p class=MsoListParagraph align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left;text-indent:0cm'><span
+lang=EN-US style='font-size:16px;font-family:Wingdings'>l<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><b><span
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>同音类别统计</span></b></p>
+
+<p class=MsoNormal align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left'><b><span style='font-size:
+16px;font-family:"微软雅黑","sans-serif"'>使用说明</span></b></p>
+
+<p class=MsoNormal align=left style='text-align:left;text-indent:32.0pt;
+line-height:200%'><span style='font-size:16px;line-height:200%;font-family:
+"微软雅黑","sans-serif"'>本服务所描述的请求方式包括<span lang=EN-US>Get</span>和<span lang=EN-US>Post</span>两种，具体参考各接口的【请求方式】说明，各个接口的相应报文正文返回格式为<span
+lang=EN-US>JSON</span>数据格式。本服务中所涉及的地理空间坐标均采用<span lang=EN-US>2000</span>国家大地坐标系（<span
+lang=EN-US>CGCS2000</span>），并以经纬度的数值表示。</span></p>
+
+<p class=MsoNormal align=left style='margin-top:7.8pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:left'><b><span style='font-size:
+16px;font-family:"微软雅黑","sans-serif"'>调用示例</span></b></p>
+
+<p class=MsoNormal align=left style='text-align:left;text-indent:32.0pt;
+line-height:200%'><span style='font-size:16px;line-height:200%;font-family:
+"微软雅黑","sans-serif"'>例如：调用【地名搜索】接口，查询<span lang=EN-US>2018</span>年版中北京市范围名称包括“故宫”的地名数据，其请求的<span
+lang=EN-US>url</span>如下：</span></p>
+
+
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr style='height:22.7pt'>
+  <td width=922 style='width:691.3pt;border:solid windowtext 1.0px;padding:
+  0cm 5.4pt 0cm 5.4pt;height:22.7pt'>
+  <p class=MsoNormal align=left style='margin-left:21.0pt;text-align:left'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif";
+  color:black'>https://</span><span lang=EN-US style='font-size:16px;
+  font-family:"微软雅黑","sans-serif"'> dmfw.mca.gov.cn<span style='color:black'>
+  /9095/stname/listPub</span></span></p>
+  </td>
+ </tr>
+</table>
+
+
+
+<p class=MsoNormal align=left style='text-align:left;text-indent:32.0pt;
+line-height:200%'><span style='font-size:16px;line-height:200%;font-family:
+"微软雅黑","sans-serif"'>请求的<span lang=EN-US>GET</span>参数如下：</span></p>
+
+
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=922 valign=top style='width:691.35pt;border:solid windowtext 1.0px;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:24.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>{</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&quot;page&quot;:1,</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&quot;size&quot;:10,</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&quot;code&quot;:&quot;11&quot;,</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&quot;stName&quot;:&quot;</span><span
+  style='font-size:16px;font-family:"微软雅黑","sans-serif"'>故宫<span lang=EN-US>&quot;</span></span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:24.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>}</span></p>
+  </td>
+ </tr>
+</table>
+
+
+
+<p class=MsoNormal align=left style='text-align:left;text-indent:32.0pt;
+line-height:200%'><span style='font-size:16px;line-height:200%;font-family:
+"微软雅黑","sans-serif"'>返回结果如下：</span></p>
+
+
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=922 valign=top style='width:691.35pt;border:solid windowtext 1.0px;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:24.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>{</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&quot;total&quot;:3,</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&quot;records&quot;:[{</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;area_name&quot;: null,</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;city_name&quot;: &quot;</span><span
+  style='font-size:16px;font-family:"微软雅黑","sans-serif"'>东城区<span lang=EN-US>&quot;,</span></span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;ethnic_minorities_writing&quot;: &quot;&quot;,</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;gdm&quot;: null,</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;id&quot;:
+  &quot;27612aa5-1e2f-4e40-ac9f-a44a23625b61&quot;, </span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;place_code&quot;:
+  &quot;11010100125200000001&quot;,</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;place_type&quot;: &quot;</span><span
+  style='font-size:16px;font-family:"微软雅黑","sans-serif"'>公园<span lang=EN-US>&quot;,</span></span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;place_type_code&quot;: &quot;25200&quot;,</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;province_name&quot;: &quot;</span><span
+  style='font-size:16px;font-family:"微软雅黑","sans-serif"'>北京市<span lang=EN-US>&quot;,
+  </span></span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;standard_name&quot;: &quot;</span><span
+  style='font-size:16px;font-family:"微软雅黑","sans-serif"'>故宫博物院<span
+  lang=EN-US>&quot;,</span></span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;province&quot;: &quot;11&quot;,</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;city&quot;: &quot;1101&quot;</span><span
+  style='font-size:16px;font-family:"微软雅黑","sans-serif"'>，</span></p>
+  <p class=MsoNormal align=left style='margin-left:52.5pt;text-align:left;
+  text-indent:24.0pt'><span lang=EN-US style='font-size:16px;font-family:
+  "微软雅黑","sans-serif"'>&quot;area&quot;: &quot;110101&quot;       </span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:40.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>},</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:24.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>{......},{.......}]</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:24.0pt'><span
+  lang=EN-US style='font-size:16px;font-family:"微软雅黑","sans-serif"'>}</span></p>
+  </td>
+ </tr>
+</table>
+
+
+
+<p class=MsoNormal align=left style='text-align:left'><b><span lang=EN-US
+style='font-size:16px;font-family:"微软雅黑","sans-serif"'>&nbsp;</span></b></p>
+
+</div>
+</body >
+<script>
+forceTreeShow( 'rootNode_node_1' );
+highlight();
+
+</script>
+</html>

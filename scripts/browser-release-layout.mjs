@@ -28,7 +28,9 @@ try{
  const ids=await page.locator('.panel:not(.site-page)').evaluateAll(nodes=>nodes.map(node=>node.id.slice(6)));
  assert.deepEqual([...ids].sort(),toolPages.map(page=>page.route).sort(),'the complete original tool set is preserved');
  assert.deepEqual((await page.locator('.panel.site-page').evaluateAll(nodes=>nodes.map(node=>node.id.slice(6)))).sort(),[...sitePages.map(page=>page.route),'browse'].sort(),'category overview is a website page, separate from engine workspaces');
- for(const retired of ['graph','geometry','circuit']){assert.ok(!ids.includes(retired));assert.equal(await page.locator(`[data-tab="${retired}"],a[href="#${retired}"]`).count(),0);for(const dir of ['public/round4','public/vendor/round4'])await assert.rejects(access(`${dir}/${retired}.js`));await page.evaluate(id=>location.hash=id,retired);await page.waitForSelector('#panel-browse:not([hidden])');}
+ for(const retired of ['graph','geometry','circuit'])for(const dir of ['public/round4','public/vendor/round4'])await assert.rejects(access(`${dir}/${retired}.js`));
+ for(const retired of ['graph','circuit']){assert.ok(!ids.includes(retired));assert.equal(await page.locator(`[data-tab="${retired}"],a[href="#${retired}"]`).count(),0);await page.evaluate(id=>location.hash=id,retired);await page.waitForSelector('#panel-browse:not([hidden])');}
+ assert.ok(ids.includes('geometry'),'the new practical geometry calculator retains its registered workspace');
  const overviews=capabilityCategories.map(category=>'browse/'+category.id);
  for(const [width,height]of [[320,844],[390,844],[768,1024],[844,390],[1280,900],[1440,1000],[1920,1080]]){await page.setViewportSize({width,height});for(const route of [...ids,...overviews]){await go(route);const dimensions=await page.evaluate(()=>({w:document.documentElement.scrollWidth,v:innerWidth}));assert.ok(dimensions.w<=width+1,`${route}@${width}: ${JSON.stringify(dimensions)}`);}console.log('PASS all',ids.length,'tool routes and five category overviews at',width,height);}
  await page.setViewportSize({width:1440,height:1000});

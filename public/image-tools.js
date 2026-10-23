@@ -3,7 +3,8 @@ import {element as uiElement, tabsController, onDisconnect} from './ui/index.js'
 import {hexDump} from './media.js';
 import {ImageInspector} from './image-inspect.js';
 import {pngImageBytes} from './image-png.js';
-import {continueButton} from './handoff/button.js';
+import {resultRecording,canvasRecord} from './result-recording.js';
+import {mountStegExtras} from './image-steg-view.js';
 const $ = id => document.getElementById(id);
 const channels = {rgb: 'RGB 叠加', r: '红色', g: '绿色', b: '蓝色', a: '透明度'};
 function download(data, name, type) {
@@ -22,29 +23,49 @@ export function initImageTools() {
   let image = null, bytes = null, worker = null, rejectTask = null, generation = 0, task = 0, engine = 'basic', activeTimer;
   let resultKind = null, analysisRevision = 0, analysisBusy = false, analysisTimer, viewRevision = 0, renderEngine = true;
   const inspector = new ImageInspector(), canvas = $('image-canvas');
-  let handoffResult=null,handedResult;
-  const next=continueButton({id:'image-continue',source:'image',read:()=>handedResult=handoffResult,isCurrent:()=>!!handedResult&&handedResult===handoffResult});$('image-copy').before(next);
-  let handedImage,handedView;
-  const imageNext=continueButton({id:'image-view-continue',source:'image',read:async()=>{handedImage=image;handedView=viewRevision;if(!image)throw Error('请先载入图片。');const original=image.file;const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('无法导出当前视图。');return {files:[original,new File([blob],'当前处理视图.png',{type:'image/png'})]};},isCurrent:()=>!!handedImage&&handedImage===image&&handedView===viewRevision});imageNext.textContent='用其他工具处理图片';$('image-download').after(imageNext);
-  const viewChanged = () => viewRevision++;
+  let handoffResult=null;
+  const recording=resultRecording({id:'image-result',anchor:$('image-copy'),source:'image'}),imageRecording=resultRecording({id:'image-view',anchor:$('image-download'),source:'image'});
+  imageRecording.buttons[0].textContent='将当前图片加入笔记本';imageRecording.buttons[1].textContent='将当前图片加入白板 / 脑图';
+  const publishImage=()=>{if(!image){imageRecording.clear();return;}const original=image.file;imageRecording.publish(async()=>{const result=await canvasRecord(canvas,'当前处理视图.png');return {files:[original,...result.files]};});};
+  const viewChanged = () => {viewRevision++;publishImage();if(resultKind==='barcode')result();};
   document.addEventListener('arg:imageviewchange',viewChanged);
   onDisconnect(canvas,()=>{stop();analysisRevision++;clearTimeout(analysisTimer);inspector.cancel();analysisBusy=false;document.removeEventListener('arg:imageviewchange',viewChanged);});
-  const analysisButtons = ['image-qr', 'image-exif', 'image-png'];
+  const analysisButtons = ['image-qr', 'image-exif', 'image-png', 'barcode-read'];
   function status(text, error = false) { $('image-status').textContent = text; $('image-status').classList.toggle('error', error); }
   function ready(value) {
-    imageNext.disabled=!value;
+    if(value)publishImage();else imageRecording.clear();
     for (const id of ['image-download', 'image-view', 'image-remap', 'image-overview', 'lsb-run']) $(id).disabled = !value;
-    for (const id of analysisButtons) $(id).disabled = !value || analysisBusy;
+    for (const id of analysisButtons) { const button=$(id);if(button)button.disabled = !value || analysisBusy; }
     $('image-analysis-cancel').hidden = !analysisBusy;
   }
   function stop() { clearTimeout(activeTimer); worker?.terminate(); worker = null; rejectTask?.(new Error('任务已取消')); rejectTask = null; task++; }
   function cancelAnalysis() { analysisRevision++; clearTimeout(analysisTimer); inspector.cancel(); analysisBusy = false; ready(!!image); }
   function result(text = '', kind = null, label = '等待分析', binary = null) {
     resultKind = kind; bytes = binary; $('image-output').value = text; $('image-result-kind').textContent = label;
-    handoffResult=binary?{bytes:binary}:kind==='qr'&&text?{text}:null;next.disabled=!handoffResult;
+    handoffResult=binary?{bytes:binary}:text?{text}:null;recording.publish(handoffResult);
     $('lsb-download').disabled = !binary?.length; $('image-copy').disabled = !text; $('image-save-text').disabled = !text;
   }
   function clearExtraction() { if (resultKind === 'extract') result(); }
+  // External recognizers use the image owner's result model rather than
+  // writing the visible textarea independently of notes/transfer actions.
+  // The lease ends synchronously on input, view, source or task invalidation;
+  // a non-terminable WASM promise may finish, but cannot publish after that.
+  function beginExternalTextResult() {
+    if(!image)throw Error('请先选择图片。');
+    stop();cancelAnalysis();result();analysisBusy=true;ready(true);
+    const source=image,captured=generation,revision=analysisRevision,view=viewRevision,selection=$('image-analysis-source').value;
+    let finished=false;
+    const ownsResult=()=>!finished&&canvas.isConnected&&source===image&&captured===generation&&revision===analysisRevision;
+    const isCurrent=()=>ownsResult()&&view===viewRevision&&selection===$('image-analysis-source')?.value;
+    return {
+      isCurrent,
+      publish(text,label='多制式条码') {
+        if(!isCurrent())return false;
+        finished=true;analysisBusy=false;result(String(text||''),'barcode',label);ready(!!image);return true;
+      },
+      clear() { if(!ownsResult())return false;finished=true;cancelAnalysis();result();return true; },
+    };
+  }
   function draw(pixels, width, height) {
     document.dispatchEvent(new Event('arg:imageviewchange'));
     canvas.width = width; canvas.height = height;
@@ -102,7 +123,7 @@ export function initImageTools() {
     }
     table.append(row);
   }
-  function extractionChanged() { stop(); clearExtraction(); if (image) status('提取参数已更改，请重新提取'); }
+  function extractionChanged() { stop(); clearExtraction(); if (image) status(''); }
   function preset() {
     const choice = $('lsb-preset').value, bit = +$('lsb-simple-bit').value;
     if (choice !== 'custom') {
@@ -186,22 +207,23 @@ export function initImageTools() {
       const output = await Promise.race([inspector.run(kind, image, {source: $('image-analysis-source').value, canvas, progress: text => { if (revision === analysisRevision && captured === generation) status(text); }}), timeout]);
       if (revision !== analysisRevision || captured !== generation) return;
       result(output.text, kind, output.label);
-      if(kind==='qr'&&!output.found){handoffResult=null;next.disabled=true;}
+      if(kind==='qr'&&!output.found){handoffResult=null;recording.clear();}
       status(kind === 'png' ? '数据块读取完成' : kind === 'exif' ? '元数据读取完成' : (output.found ? '二维码识别完成' : '未找到二维码'));
     } catch (error) { captureFailure(error);if (revision === analysisRevision && captured === generation) status(error.message, true); }
     finally { if (revision === analysisRevision) { clearTimeout(analysisTimer); analysisBusy = false; ready(!!image); } }
   }
   for (const kind of ['qr', 'exif', 'png']) $('image-' + kind).onclick = () => analyze(kind);
   $('image-analysis-cancel').onclick = () => { cancelAnalysis(); result(); status('已停止图片分析'); };
-  for (const id of ['image-analysis-source']) $(id).onchange = () => { cancelAnalysis(); if (resultKind === 'qr') result(); if (image) status('识别设置已更改，请重新分析'); };
+  for (const id of ['image-analysis-source']) $(id).onchange = () => { cancelAnalysis(); if (['qr','barcode'].includes(resultKind)) result(); if (image) status(''); };
   $('lsb-download').onclick = () => bytes && download(bytes, 'stegonline-extracted.bin', 'application/octet-stream');
   $('image-save-text').onclick = () => download($('image-output').value, 'image-analysis.txt', 'text/plain;charset=utf-8');
   $('image-download').onclick = () => canvas.toBlob(blob => { if (blob) download(blob, 'image-analysis.png', 'image/png'); });
   $('image-copy').onclick = async () => { try { await navigator.clipboard.writeText($('image-output').value); status('结果已复制'); } catch { status('复制失败，请选中结果手动复制', true); } };
   window.addEventListener('pagehide', () => { stop(); cancelAnalysis(); });
+  mountStegExtras($('steg-controls'),{getImage:()=>image,request,stop,apply(pixels,width,height){draw(pixels,width,height);imageRecording.publish(()=>canvasRecord(canvas,'StegOnline嵌入.png'));}});
   ready(false); selectEngine('basic');
   return {
-    getImage: () => image, load, selectEngine,
+    getImage: () => image, load, selectEngine,beginExternalTextResult,
     getRevision: () => ({generation,viewRevision}),
     getCurrentView: () => image ? {pixels:canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data,width:canvas.width,height:canvas.height,generation,viewRevision} : null,
     cancelTask() { stop(); cancelAnalysis(); result(); status(image ? '图片已载入' : ''); },

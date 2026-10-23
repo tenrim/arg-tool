@@ -1,0 +1,5 @@
+.site-ui.workbench-app .panel .practical-layout { align-items: start; }
+.date-offsets>[data-ui=box]>[data-ui=form-grid]{margin:0}
+.practical-diagram { display: block; width: 100%; max-width: 360px; height: auto; margin-inline: auto; }
+.practical-table { max-width: 100%; overflow-x: auto; }
+#meeting-participants { display: grid; gap: 1rem; }

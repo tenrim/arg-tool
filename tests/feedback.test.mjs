@@ -4,7 +4,23 @@ import {randomUUID} from 'node:crypto';
 import {errorDiagnostic,diagnostics,rememberAction,captureFailure} from '../public/feedback/model.js';
 import {validateReport,reportMail} from '../services/feedback/report.mjs';
 import {createFeedbackServer} from '../services/feedback/server.mjs';
+import {createFeedbackIngress} from '../services/feedback/ingress.mjs';
+import {PassThrough} from 'node:stream';
+import {EventEmitter} from 'node:events';
 const fixture=()=>({schema:1,id:randomUUID(),type:'无法运行',description:'载入图片后发生错误',expected:'显示图片',steps:'选择图片，点击读取',contact:'',diagnostics:{version:'test',task:'native:image',browser:'Chrome/140',viewport:[390,844],actions:[]},attachments:[]});
+
+test('feedback admission bounds unfinished bodies, cancels on disconnect and releases capacity',async()=>{
+ const ingress=createFeedbackIngress({maxActive:1,timeoutMs:30,maxBytes:8});
+ const pair=headers=>{const req=new PassThrough();req.headers=headers||{};return{req,res:new EventEmitter()};};
+ const a=pair(),first=ingress.acquire(a.req,a.res),body=first.read();a.req.write('1234');
+ const b=pair();assert.throws(()=>ingress.acquire(b.req,b.res),error=>error.status===503);
+ a.res.emit('close');await assert.rejects(body,error=>error.status===499);first.release();
+ const second=ingress.acquire(b.req,b.res),complete=second.read();b.req.end('12345678');assert.equal((await complete).toString(),'12345678');second.release();
+ const large=pair({'content-length':'9'});assert.throws(()=>ingress.acquire(large.req,large.res),error=>error.status===413);
+ const c=pair(),third=ingress.acquire(c.req,c.res),overflow=third.read();c.req.end('123456789');await assert.rejects(overflow,error=>error.status===413);third.release();
+ const d=pair(),fourth=ingress.acquire(d.req,d.res),timed=fourth.read();const keeper=setTimeout(()=>{},100);
+ try{await assert.rejects(timed,error=>error.status===408);}finally{clearTimeout(keeper);fourth.release();ingress.close();}
+});
 test('diagnostics whitelist metadata and never include raw errors, inputs, keys or URL queries',()=>{
   const error=new RangeError('offset outside bounds SECRET_KEY');error.stack='RangeError SECRET_KEY\n at https://evil.test/input.js?secret=CLUE:1:2';
   assert.deepEqual(errorDiagnostic(error),{code:'BYTE_BOUNDS',type:'RangeError',frames:[]});captureFailure(error);

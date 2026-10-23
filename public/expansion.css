@@ -1,0 +1,10 @@
+.expansion-panel{min-width:0}
+.expansion-panel canvas{max-width:100%;display:block}
+.expansion-stroke-canvas{width:min(100%,420px);aspect-ratio:1;touch-action:manipulation}
+#score-staff{width:100%;min-height:180px;aspect-ratio:4}
+.expansion-score-notation{overflow:auto;max-width:100%;color:var(--text)}
+.expansion-score-notation svg{max-width:100%;color:var(--text)}
+.expansion-player,.expansion-morse-player{width:100%}
+.expansion-morse-plot{display:block;width:100%;max-width:100%;height:auto;min-height:140px;aspect-ratio:3/1}
+.expansion-literal{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.expansion-grid{display:grid;grid-template-columns:repeat(var(--grid-columns),minmax(1.8rem,1fr));overflow:auto;max-width:100%}

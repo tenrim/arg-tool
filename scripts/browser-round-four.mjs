@@ -1,3 +1,4 @@
+import {tmpdir} from 'node:os';
 import {appPages} from './browser-host.mjs';
 import { createRequire } from "node:module";
 import { readFile } from "node:fs/promises";
@@ -67,7 +68,7 @@ try {
       )
       .catch(async (e) => {
         console.error("STATUS", id, await page.locator("#" + id).textContent());
-        await page.screenshot({ path: "/tmp/r4-failure.png", fullPage: true });
+        await page.screenshot({ path: resolve(tmpdir(), "r4-failure.png"), fullPage: true });
         throw e;
       });
   }
@@ -163,6 +164,57 @@ try {
       ),
     });
   await status("model-status", "外部资源");
+  // Local CIF remains an actual file capability after retiring the sample database.
+  const cifPath="upstream/reference/sources/crystals/9008564-diamond.cif";
+  assert.match(await page.locator("#model-file").getAttribute("accept"),/\.cif/);
+  await select("model-repeat","2");
+  await page.locator("#model-file").setInputFiles(cifPath);
+  await status("model-status","晶体已载入");
+  assert.equal(await page.locator("#model-info").getAttribute("data-kind"),"crystal");
+  assert.match(await page.locator("#model-info").textContent(),/每晶胞展开 8 原子 · 当前 64 原子/);
+  const retainedCrystal=await page.locator("#model-info").textContent();
+  for(const file of [
+    {name:"bad.cif",mimeType:"text/plain",buffer:Buffer.from("data_bad\n_cell_length_a 1\n")},
+    {name:"large.cif",mimeType:"text/plain",buffer:Buffer.alloc(1024*1024+1,32)},
+  ]){
+    await page.locator("#model-file").setInputFiles(file);
+    await status("model-status",file.name==="large.cif"?"1 MB":"无法读取模型");
+    assert.equal(await page.locator("#model-info").textContent(),retainedCrystal);
+    assert.equal(await page.locator("#model-stop").isDisabled(),true);
+  }
+  // Gate the real worker script: cancellation, navigation, a newer file and
+  // the deadline must terminate work without replacing the current scene.
+  const workerURL="https://arg.test/round4/cif-worker.js";
+  let gateNumber=0;
+  async function heldCIF(action){
+    const currentGate=++gateNumber;
+    let seen,release,done;
+    const requested=new Promise(resolve=>seen=resolve),gate=new Promise(resolve=>release=resolve),completed=new Promise(resolve=>done=resolve);
+    await context.route(workerURL,async route=>{seen();await gate;try{await route.fulfill({body:await readFile("public/round4/cif-worker.js"),contentType:"text/javascript"});}catch{}finally{done();}});
+    // Chromium suppresses change when the same physical file is selected
+    // twice. Each scenario selects a distinct local file with identical bytes.
+    await page.locator("#model-file").setInputFiles({name:`held-${currentGate}.cif`,mimeType:'text/plain',buffer:await readFile(cifPath)});
+    let deadline;
+    try{await Promise.race([requested,new Promise((_,reject)=>deadline=setTimeout(()=>reject(Error("CIF worker did not reach its load gate")),15000))]);}
+    catch(error){console.error('CIF gate',currentGate,await page.locator('#model-status').textContent(),await page.locator('#model-file').evaluate(input=>input.files[0]?.name));throw error;}
+    finally{clearTimeout(deadline);}
+    try{await action();}finally{release();await completed;await context.unroute(workerURL);}
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  }
+  await heldCIF(async()=>{await click("model-stop");await status("model-status","已停止读取");});
+  assert.equal(await page.locator("#model-info").textContent(),retainedCrystal);
+  await heldCIF(async()=>{await go("chess");});await go("model");
+  assert.equal(await page.locator("#model-info").textContent(),retainedCrystal);
+  assert.match(await page.locator("#model-status").textContent(),/已离开工作区/);
+  await heldCIF(async()=>{
+    await page.locator("#model-file").setInputFiles({name:"newer.obj",mimeType:"text/plain",buffer:Buffer.from("v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n")});
+    await status("model-status","模型已载入");
+  });
+  const retainedMesh=await page.locator("#model-info").textContent();assert.match(retainedMesh,/newer\.obj/);
+  await page.clock.install();
+  await heldCIF(async()=>{await page.clock.fastForward(30001);await status("model-status","超过 30 秒");await page.clock.resume();});
+  assert.equal(await page.locator("#model-info").textContent(),retainedMesh);
+  assert.equal(await page.locator("#model-stop").isDisabled(),true);
   await go("fragments");
   const pngs = await page.evaluate(() =>
     ["#ff0000", "#0000ff"].map((color) => {
@@ -247,7 +299,7 @@ try {
       await p.locator(".tool-help-button").click();
       if (width === 390 || width === 1365)
         await page.screenshot({
-          path: `/tmp/arg-r4-${id}-${width}.png`,
+          path: resolve(tmpdir(), `arg-r4-${id}-${width}.png`),
           fullPage: true,
         });
     }
@@ -268,7 +320,7 @@ try {
     { errors: [], external: [], missing: [] },
   );
   console.log(
-    "PASS: four real engines; chess PGN/legal moves, Life blinker, local model/render and external URI rejection, fragment pixel export; Chinese help/licenses, mobile 320/390/768/1365 and 200%; no external requests or popups.",
+    "PASS: four real engines; chess PGN/legal moves, Life blinker, local model/render, original CIF symmetry/repeats and bad-file preservation, real Worker stop/navigation/new-file/timeout guards and external URI rejection, fragment pixel export; Chinese help/licenses, mobile 320/390/768/1365 and 200%; no external requests or popups.",
   );
 } finally {
   await browser.close();

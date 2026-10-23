@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DEFAULT_PREFERENCES,validatePreferences,parsePreferencesBackup} from '../public/preferences.js';
+import {DEFAULT_PREFERENCES,validatePreferences,parsePreferencesBackup,recordTool,getRecentEntries,getRecent,clearRecent} from '../public/preferences.js';
+test('session recents replace the latest member of one workspace without merging other tools on the same panel',()=>{
+ const oldDocument=globalThis.document;globalThis.document={dispatchEvent(){}};
+ try{clearRecent();recordTool('symbols',{id:'topic:braille',title:'盲文工具',route:'symbols?task=topic%3Abraille&view=native%3Abraille'});recordTool('braille-languages',{id:'topic:braille',title:'盲文工具',route:'braille-languages?task=topic%3Abraille&view=native%3Abraille-languages'});assert.equal(getRecentEntries().length,1);assert.deepEqual(getRecent(),['braille-languages']);assert.match(getRecentEntries()[0].route,/view=native%3Abraille-languages/);recordTool('symbols',{id:'native:pigpen',title:'猪圈密码',route:'symbols?task=native%3Apigpen'});assert.equal(getRecentEntries().length,2);assert.equal(getRecentEntries()[1].title,'盲文工具');}finally{clearRecent();globalThis.document=oldDocument;}
+});
 
 test('preferences recover invalid stored fields without applying unsafe values',()=>{
  const p=validatePreferences({motion:'always',density:'comfortable',scanlines:'false',startPage:'missing',textSize:'large'});

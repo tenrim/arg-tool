@@ -25,7 +25,10 @@ export async function planChecks(files, {unitOnly=false, staticOnly=false}={}) {
   const ui=file=>add('ui-policy',['node','scripts/audit-ui.mjs'],file);
   const workflow=/^scripts\/(?:test-all|verify-all|verify-affected|affected-plan|test-map|module-graph|architecture-policy|audit-architecture|check)\.mjs$/;
   for(const file of files){
-    if(/\.(?:m?js)$/.test(file)&&!file.startsWith('public/vendor/')) {
+    // Fixed upstream archives may contain preprocessor fragments (e.g.
+    // Alpertron Blockly), not standalone Node programs. Their original bytes
+    // are checked by integrity; executable adapters stay syntax/browser owned.
+    if(/\.(?:m?js)$/.test(file)&&!file.startsWith('public/vendor/')&&!file.startsWith('upstream/')) {
       try{await access(file);syntax.push(file);}catch{/* Deleted files still select their owner's suite. */}
     }
     if(file.startsWith('public/')&&!file.startsWith('public/vendor/')) {
@@ -34,7 +37,7 @@ export async function planChecks(files, {unitOnly=false, staticOnly=false}={}) {
     }
     if(/\.md$/.test(file)&&!file.startsWith('upstream/')&&!file.startsWith('public/vendor/')){add('docs',['node','scripts/audit-docs.mjs'],file);continue;}
     if(['public/project-licenses.js','public/project-sources.js'].includes(file))integrity(file);
-    if(['dependencies.lock.json','scripts/source-dependencies.py','tests/source-dependencies_test.py','.openai/hosting.json'].includes(file)){addUnit('source-distribution',file);if(['dependencies.lock.json','scripts/source-dependencies.py'].includes(file))addBrowser('deployment',file);continue;}
+    if(['dependencies.lock.json','scripts/source-dependencies.py','tests/source-dependencies_test.py','public/deployment.js'].includes(file)){addUnit('source-distribution',file);continue;}
     if(/^docs\//.test(file))continue; // Verification artifacts, not runtime data.
     if(/^tests\/[^/]+\.test\.mjs$/.test(file)){try{await access(file);addUnit(file,file);}catch{}continue;}
     const browser=browserSuites.find(name=>browserFile(name)===file);

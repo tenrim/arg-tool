@@ -273,18 +273,28 @@
       "generator": "scripts/build-image-vendor.mjs"
     },
     {
-      "name": "cipher-machine",
+      "name": "cipher_machine",
       "repository": "https://github.com/philippica/cipher_machine",
       "commit": "29fa4ee1c60873484688c250b37c87d93f54cae4",
       "license": "BSD-3-Clause",
-      "local_directory": "public/vendor/hunt/cipher-machine"
+      "local_directory": "public/vendor/hunt/cipher-machine",
+      "license_path": "public/vendor/expansion/hunt/cipher-machine-LICENSE.txt",
+      "license_sha256": "e7af67c17da942bf0cfd015fc0b2e63413a89c93c25066acffecd4e8552f03b2",
+      "file_manifest": "public/vendor/expansion/hunt/UPSTREAM.json",
+      "import_script": "scripts/import-hunt-expansion.py",
+      "adaptation": "Real local engines and full fixed datasets; original sources and documented deterministic adapters under upstream/expansion. Runtime does not require a backend."
     },
     {
-      "name": "chinese-puzzle",
+      "name": "ChinesePuzzleTool",
       "repository": "https://github.com/philippica/ChinesePuzzleTool",
       "commit": "8b4ebec728138981a94b4ff743026084e9e37ef5",
       "license": "BSD-2-Clause",
-      "local_directory": "public/vendor/hunt/chinese-puzzle"
+      "local_directory": "public/vendor/hunt/chinese-puzzle",
+      "license_path": "public/vendor/expansion/hunt/chinese-puzzle-LICENSE.txt",
+      "license_sha256": "fcfb331acf7e910a09fccbfc265a915faf0086fefff74f093ddf21140162a40a",
+      "file_manifest": "public/vendor/expansion/hunt/UPSTREAM.json",
+      "import_script": "scripts/import-hunt-expansion.py",
+      "adaptation": "Real local engines and full fixed datasets; original sources and documented deterministic adapters under upstream/expansion. Runtime does not require a backend."
     },
     {
       "name": "stereogram",
@@ -828,17 +838,6 @@
       "build_script": "scripts/build-discovery.py"
     },
     {
-      "name": "HYG-Database",
-      "repository": "https://github.com/astronexus/HYG-Database",
-      "commit": "c7f7f883fe678cc7680169a50ccd7dcc49b060ce",
-      "license": "CC-BY-SA-4.0 (original and derived data)",
-      "local_directory": "public/vendor/discovery",
-      "source_directory": "upstream/discovery",
-      "file_manifest": "public/vendor/discovery/UPSTREAM.json",
-      "import_script": "scripts/import-discovery.py",
-      "build_script": "scripts/build-discovery.py"
-    },
-    {
       "name": "OpenNGC",
       "repository": "https://github.com/mattiaverga/OpenNGC",
       "commit": "75ca7ff090e1d0081a5b08be70eb3bc45ccd9e06",
@@ -1012,22 +1011,6 @@
       "license_source_url": "https://raw.githubusercontent.com/publicsuffix/list/3929462652695bad04f0a27afb600974014a3c8b/LICENSE"
     },
     {
-      "name": "RFC Editor Index",
-      "repository": "https://www.rfc-editor.org/rfc-index/",
-      "license": "RFC索引事实元数据；RFC文档原许可另行适用（未引入正文）",
-      "license_path": "public/vendor/it-reference/RFC-NOTICE.txt",
-      "license_sha256": "0f956c03caa7834c60a22668dd0114277344156d11b1c6a9ef4c6abf6c85fe0a",
-      "local_directory": "public/vendor/it-reference",
-      "source_directory": "upstream/it-reference",
-      "file_manifest": "public/vendor/it-reference/UPSTREAM.json",
-      "import_script": "scripts/import-it-reference.py",
-      "build_script": "scripts/build-it-reference.mjs",
-      "adaptation": "2026-07-31索引中精选56项编号、短标题、状态与更新关系；中文摘要为本站原创。",
-      "commit": "4a9672c79e71f0816cffb4968f50da279d7bf910",
-      "source_url": "https://raw.githubusercontent.com/AlexMelanFromRingo/rfc-library/4a9672c79e71f0816cffb4968f50da279d7bf910/indexes/rfc-index.txt",
-      "license_source_url": "https://www.rfc-editor.org/series/rfc-use/"
-    },
-    {
       "name": "Nodemailer (feedback service)",
       "repository": "https://github.com/nodemailer/nodemailer",
       "version": "10.1.1",
@@ -1036,6 +1019,671 @@
       "license_sha256": "4f814dcacd2da618d62829ea1f6238701cf421f18a6b36c91c5d8212245e2c78",
       "dependency_lock": "services/feedback/package-lock.json",
       "adaptation": "Server-only SMTP transport. No code bundled in public. Installed from pinned lock with npm ci --ignore-scripts."
+    },
+    {
+      "name": "Notebook editor",
+      "version": "Vditor 4.0.0 / DOMPurify 3.4.17",
+      "local_directory": "public/vendor/notebook",
+      "file_manifest": "public/vendor/notebook/UPSTREAM.json",
+      "import_script": "scripts/import-notebook.mjs",
+      "lock": "upstream/notebook/package-lock.json",
+      "components": [
+        {
+          "name": "Vditor",
+          "repository": "https://github.com/Vanessa219/vditor",
+          "version": "4.0.0",
+          "license": "MIT + diff-match-patch Apache-2.0"
+        },
+        {
+          "name": "Lute",
+          "repository": "https://github.com/88250/lute",
+          "version": "bundled with Vditor 4.0.0; exact SHA256 in UPSTREAM.json",
+          "license": "MulanPSL-2.0; Go/GopherJS runtime BSD-3-Clause"
+        },
+        {
+          "name": "DOMPurify",
+          "repository": "https://github.com/cure53/DOMPurify",
+          "version": "3.4.17",
+          "license": "Apache-2.0 OR MPL-2.0"
+        }
+      ],
+      "renderer_notices": "upstream/notebook/renderer-notices.json",
+      "renderer_policy": "Official Vditor 4.0.0 renderer bytes unchanged; local JSON-only chart adapter, strict Mermaid, no external assets or PlantUML server calls."
+    },
+    {
+      "name": "Editable graphics",
+      "version": "Excalidraw 0.18.1 / Mind Elixir 5.15.1",
+      "local_directory": "public/vendor/graphics",
+      "file_manifest": "public/vendor/graphics/UPSTREAM.json",
+      "import_script": "scripts/import-graphics.mjs",
+      "lock": "upstream/graphics/package-lock.json",
+      "license": "Excalidraw MIT; Mind Elixir MIT; React MIT; fonts SIL OFL-1.1 except Comic Shanns MIT; transitive notices bundled",
+      "components": [
+        {
+          "name": "Excalidraw",
+          "repository": "https://github.com/excalidraw/excalidraw",
+          "version": "0.18.1"
+        },
+        {
+          "name": "Mind Elixir",
+          "repository": "https://github.com/SSShooter/mind-elixir-core",
+          "version": "5.15.1"
+        },
+        {
+          "name": "React",
+          "repository": "https://github.com/facebook/react",
+          "version": "19.0.0"
+        }
+      ]
+    },
+    {
+      "name": "Alpertron Calculators",
+      "repository": "https://github.com/alpertron/calculators",
+      "commit": "93c5c8189cb2f149c8dae898eb11997c5f2e7980",
+      "license": "GPL-3.0-or-later; bundled musl MIT/Sun notices",
+      "license_path": "public/vendor/expansion/alpertron/LICENSE.txt",
+      "license_sha256": "53927bd0b739d38c87a0a82236fd9b070c2dfff11c0c119be50372005d5047ad",
+      "file_manifest": "public/vendor/expansion/alpertron/UPSTREAM.json",
+      "import_script": "scripts/import-alpertron.mjs",
+      "adaptation": "Real local engines and full fixed datasets; original sources and documented deterministic adapters under upstream/expansion. Runtime does not require a backend."
+    },
+    {
+      "name": "ggmorse",
+      "repository": "https://github.com/ggerganov/ggmorse",
+      "commit": "7b4822a8cfdbb1addfe497f3ae8186f142a4ee79",
+      "license": "MIT; FFT CC-BY-SA-3.0/4.0; bundled toolchain notices",
+      "license_path": "public/vendor/expansion/ggmorse/LICENSE-MIT.txt",
+      "license_sha256": "1f0a52b2ca90c54bf0a55915fbe6ab412a9c514b8ec2be71ca272be812d7d838",
+      "file_manifest": "public/vendor/expansion/ggmorse/UPSTREAM.json",
+      "import_script": "scripts/import-ggmorse.py",
+      "adaptation": "Real local engines and full fixed datasets; original sources and documented deterministic adapters under upstream/expansion. Runtime does not require a backend."
+    },
+    {
+      "name": "Fuse.js",
+      "repository": "https://github.com/krisk/Fuse",
+      "version": "7.5.0",
+      "license": "Apache-2.0",
+      "source_url": "https://registry.npmjs.org/fuse.js/-/fuse.js-7.5.0.tgz",
+      "archive_sha256": "076e7375510cd2f40b86108cd7d87534cf3b32682e80df23cd2ba6f25737f168",
+      "package_integrity": "sha512-sQtrEfA+ez/3G0cCZecF70oqpCRttCexYUG4mUrtWL49ULUzUyxokt5kyqwtKzj1270RaKih+hcP3qLcumccow==",
+      "source_directory": "upstream/fuse",
+      "local_directory": "public/vendor/fuse",
+      "file_manifest": "public/vendor/fuse/UPSTREAM.json",
+      "import_script": "scripts/import-fuse.mjs",
+      "license_path": "public/vendor/fuse/LICENSE.txt",
+      "license_sha256": "cc807e3caa26cdee316bab2ff6fdb508a2f619b74959fe59e513ef6e61635ebe",
+      "adaptation": "Unchanged official ES module; offline fuzzy matching of public capability metadata only."
+    },
+    {
+      "name": "IANA TZDB",
+      "version": "2026e",
+      "repository": "https://www.iana.org/time-zones",
+      "license": "public-domain",
+      "integrity_file": "public/vendor/timezones/UPSTREAM.json"
+    },
+    {
+      "name": "PSF tzdata",
+      "version": "2026.5",
+      "repository": "https://github.com/python/tzdata",
+      "license": "Apache-2.0; IANA data public-domain",
+      "integrity_file": "public/vendor/timezones/UPSTREAM.json"
+    },
+    {
+      "name": "IAU 88 constellations",
+      "version": "snapshot-2026-10-17",
+      "repository": "https://iauarchive.eso.org/public/themes/constellations/",
+      "license": "CC-BY-4.0 charts; original attribution retained",
+      "integrity_file": "public/vendor/atlas-celestial/UPSTREAM.json"
+    },
+    {
+      "name": "NASA five millennium eclipses",
+      "version": "-1999..3000",
+      "repository": "https://eclipse.gsfc.nasa.gov/",
+      "license": "NASA reproduction permitted with author credit",
+      "integrity_file": "public/vendor/atlas-celestial/UPSTREAM.json"
+    },
+    {
+      "name": "AviList Extended",
+      "version": "v2025b",
+      "repository": "https://www.avilist.org/checklist/v2025b/",
+      "license": "CC-BY-4.0",
+      "integrity_file": "public/vendor/atlas-life-culture/UPSTREAM.json"
+    },
+    {
+      "name": "Open Opus data",
+      "version": "snapshot-2026-10-17",
+      "repository": "https://openopus.org/",
+      "license": "CC0-1.0",
+      "integrity_file": "public/vendor/atlas-life-culture/UPSTREAM.json"
+    },
+    {
+      "name": "OEIS online sequence data service",
+      "repository": "https://oeis.org/",
+      "version": "interactive online JSON query; official evidence retrieved 2026-10-17",
+      "license": "CC-BY-SA-4.0 (returned sequence data); query adapter is original site code",
+      "license_source_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
+      "license_path": "public/licenses/OEIS-CC-BY-SA-4.0.txt",
+      "license_sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+      "local_directory": "upstream/online-query",
+      "file_manifest": "upstream/online-query/UPSTREAM.json",
+      "source_url": "https://oeis.org/wiki/JSON_Format",
+      "adaptation": "Explicit user query through fixed server endpoint; all returned record fields and attribution retained. No offline OEIS database or OEIS software is bundled."
+    },
+    {
+      "name": "CDS/SIMBAD online object data",
+      "repository": "https://simbad.cds.unistra.fr/simbad/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "Dataset-specific rights, CDS/SIMBAD acknowledgement and original scientific references",
+      "license_source_url": "https://cds.unistra.fr/legals/",
+      "license_path": "public/licenses/CDS-ONLINE-TERMS.txt",
+      "license_sha256": "6ccdc6f98f70d25a86f2709148900a22e7c1d62f1edd37ce5628f8c59c10a28f",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint simbad adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "CDS/VizieR online catalogue data",
+      "repository": "https://vizier.cds.unistra.fr/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "Dataset-specific licences/rights_uri and original authors, CDS/VizieR acknowledgement",
+      "license_source_url": "https://cds.unistra.fr/legals/",
+      "license_path": "public/licenses/CDS-ONLINE-TERMS.txt",
+      "license_sha256": "6ccdc6f98f70d25a86f2709148900a22e7c1d62f1edd37ce5628f8c59c10a28f",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint vizier adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "COD online crystal data",
+      "repository": "https://www.crystallography.net/cod/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "CC0-1.0 (data); original scientific citation retained",
+      "license_source_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "license_path": "public/licenses/ONLINE-CC0-1.0.txt",
+      "license_sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint cod adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "PubChem online compound data",
+      "repository": "https://pubchem.ncbi.nlm.nih.gov/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "NCBI policies and each original contributor terms; not all annotations are CC0",
+      "license_source_url": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+      "license_path": "public/licenses/PUBCHEM-POLICIES.txt",
+      "license_sha256": "8ad8f6f186ca51ec73a5fb8935ecfa17b8cbaad300b7025b381898ab72621869",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint pubchem adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "National Place Names Database online service",
+      "repository": "https://dmfw.mca.gov.cn/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "Official public query service; no blanket full-database redistribution licence",
+      "license_source_url": "https://dmfw.mca.gov.cn/baseHtmls/docfile/_1.htm",
+      "license_path": "public/licenses/PLACENAMES-API-TERMS.txt",
+      "license_sha256": "49c4dee17beaaae6493ad239d0d30f2953a48dce0b79f623cf4cdc3da3e01f98",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint placenames adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "Zdic public dictionary entry content",
+      "repository": "https://www.zdic.net/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "CC0-1.0 statement in Zdic terms; public entry parsing, not an official API",
+      "license_source_url": "https://www.zdic.net/terms/",
+      "license_path": "public/licenses/ZDIC-TERMS.txt",
+      "license_sha256": "14e882ce80851241c8663045180c4ba6f76a6fe5aa56318b74de3c6a39fd5b3d",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint zdic adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "CNKGraph online writings and tune data",
+      "repository": "https://cnkgraph.com/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "Non-commercial research and study only; not a CC or software licence",
+      "license_source_url": "https://cnkgraph.com/Home/OpenResources",
+      "license_path": "public/licenses/CNKGRAPH-OPEN-TERMS.txt",
+      "license_sha256": "136f9b9db8a790e1a7a158441b5b62b8821a770d303059365d36d723b430b64b",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint cnkgraph adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "52poke online encyclopedia text",
+      "repository": "https://wiki.52poke.com/",
+      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
+      "license": "CC-BY-NC-SA-3.0 (text); media rights independent",
+      "license_source_url": "https://wiki.52poke.com/wiki/神奇宝贝百科:版权声明",
+      "license_path": "public/licenses/52POKE-COPYRIGHT.txt",
+      "license_sha256": "c8d5182cf5f74029cf27035b819fdfceea0c7cd173ccfc1a7f08078f433c54ed",
+      "local_directory": "upstream/online-services",
+      "file_manifest": "upstream/online-services/UPSTREAM.json",
+      "adaptation": "Original explicit-submit fixed-endpoint pokewiki adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
+    },
+    {
+      "name": "MDN Chinese reference prose",
+      "repository": "https://github.com/mdn/translated-content",
+      "version": "e7abcf317df79ab57e6053f48c8b1fec01920836",
+      "license": "CC-BY-SA-2.5",
+      "license_path": "public/vendor/reference-mdn-zh/LICENSE.md",
+      "license_sha256": "57c0d7e200fadfdbadb04b9ab220297809ba7f2ac0adaa6707a07fba432b2ebe",
+      "source_directory": "upstream/reference-mdn-zh",
+      "local_directory": "public/vendor/reference-mdn-zh",
+      "integrity_file": "public/vendor/reference-mdn-zh/UPSTREAM.json",
+      "import_script": "scripts/import-reference-mdn-zh.mjs",
+      "build_script": "scripts/build-reference-mdn-zh.mjs",
+      "scope": "Complete selected Chinese HTTP header reference, common MIME table and CSP glossary prose, exact identifier joins; no examples or media."
+    },
+    {
+      "name": "Unicode CLDR Chinese locale data",
+      "repository": "https://github.com/unicode-org/cldr-json",
+      "version": "48.2.0",
+      "license": "Unicode-3.0",
+      "license_path": "public/vendor/cldr/LICENSE.txt",
+      "license_sha256": "220ba0e1c43b99530d2d5bdb892a99dca0989414f51ab695ecd90163eaa1ec3b",
+      "source_directory": "upstream/cldr",
+      "local_directory": "public/vendor/cldr",
+      "integrity_file": "public/vendor/cldr/UPSTREAM.json",
+      "import_script": "scripts/import-cldr.mjs",
+      "scope": "Complete selected zh/zh-Hant locale files, en territories and UCD17 script value aliases; exact IDs only, not a translation of all Unicode or IANA contents."
+    },
+    {
+      "name": "IOC World Bird List Chinese names",
+      "repository": "https://www.worldbirdnames.org/new/ioc-lists/master-list-2/",
+      "version": "15.2",
+      "license": "CC-BY-3.0",
+      "license_path": "public/vendor/atlas-life-culture/IOC-CC-BY-3.0.txt",
+      "source_directory": "upstream/atlas-chinese",
+      "local_directory": "public/vendor/atlas-life-culture",
+      "integrity_file": "public/vendor/atlas-life-culture/UPSTREAM.json",
+      "scope": "Complete source multilingual workbook archived; exact scientific-name Chinese overlay for 11,075 AviList species; all original rows and fields retained.",
+      "license_sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76"
+    },
+    {
+      "name": "Wikidata composer Chinese labels and musical forms",
+      "repository": "https://www.wikidata.org/",
+      "version": "2026-10-17",
+      "license": "CC0-1.0",
+      "license_path": "public/vendor/atlas-life-culture/Wikidata-CC0-1.0.txt",
+      "source_directory": "upstream/atlas-chinese",
+      "local_directory": "public/vendor/atlas-life-culture",
+      "integrity_file": "public/vendor/atlas-life-culture/UPSTREAM.json",
+      "scope": "208 composers with exact label/alias, human instance and birth/death-year identity;14 source-fetched form labels used only for exact title-term keywords.",
+      "license_sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "name": "Wikidata geographical and deep-sky Chinese labels",
+      "repository": "https://www.wikidata.org/",
+      "version": "2026-10-17",
+      "license": "CC0-1.0",
+      "license_path": "public/licenses/REFERENCE-CHINESE-CC0-1.0.txt",
+      "license_sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "source_directory": "upstream/reference-chinese",
+      "local_directory": "public/vendor/reference-chinese",
+      "integrity_file": "public/vendor/reference-chinese/UPSTREAM.json",
+      "import_script": "scripts/import-reference-chinese.mjs",
+      "scope": "Partial exact-code Chinese naming overlays;235 capitals,5093 airports,33831 UNLOCODE locations,87 OpenNGC objects. Fixed complete responses include all26 UNLOCODE prefixes. Original databases unchanged; not an official nomenclature."
+    },
+    {
+      "name": "simple-keyboard",
+      "repository": "https://github.com/hodgef/simple-keyboard",
+      "version": "3.8.195",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/simple-keyboard.tar.gz",
+      "sha256": "dfb96a24949bec07fd2d5df213d7de5aab36e84221cd8915b07698ab15d2ab9f",
+      "local_directory": "public/vendor/completion/simple-keyboard",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "simple-keyboard-layouts",
+      "repository": "https://github.com/simple-keyboard/simple-keyboard-layouts",
+      "version": "3.4.269",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/simple-keyboard-layouts.tar.gz",
+      "sha256": "6c541edff003f453008a4258df50ede9845680bcd8e003545d82f8032b7d630c",
+      "local_directory": "public/vendor/completion/simple-keyboard-layouts",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "node-base91",
+      "repository": "https://github.com/Equim-chan/base91",
+      "version": "301b1a651bccbd78205011959cf3533870c4b671",
+      "license": "BSD-3-Clause",
+      "local_path": "upstream/completion-20261017/base91.tar.gz",
+      "sha256": "edc320520d82b497a03bcb9642e5caa1a7a879c1ff0a87393369484ca227e02d",
+      "local_directory": "public/vendor/completion/base91",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "Base65536",
+      "repository": "https://github.com/qntm/base65536",
+      "version": "5.0.0",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/base65536.tar.gz",
+      "sha256": "767627549367aec27666e0d7d7d69d1a4f47c9e754974dfb39d1392e94ef6671",
+      "local_directory": "public/vendor/completion/base65536",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "bwip-js / BWIPP",
+      "repository": "https://github.com/metafloor/bwip-js",
+      "version": "4.11.4",
+      "license": "MIT；Inconsolata 字体 SIL-OFL-1.1",
+      "local_path": "upstream/completion-20261017/bwip-js.tar.gz",
+      "sha256": "4bc84ad2fff0bf39af8666ea3fb771da6d63a2d54bbbcca8971e45e4500d8647",
+      "local_directory": "public/vendor/completion/bwip-js",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "FOLD",
+      "repository": "https://github.com/edemaine/fold",
+      "version": "0.12.0",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/fold.tar.gz",
+      "sha256": "bb13e2e274d234dfc79911d1f32f258ec2d0bb033311b5fd7f96c389e50c0794",
+      "local_directory": "public/vendor/completion/fold",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "OrigamiSimulator",
+      "repository": "https://github.com/amandaghassaei/OrigamiSimulator",
+      "version": "903ef27afcec7113390659935ae884798ed27188",
+      "license": "MIT；随包独立依赖许可见 NOTICE",
+      "local_path": "upstream/completion-20261017/origami.tar.gz",
+      "sha256": "a29dd7a77ecc3c3913cc7da181070e72fa9e8645e12889a62b117862487bd393",
+      "local_directory": "public/vendor/completion/origami",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "Liblouis",
+      "repository": "https://github.com/liblouis/liblouis",
+      "version": "52f776cead352235792445f2c568aa8e146cb58f",
+      "license": "LGPL-2.1-or-later（核心）；各翻译表按表头原许可，完整保留",
+      "local_path": "upstream/completion-20261017/liblouis-build.tar.gz",
+      "sha256": "198b576ed8007c479ae4ce004233d07c2c7a182c0066803c2f939d70b1a3cbf4",
+      "local_directory": "public/vendor/completion/liblouis",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "liblouis-js",
+      "repository": "https://github.com/liblouis/liblouis-js",
+      "version": "a91a717ea2b21364b4f766062b11777714beabf2",
+      "license": "GPL-3.0-or-later",
+      "local_path": "upstream/completion-20261017/liblouis-js.tar.gz",
+      "sha256": "62834e78e47c4844fb521e1e8de566b415e1beaad5a41fde9eb508f8f300ea1d",
+      "local_directory": "public/vendor/completion/liblouis",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "aaencode-cli",
+      "repository": "https://github.com/jikkai/aaencode-cli",
+      "version": "0.0.2",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/aaencode-cli.tar.gz",
+      "sha256": "95c3e965d946f0832b6436d7a29de3f748619a262ee3bf2b90534a8aaf9446e9",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "grunt-jjencode",
+      "repository": "https://github.com/blaiprat/grunt-jjencode",
+      "version": "0.1.0",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/grunt-jjencode.tar.gz",
+      "sha256": "a4005092085ae2b3d5505516accd98a4515296ae576434b73b7f82e42a583a73",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "liblouis-source",
+      "repository": "https://github.com/liblouis/liblouis",
+      "version": "52f776cead352235792445f2c568aa8e146cb58f",
+      "license": "LGPL-2.1-or-later",
+      "local_path": "upstream/completion-20261017/liblouis-source.tar.gz",
+      "sha256": "4d54dc0dba5ed51e6cca5632c4e77cf14404dc54d91db49926d647c0eb6e705b",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "qrazybox",
+      "repository": "https://github.com/Merricx/qrazybox",
+      "version": "72a0b00717c8bdebb6932174274c981e2c78fdaa",
+      "license": "MIT",
+      "local_path": "upstream/completion-20261017/qrazybox.tar.gz",
+      "sha256": "70df2e1deb951bf7a4d04752b5bc5d1d8af53c017750d2cb41ff8a6749e4f7c5",
+      "import_script": "scripts/build-completion-vendor.mjs"
+    },
+    {
+      "name": "NGA International Code of Signals",
+      "version": "1969 edition revised 2020",
+      "source_url": "https://msi.nga.mil/Publications/ICOS",
+      "local_path": "upstream/completion-20261017/marine/Pub102bk.pdf",
+      "license": "US Government work; no copyright claimed under Title 17 USC",
+      "import_script": "scripts/import-marine-codebook.py",
+      "sha256": "b2814807c53ba87239ccbe98db360703556048064eae97aa630d98bcc548d687",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json"
+    },
+    {
+      "name": "GS8 published rule facts",
+      "version": "Science Access Project archive, 2010",
+      "source_url": "https://web.archive.org/web/20100611002719/http://dots.physics.orst.edu/gs_technical.html",
+      "local_path": "upstream/completion-20261017/gs8/symbols.json",
+      "license": "Factual symbol assignments transcribed by this project; original explanatory prose not republished",
+      "import_script": "scripts/import-gs8.py",
+      "sha256": "81ac3007f1daf23885c5d195a3cfd9fb1360daa281b9920906b8c358740a81cf",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json"
+    },
+    {
+      "name": "GC Wizard Prussian codebook",
+      "version": "3.7.0",
+      "commit": "0ead04f8b626357e0e8fd649771c793f81ffbe68",
+      "source_url": "https://github.com/GCWizard/GCWizard",
+      "local_path": "upstream/completion-20261017/gcwizard/prussian_telegraph.dart",
+      "license": "GPL-3.0-or-later",
+      "import_script": "scripts/build-completion-vendor.mjs",
+      "sha256": "a3e7ad0294b4913aa8a458f724043798c805a6d73db5f653cd4003ec9fe52304",
+      "file_manifest": "public/vendor/completion/UPSTREAM.json"
+    },
+    {
+      "name": "Animate UI / Motion shared UI runtime",
+      "version": "Animate UI 2.0.0; Motion 14.4.0; React 19.3.1; Base UI 1.8.0",
+      "repository": "https://animate-ui.com/",
+      "source_repository": "https://github.com/imskyleen/animate-ui",
+      "license": "Animate UI MIT + Commons Clause; other bundled runtime packages MIT",
+      "local_directory": "public/vendor/ui-runtime",
+      "file_manifest": "public/vendor/ui-runtime/UPSTREAM.json",
+      "import_script": "scripts/build-ui-runtime.mjs",
+      "package_lock": "tools/ui-runtime/package-lock.json",
+      "adaptation": "Actual imported components including Animate UI Effect page entrances with original-node UI bridge; locally bundled by esbuild, no upstream source modifications or CDN."
+    },
+    {
+      "name": "gifuct-js",
+      "repository": "https://github.com/matt-way/gifuct-js",
+      "version": "2.1.2",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/gifuct-js/-/gifuct-js-2.1.2.tgz",
+      "archive_sha256": "6c7d1a46e36ce1ede8de4f928683bd6801022fd112342aebb36604d9d064e9f7",
+      "source_directory": "upstream/animation/packages/gifuct-js",
+      "local_directory": "public/vendor/animation",
+      "file_manifest": "public/vendor/animation/UPSTREAM.json",
+      "import_script": "scripts/import-animation.mjs",
+      "license_path": "public/vendor/animation/gifuct-js-LICENSE",
+      "license_sha256": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+      "adaptation": "Unmodified fixed package bundled locally; original source archive and all package files retained. Strict container, frame compositor and export adapters in public/animation."
+    },
+    {
+      "name": "js-binary-schema-parser",
+      "repository": "https://github.com/matt-way/jsBinarySchemaParser",
+      "version": "2.0.3",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/js-binary-schema-parser/-/js-binary-schema-parser-2.0.3.tgz",
+      "archive_sha256": "940ceb2581c6f2715a8d23e1db62a9b78dc7690a5a456493186b07721b6465f0",
+      "source_directory": "upstream/animation/packages/js-binary-schema-parser",
+      "local_directory": "public/vendor/animation",
+      "file_manifest": "public/vendor/animation/UPSTREAM.json",
+      "import_script": "scripts/import-animation.mjs",
+      "license_path": "public/vendor/animation/js-binary-schema-parser-LICENSE",
+      "license_sha256": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+      "adaptation": "Unmodified fixed package bundled locally; original source archive and all package files retained. Strict container, frame compositor and export adapters in public/animation."
+    },
+    {
+      "name": "UPNG.js",
+      "repository": "https://github.com/photopea/UPNG.js",
+      "version": "2.1.0",
+      "license": "MIT",
+      "source_url": "https://registry.npmjs.org/upng-js/-/upng-js-2.1.0.tgz",
+      "archive_sha256": "f9aba5cb21db38a737c5ca21ce4274432b24f365bf1eab0375bd41871c1aeffc",
+      "source_directory": "upstream/animation/packages/upng-js",
+      "local_directory": "public/vendor/animation",
+      "file_manifest": "public/vendor/animation/UPSTREAM.json",
+      "import_script": "scripts/import-animation.mjs",
+      "license_path": "public/vendor/animation/upng-js-LICENSE",
+      "license_sha256": "c1fb8861eca211bf5aea574358aba7039396c0c1824c2a1477cc126d398efd89",
+      "adaptation": "Unmodified fixed package bundled locally; original source archive and all package files retained. Strict container, frame compositor and export adapters in public/animation."
+    },
+    {
+      "name": "pako",
+      "repository": "https://github.com/nodeca/pako",
+      "version": "1.0.11",
+      "license": "(MIT AND Zlib)",
+      "source_url": "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz",
+      "archive_sha256": "0d4028dc0352a740c30cbfd772917f2744986d42bfa0b06ec7642bffe7ad3941",
+      "source_directory": "upstream/animation/packages/pako",
+      "local_directory": "public/vendor/animation",
+      "file_manifest": "public/vendor/animation/UPSTREAM.json",
+      "import_script": "scripts/import-animation.mjs",
+      "license_path": "public/vendor/animation/pako-LICENSE",
+      "license_sha256": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539",
+      "adaptation": "Unmodified fixed package bundled locally; original source archive and all package files retained. Strict container, frame compositor and export adapters in public/animation."
+    },
+    {
+      "name": "Qalculate! / libqalculate",
+      "repository": "https://github.com/Qalculate/libqalculate",
+      "version": "5.13.0",
+      "license": "GPL-2.0-or-later (combined WASM GPL-3.0-or-later)",
+      "source_url": "https://github.com/Qalculate/libqalculate/releases/download/v5.13.0/libqalculate-5.13.0.tar.gz",
+      "source_directory": "upstream/qalculate",
+      "corresponding_source": "public/vendor/qalculate/source.zip",
+      "local_directory": "public/vendor/qalculate",
+      "file_manifest": "public/vendor/qalculate/UPSTREAM.json",
+      "license_path": "public/vendor/qalculate/CORE-LICENSE",
+      "license_sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+      "adaptation": "Full official libqalculate engine and definitions compiled locally. All runtime files and sources pinned in UPSTREAM.json; Gnuplot uses unchanged qalculate-nb browser binaries and its fixed build recipe.",
+      "unit_notation_adapter": {
+        "generator": "scripts/build-qalculate-units.py",
+        "output": "public/qalculate/unit-definitions.json",
+        "sha256": "cb7605a9c30f0b055588feeec681a5b49a737882eef3235f2ef6c48a5fee5ebc",
+        "notice": "public/qalculate/UNIT-DEFINITIONS-NOTICE.txt",
+        "scope": "All original XML unit identifiers and input-safe composite notation; conversion performed by libqalculate."
+      }
+    },
+    {
+      "name": "GMP",
+      "repository": "https://gmplib.org/",
+      "version": "6.3.0",
+      "license": "LGPL-3.0-or-later OR GPL-2.0-or-later",
+      "source_url": "https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz",
+      "source_directory": "upstream/qalculate",
+      "corresponding_source": "public/vendor/qalculate/source.zip",
+      "local_directory": "public/vendor/qalculate",
+      "file_manifest": "public/vendor/qalculate/UPSTREAM.json",
+      "license_path": "public/vendor/qalculate/GMP-LICENSE",
+      "license_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "adaptation": "Full official libqalculate engine and definitions compiled locally. All runtime files and sources pinned in UPSTREAM.json; Gnuplot uses unchanged qalculate-nb browser binaries and its fixed build recipe."
+    },
+    {
+      "name": "MPFR",
+      "repository": "https://www.mpfr.org/",
+      "version": "4.2.1",
+      "license": "LGPL-3.0-or-later",
+      "source_url": "https://www.mpfr.org/mpfr-4.2.1/mpfr-4.2.1.tar.xz",
+      "source_directory": "upstream/qalculate",
+      "corresponding_source": "public/vendor/qalculate/source.zip",
+      "local_directory": "public/vendor/qalculate",
+      "file_manifest": "public/vendor/qalculate/UPSTREAM.json",
+      "license_path": "public/vendor/qalculate/MPFR-LICENSE",
+      "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "adaptation": "Full official libqalculate engine and definitions compiled locally. All runtime files and sources pinned in UPSTREAM.json; Gnuplot uses unchanged qalculate-nb browser binaries and its fixed build recipe."
+    },
+    {
+      "name": "libxml2",
+      "repository": "https://gitlab.gnome.org/GNOME/libxml2",
+      "version": "2.9.12",
+      "license": "MIT",
+      "source_url": "https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.12.tar.xz",
+      "source_directory": "upstream/qalculate",
+      "corresponding_source": "public/vendor/qalculate/source.zip",
+      "local_directory": "public/vendor/qalculate",
+      "file_manifest": "public/vendor/qalculate/UPSTREAM.json",
+      "license_path": "public/vendor/qalculate/XML-LICENSE",
+      "license_sha256": "c5c63674f8a83c4d2e385d96d1c670a03cb871ba2927755467017317878574bd",
+      "adaptation": "Full official libqalculate engine and definitions compiled locally. All runtime files and sources pinned in UPSTREAM.json; Gnuplot uses unchanged qalculate-nb browser binaries and its fixed build recipe."
+    },
+    {
+      "name": "Gnuplot",
+      "repository": "https://www.gnuplot.info/",
+      "version": "5.4.10",
+      "license": "Gnuplot custom license",
+      "source_url": "https://sourceforge.net/projects/gnuplot/files/gnuplot/5.4.10/gnuplot-5.4.10.tar.gz",
+      "source_directory": "upstream/qalculate",
+      "corresponding_source": "public/vendor/qalculate/source.zip",
+      "local_directory": "public/vendor/qalculate",
+      "file_manifest": "public/vendor/qalculate/UPSTREAM.json",
+      "license_path": "public/vendor/qalculate/GNUPLOT-LICENSE",
+      "license_sha256": "895928ec0735cca1c8cec42656c7e314a065d0242813bb8693c0c1bf61fd4e4d",
+      "adaptation": "Full official libqalculate engine and definitions compiled locally. All runtime files and sources pinned in UPSTREAM.json; Gnuplot uses unchanged qalculate-nb browser binaries and its fixed build recipe."
+    },
+    {
+      "name": "Emscripten Qalculate runtime",
+      "repository": "https://github.com/emscripten-core/emscripten",
+      "version": "3.1.67",
+      "license": "MIT / NCSA with bundled runtime licenses",
+      "source_url": "https://github.com/emscripten-core/emscripten/tree/3.1.67",
+      "source_directory": "upstream/qalculate",
+      "corresponding_source": "public/vendor/qalculate/source.zip",
+      "local_directory": "public/vendor/qalculate",
+      "file_manifest": "public/vendor/qalculate/UPSTREAM.json",
+      "license_path": "public/vendor/qalculate/EMSCRIPTEN-LICENSE",
+      "license_sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+      "adaptation": "Full official libqalculate engine and definitions compiled locally. All runtime files and sources pinned in UPSTREAM.json; Gnuplot uses unchanged qalculate-nb browser binaries and its fixed build recipe."
+    },
+    {
+      "name": "SeqViz full local viewer",
+      "repository": "https://github.com/Lattice-Automation/seqviz",
+      "version": "3.10.25",
+      "commit": "7a0e8f4c45ad5f4d076178f54f08f071e91d7b6a",
+      "local_directory": "public/vendor/science/seqviz",
+      "file_manifest": "public/vendor/science/seqviz/UPSTREAM.json",
+      "import_script": "scripts/build-upstream-completion.mjs",
+      "license": "MIT and bundled independent notices"
+    },
+    {
+      "name": "cnchar complete plugins and local resources",
+      "repository": "https://github.com/theajack/cnchar",
+      "version": "cnchar-all 3.2.6; cnchar-data 1.1.0",
+      "local_directory": "public/vendor/hanzi-full",
+      "file_manifest": "public/vendor/hanzi-full/UPSTREAM.json",
+      "import_script": "scripts/build-upstream-completion.mjs",
+      "license": "MIT; glyph resources Arphic Public License"
+    },
+    {
+      "name": "Make Me a Hanzi full graphics",
+      "repository": "https://github.com/skishore/makemeahanzi",
+      "commit": "bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+      "local_directory": "public/vendor/hanzi-full",
+      "file_manifest": "public/vendor/hanzi-full/UPSTREAM.json",
+      "license": "Arphic Public License; dictionary separately LGPL-3.0-or-later"
     }
   ],
   "retired_components": [

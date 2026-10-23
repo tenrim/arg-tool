@@ -1,8 +1,5 @@
 # 结果联动与邮件反馈
 
-源码版默认只提供本机报告复制／下载，不创建发送或附件入口。只有部署者在 `public/deployment.js` 配置同源 `feedbackEndpoint` 并自行部署服务后，下文的邮件发送流程才适用。前端不保存 SMTP 凭据。
-
-
 ## 用其他工具处理
 
 编解码／加解密任务、基础转换、处理链、图片提取／二维码、图片原文件与当前处理视图、文件原字节和 ZIP 选中条目提供“用其他工具处理”入口。三维模型、资料查询、模拟器不强制增加入口，保留原有具名操作。
@@ -19,35 +16,47 @@
 
 用户可查看报告，并主动选择最多 2 个／合计 4 MB 附件。只有点击发送才调用同源 `api/feedback`。复制／下载仅导出文字报告，所选附件需另行提供。邮件正文、联系人和附件都是用户主动提交的信息，不使用联系方式作为 SMTP 邮件头。
 
-## 1Panel 部署邮件服务
+## 1Panel：一个 npm start 启动网站与邮件
 
-网站继续作为静态站点运行；额外部署 `services/feedback` 的 Node.js 24 服务。邮件服务只负责报告，不参与工具运算，不与静态目录放在一起公开。
+适用于已经通过项目根目录 `npm start` 运行工具箱的网站。Node.js 24 或更新版本下，同一个进程提供网页和反馈接口，并在私有回环地址启动附属邮件服务。1Panel 只管理原来的一个运行环境；关闭或重启网站时，附属邮件服务一同关闭或重新启动。工具计算仍在浏览器内完成。
 
-1. 在静态网站根目录之外放置 `services/feedback`，运行 `npm ci --omit=dev --ignore-scripts`。
-2. 复制 `.env.example` 为 `.env`，配置 SMTP_HOST、SMTP_PORT、SMTP_USER、SMTP_PASS、REPORT_TO。QQ 邮箱使用授权码及 smtp.qq.com:465；配置只保存在服务端。`.env` 已被 Git 忽略，不随网页发布。
-3. ALLOWED_ORIGINS 设置为实际网站源，如 `https://www.tool.mistarg.cn`，不带路径或结尾斜杠。多个源用逗号分隔。不能用 `*`。
-4. 运行 `npm run verify-mail` 检查 TLS 与登录，这一步不发邮件。用 1Panel 的 Node 运行环境或进程管理运行 `npm start`，默认监听 127.0.0.1:6143。容器部署时按容器网络设置 HOST，并且不要将该端口直接对公网开放。
-5. 在网站 OpenResty 配置中添加下面的精确接口代理。若网站位于 `/tools/` 子目录，把 location 改为 `/tools/api/feedback`，proxy_pass 仍指向 `/api/feedback`。
+### 首次配置
 
-```nginx
-location = /api/feedback {
-    client_max_body_size 6m;
-    proxy_pass http://127.0.0.1:6143/api/feedback;
-    proxy_set_header Origin $http_origin;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_connect_timeout 5s;
-    proxy_read_timeout 30s;
-}
+1. 1Panel 项目目录仍指向仓库根目录，启动命令保持 `npm start`。保留现有已正常工作的应用端口、外部映射和网站反向代理。
+2. 首次将 `services/feedback/.env.example` 复制为同目录的 `.env`，填写 `SMTP_HOST`、`SMTP_PORT`、`SMTP_USER`、`SMTP_PASS` 和固定收件人 `REPORT_TO`；已有 `.env` 时直接编辑并保留原邮箱配置。QQ 邮箱使用授权码及 `smtp.qq.com:465`。服务器上的私密文件需自行配置，本机的 `.env` 不会随 Git 同步。
+3. 将 `ALLOWED_ORIGINS` 填为实际网站的完整源，例如 `https://www.tool.mistarg.cn`。多个源用逗号分隔；协议、域名和非默认端口必须与浏览器地址一致，不带路径、结尾斜杠或通配符。环境变量优先于私密文件。当前本机实际端口的 localhost／127.0.0.1 源也可使用；不能根据请求头自动信任其他来源。
+4. 运行下面的命令检查 SMTP 连接与登录；不会发送真实邮件：
+
+```bash
+npm --prefix services/feedback run verify-mail
 ```
 
-本机代理且 X-Real-IP 由代理覆盖时，服务设置 TRUST_PROXY=true。服务仅在直连对端为回环地址时信任此头；跨容器代理默认按直连地址限流，应调整部署网络，使可信代理与服务通过回环通信，或在代理额外配置逐 IP 限流。每来源 10 分钟最多 5 次新报告，全服务每小时最多 60 次。
+5. 重启 1Panel 中原有网站运行环境。启动日志会明确显示 `FEEDBACK_READY`，或配置／依赖准备失败等原因码；不会打印邮箱授权码。缺少配置时网页仍可使用，问题报告可复制或下载。
 
-服务仅向配置的固定接收邮箱发送。成功响应代表 SMTP 已接收，不保证邮件一定进入收件箱。相同报告编号在当前服务进程内去重 24 小时；明确的 SMTP 拒收允许用户手动重试；超时或状态不确定时不会再次投递，防止实际已发送却重复发信。重启会清空去重与限流记录。遇到不确定状态，可复制报告联系维护者；修改报告会生成新编号。此版本没有持久邮件队列或管理员后台，收件箱承担问题管理。
+邮件配置有效时，启动会自动检查服务目录的固定依赖。首次安装、依赖缺失、安装版本不符或 `package.json`／`package-lock.json` 发生变化时，自动执行该服务的 `npm ci --omit=dev --ignore-scripts`；成功后将摘要标记保存在被忽略的 `services/feedback/node_modules/` 中。普通重启复用已有依赖，不访问 npm；未配置邮件时也不安装。1Panel 根目录的 `npm install` 无须另加子目录安装命令。首次安装或依赖更新需能连接配置的 npm 源，最长等待 90 秒；失败时网页仍可使用，修复网络或目录权限后重启即可重试。
 
-## 本地配置与检查
+`/api/feedback` 与网页共用现有网站端口，内部邮件端口随机分配且只监听回环地址；无需新增 6143 公网映射、第二个运行环境或单独的邮件进程。私密文件中的 `HOST`／`PORT` 只供下方的独立部署使用，不会改动当前网站端口。若曾配置 `FEEDBACK_URL`，切换统一启动时应移除它；该变量仍作为显式独立服务模式保留。若曾有 `/api/feedback` 指向旧 6143 服务的专用代理，应让该路径随网页请求转发到当前网站运行环境，避免绕过统一启动服务。
 
-可用 `node services/feedback/configure.mjs <邮箱文本路径>` 导入发送邮箱、授权码和接收邮箱；只写入被忽略的 `services/feedback/.env`，不打印值。默认仅允许 localhost:16142 和 localhost:16143，生产部署需修改源。
+### 反向代理与限流
 
-启动邮件服务后，开发静态服务设置 FEEDBACK_URL=http://127.0.0.1:6143，执行 `node scripts/server.mjs --port 16143`。该代理只接受本机目标。没有配置服务时，网页仍可复制、下载报告。
+统一启动会使用网站连接的实际对端地址区分报告来源；不会直接信任访客自填的 `X-Real-IP` 或 `X-Forwarded-For`。若网站经过 OpenResty 代理，可在 1Panel 环境变量或私密 `.env` 中设置 `FEEDBACK_TRUSTED_PROXIES` 为网站进程实际看到的代理 IP；多个精确 IP 用逗号分隔，支持 IPv4／IPv6，不支持通配符或整个网段。
 
-验证归属：`tests/handoff.test.mjs`、`tests/feedback.test.mjs` 与 `scripts/browser-handoff-feedback.mjs`；其他行为按 [测试政策](TESTING_POLICY.md) 选择。后台依赖仅 Nodemailer 10.1.1（MIT-0），固定锁在服务目录，不增加前端 npm 依赖。
+仅当直接对端命中这个列表时，网站才采纳一个合法的 `X-Real-IP`。代理配置应覆盖该头，例如 `proxy_set_header X-Real-IP $remote_addr;`。容器之间的实际对端可能是容器网关地址，应按自己的网络填写；不要把网站域名或全部容器网段当成可信代理。不配置时按直接对端限流，若所有访客经同一个代理，会共享该地址的提交额度。邮件原有的每地址 10 分钟最多 5 次新报告、全服务每小时最多 60 次以及报告去重仍保留。
+
+### 日常更新
+
+同步代码后，在 1Panel 重启原网站运行环境即可同时更新网页与邮件服务；依赖锁有变化也由启动流程自动处理，无须手动安装子目录依赖。保留现有项目目录及其中的私密 `.env`；同步代码不会覆盖它。无需在服务器运行测试、创建第二个运行环境或新增公网端口。
+
+## 可选：纯静态网站加独立邮件服务
+
+纯静态 OpenResty 托管仍可继续使用；这时没有根目录的 Node 网站进程，需要独立运行 `services/feedback`。该目录中配置私密 `.env` 后运行 `npm start`，同样自动准备固定依赖，默认监听 `127.0.0.1:6143`，网站的精确 `/api/feedback` 代理指向邮件服务实际可达的地址。容器内回环地址只属于该容器，不能直接用它访问另一个容器；具体网络按现有部署设置。
+
+独立邮件服务的 `TRUST_PROXY=true` 只在直连对端为回环地址时接受代理覆盖的 `X-Real-IP`；跨容器部署需在代理层保留逐地址限流，不能靠该开关盲目信任外部请求。统一启动的代理白名单由上面的 `FEEDBACK_TRUSTED_PROXIES` 单独控制。
+
+## 报告投递与本地配置
+
+服务仅向配置的固定接收邮箱发送。成功响应代表 SMTP 已接收，不保证邮件一定进入收件箱。相同报告编号在当前服务进程内去重 24 小时；明确的 SMTP 拒收允许手动重试，超时或状态不确定时不会再次投递。重启会清空内存去重与限流记录。本服务没有持久邮件队列或管理员后台。
+
+可用 `node services/feedback/configure.mjs <邮箱文本路径>` 导入发送邮箱、授权码和接收邮箱；只写入被忽略的私密文件，不打印值。随后按实际网站设置 `ALLOWED_ORIGINS`。根目录 `npm start` 与 `node scripts/server.mjs --port 16319` 使用同一启动逻辑，启动本身不验证 SMTP 登录或发送邮件。配置只由 Node 读取，不进入静态发布包或浏览器响应。
+
+验证归属为 `tests/feedback-dependencies.test.mjs`、`tests/dev-feedback.test.mjs`、`tests/server.test.mjs`、`tests/feedback.test.mjs` 与 `scripts/browser-handoff-feedback.mjs`；按 [测试政策](TESTING_POLICY.md) 选择本次范围。依赖准备单元使用隔离的临时目录和模拟 npm，不访问真实包源、不发送邮件。邮件依赖仅固定 Nodemailer 10.1.1（MIT-0），锁在服务目录；主前端构建仍无须 npm 安装依赖。

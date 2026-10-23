@@ -1,6 +1,7 @@
 import {Box, Button, Card, DataList, EmptyState, Field, FilePicker, Input, Option, Select, SplitView, Status, Textarea, Toolbar, onDisconnect, setState, setTextareaValue, updateStatus} from '../ui/index.js';
 import {mount, download, copy} from '../round1/common.js';
 import {goCoordinate, GO_LIMITS} from './go-core.js';
+import {resultRecording} from '../result-recording.js';
 const ns = 'http://www.w3.org/2000/svg';
 const svg = (tag, attrs = {}, text) => {const node = document.createElementNS(ns, tag); for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value); if (text !== undefined) node.textContent = text; return node;};
 export function drawGoBoard(game, state, flipped = false) {
@@ -52,11 +53,13 @@ export function initGo() {
       Card({title: '棋谱与注释', children: [info, notes, moves, Toolbar({children: [save, clipboard]})]})
     ]})
   ]}), panel.querySelector('.tool-provenance'));
+  const recording=resultRecording({id:'go-result',anchor:save.parentElement,panel});
   let games = null, game = null, current = null, source = '', flipped = false, worker = null, timer = null, version = 0, reading = false;
   const choices = new Map();
   const syncBusy = () => {setState(load, {busy: Boolean(worker) || reading, disabled: Boolean(worker) || reading}); stop.disabled = !worker && !reading;};
   function terminate() {worker?.terminate(); worker = null; clearTimeout(timer);}
-  function invalidate(text = '棋谱已修改，请重新载入。') {
+  function invalidate(text = '') {
+    recording.clear();
     version++; terminate(); reading = false; games = game = current = null; source = ''; choices.clear();
     board.replaceChildren(EmptyState({text: '载入 SGF 后显示棋盘'})); info.replaceChildren(); notes.replaceChildren(); moves.replaceChildren(); readout.textContent = '';
     gameSelect.replaceChildren(); branch.replaceChildren(); for (const node of [...nav, slider, flip, save, image, clipboard, gameSelect, branch]) node.disabled = true;
@@ -71,6 +74,7 @@ export function initGo() {
   }
   function draw() {
     board.replaceChildren(drawGoBoard(game, current, flipped));
+    recording.publish({text:JSON.stringify({sgf:source,gameId:game.id,current:structuredClone(current)},null,2),name:'围棋复盘记录.json'});
     readout.textContent = `第 ${current.ply} 手 · ${current.turn === 1 ? '黑' : '白'}方行棋 · 黑方提子 ${current.black} / 白方提子 ${current.white}`;
     info.replaceChildren(DataList({items: game.fields}));
     notes.replaceChildren(Box({tag: 'h3', text: current.name || '当前注释'}), Box({tag: 'p', className: 'go-comment-text', text: current.comment || '此节点没有注释'}));

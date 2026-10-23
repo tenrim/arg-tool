@@ -12,6 +12,7 @@ import {
   download,
   textFile,
 } from "./common.js";
+import {resultRecording} from '../result-recording.js';
 export function init(root) {
   uiRender(root, box(
       field(
@@ -52,6 +53,7 @@ export function init(root) {
             ]),
         ),
     )}${box('<p id="chess-turn"></p><div id="chess-moves" class="r4-moves"></div>' + field("当前 FEN（可选中复制）", '<textarea id="chess-fen" readonly rows="3"></textarea>') + row(button("chess-save", "下载当前 FEN") + button("chess-pgn", "下载棋谱")) + '')}</div>`);
+  const recording=resultRecording({id:'chess-result',anchor:$('chess-save').parentElement,onLeave:()=>{fileToken++;}});
   let start = new Chess().fen(),
     moves = [],
     pos = 0,
@@ -89,6 +91,7 @@ export function init(root) {
         $("chess-board").append(b);
       }
     $("chess-fen").value = game.fen();
+    const all=new Chess(start);moves.forEach(move=>all.move(move));recording.publish({text:JSON.stringify({start,moves:[...moves],position:pos,fen:game.fen(),pgn:all.pgn()},null,2),name:'棋谱复盘.json'});
     $("chess-turn").textContent =
       `第 ${pos} / ${moves.length} 半回合 · ${game.turn() === "w" ? "白" : "黑"}方行棋` +
       (game.isCheckmate()
@@ -168,9 +171,9 @@ export function init(root) {
     }
   };
   let fileToken = 0;
-  $("chess-input").oninput = () => fileToken++;
+  $("chess-input").oninput = () => {recording.clear();fileToken++;};
   $("chess-file").onchange = async () => {
-    const token = ++fileToken;
+    recording.clear();const token = ++fileToken;
     try {
       const f = $("chess-file").files[0],
         text = await textFile(f, 0.1 * 1024 * 1024);

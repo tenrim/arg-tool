@@ -1,4 +1,19 @@
-import {create, setState} from './core.js';
+import {create, setState, onDisconnect} from './core.js';
+const confirmations = new WeakMap();
+
+// Call only after the real operation succeeds. No optimistic success on click.
+export function confirmAction(node) {
+  if (!node?.isConnected || node.disabled) return;
+  let state = confirmations.get(node);
+  if (!state) {
+    const clear = () => {clearTimeout(state.timer);delete node.dataset.actionFeedback;};
+    state = {clear};confirmations.set(node,state);
+    node.addEventListener('click',clear);
+    onDisconnect(node,()=>{clear();node.removeEventListener('click',clear);confirmations.delete(node);});
+  }
+  state.clear();node.dataset.actionFeedback='success';
+  state.timer=setTimeout(state.clear,1600);
+}
 
 export function Status(options = {}) {
   return create('status', options.tag || 'p', {...options,

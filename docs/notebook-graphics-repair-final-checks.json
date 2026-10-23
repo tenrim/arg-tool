@@ -1,0 +1,46 @@
+{
+  "run_at": "2026-10-16T06:59:50.363Z",
+  "reason": "Remaining affected checks plus current native direction metadata adapter; already passed unrelated portions of this repair are retained in the first report.",
+  "results": [
+    {
+      "id": "architecture",
+      "exit_code": 0,
+      "duration_ms": 152
+    },
+    {
+      "id": "ui-policy",
+      "exit_code": 0,
+      "duration_ms": 162
+    },
+    {
+      "id": "syntax",
+      "exit_code": 0,
+      "duration_ms": 565
+    },
+    {
+      "id": "browser:capabilities",
+      "exit_code": 0,
+      "duration_ms": 33182
+    },
+    {
+      "id": "browser:capability-resilience",
+      "exit_code": 0,
+      "duration_ms": 11577
+    },
+    {
+      "id": "browser:graphics",
+      "exit_code": 0,
+      "duration_ms": 35151
+    },
+    {
+      "id": "browser:notebook",
+      "exit_code": 0,
+      "duration_ms": 29621
+    },
+    {
+      "id": "browser:ui-layout",
+      "exit_code": 0,
+      "duration_ms": 49372
+    }
+  ]
+}

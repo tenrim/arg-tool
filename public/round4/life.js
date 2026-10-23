@@ -53,6 +53,7 @@ export function parseRLE(text) {
   if (!ended || count) throw Error("RLE 缺少结束符 !。");
   return { width: +m[1], height: +m[2], cells };
 }
+import {resultRecording} from '../result-recording.js';
 export function init(root) {
   uiRender(root, box(
       row(
@@ -75,6 +76,7 @@ export function init(root) {
             button("life-export", "导出可见区域 RLE"),
         ),
     ));
+  const recording=resultRecording({id:'life-result',anchor:$('life-export').parentElement});
   let universe = new LifeUniverse(),
     size = 48,
     timer = null,
@@ -84,9 +86,11 @@ export function init(root) {
   const canvas = $("life-canvas"),
     ctx = canvas.getContext("2d");
   function stop() {
+    recording.clear();
     clearTimeout(timer);
     timer = null;
     $("life-play").textContent = "连续运行";
+    if(universe.root.population)recording.publish(()=>({text:exportRLE(),name:'生命游戏-可见区域.rle'}));
   }
   function draw() {
     const dpr = Math.min(devicePixelRatio || 1, 2),
@@ -123,6 +127,7 @@ export function init(root) {
       ctx.lineTo(left + size * cell, top + i * cell);
     }
     ctx.stroke();
+    if(universe.root.population)recording.publish(()=>({text:exportRLE(),name:'生命游戏-可见区域.rle'}));else recording.clear();
     $("life-info").textContent =
       `第 ${universe.generation} 代 · 总存活 ${universe.root.population} · 视窗 ${size} × ${size}`;
   }
@@ -225,7 +230,7 @@ export function init(root) {
     draw();
     setStatus("life-status", `已导入 ${p.cells.length} 个细胞。`);
   });
-  $("life-export").onclick = () => {
+  function exportRLE() {
     const rows = [];
     for (let y = 0; y < size; y++) {
       let line = "",
@@ -249,8 +254,10 @@ export function init(root) {
       rows.push(line);
     }
     const out = `x = ${size}, y = ${size}, rule = B3/S23\n${rows.join("$")}!`;
-    download(out, "生命游戏-可见区域.rle");
-  };
+    return out;
+  }
+  $("life-export").onclick=()=>download(exportRLE(),'生命游戏-可见区域.rle');
+  $('life-rle').addEventListener('input',()=>recording.clear());
   watchSize($("life-view"), draw);
   document.addEventListener("arg:panelchange", (e) => {
     if (e.detail.name !== "life") stop();

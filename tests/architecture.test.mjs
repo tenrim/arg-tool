@@ -27,6 +27,33 @@ test('boundaries reject UI back-imports, worker-to-UI and accidental cross-featu
   assert.match(issues,/root-level feature/);
   assert.equal(cyclesOf(graph).length,1);
 });
+
+test('the metadata search adapter alone may import the pinned pure fuzzy library',()=>{
+  const allowed=new Map([['public/capabilities/search.js',{imports:['public/vendor/fuse/fuse.js']}]]);
+  assert.deepEqual(boundaryViolations(allowed,closure),[]);
+  for(const [from,to]of [['public/capabilities/search.js','public/ui/index.js'],['public/navigation.js','public/vendor/fuse/fuse.js'],['public/capabilities/search.js','public/science/core.js']]){
+    assert.ok(boundaryViolations(new Map([[from,{imports:[to]}]]),closure).some(issue=>issue.includes('discovery data')));
+  }
+});
+
+test('组合入口不重新接管媒体算法、计算内核或表单状态',()=>{
+ const wrong=new Map([
+  ['public/app.js',{imports:['public/media.js']}],
+  ['public/practical/index.js',{imports:['public/qalculate/client.js','public/ui/index.js']}]
+ ]);
+ const issues=boundaryViolations(wrong,closure).join('\n');
+ assert.match(issues,/bootstrap composes controllers/);assert.match(issues,/practical entry composes domain views only/);
+ const right=new Map([
+  ['public/app.js',{imports:['public/media-workspace/audio.js','public/media-workspace/file.js']}],
+  ['public/practical/index.js',{imports:['public/practical/date-view.js','public/practical/geometry-view.js']}]
+ ]);
+ assert.deepEqual(boundaryViolations(right,closure),[]);
+});
+
+test('魔方观察来源使用单向具名桥，不扩大其他功能的根模块访问权限',()=>{
+ assert.deepEqual(boundaryViolations(new Map([['public/round1/cube.js',{imports:['public/project-sources.js']}]]),closure),[]);
+ assert.ok(boundaryViolations(new Map([['public/round1/hanzi.js',{imports:['public/project-sources.js']}]]),closure).some(issue=>issue.includes('root-level feature')));
+});
 test('route extraction preserves direction, original operation IDs and contains only route identity',()=>{
   const entry={id:'chef:To Base64',route:'encoding',input:'private clue'};
   const [path,query]=capabilityRoute(entry,'From Base64','decode').split('?');

@@ -1,4 +1,4 @@
-import {element as uiElement, Option as uiOption, Field, CheckGroup, uid} from '../ui/index.js';
+import {element as uiElement, Option as uiOption, Box, Field, CheckGroup, uid} from '../ui/index.js';
 import {parameterName,optionName,operationName} from '../cyberchef-i18n.js';
 const elem=uiElement;
 export const schemas = operation => operation.args.filter(arg => arg.type !== 'label');
@@ -46,7 +46,12 @@ export function renderParameters(fields,definition,step,onChange){fields.replace
         }
         if(control.tagName!=='DIV')control.setAttribute('aria-label',`${operationName(step.op)} ${parameterName(arg.name)}`);
         if(!composite){control.id=uid('parameter');field.htmlFor=control.id;}
-        field.append(control);
+        if(arg.type.startsWith('editable')) {
+          const choices=field.querySelector('select');
+          const syncPreset=()=>{choices.value=[...choices.options].some(option=>option.value===control.value)?control.value:'';};
+          control.addEventListener('input',syncPreset);syncPreset();
+          field.append(Box({className:'chef-editable-value',children:[choices,control]}));
+        } else field.append(control);
         if(arg.type==='boolean'){if(!checks){checks=CheckGroup();fields.append(checks);}checks.append(field);}else{checks=null;fields.append(field);}
       });
       function visibility() { const labels=[...fields.querySelectorAll('[data-arg]')];for(const field of labels)field.hidden=false;args.forEach((arg,i)=>{if(arg.type==='argSelector'){const option=arg.value.find(v=>v.name===step.args[i]);for(const n of option?.off||[])if(labels[n])labels[n].hidden=true;for(const n of option?.on||[])if(labels[n])labels[n].hidden=false;}}); }

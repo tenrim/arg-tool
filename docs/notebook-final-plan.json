@@ -1,0 +1,110 @@
+{
+  "run_at": "2026-10-16T04:00:16.036Z",
+  "mode": "affected",
+  "files": [
+    "README.md",
+    "THIRD_PARTY.md",
+    "docs/NOTEBOOK.md",
+    "public/notebook/editor.js",
+    "public/notebook/model.js",
+    "public/notebook/page.css",
+    "public/notebook/page.js",
+    "public/notebook/store.js",
+    "scripts/browser-notebook.mjs",
+    "tests/notebook.test.mjs"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "docs",
+      "command": [
+        "node",
+        "scripts/audit-docs.mjs"
+      ],
+      "reasons": [
+        "README.md",
+        "THIRD_PARTY.md",
+        "docs/NOTEBOOK.md"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.js",
+        "public/notebook/store.js"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/store.js"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "scripts/browser-notebook.mjs",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js, public/notebook/model.js, public/notebook/page.js, public/notebook/store.js, scripts/browser-notebook.mjs, tests/notebook.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "tests/notebook.test.mjs"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "scripts/browser-notebook.mjs"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

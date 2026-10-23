@@ -1,0 +1,205 @@
+[
+  {
+    "id": "D0891",
+    "name": "Aztec Barcode",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/aztec-barcode",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0892",
+    "name": "Barcode 39",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-39",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0893",
+    "name": "Barcode 93",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-93",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0894",
+    "name": "Barcode 128",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-128",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0895",
+    "name": "Barcode Codabar",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-codabar",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0896",
+    "name": "Barcode EAN8",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-ean8",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0897",
+    "name": "Barcode EAN13",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-ean13",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0898",
+    "name": "Barcode Generator",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcodes",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0899",
+    "name": "Barcode PLANET",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-planet",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0900",
+    "name": "Barcode POSTNET",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcode-postnet",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0914",
+    "name": "French Postal Barcode",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/french-postal-barcode",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0918",
+    "name": "QR Code",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/qr-code",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D0980",
+    "name": "Barcodes Country Codes",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.dcode.fr/barcodes-country-codes",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1164",
+    "name": "encode / Barcode generator",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://www.barcode-generator.org/",
+    "status": "待核实"
+  },
+  {
+    "id": "D1165",
+    "name": "decode [IMG] / Barcode decoder",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://www.onlinebarcodereader.com/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1282",
+    "name": "wikipedia",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://en.wikipedia.org/wiki/Barcode",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1283",
+    "name": "barcoding.com",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://www.barcoding.com/information/barcode-symbology-definition.shtml",
+    "status": "待核实"
+  },
+  {
+    "id": "D1284",
+    "name": "Barcode decoder (zxing.org) / decode",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://zxing.org/w/decode.jspx",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1285",
+    "name": "Barcode decoder (2dtg.com) / decode",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://www.2dtg.com/decode",
+    "status": "待核实"
+  },
+  {
+    "id": "D1290",
+    "name": "Google Code Archive - Long-term storage for Google Code Project Hosting.",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://code.google.com/p/postscriptbarcode/wiki/ChannelCode",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1293",
+    "name": "encode",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://www.racoindustries.com/barcodegenerator/2d/code-16k.aspx",
+    "status": "待核实"
+  },
+  {
+    "id": "D1294",
+    "name": "Code16K",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://code.google.com/p/postscriptbarcode/wiki/Code16K",
+    "status": "待核实"
+  },
+  {
+    "id": "D1308",
+    "name": "trillcode-barcode",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 部分覆盖；识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://blog.barcoding.com/2009/02/trillcode-barcode/",
+    "status": "待核实"
+  },
+  {
+    "id": "D1504",
+    "name": "ZXing (Zebra Crossing) opensource barcode project",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "http://code.google.com/p/zxing/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1597",
+    "name": "在线二维码生成器",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.jyshare.com/front-end/3454/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D1896",
+    "name": "草料二维码 免费制作出能高效解决业务问题的二维码",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://cli.im/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "D2402",
+    "name": "https://github.com/merricx/qrazybox/",
+    "difference": "只有模板/矩阵/格式位穷举；独立RS擦除、填充位恢复和序列调试未全接。",
+    "url": "https://github.com/merricx/qrazybox/",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0224",
+    "name": "QR code and barcode reader",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=qrReader",
+    "status": "部分覆盖"
+  },
+  {
+    "id": "F0225",
+    "name": "QR code generator",
+    "difference": "识读多格式及文本QR生成有；并非每一种条码的生成器或任意字节QR。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=qrGenerator",
+    "status": "部分覆盖"
+  }
+]

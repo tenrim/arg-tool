@@ -59,3 +59,12 @@ test('vendor license notices still select integrity; UI lifecycle imports retain
   assert(ids(notice).includes('integrity'));assert(ids(source).includes('integrity'));
   assert(ids(component).includes('browser:ui-motion'));assert(!ids(component).includes('browser:coderunner'));
 });
+test('explicit JSON file scopes preserve empty scopes and reject malformed path lists',async()=>{
+ const cwd=await mkdtemp(join(tmpdir(),'arg-explicit-scope-'));
+ try{
+  const file=join(cwd,'scope.json');await writeFile(file,'[]');
+  const empty=execFileSync(process.execPath,['scripts/verify-affected.mjs','--plan','--files','@'+file],{encoding:'utf8'});assert.match(empty,/0 changed files; 0 selected checks/);
+  await writeFile(file,JSON.stringify(['public/expansion/classical-core.js']));const scoped=execFileSync(process.execPath,['scripts/verify-affected.mjs','--plan','--files','@'+file],{encoding:'utf8'});assert.match(scoped,/1 changed files/);assert.match(scoped,/expansion-classical/);
+  await writeFile(file,'[42]');assert.throws(()=>execFileSync(process.execPath,['scripts/verify-affected.mjs','--plan','--files','@'+file],{stdio:'pipe'}),/failed/i);
+ }finally{assert(cwd.startsWith(join(tmpdir(),'arg-explicit-scope-')));await rm(cwd,{recursive:true,force:true});}
+});

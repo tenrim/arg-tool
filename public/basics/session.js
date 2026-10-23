@@ -6,7 +6,7 @@ import {getCatalogue} from '../chef-tools/catalog.js';
 import {foundationRecipe,foundationInput} from './foundation.js';
 import {localizedError} from '../cyberchef-i18n.js';
 import {normalizeInputSource} from '../capabilities/input-session.js';
-import {continueButton} from '../handoff/button.js';
+import {resultRecording} from '../result-recording.js';
 
 const sessions=new Map();
 export const getConversionSession=id=>sessions.get(id)||null;
@@ -16,19 +16,18 @@ export function conversionSession(view,{id,options,draw}) {
   // Native textarea values normalize CR/CRLF to LF. Keep adopted engine data
   // separately from that display projection until the user actually edits it.
   let inputSnapshot=null,adopting=false;
-  let handedResult;
-  const next=continueButton({id:id+'-continue',source:'text',read:()=>{handedResult=result;return {text:result?.output};},isCurrent:()=>!!handedResult&&handedResult===result});view.use.before(next);
+  const recording=resultRecording({id:id+'-result',anchor:view.use});
   const getInput=()=>inputSnapshot?.display===view.input.value?inputSnapshot.text:view.input.value;
-  function sync(){setState(view.run,{busy});view.run.disabled=busy;view.stop.disabled=!busy;view.copy.disabled=view.save.disabled=view.use.disabled=next.disabled=!result;}
+  function sync(){setState(view.run,{busy});view.run.disabled=busy;view.stop.disabled=!busy;view.copy.disabled=view.save.disabled=view.use.disabled=!result;}
   function dispose(){worker?.terminate();worker=null;client?.close();client=null;clearTimeout(timer);timer=null;pending?.reject(Error('已停止'));pending=null;}
-  function invalidate(message=''){revision++;dispose();busy=false;result=null;setTextareaValue(view.output,'',{feedback:false});view.details.replaceChildren();updateStatus(view.status,message);sync();}
+  function invalidate(message=''){revision++;dispose();busy=false;result=null;recording.clear();setTextareaValue(view.output,'',{feedback:false});view.details.replaceChildren();updateStatus(view.status,message);sync();}
   async function run(){invalidate('正在转换…');busy=true;sync();const version=revision;
     timer=setTimeout(()=>{if(version===revision)invalidate('转换超过 30 秒，已停止。');},30000);
     try {
       const text=getInput(),config=options();let response;
-      if(id==='basics') {const catalogue=await getCatalogue();if(version!==revision)return;const recipe=foundationRecipe(catalogue,text,config);client=new CyberChefClient();const cooked=await client.bake(foundationInput(text,config),recipe,{structured:true});response={output:new TextDecoder('utf-8',{fatal:true}).decode(cooked.bytes)};}
-      else {response=await new Promise((resolve,reject)=>{pending={resolve,reject};worker=new Worker(new URL('./worker.js',import.meta.url));worker.onmessage=({data})=>{pending=null;data.error?reject(Error(data.error)):resolve(data.result);};worker.onerror=event=>{event.preventDefault();pending=null;reject(Error('转换线程加载失败，请重试。'));};worker.onmessageerror=()=>{pending=null;reject(Error('无法读取转换结果。'));};worker.postMessage({kind:id,text,options:config,resourceBase:new URL('../',import.meta.url).href});});}
-      if(version!==revision)return;result=response;setTextareaValue(view.output,response.output);draw?.(response,text,config);updateStatus(view.status,'转换完成','success');
+      if(id==='basics'&&config.family!=='radix') {const catalogue=await getCatalogue();if(version!==revision)return;const recipe=foundationRecipe(catalogue,text,config);client=new CyberChefClient();const cooked=await client.bake(foundationInput(text,config),recipe,{structured:true});response={output:new TextDecoder('utf-8',{fatal:true}).decode(cooked.bytes)};}
+      else {response=await new Promise((resolve,reject)=>{pending={resolve,reject};worker=new Worker(new URL('./worker.js',import.meta.url));worker.onmessage=({data})=>{pending=null;data.error?reject(Error(data.error)):resolve(data.result);};worker.onerror=event=>{event.preventDefault();pending=null;reject(Error('转换线程加载失败，请重试。'));};worker.onmessageerror=()=>{pending=null;reject(Error('无法读取转换结果。'));};worker.postMessage({kind:id==='basics'?'radix64':id,text,options:config,resourceBase:new URL('../',import.meta.url).href});});}
+      if(version!==revision)return;result=response;recording.publish({text:response.output});setTextareaValue(view.output,response.output);draw?.(response,text,config);updateStatus(view.status,'转换完成','success');
     } catch(error) {captureFailure(error);if(version===revision){result=null;view.details.replaceChildren();setTextareaValue(view.output,'',{feedback:false});updateStatus(view.status,localizedError(error.message),'error');}}
     finally {if(version===revision){dispose();busy=false;sync();}}
   }

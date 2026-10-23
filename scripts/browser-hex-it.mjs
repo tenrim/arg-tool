@@ -1,3 +1,4 @@
+import {tmpdir} from 'node:os';
 import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import {resolve, extname} from 'node:path';
@@ -185,6 +186,12 @@ try {
     // Fixed knowledge is useful immediately, searchable in Chinese and precise
     // identifiers, and linked to real existing workspaces in the same document.
     await go('it-reference'); await page.waitForSelector('#it-kind-ports');
+    assert.equal(await page.locator('#it-kind-rfc,#it-kind-instructions').count(),0,'retired selected catalogues have no workspace tabs');
+    assert.deepEqual(await page.evaluate(async()=>{
+      const {IT_CATEGORIES,loadITData}=await import(new URL('./it-reference/model.js',location.href));
+      const rejected=[];for(const kind of ['rfc','instructions'])try{await loadITData(kind);}catch(error){if(/未知的IT资料分类/.test(error.message))rejected.push(kind);}
+      return{categories:IT_CATEGORIES.map(item=>item.id),rejected};
+    }),{categories:['ports','http','formats','domains'],rejected:['rfc','instructions']},'retirement removes the model capability, not just visible buttons');
     const kind = async name => {await page.locator('#it-kind-'+name).click(); await page.waitForFunction(name=>document.querySelector('#it-kind-'+name).getAttribute('aria-selected')==='true',name); await page.waitForFunction(()=>document.querySelector('#it-results [data-it-record]') || document.querySelector('#it-status').classList.contains('error')); assert.equal(await page.locator('#it-status').evaluate(node=>node.classList.contains('error')),false,await value('it-status'));};
     const query = async text => {await page.locator('#it-query').fill(text); await page.waitForFunction(()=>document.querySelector('#it-results [data-it-record]') || document.querySelector('#it-status').classList.contains('error'));};
     const detail = async expression => {const result=page.locator('#it-results [data-it-record]').filter({hasText:expression}).first(); await result.click(); await page.waitForSelector('#it-detail [data-it-detail]'); return page.locator('#it-detail').textContent();};
@@ -198,8 +205,23 @@ try {
       await page.waitForSelector('#it-results [data-it-record]');assert.equal(await page.locator('#it-status').evaluate(node=>node.classList.contains('error')),false,'failed fixed-data loads can be retried');
     }
     await kind('http'); await query('404'); assert.match(await detail(/404/),/Not Found|未找到|不存在/);
+    await query('内容安全策略'); assert.match(await detail(/Content-Security-Policy/),/MDN 中文说明[\s\S]*内容安全策略/);
+    assert.match(await value('it-scope'),/103 项[\s\S]*不是完整中文译库/);
     await kind('formats'); await query('application/json'); assert.match(await detail(/json/i),/application\/json/);
+    await query('超文本'); assert.match(await detail(/text\/html/i),/超文本标记语言[\s\S]*text\/html|text\/html[\s\S]*超文本标记语言/);
     await query('utf-8'); assert.match(await detail(/utf-8/i),/UTF-8/i);
+    if (scenario==='native') {
+      const resource='https://arg.test'+prefix+'vendor/it-reference/domains.json';let release,resolvePending;
+      const pending=new Promise(resolve=>{resolvePending=resolve;});
+      await context.route(resource,async route=>{resolvePending();await new Promise(resolveRelease=>{release=resolveRelease;});await route.fulfill({body:await readFile(resolve('public/vendor/it-reference/domains.json')),contentType:'application/json'});});
+      await page.locator('#it-kind-domains').click();await pending;await kind('formats');await query('application/json');await detail(/json/i);
+      const current=await value('it-detail');release();
+      // Await the actual shared loader promise rather than a timing delay; the
+      // abandoned page callback has now had the same real response available.
+      await page.evaluate(async()=>{const model=await import(new URL('./it-reference/model.js',location.href));await model.loadITData('domains');});
+      assert.equal(await page.locator('#it-kind-formats').getAttribute('aria-selected'),'true');assert.equal(await value('it-detail'),current,'a delayed old catalogue cannot replace a newer selected record');
+      await context.unroute(resource);
+    }
     await kind('domains'); await page.locator('#it-domain-input').fill('https://a.b.example.co.uk/path'); await page.locator('#it-domain-run').click();
     await page.waitForFunction(()=>document.querySelector('#it-domain-result').textContent.includes('example.co.uk'));
     assert.match(await value('it-domain-result'),/co\.uk/,'registrable domain respects a multi-label public suffix');
@@ -207,34 +229,20 @@ try {
     await page.waitForFunction(()=>document.querySelector('#it-domain-result').textContent.includes('xn--') || document.querySelector('#it-domain-result').textContent.includes('例子'));
     await page.locator('#it-domain-input').fill('https://用户:密码@example.co.uk/path'); await page.locator('#it-domain-run').click();
     await page.waitForSelector('#it-domain-status.error');assert.equal(await value('it-domain-result'),'','URLs with credentials cannot leave an old domain result');
-    if (scenario==='native') {
-      const resource='https://arg.test'+prefix+'vendor/it-reference/rfc.json';let release,resolvePending;
-      const pending=new Promise(resolve=>{resolvePending=resolve;});
-      await context.route(resource,async route=>{resolvePending();await new Promise(resolveRelease=>{release=resolveRelease;});await route.fulfill({body:await readFile(resolve('public/vendor/it-reference/rfc.json')),contentType:'application/json'});});
-      await page.locator('#it-kind-rfc').click();await pending;await kind('formats');await query('application/json');await detail(/json/i);
-      const current=await value('it-detail');release();
-      // Await the actual shared loader promise rather than a timing delay; the
-      // abandoned page callback has now had the same real response available.
-      await page.evaluate(async()=>{const model=await import(new URL('./it-reference/model.js',location.href));await model.loadITData('rfc');});
-      assert.equal(await page.locator('#it-kind-formats').getAttribute('aria-selected'),'true');assert.equal(await value('it-detail'),current,'a delayed old catalogue cannot replace a newer selected record');
-      await context.unroute(resource);
-    }
-    await kind('rfc'); await query('9110'); const rfc9110=await detail(/9110/);
-    assert.match(rfc9110,/HTTP Semantics|HTTP\s*语义|HTTP语义/i);assert.match(rfc9110,/互联网标准/);assert.match(rfc9110,/RFC7231/);assert.match(rfc9110,/RFC3864/,'RFC continuation lines preserve actual status and replacement/update relationships');
-    await query('7231');assert.match(await detail(/7231/),/RFC9110/,'obsolete predecessor identifies its actual replacement');
-    await kind('instructions'); await query('xor'); assert.match(await detail(/xor/i),/异或|XOR/i);
+    await kind('formats');await query('application/json');await detail(/json/i);
     assert.ok(await page.locator('#it-detail [data-it-related]').count()>0,'technical concepts expose real existing related tools');
     const related=page.locator('#it-detail [data-it-related]').first(), target=await related.getAttribute('data-it-related');
     await page.evaluate(()=>window.__hexDocumentIdentity='same-document'); await related.click();
     await page.waitForFunction(target=>location.hash.slice(1).split('?')[0]===target.split('?')[0],target);
     assert.equal(await page.evaluate(()=>window.__hexDocumentIdentity),'same-document','related tools navigate inside the existing application');
-    await page.waitForFunction(()=>document.querySelector('#panel-file .ct-tool')?.dataset.operation==='Disassemble x86');
     if(scenario==='native') {
+      await go('file/inspect?task=op%3ADisassemble%2520x86&op=Disassemble+x86');
+      await page.waitForFunction(()=>document.querySelector('#panel-file .ct-tool')?.dataset.operation==='Disassemble x86');
       // This particular upstream operation accepts hexadecimal characters as
       // a string; the site's generic hex source would decode them prematurely.
       const task=page.locator('#panel-file .ct-tool');await task.locator('.ct-source').selectOption('text');await task.locator('.ct-input').fill('90');await task.locator('.ct-run').click();
       await page.waitForFunction(()=>{const status=document.querySelector('#panel-file .ct-status');return status?.textContent.includes('处理完成')||status?.classList.contains('error');},null,{timeout:60000});
-      assert.equal(await task.locator('.ct-status').evaluate(node=>node.classList.contains('error')),false,await task.locator('.ct-status').textContent());assert.match(await task.locator('.ct-result textarea').inputValue(),/\bnop\b/i,'x86 knowledge link reaches the actual CyberChef disassembler and executes the NOP byte');
+      assert.equal(await task.locator('.ct-status').evaluate(node=>node.classList.contains('error')),false,await task.locator('.ct-status').textContent());assert.match(await task.locator('.ct-result textarea').inputValue(),/\bnop\b/i,'retiring selected instruction references preserves the actual CyberChef disassembler and NOP byte execution');
     }
     await go('it-reference'); await kind('http'); await query('404'); await detail(/404/);
     assert.equal(await page.locator('#panel-it-reference .tool-help-button').count(),1);
@@ -270,9 +278,9 @@ try {
     await page.evaluate(()=>document.documentElement.style.fontSize='');
     if (scenario==='native') {
       const settle=()=>page.evaluate(async()=>{await document.fonts.ready;await Promise.all(document.getAnimations().map(animation=>animation.finished.catch(()=>{})));});
-      await page.setViewportSize({width:1280,height:950});await page.emulateMedia({reducedMotion:'no-preference'});await go(hexRoute);await settle();await page.screenshot({path:'/tmp/mist-hex-desktop.png',fullPage:true});
-      await go('it-reference');await kind('ports');await query('80');await detail(/http/i);await settle();await page.screenshot({path:'/tmp/mist-it-desktop.png',fullPage:true});
-      await page.setViewportSize({width:390,height:844});await detail(/http/i);await settle();await page.screenshot({path:'/tmp/mist-it-mobile.png',fullPage:true});
+      await page.setViewportSize({width:1280,height:950});await page.emulateMedia({reducedMotion:'no-preference'});await go(hexRoute);await settle();await page.screenshot({path:resolve(tmpdir(),'mist-hex-desktop.png'),fullPage:true});
+      await go('it-reference');await kind('ports');await query('80');await detail(/http/i);await settle();await page.screenshot({path:resolve(tmpdir(),'mist-it-desktop.png'),fullPage:true});
+      await page.setViewportSize({width:390,height:844});await detail(/http/i);await settle();await page.screenshot({path:resolve(tmpdir(),'mist-it-mobile.png'),fullPage:true});
     }
     const persisted=await page.evaluate(()=>window.__hexPersistentWrites.map(([,value])=>value).join('\n'));
     assert.equal(persisted.includes(privateName),false,'file names never enter persistent preferences'); assert.equal(persisted.includes('ARG_ARG_'),false,'clue bytes never enter persistent preferences');

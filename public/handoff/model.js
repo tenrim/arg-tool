@@ -53,7 +53,7 @@ export function compatibleTargets(data,registry,catalogue,imageOperations=new Se
   return registry.entries.filter(entry=>entry.listed!==false).flatMap(entry=>{
     if(nativeIds.has(entry.id)||entry.id===archive)return [{entry,directions:[{label:'打开工具'}]}];
     if(entry.open.kind!=='operation')return [];
-    const directions=(entry.directions||[{op:entry.open.operation,label:entry.title}]).filter(direction=>{
+    const directions=(entry.actions||entry.directions||[{op:entry.open.operation,label:entry.title}]).filter(direction=>{
       const definition=catalogue.operations[direction.op];if(!definition)return false;
       if(imageOperations.has(direction.op)&&!data.mime.startsWith('image/'))return false;
       if(definition.inputType==='string')return data.text!==null&&data.mime.startsWith('text/');

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "D0638",
+    "name": "Cantor Expansion",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；颜色/数字基础工具不是专用色环或排列排名规则。",
+    "url": "https://www.dcode.fr/cantor-expansion",
+    "status": "待核实"
+  },
+  {
+    "id": "D1082",
+    "name": "Capacitor Color Code",
+    "difference": "颜色/数字基础工具不是专用色环或排列排名规则。",
+    "url": "https://www.dcode.fr/capacitor-color-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1083",
+    "name": "Resistors' Color Code",
+    "difference": "颜色/数字基础工具不是专用色环或排列排名规则。",
+    "url": "https://www.dcode.fr/resistor-color-code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1200",
+    "name": "25-pair color code - Wikipedia",
+    "difference": "颜色/数字基础工具不是专用色环或排列排名规则。",
+    "url": "http://en.wikipedia.org/wiki/25-pair_color_code",
+    "status": "未覆盖"
+  },
+  {
+    "id": "D1228",
+    "name": "4-band converter / Resistor (4,5,6-band) color code converter",
+    "difference": "原页未取得足够可读正文，目录描述的初判为 未覆盖；颜色/数字基础工具不是专用色环或排列排名规则。",
+    "url": "http://samstechlib.com/24614782/en/read/4_Band_Resistor_Color_Codes",
+    "status": "待核实"
+  },
+  {
+    "id": "F0207",
+    "name": "Resistor code",
+    "difference": "颜色/数字基础工具不是专用色环或排列排名规则。",
+    "url": "https://www.geocachingtoolbox.com/index.php?lang=en&page=resistorCode",
+    "status": "未覆盖"
+  }
+]

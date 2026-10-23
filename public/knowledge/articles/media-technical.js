@@ -2480,7 +2480,7 @@ export const articles = [
     "relatedIds": [
       "op:Analyse%20UUID"
     ],
-    "topicGroup": "maths",
+    "topicGroup": "formats",
     "title": "分析 UUID",
     "summary": "按固定字段检查版本与变体。",
     "aliases": [
@@ -3029,7 +3029,7 @@ export const articles = [
         "title": "原理与规则",
         "paragraphs": [
           "音频元数据包括格式、编码、采样率、声道与时长等。采样率是每秒采样次数，声道是同时保存的信号通道数量，与码率不是一个概念。",
-          "元数据解析主要读取文件结构，不会替你听懂声音中的内容。标题、作者等描述性标签也不一定存在，不同容器保存的字段不同。"
+          "元数据解析读取文件结构，不识别录音中的语义。标题、作者等描述性标签可以缺失，不同容器保存的字段也不同。"
         ],
         "sourceIds": [
           "s1",
@@ -6420,7 +6420,27 @@ export const articles = [
     "aliases": [
       "配方",
       "Recipe",
-      "处理链"
+      "处理链",
+      "Fork",
+      "分支处理",
+      "Merge",
+      "合并分支",
+      "Subsection",
+      "截取片段",
+      "Register",
+      "寄存器",
+      "Conditional Jump",
+      "条件跳转",
+      "Label",
+      "标签",
+      "Jump",
+      "跳转",
+      "Sleep",
+      "等待",
+      "Return",
+      "返回",
+      "Comment",
+      "注释"
     ],
     "sources": [
       {
@@ -6439,6 +6459,96 @@ export const articles = [
         "url": "/cyberchef.js",
         "locator": "initCyberChef / checkedRecipe / run",
         "language": "zh-CN",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow0-s1",
+        "title": "CyberChef 官方操作定义 · Fork",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Fork\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow1-s1",
+        "title": "CyberChef 官方操作定义 · Merge",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Merge\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow2-s1",
+        "title": "CyberChef 官方操作定义 · Subsection",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Subsection\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow3-s1",
+        "title": "CyberChef 官方操作定义 · Register",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Register\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow4-s1",
+        "title": "CyberChef 官方操作定义 · Conditional Jump",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Conditional Jump\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow5-s1",
+        "title": "CyberChef 官方操作定义 · Label",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Label\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow6-s1",
+        "title": "CyberChef 官方操作定义 · Jump",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Jump\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow7-s1",
+        "title": "CyberChef 官方操作定义 · Sleep",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Sleep\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow8-s1",
+        "title": "CyberChef 官方操作定义 · Return",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Return\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
+        "kind": "implementation"
+      },
+      {
+        "id": "flow9-s1",
+        "title": "CyberChef 官方操作定义 · Comment",
+        "publisher": "GCHQ / CyberChef",
+        "url": "/vendor/cyberchef/catalogue.json",
+        "locator": "operations[\"Comment\"]；随站提供的 Apache-2.0 操作描述与参数",
+        "language": "en",
         "kind": "implementation"
       }
     ],
@@ -6472,54 +6582,25 @@ export const articles = [
             "explanation": "要还原应先 Reverse 得 QVJH，再 From Base64 得 ARG；直接对 HJVQ 做 Base64 解码并不是原链的逆向。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Fork",
-    "capabilityIds": [
-      "op:Fork"
-    ],
-    "relatedIds": [
-      "op:Fork"
-    ],
-    "topicGroup": "pipeline",
-    "title": "分支处理",
-    "summary": "按分隔符生成独立分支。",
-    "aliases": [
-      "Fork"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Fork",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Fork\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "分支处理：原理与规则",
         "paragraphs": [
           "Fork 用指定分隔符切分输入，后续操作分别在各分支执行。例如每行是一个独立 Base64 文本时，每一行应分别解码。",
           "分支结果最后用合并分隔符连接。切分分隔符与输出连接分隔符可不同；分支内的转换不会自动把整份输入当作一个连续字节流。"
         ],
         "sourceIds": [
-          "s1"
+          "flow0-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "分支处理：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow0-s1"
         ],
         "examples": [
           {
@@ -6529,54 +6610,25 @@ export const articles = [
             "explanation": "QQ== 和 Qg== 各表示一个字节；Fork 保持了两个独立输入的边界。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Merge",
-    "capabilityIds": [
-      "op:Merge"
-    ],
-    "relatedIds": [
-      "op:Merge"
-    ],
-    "topicGroup": "pipeline",
-    "title": "合并分支",
-    "summary": "把多个分支重新合成一个输入。",
-    "aliases": [
-      "Merge"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Merge",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Merge\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "合并分支：原理与规则",
         "paragraphs": [
           "Merge 把当前分支集合收束成一条主干，后续操作再面对整个合并结果。它用于结束 Fork 或 Subsection 的局部处理范围。",
           "多层分支时，“合并全部”与只合并最近一层不同。应在合并前核对连接分隔符，否则片段可能紧连后改变后续解释。"
         ],
         "sourceIds": [
-          "s1"
+          "flow1-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "合并分支：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow1-s1"
         ],
         "examples": [
           {
@@ -6586,54 +6638,25 @@ export const articles = [
             "explanation": "ASCII/UTF-8 下包含 A、换行、B，共 3 字节，而不是两个各 1 字节的独立结果。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Subsection",
-    "capabilityIds": [
-      "op:Subsection"
-    ],
-    "relatedIds": [
-      "op:Subsection"
-    ],
-    "topicGroup": "pipeline",
-    "title": "截取片段",
-    "summary": "正则匹配限定后续操作的处理片段。",
-    "aliases": [
-      "Subsection"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Subsection",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Subsection\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "截取片段：原理与规则",
         "paragraphs": [
           "Subsection 用正则选择输入中需要处理的子串。如果有捕获组，后续操作针对第一个捕获组；未使用捕获组时针对完整匹配。",
           "它与简单删除前后文本不同：未选择的文本可以保留在输出上下文中。需要恢复全局处理时使用 Merge；多个捕获组也不会自动各运行一条不同配方。"
         ],
         "sourceIds": [
-          "s1"
+          "flow2-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "截取片段：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow2-s1"
         ],
         "examples": [
           {
@@ -6643,54 +6666,25 @@ export const articles = [
             "explanation": "捕获组内容是 abc，方括号和外侧 x/y 不参加转大写。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Register",
-    "capabilityIds": [
-      "op:Register"
-    ],
-    "relatedIds": [
-      "op:Register"
-    ],
-    "topicGroup": "pipeline",
-    "title": "寄存器",
-    "summary": "用 $R0 等引用已提取的值。",
-    "aliases": [
-      "Register"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Register",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Register\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "寄存器：原理与规则",
         "paragraphs": [
           "Register 把正则捕获的数据存入寄存器。后续参数中的 $R0 引用第一个捕获值，$R1 引用下一个，编号从 0 开始。",
           "它用于让参数跟随输入中提取的线索变化，不是普通 CPU 寄存器模拟。如果要字面写出 $R0 而不替换，可按项目规则用反斜杠转义。"
         ],
         "sourceIds": [
-          "s1"
+          "flow3-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "寄存器：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow3-s1"
         ],
         "examples": [
           {
@@ -6700,54 +6694,25 @@ export const articles = [
             "explanation": "括号捕获的是 13，key= 不在捕获组内；这一步保存参数，不代表已完成任何密文解密。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Conditional%20Jump",
-    "capabilityIds": [
-      "op:Conditional%20Jump"
-    ],
-    "relatedIds": [
-      "op:Conditional%20Jump"
-    ],
-    "topicGroup": "pipeline",
-    "title": "条件跳转",
-    "summary": "对当前数据做正则判断，再决定跳转。",
-    "aliases": [
-      "Conditional Jump"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Conditional Jump",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Conditional Jump\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "条件跳转：原理与规则",
         "paragraphs": [
           "Conditional Jump 将当前结果与正则匹配；满足条件时跳到指定 Label。反转匹配选项可改成“不匹配时跳转”。",
           "后向跳转可能构成循环，因此需要最大跳转次数。判断针对当前步骤的数据，不是永远针对最初输入；每次转换可能改变条件是否成立。"
         ],
         "sourceIds": [
-          "s1"
+          "flow4-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "条件跳转：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow4-s1"
         ],
         "examples": [
           {
@@ -6757,54 +6722,25 @@ export const articles = [
             "explanation": "锚点要求整段恰好一位 0～8；9 不在范围内。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Label",
-    "capabilityIds": [
-      "op:Label"
-    ],
-    "relatedIds": [
-      "op:Label"
-    ],
-    "topicGroup": "pipeline",
-    "title": "标签",
-    "summary": "给配方位置一个名字。",
-    "aliases": [
-      "Label"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Label",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Label\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "标签：原理与规则",
         "paragraphs": [
           "Label 只为配方中的位置命名，Jump 或 Conditional Jump 可以用同一名称定位它。它不替换输入文本，也不是显示结果标题。",
           "只有到达跳转操作并指定该标签时，执行顺序才会改变。标签本身经过执行不会更改当前数据。"
         ],
         "sourceIds": [
-          "s1"
+          "flow5-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "标签：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow5-s1"
         ],
         "examples": [
           {
@@ -6814,54 +6750,25 @@ export const articles = [
             "explanation": "decode-start 是控制流位置名，不会添加到结果正文。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Jump",
-    "capabilityIds": [
-      "op:Jump"
-    ],
-    "relatedIds": [
-      "op:Jump"
-    ],
-    "topicGroup": "pipeline",
-    "title": "跳转",
-    "summary": "无条件把执行位置移到命名标签。",
-    "aliases": [
-      "Jump"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Jump",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Jump\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "跳转：原理与规则",
         "paragraphs": [
           "Jump 无条件转到指定 Label，位于中间的操作可能被跳过。向后跳转可重复一段配方，向前跳转可绕过一段。",
           "后向跳转设置上限用于限制重复次数。不能把“最大跳转次数”直接当作转换总次数，第一次顺序进入时也可能已经执行了转换。"
         ],
         "sourceIds": [
-          "s1"
+          "flow6-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "跳转：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow6-s1"
         ],
         "examples": [
           {
@@ -6871,54 +6778,25 @@ export const articles = [
             "explanation": "Jump 直接到 end，To Base64 未执行，因此不会得到 QVJH。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Sleep",
-    "capabilityIds": [
-      "op:Sleep"
-    ],
-    "relatedIds": [
-      "op:Sleep"
-    ],
-    "topicGroup": "pipeline",
-    "title": "等待",
-    "summary": "按毫秒暂停配方再继续。",
-    "aliases": [
-      "Sleep"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Sleep",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Sleep\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "等待：原理与规则",
         "paragraphs": [
           "Sleep 在当前操作位置等待指定毫秒数，随后执行下一步。它没有编码或解码作用，也不创建定时重复任务。",
           "毫秒与秒相差 1000 倍。实际恢复时刻还受浏览器调度影响，不能把等待参数当作精密时钟计时保证。"
         ],
         "sourceIds": [
-          "s1"
+          "flow7-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "等待：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow7-s1"
         ],
         "examples": [
           {
@@ -6928,54 +6806,25 @@ export const articles = [
             "explanation": "1000/1000=1 秒；若填 1，则只是 1 毫秒。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Return",
-    "capabilityIds": [
-      "op:Return"
-    ],
-    "relatedIds": [
-      "op:Return"
-    ],
-    "topicGroup": "pipeline",
-    "title": "返回",
-    "summary": "到达 Return 后终止后续操作。",
-    "aliases": [
-      "Return"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Return",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Return\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "返回：原理与规则",
         "paragraphs": [
           "Return 终止当前配方执行，不是把输出送给后面的操作继续执行。它适合与条件跳转组合，在已经得到合适结果时提前结束。",
           "项目正式说明明确其作用是结束正在执行的操作流。应把它与 Merge 区分：Merge 结束分支处理范围，但还会继续后续配方。"
         ],
         "sourceIds": [
-          "s1"
+          "flow8-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "返回：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow8-s1"
         ],
         "examples": [
           {
@@ -6985,54 +6834,25 @@ export const articles = [
             "explanation": "后面的 To Base64 不执行，所以结果不是 QVJH。"
           }
         ]
-      }
-    ],
-    "misconceptions": []
-  },
-  {
-    "id": "function-op:Comment",
-    "capabilityIds": [
-      "op:Comment"
-    ],
-    "relatedIds": [
-      "op:Comment"
-    ],
-    "topicGroup": "pipeline",
-    "title": "注释",
-    "summary": "为配方记录意图，计算结果不改变。",
-    "aliases": [
-      "Comment"
-    ],
-    "sources": [
+      },
       {
-        "id": "s1",
-        "title": "CyberChef 官方操作定义 · Comment",
-        "publisher": "GCHQ / CyberChef",
-        "url": "/vendor/cyberchef/catalogue.json",
-        "locator": "operations[\"Comment\"]；随站提供的 Apache-2.0 操作描述与参数",
-        "language": "en",
-        "kind": "implementation"
-      }
-    ],
-    "sections": [
-      {
-        "title": "原理与规则",
+        "title": "注释：原理与规则",
         "paragraphs": [
           "Comment 提供一处说明配方步骤的文字，不参与编码、解码或字节计算。运行经过它时，当前数据原样继续传递。",
           "注释应记录参数约定、线索来源或选择原因。写在注释里的代码和正则不会因此被执行，也不会成为输出的一部分。"
         ],
         "sourceIds": [
-          "s1"
+          "flow9-s1"
         ],
         "examples": []
       },
       {
-        "title": "逐步核对",
+        "title": "注释：逐步核对",
         "paragraphs": [
           "下例用于核对这项规则；参数和输入格式需与示例所述保持一致。"
         ],
         "sourceIds": [
-          "s1"
+          "flow9-s1"
         ],
         "examples": [
           {

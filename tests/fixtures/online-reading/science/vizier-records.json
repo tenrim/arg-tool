@@ -1,0 +1,789 @@
+{
+  "record": {
+    "id": "I/239/hip_main:1",
+    "title": "I/239/hip_main · 1",
+    "fields": {
+      "recno": "       1",
+      "HIP": "     1",
+      "Proxy": " ",
+      "RAhms": "00 00 00.22",
+      "DEdms": "+01 05 20.4",
+      "Vmag": " 9.10",
+      "VarFlag": " ",
+      "r_Vmag": "H",
+      "RAICRS": "000.00091185",
+      "DEICRS": "+01.08901332",
+      "AstroRef": " ",
+      "Plx": "   3.54",
+      "pmRA": "   -5.20",
+      "pmDE": "   -1.88",
+      "e_RAICRS": "  1.32",
+      "e_DEICRS": "  0.74",
+      "e_Plx": "  1.39",
+      "e_pmRA": "  1.36",
+      "e_pmDE": "  0.81",
+      "DE:RA": " 0.32",
+      "Plx:RA": "-0.07",
+      "Plx:DE": "-0.11",
+      "pmRA:RA": "-0.24",
+      "pmRA:DE": " 0.09",
+      "pmRA:Plx": "-0.01",
+      "pmDE:RA": " 0.10",
+      "pmDE:DE": "-0.01",
+      "pmDE:Plx": " 0.01",
+      "pmDE:pmRA": " 0.34",
+      "F1": "  0",
+      "F2": " 0.74",
+      "BTmag": " 9.643",
+      "e_BTmag": " 0.020",
+      "VTmag": " 9.130",
+      "e_VTmag": " 0.019",
+      "m_BTmag": " ",
+      "B-V": " 0.482",
+      "e_B-V": " 0.025",
+      "r_B-V": "T",
+      "V-I": " 0.55",
+      "e_V-I": " 0.03",
+      "r_V-I": "L",
+      "CombMag": " ",
+      "Hpmag": " 9.2043",
+      "e_Hpmag": " 0.0020",
+      "Hpscat": " 0.017",
+      "o_Hpmag": " 87",
+      "m_Hpmag": " ",
+      "Hpmax": " 9.17",
+      "HPmin": " 9.24",
+      "Period": "       ",
+      "HvarType": " ",
+      "moreVar": " ",
+      "morePhoto": " ",
+      "CCDM": "          ",
+      "n_CCDM": " ",
+      "Nsys": "  ",
+      "Ncomp": " 1",
+      "MultFlag": " ",
+      "Source": " ",
+      "Qual": " ",
+      "m_HIP": "  ",
+      "theta": "   ",
+      "rho": "       ",
+      "e_rho": "      ",
+      "dHp": "     ",
+      "e_dHp": "     ",
+      "Survey": "S",
+      "Chart": " ",
+      "Notes": " ",
+      "HD": "224700",
+      "BD": "B+00 5077 ",
+      "CoD": "          ",
+      "CPD": "          ",
+      "(V-I)red": " 0.66",
+      "SpType": "F5          ",
+      "r_SpType": "S",
+      "HIPep": "HIPep",
+      "Erratum": "Erratum",
+      "_RA.icrs": "000.00089921",
+      "_DE.icrs": "+01.08900875"
+    },
+    "sourceURL": "https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=I%2F239%2Fhip_main"
+  },
+  "result": {
+    "parameters": {
+      "mode": "records",
+      "table": "I/239/hip_main",
+      "conditions": [
+        {
+          "column": "HIP",
+          "operator": "=",
+          "value": "1"
+        }
+      ],
+      "cone": null,
+      "offset": 0
+    },
+    "columns": [
+      {
+        "name": "recno",
+        "unit": " ",
+        "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+        "notes": [
+          "[ucd=meta.record]"
+        ]
+      },
+      {
+        "name": "HIP",
+        "unit": " ",
+        "description": "Identifier (HIP number) (H1)",
+        "notes": [
+          "[ucd=meta.id;meta.main]"
+        ]
+      },
+      {
+        "name": "Proxy",
+        "unit": " ",
+        "description": "[HT] Proximity flag (H2)",
+        "notes": [
+          "[ucd=meta.code]"
+        ]
+      },
+      {
+        "name": "RAhms",
+        "unit": " ",
+        "description": "Right ascension in h m s, ICRS (J1991.25) (H3)",
+        "notes": [
+          "[ucd=pos.eq.ra]"
+        ]
+      },
+      {
+        "name": "DEdms",
+        "unit": " ",
+        "description": "Declination in deg ' \", ICRS (J1991.25) (H4)",
+        "notes": [
+          "[ucd=pos.eq.dec]"
+        ]
+      },
+      {
+        "name": "Vmag",
+        "unit": "mag",
+        "description": "? Magnitude in Johnson V (H5)",
+        "notes": [
+          "[ucd=phot.mag;em.opt.V]"
+        ]
+      },
+      {
+        "name": "VarFlag",
+        "unit": " ",
+        "description": "[1,3]? Coarse variability flag (H6)",
+        "notes": [
+          "[ucd=meta.code;src.var]"
+        ]
+      },
+      {
+        "name": "r_Vmag",
+        "unit": " ",
+        "description": "[GHT] Source of magnitude (H7)",
+        "notes": [
+          "[ucd=meta.ref;pos.frame]"
+        ]
+      },
+      {
+        "name": "RAICRS",
+        "unit": "deg",
+        "description": "? alpha, degrees (ICRS, Epoch=J1991.25) (H8)",
+        "notes": [
+          "[ucd=pos.eq.ra;meta.main]"
+        ]
+      },
+      {
+        "name": "DEICRS",
+        "unit": "deg",
+        "description": "? delta, degrees (ICRS, Epoch=J1991.25) (H9)",
+        "notes": [
+          "[ucd=pos.eq.dec;meta.main]"
+        ]
+      },
+      {
+        "name": "AstroRef",
+        "unit": " ",
+        "description": "[*+A-Z] Reference flag for astrometry (H10)",
+        "notes": [
+          "[ucd=meta.bib]"
+        ]
+      },
+      {
+        "name": "Plx",
+        "unit": "mas",
+        "description": "? Trigonometric parallax (H11)",
+        "notes": [
+          "[ucd=pos.parallax.trig]"
+        ]
+      },
+      {
+        "name": "pmRA",
+        "unit": "mas/yr",
+        "description": "*? Proper motion mu_alpha.cos(delta), ICRS(H12)",
+        "notes": [
+          "[ucd=pos.pm;pos.eq.ra]"
+        ]
+      },
+      {
+        "name": "pmDE",
+        "unit": "mas/yr",
+        "description": "*? Proper motion mu_delta, ICRS (H13)",
+        "notes": [
+          "[ucd=pos.pm;pos.eq.dec]"
+        ]
+      },
+      {
+        "name": "e_RAICRS",
+        "unit": "mas",
+        "description": "*? Standard error in RA*cos(DEdeg) (H14)",
+        "notes": [
+          "[ucd=stat.error;pos.eq.ra]"
+        ]
+      },
+      {
+        "name": "e_DEICRS",
+        "unit": "mas",
+        "description": "*? Standard error in DE (H15)",
+        "notes": [
+          "[ucd=stat.error;pos.eq.dec]"
+        ]
+      },
+      {
+        "name": "e_Plx",
+        "unit": "mas",
+        "description": "? Standard error in Plx (H16)",
+        "notes": [
+          "[ucd=stat.error;pos.parallax]"
+        ]
+      },
+      {
+        "name": "e_pmRA",
+        "unit": "mas/yr",
+        "description": "? Standard error in pmRA (H17)",
+        "notes": [
+          "[ucd=stat.error;pos.pm;pos.eq.ra]"
+        ]
+      },
+      {
+        "name": "e_pmDE",
+        "unit": "mas/yr",
+        "description": "? Standard error in pmDE (H18)",
+        "notes": [
+          "[ucd=stat.error;pos.pm;pos.eq.dec]"
+        ]
+      },
+      {
+        "name": "DE:RA",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, DE/RA*cos(delta) (H19)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "Plx:RA",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, Plx/RA*cos(delta) (H20)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "Plx:DE",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, Plx/DE (H21)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmRA:RA",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmRA/RA*cos(delta) (H22)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmRA:DE",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmRA/DE (H23)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmRA:Plx",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmRA/Plx (H24)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmDE:RA",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmDE/RA*cos(delta) (H25)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmDE:DE",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmDE/DE (H26)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmDE:Plx",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmDE/Plx (H27)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "pmDE:pmRA",
+        "unit": " ",
+        "description": "[-1/1]? Correlation, pmDE/pmRA (H28)",
+        "notes": [
+          "[ucd=stat.correlation]"
+        ]
+      },
+      {
+        "name": "F1",
+        "unit": "%",
+        "description": "? Percentage of rejected data (H29)",
+        "notes": [
+          "[ucd=stat.value;arith.ratio]"
+        ]
+      },
+      {
+        "name": "F2",
+        "unit": " ",
+        "description": "? Goodness-of-fit parameter (H30)",
+        "notes": [
+          "[ucd=stat.fit.goodness]"
+        ]
+      },
+      {
+        "name": "BTmag",
+        "unit": "mag",
+        "description": "? Mean BT magnitude (H32)",
+        "notes": [
+          "[ucd=phot.mag;em.opt.B]"
+        ]
+      },
+      {
+        "name": "e_BTmag",
+        "unit": "mag",
+        "description": "? Standard error on BTmag (H33)",
+        "notes": [
+          "[ucd=stat.error;phot.mag]"
+        ]
+      },
+      {
+        "name": "VTmag",
+        "unit": "mag",
+        "description": "? Mean VT magnitude (H34)",
+        "notes": [
+          "[ucd=phot.mag;em.opt.V]"
+        ]
+      },
+      {
+        "name": "e_VTmag",
+        "unit": "mag",
+        "description": "? Standard error on VTmag (H35)",
+        "notes": [
+          "[ucd=stat.error;phot.mag]"
+        ]
+      },
+      {
+        "name": "m_BTmag",
+        "unit": " ",
+        "description": "[A-Z*-] Reference flag for BT and VTmag (H36)",
+        "notes": [
+          "[ucd=meta.code.multip]"
+        ]
+      },
+      {
+        "name": "B-V",
+        "unit": "mag",
+        "description": "? Johnson B-V colour (H37)",
+        "notes": [
+          "[ucd=phot.color;em.opt.B;em.opt.V]"
+        ]
+      },
+      {
+        "name": "e_B-V",
+        "unit": "mag",
+        "description": "? Standard error on B-V (H38)",
+        "notes": [
+          "[ucd=stat.error;phot.color;em.opt.B]"
+        ]
+      },
+      {
+        "name": "r_B-V",
+        "unit": " ",
+        "description": "[GT] Source of B-V from Ground or Tycho (H39)",
+        "notes": [
+          "[ucd=meta.ref;phot.color;em.opt.B]"
+        ]
+      },
+      {
+        "name": "V-I",
+        "unit": "mag",
+        "description": "? Colour index in Cousins' system (H40)",
+        "notes": [
+          "[ucd=phot.color;em.opt.V;em.opt.I]"
+        ]
+      },
+      {
+        "name": "e_V-I",
+        "unit": "mag",
+        "description": "? Standard error on V-I (H41)",
+        "notes": [
+          "[ucd=stat.error;phot.color;em.opt.V]"
+        ]
+      },
+      {
+        "name": "r_V-I",
+        "unit": " ",
+        "description": "[A-T] Source of V-I (H42)",
+        "notes": [
+          "[ucd=meta.ref;phot.color;em.opt.V]"
+        ]
+      },
+      {
+        "name": "CombMag",
+        "unit": " ",
+        "description": "[*] Flag for combined Vmag, B-V, V-I (H43)",
+        "notes": [
+          "[ucd=meta.code]"
+        ]
+      },
+      {
+        "name": "Hpmag",
+        "unit": "mag",
+        "description": "? Median magnitude in Hipparcos system (H44)",
+        "notes": [
+          "[ucd=phot.mag;em.opt.V]"
+        ]
+      },
+      {
+        "name": "e_Hpmag",
+        "unit": "mag",
+        "description": "? Standard error on Hpmag (H45)",
+        "notes": [
+          "[ucd=stat.error;phot.mag]"
+        ]
+      },
+      {
+        "name": "Hpscat",
+        "unit": "mag",
+        "description": "? Scatter on Hpmag (H46)",
+        "notes": [
+          "[ucd=stat.error]"
+        ]
+      },
+      {
+        "name": "o_Hpmag",
+        "unit": " ",
+        "description": "? Number of observations for Hpmag (H47)",
+        "notes": [
+          "[ucd=meta.number]"
+        ]
+      },
+      {
+        "name": "m_Hpmag",
+        "unit": " ",
+        "description": "[A-Z*-] Reference flag for Hpmag (H48)",
+        "notes": [
+          "[ucd=meta.code.multip]"
+        ]
+      },
+      {
+        "name": "Hpmax",
+        "unit": "mag",
+        "description": "? Hpmag at maximum (5th percentile) (H49)",
+        "notes": [
+          "[ucd=stat.error]"
+        ]
+      },
+      {
+        "name": "HPmin",
+        "unit": "mag",
+        "description": "? Hpmag at minimum (95th percentile) (H50)",
+        "notes": [
+          "[ucd=stat.error]"
+        ]
+      },
+      {
+        "name": "Period",
+        "unit": "d",
+        "description": "? Variability period (days) (H51)",
+        "notes": [
+          "[ucd=src.var]"
+        ]
+      },
+      {
+        "name": "HvarType",
+        "unit": " ",
+        "description": "[CDMPRU]? variability type (H52)",
+        "notes": [
+          "[ucd=meta.note]"
+        ]
+      },
+      {
+        "name": "moreVar",
+        "unit": " ",
+        "description": "[12] Additional data about variability (H53)",
+        "notes": [
+          "[ucd=meta.code]"
+        ]
+      },
+      {
+        "name": "morePhoto",
+        "unit": " ",
+        "description": "[ABC] Light curve Annex (H54)",
+        "notes": [
+          "[ucd=meta.code]"
+        ]
+      },
+      {
+        "name": "CCDM",
+        "unit": " ",
+        "description": "CCDM identifier (H55)",
+        "notes": [
+          "[ucd=meta.id.cross]"
+        ]
+      },
+      {
+        "name": "n_CCDM",
+        "unit": " ",
+        "description": "[HIM] Historical status flag (H56)",
+        "notes": [
+          "[ucd=meta.note]"
+        ]
+      },
+      {
+        "name": "Nsys",
+        "unit": " ",
+        "description": "? Number of entries with same CCDM (H57)",
+        "notes": [
+          "[ucd=meta.number]"
+        ]
+      },
+      {
+        "name": "Ncomp",
+        "unit": " ",
+        "description": "? Number of components in this entry (H58)",
+        "notes": [
+          "[ucd=meta.number]"
+        ]
+      },
+      {
+        "name": "MultFlag",
+        "unit": " ",
+        "description": "[CGOVX] Double/Multiple Systems flag (H59)",
+        "notes": [
+          "[ucd=meta.code]"
+        ]
+      },
+      {
+        "name": "Source",
+        "unit": " ",
+        "description": "[PFILS] Astrometric source flag (H60)",
+        "notes": [
+          "[ucd=meta.bib]"
+        ]
+      },
+      {
+        "name": "Qual",
+        "unit": " ",
+        "description": "[ABCDS] Solution quality (H61)",
+        "notes": [
+          "[ucd=meta.code.qual;stat.fit]"
+        ]
+      },
+      {
+        "name": "m_HIP",
+        "unit": " ",
+        "description": "Component identifiers (H62)",
+        "notes": [
+          "[ucd=meta.code.multip]"
+        ]
+      },
+      {
+        "name": "theta",
+        "unit": "deg",
+        "description": "? Position angle between components (H63)",
+        "notes": [
+          "[ucd=pos.posAng]"
+        ]
+      },
+      {
+        "name": "rho",
+        "unit": "arcsec",
+        "description": "? Angular separation between components (H64)",
+        "notes": [
+          "[ucd=pos.angDistance]"
+        ]
+      },
+      {
+        "name": "e_rho",
+        "unit": "arcsec",
+        "description": "? Standard error on rho (H65)",
+        "notes": [
+          "[ucd=stat.error]"
+        ]
+      },
+      {
+        "name": "dHp",
+        "unit": "mag",
+        "description": "? Magnitude difference of components (H66)",
+        "notes": [
+          "[ucd=phot.mag;arith.diff]"
+        ]
+      },
+      {
+        "name": "e_dHp",
+        "unit": "mag",
+        "description": "? Standard error on dHp (H67)",
+        "notes": [
+          "[ucd=stat.error]"
+        ]
+      },
+      {
+        "name": "Survey",
+        "unit": " ",
+        "description": "[S] Flag indicating a Survey Star (H68)",
+        "notes": [
+          "[ucd=meta.code]"
+        ]
+      },
+      {
+        "name": "Chart",
+        "unit": " ",
+        "description": "[DG] Identification Chart (H69)",
+        "notes": [
+          "[ucd=meta.id;obs.field]"
+        ]
+      },
+      {
+        "name": "Notes",
+        "unit": " ",
+        "description": "[DGPWXYZ] Existence of notes (H70)",
+        "notes": [
+          "[ucd=meta.note]"
+        ]
+      },
+      {
+        "name": "HD",
+        "unit": " ",
+        "description": "[1/359083]? HD number <III/135> (H71)",
+        "notes": [
+          "[ucd=meta.id.cross]"
+        ]
+      },
+      {
+        "name": "BD",
+        "unit": " ",
+        "description": "Bonner DM <I/119>, <I/122> (H72)",
+        "notes": [
+          "[ucd=meta.id.cross]"
+        ]
+      },
+      {
+        "name": "CoD",
+        "unit": " ",
+        "description": "Cordoba Durchmusterung (DM) <I/114> (H73)",
+        "notes": [
+          "[ucd=meta.id.cross]"
+        ]
+      },
+      {
+        "name": "CPD",
+        "unit": " ",
+        "description": "Cape Photographic DM <I/108> (H74)",
+        "notes": [
+          "[ucd=meta.id.cross]"
+        ]
+      },
+      {
+        "name": "(V-I)red",
+        "unit": "mag",
+        "description": "V-I used for reductions (H75)",
+        "notes": [
+          "[ucd=phot.color;em.opt.V;em.opt.I]"
+        ]
+      },
+      {
+        "name": "SpType",
+        "unit": " ",
+        "description": "Spectral type (H76)",
+        "notes": [
+          "[ucd=src.spType]"
+        ]
+      },
+      {
+        "name": "r_SpType",
+        "unit": " ",
+        "description": "[1234GKSX]? Source of spectral type (H77)",
+        "notes": [
+          "[ucd=meta.ref;pos.frame]"
+        ]
+      },
+      {
+        "name": "HIPep",
+        "unit": " ",
+        "description": "Hipparcos Epoch Photometry (Plot and List)",
+        "notes": [
+          "[ucd=meta.ref.url]"
+        ]
+      },
+      {
+        "name": "Erratum",
+        "unit": " ",
+        "description": "VizieR added column, not part of original data",
+        "notes": [
+          "[ucd=meta.ref.url]"
+        ]
+      },
+      {
+        "name": "_RA.icrs",
+        "unit": "deg",
+        "description": "Right ascension (ICRS) at Epoch=J2000, proper motions taken into account",
+        "notes": [
+          "[ucd=pos.eq.ra]"
+        ]
+      },
+      {
+        "name": "_DE.icrs",
+        "unit": "deg",
+        "description": "Declination (ICRS) at Epoch=J2000, proper motions taken into account",
+        "notes": [
+          "[ucd=pos.eq.dec]"
+        ]
+      }
+    ],
+    "tableMetadata": {
+      "id": "I/239/hip_main",
+      "title": "The Hipparcos Main Catalogue",
+      "resource": {
+        "id": "I/239",
+        "title": "The Hipparcos and Tycho Catalogues (ESA 1997)",
+        "info": [
+          "#RESOURCE=yCat_1239",
+          "#INFO\tivoid=ivo://cds.vizier/i/239\t    IVOID of underlying data collection",
+          "#INFO\tdata_ivoid=ivo://cds.vizier/i/239\t    IVOID of underlying data collection",
+          "#INFO\tcreator=ESA 1997\t    First author or institution",
+          "#INFO\tcites=1997HIP...C......0E\t    Article or Data origin sources",
+          "#INFO\treference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/I/239\t    Dataset landing page",
+          "#INFO\tpublication_date=2021-11-18\t    Date of first publication in the data centre",
+          "#INFO\trights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html\t    Licence URI",
+          "#Coosys\tH_1991.250:\tICRS"
+        ]
+      },
+      "global": [
+        "#",
+        "#   VizieR Astronomical Server vizier.cds.unistra.fr",
+        "#    Date: 2026-10-17T04:07:30 [V7.6.1]",
+        "#   In case of problem, please report to:\tcds-question@unistra.fr",
+        "#",
+        "#",
+        "#Coosys\tJ2000:\teq_FK5 J2000",
+        "#INFO\tservice_protocol=ASU\t  IVOID of the protocol through which the data was retrieved",
+        "#INFO\trequest_date=2026-10-17T04:07:30\t  Query execution date",
+        "#INFO\trequest=https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=I%2F239%2Fhip_main&-out.all=1&-out.max=26&HIP=%3D1\t  Full request URL",
+        "#INFO\tcontact=cds-question@unistra.fr\t  Email or URL to contact publisher",
+        "#INFO\tserver_software=VizieR/7.6.1\t  Software version",
+        "#INFO\tpublisher=CDS\t  Data centre that produced the VOTable"
+      ]
+    }
+  }
+}

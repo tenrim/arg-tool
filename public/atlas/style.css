@@ -1,0 +1,12 @@
+.atlas-body>.surface{margin-block:1rem}
+.atlas-panes{align-items:start;gap:1rem;margin-block:1rem}
+.atlas-form{display:grid;gap:1rem}
+.atlas-index-body{display:flex;flex-wrap:wrap;gap:.5rem;max-height:14rem;overflow:auto}
+.atlas-index-body:empty{display:none}
+.atlas-index:has(.atlas-index-body:empty){display:none}
+.atlas-record-list{display:grid;gap:.5rem;margin-block:1rem}
+.atlas-record{text-align:start;white-space:normal}
+.atlas-detail,.atlas-results{min-width:0;padding:1rem}
+.atlas-chart{display:block;width:100%;height:auto;margin-block:1rem}
+.atlas-raw{max-height:30rem;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+.atlas-result-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-block-start:1rem}

@@ -1,0 +1,454 @@
+{
+  "run_at": "2026-10-16T03:48:30.648Z",
+  "mode": "affected",
+  "files": [
+    "public/app.js",
+    "public/handoff/button.js",
+    "public/index.html",
+    "public/navigation.js",
+    "public/notebook/editor.js",
+    "public/notebook/model.js",
+    "public/notebook/page.css",
+    "public/notebook/page.js",
+    "public/notebook/store.js",
+    "public/project-licenses.js",
+    "public/ui/components.css",
+    "public/vendor/notebook/DIFF-MATCH-PATCH-LICENSE.txt",
+    "public/vendor/notebook/DOMPURIFY-LICENSE.txt",
+    "public/vendor/notebook/GO-LICENSE.txt",
+    "public/vendor/notebook/GOPHERJS-LICENSE.txt",
+    "public/vendor/notebook/LUTE-LICENSE.txt",
+    "public/vendor/notebook/NOTICE.txt",
+    "public/vendor/notebook/UPSTREAM.json",
+    "public/vendor/notebook/VDITOR-LICENSE.txt",
+    "public/vendor/notebook/purify.min.js",
+    "public/vendor/notebook/vditor-package.json",
+    "public/vendor/notebook/vditor/dist/css/content-theme/dark.css",
+    "public/vendor/notebook/vditor/dist/index.css",
+    "public/vendor/notebook/vditor/dist/index.min.js",
+    "public/vendor/notebook/vditor/dist/js/i18n/zh_CN.js",
+    "public/vendor/notebook/vditor/dist/js/icons/ant.js",
+    "public/vendor/notebook/vditor/dist/js/lute/lute.min.js",
+    "scripts/architecture-policy.mjs",
+    "scripts/audit-integrity.mjs",
+    "scripts/browser-notebook.mjs",
+    "scripts/import-notebook.mjs",
+    "scripts/test-map.mjs",
+    "tests/notebook.test.mjs",
+    "upstream-manifest.json",
+    "upstream/notebook/GO-LICENSE.txt",
+    "upstream/notebook/GOPHERJS-LICENSE.txt",
+    "upstream/notebook/LUTE-LICENSE.txt",
+    "upstream/notebook/license-sources.json",
+    "upstream/notebook/package-lock.json",
+    "upstream/notebook/package.json"
+  ],
+  "unknown": [],
+  "checks": [
+    {
+      "id": "integrity",
+      "command": [
+        "node",
+        "scripts/audit-integrity.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js",
+        "public/vendor/notebook/DIFF-MATCH-PATCH-LICENSE.txt",
+        "public/vendor/notebook/DOMPURIFY-LICENSE.txt",
+        "public/vendor/notebook/GO-LICENSE.txt",
+        "public/vendor/notebook/GOPHERJS-LICENSE.txt",
+        "public/vendor/notebook/LUTE-LICENSE.txt",
+        "public/vendor/notebook/NOTICE.txt",
+        "public/vendor/notebook/UPSTREAM.json",
+        "public/vendor/notebook/VDITOR-LICENSE.txt",
+        "public/vendor/notebook/purify.min.js",
+        "public/vendor/notebook/vditor-package.json",
+        "public/vendor/notebook/vditor/dist/css/content-theme/dark.css",
+        "public/vendor/notebook/vditor/dist/index.css",
+        "public/vendor/notebook/vditor/dist/index.min.js",
+        "public/vendor/notebook/vditor/dist/js/i18n/zh_CN.js",
+        "public/vendor/notebook/vditor/dist/js/icons/ant.js",
+        "public/vendor/notebook/vditor/dist/js/lute/lute.min.js",
+        "scripts/audit-integrity.mjs",
+        "scripts/import-notebook.mjs",
+        "upstream-manifest.json",
+        "upstream/notebook/GO-LICENSE.txt",
+        "upstream/notebook/GOPHERJS-LICENSE.txt",
+        "upstream/notebook/LUTE-LICENSE.txt",
+        "upstream/notebook/license-sources.json",
+        "upstream/notebook/package-lock.json",
+        "upstream/notebook/package.json"
+      ]
+    },
+    {
+      "id": "architecture",
+      "command": [
+        "node",
+        "scripts/audit-architecture.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/handoff/button.js",
+        "public/navigation.js",
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "public/project-licenses.js",
+        "scripts/architecture-policy.mjs",
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "ui-policy",
+      "command": [
+        "node",
+        "scripts/audit-ui.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/handoff/button.js",
+        "public/index.html",
+        "public/navigation.js",
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "public/project-licenses.js",
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "scripts/check.mjs",
+        "--files",
+        "public/app.js",
+        "public/handoff/button.js",
+        "public/navigation.js",
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "public/project-licenses.js",
+        "scripts/architecture-policy.mjs",
+        "scripts/audit-integrity.mjs",
+        "scripts/browser-notebook.mjs",
+        "scripts/import-notebook.mjs",
+        "scripts/test-map.mjs",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/app.js, public/handoff/button.js, public/navigation.js, public/notebook/editor.js, public/notebook/model.js, public/notebook/page.js, public/notebook/store.js, public/project-licenses.js, scripts/architecture-policy.mjs, scripts/audit-integrity.mjs, scripts/browser-notebook.mjs, scripts/import-notebook.mjs, scripts/test-map.mjs, tests/notebook.test.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/handoff.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/handoff.test.mjs"
+      ],
+      "reasons": [
+        "public/handoff/button.js"
+      ]
+    },
+    {
+      "id": "unit:tests/notebook.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/notebook.test.mjs"
+      ],
+      "reasons": [
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "public/vendor/notebook/DIFF-MATCH-PATCH-LICENSE.txt",
+        "public/vendor/notebook/DOMPURIFY-LICENSE.txt",
+        "public/vendor/notebook/GO-LICENSE.txt",
+        "public/vendor/notebook/GOPHERJS-LICENSE.txt",
+        "public/vendor/notebook/LUTE-LICENSE.txt",
+        "public/vendor/notebook/NOTICE.txt",
+        "public/vendor/notebook/UPSTREAM.json",
+        "public/vendor/notebook/VDITOR-LICENSE.txt",
+        "public/vendor/notebook/purify.min.js",
+        "public/vendor/notebook/vditor-package.json",
+        "public/vendor/notebook/vditor/dist/css/content-theme/dark.css",
+        "public/vendor/notebook/vditor/dist/index.css",
+        "public/vendor/notebook/vditor/dist/index.min.js",
+        "public/vendor/notebook/vditor/dist/js/i18n/zh_CN.js",
+        "public/vendor/notebook/vditor/dist/js/icons/ant.js",
+        "public/vendor/notebook/vditor/dist/js/lute/lute.min.js",
+        "scripts/import-notebook.mjs",
+        "tests/notebook.test.mjs",
+        "upstream/notebook/GO-LICENSE.txt",
+        "upstream/notebook/GOPHERJS-LICENSE.txt",
+        "upstream/notebook/LUTE-LICENSE.txt",
+        "upstream/notebook/license-sources.json",
+        "upstream/notebook/package-lock.json",
+        "upstream/notebook/package.json"
+      ]
+    },
+    {
+      "id": "unit:tests/testing-policy.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/testing-policy.test.mjs"
+      ],
+      "reasons": [
+        "scripts/architecture-policy.mjs",
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/architecture.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/architecture.test.mjs"
+      ],
+      "reasons": [
+        "scripts/architecture-policy.mjs",
+        "scripts/test-map.mjs"
+      ]
+    },
+    {
+      "id": "unit:tests/basics.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/basics.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/capabilities.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/capabilities.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/chef-tools.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/chef-tools.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/knowledge.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/knowledge.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/preferences.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/preferences.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/reference.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/reference.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "unit:tests/task-selection.test.mjs",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/task-selection.test.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "browser:workspace",
+      "command": [
+        "node",
+        "scripts/browser-workspace.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:sidebar-routing",
+      "command": [
+        "node",
+        "scripts/browser-sidebar-routing.mjs"
+      ],
+      "reasons": [
+        "public/app.js",
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "browser:task-lifecycle",
+      "command": [
+        "node",
+        "scripts/browser-task-lifecycle.mjs"
+      ],
+      "reasons": [
+        "public/app.js"
+      ]
+    },
+    {
+      "id": "browser:notebook",
+      "command": [
+        "node",
+        "scripts/browser-notebook.mjs"
+      ],
+      "reasons": [
+        "public/handoff/button.js",
+        "public/notebook/editor.js",
+        "public/notebook/model.js",
+        "public/notebook/page.css",
+        "public/notebook/page.js",
+        "public/notebook/store.js",
+        "public/vendor/notebook/DIFF-MATCH-PATCH-LICENSE.txt",
+        "public/vendor/notebook/DOMPURIFY-LICENSE.txt",
+        "public/vendor/notebook/GO-LICENSE.txt",
+        "public/vendor/notebook/GOPHERJS-LICENSE.txt",
+        "public/vendor/notebook/LUTE-LICENSE.txt",
+        "public/vendor/notebook/NOTICE.txt",
+        "public/vendor/notebook/UPSTREAM.json",
+        "public/vendor/notebook/VDITOR-LICENSE.txt",
+        "public/vendor/notebook/purify.min.js",
+        "public/vendor/notebook/vditor-package.json",
+        "public/vendor/notebook/vditor/dist/css/content-theme/dark.css",
+        "public/vendor/notebook/vditor/dist/index.css",
+        "public/vendor/notebook/vditor/dist/index.min.js",
+        "public/vendor/notebook/vditor/dist/js/i18n/zh_CN.js",
+        "public/vendor/notebook/vditor/dist/js/icons/ant.js",
+        "public/vendor/notebook/vditor/dist/js/lute/lute.min.js",
+        "scripts/browser-notebook.mjs",
+        "scripts/import-notebook.mjs",
+        "upstream/notebook/GO-LICENSE.txt",
+        "upstream/notebook/GOPHERJS-LICENSE.txt",
+        "upstream/notebook/LUTE-LICENSE.txt",
+        "upstream/notebook/license-sources.json",
+        "upstream/notebook/package-lock.json",
+        "upstream/notebook/package.json"
+      ]
+    },
+    {
+      "id": "browser:handoff-feedback",
+      "command": [
+        "node",
+        "scripts/browser-handoff-feedback.mjs"
+      ],
+      "reasons": [
+        "public/handoff/button.js"
+      ]
+    },
+    {
+      "id": "browser:ui-layout",
+      "command": [
+        "node",
+        "scripts/browser-ui-layout.mjs"
+      ],
+      "reasons": [
+        "public/index.html",
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:responsive-smoke",
+      "command": [
+        "node",
+        "scripts/browser-responsive-smoke.mjs"
+      ],
+      "reasons": [
+        "public/index.html"
+      ]
+    },
+    {
+      "id": "browser:capabilities",
+      "command": [
+        "node",
+        "tests/browser-capabilities.mjs"
+      ],
+      "reasons": [
+        "public/navigation.js"
+      ]
+    },
+    {
+      "id": "browser:project-licenses",
+      "command": [
+        "node",
+        "scripts/browser-project-licenses.mjs"
+      ],
+      "reasons": [
+        "public/project-licenses.js"
+      ]
+    },
+    {
+      "id": "browser:ui-components",
+      "command": [
+        "node",
+        "scripts/browser-ui-components.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    },
+    {
+      "id": "browser:ui-motion",
+      "command": [
+        "node",
+        "scripts/browser-ui-motion.mjs"
+      ],
+      "reasons": [
+        "public/ui/components.css"
+      ]
+    }
+  ],
+  "executed": false,
+  "passed": null,
+  "results": []
+}

@@ -18,7 +18,7 @@ export function mountHandoff({receive,needsReplace}) {
     node.addEventListener('toggle',populate);node.open=expanded;populate();return node;
   }
   function targetButton(target,rev,recommended=false){
-    const direction=target.entry.directions?.find(d=>d.op===target.op)?.label;
+    const direction=(target.entry.actions||target.entry.directions)?.find(d=>d.op===target.op)?.label;
     return Button({layout:'stacked',attrs:{'data-handoff-target':target.op||target.entry.id},children:[Box({tag:'strong',text:target.entry.title+(direction?' · '+direction:'')}),...(recommended?[Box({tag:'span',text:target.reason})]:[])],on:{click:()=>choose(target,rev)}});
   }
   function renderChoices(rev){
@@ -31,7 +31,7 @@ export function mountHandoff({receive,needsReplace}) {
       const tree=groupTargets(filtered,registry);
       all.replaceChildren(...tree.map(category=>fold(`${category.title} · ${category.count} 项`,()=>category.groups.map(group=>fold(`${group.title} · ${group.targets.length} 项`,()=>group.targets.map(target=>{
         if(target.directions.length===1)return targetButton({...target,op:target.directions[0].op},rev);
-        return Box({className:'ui-flow-family',children:[Box({tag:'strong',text:target.entry.title}),Toolbar({attrs:{'aria-label':target.entry.title+'处理方向'},children:target.directions.map(direction=>Button({text:direction.label,attrs:{'data-handoff-target':direction.op,'aria-label':target.entry.title+' · '+direction.label},on:{click:()=>choose({entry:target.entry,op:direction.op},rev)}}))})]});
+        return Box({className:'ui-flow-family',children:[Box({tag:'strong',text:target.entry.title}),Toolbar({attrs:{'aria-label':target.entry.title+(target.entry.topic?'处理操作':'处理方向')},children:target.directions.map(direction=>Button({text:direction.label,attrs:{'data-handoff-target':direction.op,'aria-label':target.entry.title+' · '+direction.label},on:{click:()=>choose({entry:target.entry,op:direction.op},rev)}}))})]});
       }),{'data-handoff-group':group.id},!!query)),{'data-handoff-category':category.id},!!query)));
       if(!tree.length)all.append(Box({tag:'p',text:'没有找到可接收当前结果的工具。'}));
     };

@@ -1,0 +1,64 @@
+{
+  "fixture": {
+    "sourceURL": "https://open.cnkgraph.com/api/ciTune/90",
+    "status": 200,
+    "capturedAt": "2026-10-17",
+    "scope": "A complete selected public record from the archived response; no record fields or article text truncated.",
+    "credit": "苏州图谱信息技术有限公司、作品作者及数据所列原始文献来源",
+    "termsURL": "https://cnkgraph.com/Home/OpenResources",
+    "notice": "Official read-only API; noncommercial research and study only. No claim of an unrestricted open-data license."
+  },
+  "record": {
+    "id": "90",
+    "title": "醉花間",
+    "fields": {
+      "Formats": [
+        {
+          "FormatIndex": 0,
+          "Desc": "雙調四十一字，前段五句三仄韻、一疊韻，後段四句三仄韻",
+          "Comment": "《嘯餘譜》注《生查子》調，與《醉花間》調相近。不知《生查子》正體前後段皆五字句起，間有用六字者，變格耳。《醉花間》正體則前必六字、後必五字也。\n譜內可平可仄悉參下毛詞。",
+          "SampleAuthor": "毛文錫",
+          "SampleContent": "深相憶莫相憶相憶情難極銀漢是紅牆一帶遙相隔金盤珠露滴兩岸榆花白風搖玉佩輕今夕為何夕",
+          "Definition": "○○●韻●○●疊○●○○●韻○●●○○句◎●○○●韻　　⊙⊙⊙◎●韻◎◎○⊙●韻○⊙●◎○句⊙●○○●韻",
+          "LeadingChars": null,
+          "FormatHtml": "<p class='mSize'>　　深相憶　莫相憶　相憶情難極　銀漢是紅牆　一帶遙相隔　<br />\r\n<span class='comment'>　　平平仄<span class='rhythm'>韻</span>仄平仄<span class='rhythm'>疊</span>平仄平平仄<span class='rhythm'>韻</span>平仄仄平平<span class='rhythm'>句</span>中仄平平仄<span class='rhythm'>韻</span></span></p>\r\n<br /><p class='mSize'>　　金盤珠露滴　兩岸榆花白　風搖玉佩輕　今夕為何夕　<br />\r\n<span class='comment'>　　中中中中仄<span class='rhythm'>韻</span>中中平中仄<span class='rhythm'>韻</span>平中仄中平<span class='rhythm'>句</span>中仄平平仄<span class='rhythm'>韻</span></span></p>\r\n"
+        },
+        {
+          "FormatIndex": 1,
+          "Desc": "雙調四十一字，前段五句三仄韻、一疊韻，後段四句兩仄韻",
+          "Comment": "此詞後段第一句少押一韻，與前詞異。",
+          "SampleAuthor": "毛文錫",
+          "SampleContent": "休相問怕相問相問還添恨春水滿塘生鸂鶒還相趁昨夜雨霏霏臨明寒一陣偏憶戍樓人久絕邊庭信",
+          "Definition": "○○●韻●○●疊○●○○●韻○●●○○句○●○○●韻　　●●●○○句○○○●●韻○●●○○句●●○○●韻",
+          "LeadingChars": null,
+          "FormatHtml": "<p class='mSize'>　　休相問　怕相問　相問還添恨　春水滿塘生　鸂鶒還相趁　<br />\r\n<span class='comment'>　　平平仄<span class='rhythm'>韻</span>仄平仄<span class='rhythm'>疊</span>平仄平平仄<span class='rhythm'>韻</span>平仄仄平平<span class='rhythm'>句</span>平仄平平仄<span class='rhythm'>韻</span></span></p>\r\n<br /><p class='mSize'>　　昨夜雨霏霏　臨明寒一陣　偏憶戍樓人　久絕邊庭信　<br />\r\n<span class='comment'>　　仄仄仄平平<span class='rhythm'>句</span>平平平仄仄<span class='rhythm'>韻</span>平仄仄平平<span class='rhythm'>句</span>仄仄平平仄<span class='rhythm'>韻</span></span></p>\r\n"
+        },
+        {
+          "FormatIndex": 2,
+          "Desc": "雙調五十字，前段四句三仄韻，後段六句四仄韻",
+          "Comment": "此詞前段第二、三、四句與毛詞同，惟起句作七字異。後段第一、二句與毛詞同，以下句讀全異。《陽春集》中四首皆然。\n前段第一句，馮詞別首“月落霜繁深院閉”，“月”字仄聲，“霜”字平聲。第二句“洞房人正睡”，“洞”字仄聲。後段第一句“夜深寒不徹”，“夜”字仄聲。第三句“雙眉愁幾許”，“雙”字平聲。第四句“兩條玉箸為君垂”，“兩”字仄聲。又“人心情緒自無端”，“情”字平聲。譜內可平可仄據此。",
+          "SampleAuthor": "馮延巳",
+          "SampleContent": "晴雪小園春未到池邊梅自早高樹鵲銜巢斜月明寒草山川風景好自古金陵道少年看却老相逢莫厭醉金杯別離多歡會少",
+          "Definition": "⊙●◎○○●●韻⊙○○●●韻○●●○○句○●○○●韻　　⊙○○●●韻●●○○●韻◎○○●●韻⊙○◎●●○○句●○○句○●●韻",
+          "LeadingChars": null,
+          "FormatHtml": "<p class='mSize'>　　晴雪小園春未到　池邊梅自早　高樹鵲銜巢　斜月明寒草　<br />\r\n<span class='comment'>　　中仄中平平仄仄<span class='rhythm'>韻</span>中平平仄仄<span class='rhythm'>韻</span>平仄仄平平<span class='rhythm'>句</span>平仄平平仄<span class='rhythm'>韻</span></span></p>\r\n<br /><p class='mSize'>　　山川風景好　自古金陵道　少年看却老　相逢莫厭醉金杯　別離多　歡會少　<br />\r\n<span class='comment'>　　中平平仄仄<span class='rhythm'>韻</span>仄仄平平仄<span class='rhythm'>韻</span>中平平仄仄<span class='rhythm'>韻</span>中平中仄仄平平<span class='rhythm'>句</span>仄平平<span class='rhythm'>句</span>平仄仄<span class='rhythm'>韻</span></span></p>\r\n"
+        }
+      ],
+      "Id": 90,
+      "Type": "Ze",
+      "Name": "醉花間",
+      "Aliases": [
+        "醉花閒"
+      ],
+      "Desc": "唐教坊曲名。《宋史·樂志》：雙調。",
+      "WritingCount": 44
+    },
+    "sourceURL": "https://open.cnkgraph.com/api/ciTune/90"
+  },
+  "result": {
+    "provider": "cnkgraph",
+    "parameters": {
+      "mode": "tune-detail"
+    }
+  }
+}
