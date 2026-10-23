@@ -12,3 +12,6 @@ __pycache__/
 /public/vendor/
 /public/fonts/
 /upstream/
+
+# Chromium 本地诊断日志，不属于发布源码。
+/debug.log

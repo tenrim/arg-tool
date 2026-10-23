@@ -68,6 +68,9 @@ export async function planChecks(files, {unitOnly=false, staticOnly=false}={}) {
     if(/^public\/(?:fonts|assets)\//.test(file)){addBrowser('ui-layout',file);continue;}
     if(/^tests\/fixtures\//.test(file)){addBrowser('smoke',file);addBrowser('round-two',file);continue;}
     if(file.startsWith('test-tools/')){addUnit('testing-policy',file);addBrowser('sidebar-routing',file);continue;}
+    // The source snapshot once included Chromium's local diagnostic log.
+    // Its deletion has no behavior owner; an existing tracked log still fails closed.
+    if(file==='debug.log'){try{await access(file);}catch{continue;}}
     if(['.gitignore','.gitattributes','.nojekyll','public/.nojekyll','LICENSE'].includes(file))continue;
     unknown.push(file);
   }

@@ -35,6 +35,12 @@ test('changed test selects itself; unknown files fail closed; paths cannot leave
   await assert.rejects(planChecks(['../private.js']),/inside the repository/);
   assert.equal((await planChecks([])).checks.length,0);
 });
+test('removing the historical Chromium log requires no runtime checks; unknown logs still fail closed',async()=>{
+  const removed=await planChecks(['debug.log']);
+  assert.deepEqual(removed.unknown,[]);assert.deepEqual(ids(removed),[]);
+  const unknown=await planChecks(['public/new-runtime.log']);
+  assert.deepEqual(unknown.unknown,['public/new-runtime.log']);
+});
 test('Git discovery includes staged, unstaged, untracked, renamed and deleted paths',async()=>{
   const cwd=await mkdtemp(join(tmpdir(),'arg-impact-'));
   const git=args=>execFileSync('git',['-c',`safe.directory=${cwd.replaceAll('\\','/')}`,...args],{cwd,encoding:'utf8'});
