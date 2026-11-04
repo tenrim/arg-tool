@@ -1,0 +1,351 @@
+/* Pinned editor appearance shares the native component theme. */
+/* A heading may own several actions (notebook, drawings). Let the shared
+   header wrap at its intrinsic width instead of forcing controls off-screen. */
+.site-ui.workbench-app [data-ui='tool-header'] {
+  flex-wrap: wrap;
+  row-gap: var(--ui-space-3);
+}
+.site-ui.workbench-app [data-ui='tool-header'] > .heading-actions {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: var(--ui-space-1);
+}
+/* §2.8: navigation and help remain available without competing with the task. */
+.site-ui.workbench-app .heading-actions [data-ui='button'][data-variant='quiet'] {
+  min-block-size: var(--ui-control-height);
+  padding-inline: var(--ui-space-2);
+  font-size: calc(var(--ui-text-small) * var(--ui-font-scale, 1));
+}
+.site-ui .graphic-engine {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  font-family: var(--body);
+  font-variant-ligatures: none;
+}
+.site-ui .graphic-engine .excalidraw {
+  --color-primary: #e9ab00;
+  --color-primary-darker: #b78000;
+  --color-primary-darkest: #7d5900;
+  --color-primary-light: #342b15;
+  --island-bg-color: #141b29;
+  --popup-bg-color: #141b29;
+  --button-hover-bg: #263148;
+  --default-bg-color: #0b1019;
+  --text-primary-color: #e2e8f0;
+  --color-on-primary-container: #e9ab00;
+  --color-primary-container: #342b15;
+  font-family: var(--body);
+}
+.site-ui
+  .graphic-engine
+  .excalidraw
+  :is(button, input, select, textarea, label, .dropdown-menu-item) {
+  font-family: var(--body);
+  font-variant-ligatures: none;
+}
+.site-ui .graphic-engine .excalidraw .Island {
+  box-shadow: 0 2px 10px #0004;
+}
+.site-ui .graphic-engine .excalidraw {
+  --color-surface-primary-container: #3d3119;
+  --color-primary-light-darker: #3d3119;
+  --color-brand-hover: #e9ab00;
+  --color-brand-active: #e9ab00;
+  --color-primary-hover: #e9ab00;
+}
+/* Dark chrome is independent of artwork colors. Palette, canvas, eyedropper
+   and library previews share the same literal colors as saved/exported data. */
+.site-ui .graphic-engine .excalidraw {
+  --theme-filter: none;
+}
+.site-ui .graphic-engine :is(me-tpc, .mind-elixir-toolbar, .mind-elixir-context-menu) {
+  font-family: var(--body);
+  font-variant-ligatures: none;
+}
+.site-ui .mindmap-canvas-actions button {
+  background: var(--surface-raised);
+  box-shadow: 0 2px 8px #0003;
+  padding: 6px 9px;
+  font-size: 13px;
+}
+.site-ui .mindmap-node-properties,
+.site-ui .mindmap-source-menu {
+  background: var(--surface);
+  box-shadow: 0 6px 24px #0006;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.site-ui .mindmap-control-status {
+  padding: 0;
+  min-height: 0;
+  font-size: 12px;
+}
+.site-ui .mindmap-node-properties input[type='color'] {
+  width: 100%;
+  height: 44px;
+  padding: 4px;
+}
+.site-ui .graphic-mindmap .mind-elixir-toolbar {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.site-ui .graphic-mindmap .mind-elixir-toolbar [role='button'] {
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.site-ui .graphic-mindmap .mind-elixir-toolbar [role='button']:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.site-ui .graphic-engine :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.site-ui.workbench-app .graphic-document-heading > input {
+  font: 600 17px/1.5 var(--body);
+  background: transparent;
+  border-color: transparent;
+}
+.site-ui.workbench-app .graphic-document-heading > input:focus {
+  border-color: var(--line);
+  background: var(--bg-deep);
+}
+.site-ui.workbench-app .graphic-document-heading [role='status'] {
+  font: 12px/1.5 var(--body);
+  padding: 0;
+  min-height: 0;
+}
+/* Upstream editors use instantaneous canvas transforms. Disable decorative
+   CSS animation here so continuous drawing and live motion preferences agree. */
+.site-ui .graphic-engine * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+.site-ui .notebook-editor.vditor {
+  --panel-background-color: var(--surface);
+  --toolbar-background-color: var(--surface);
+  --textarea-background-color: var(--bg-deep);
+  --textarea-text-color: var(--ink);
+  --toolbar-icon-color: var(--muted);
+  --toolbar-icon-hover-color: var(--accent);
+  --border-color: var(--line);
+  --second-color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+.site-ui .notebook-editor .vditor-toolbar {
+  padding: 8px;
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  flex-wrap: wrap;
+}
+.site-ui .notebook-editor .vditor-toolbar__item {
+  padding: 0;
+}
+.site-ui .notebook-editor .vditor-toolbar__item button {
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius);
+}
+.site-ui
+  .notebook-editor
+  .vditor-toolbar__item
+  button:not(:disabled):not([aria-disabled='true']):not(.vditor-menu--disabled):is(
+    :hover,
+    :focus-visible
+  ),
+.site-ui .notebook-editor .vditor-toolbar__item button.vditor-menu--current {
+  color: var(--ui-action-hover-ink);
+  background: var(--ui-action-hover-bg);
+}
+.site-ui .notebook-editor .vditor-toolbar__item button.vditor-menu--disabled {
+  opacity: 0.42;
+  background: transparent;
+}
+/* Upstream hint menus declare their surface important; adapt that surface here,
+   without changing vendor bytes or assigning fake component markers. */
+.site-ui
+  .notebook-editor
+  .vditor-hint
+  button:not(.vditor-menu--disabled):not(:disabled):is(:hover, :focus-visible),
+.site-ui .notebook-editor .vditor-hint--current {
+  background-color: var(--ui-action-hover-bg) !important;
+  color: var(--ui-action-hover-ink) !important;
+}
+.site-ui .notebook-editor .vditor-reset {
+  padding: 24px !important;
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+  background: var(--bg-deep);
+  font-variant-ligatures: none;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.site-ui .notebook-editor .vditor-reset code,
+.site-ui .notebook-editor .vditor-reset pre {
+  font-family: var(--mono);
+  font-variant-ligatures: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.site-ui .notebook-editor .vditor-reset a {
+  color: var(--cyan);
+}
+.site-ui .notebook-editor .vditor-reset img {
+  max-width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+}
+.site-ui .notebook-editor .vditor-reset table {
+  display: block;
+  max-width: 100%;
+  overflow: auto;
+}
+.site-ui .notebook-editor :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.site-ui .notebook-editor .vditor-reset:focus-visible {
+  outline-offset: -3px;
+}
+.site-ui .notebook-editor .vditor-panel {
+  max-width: min(85vw, 420px);
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+.site-ui .notebook-editor .vditor-toolbar__item svg {
+  width: 16px;
+  height: 16px;
+}
+.site-ui.workbench-app .notebook-save-state {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  max-width: 380px;
+  font: 12px/1.6 var(--body);
+  overflow-wrap: anywhere;
+}
+.site-ui.workbench-app #notebook-title {
+  font: 600 18px/1.5 var(--body);
+  background: transparent;
+  border-color: transparent;
+  padding: 6px 8px;
+  min-height: 40px;
+}
+.site-ui.workbench-app #notebook-title:hover,
+.site-ui.workbench-app #notebook-title:focus {
+  border-color: var(--line);
+  background: var(--bg-deep);
+}
+.site-ui.workbench-app .notebook-editor .vditor-reset :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--body);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.site-ui.workbench-app .notebook-editor .vditor-reset h1 {
+  font-size: 1.8em;
+}
+.site-ui .notebook-editor .vditor-counter {
+  font: 12px var(--body);
+  color: var(--muted);
+}
+.site-ui .notebook-editor .vditor-outline {
+  font: 13px/1.7 var(--body);
+  background: var(--surface);
+}
+.site-ui .notebook-editor .vditor-toolbar__item .vditor-hint button {
+  width: auto;
+  white-space: normal;
+}
+.site-ui .notebook-editor .vditor-toolbar__item .vditor-panel {
+  z-index: 20;
+}
+.site-ui .notebook-editor.vditor--fullscreen {
+  border-radius: 0;
+}
+.site-ui .notebook-editor [data-notebook-language] {
+  background: transparent !important;
+}
+.site-ui .notebook-diagram-paper {
+  background: #fff;
+  color: #17202b;
+  padding: 12px;
+  border-radius: var(--radius);
+}
+.site-ui .notebook-editor .notebook-diagram-paper text {
+  fill: #17202b;
+}
+.site-ui .notebook-editor:not([data-content-theme='dark']) .vditor-reset {
+  background: #fafbfc;
+  color: #18202b;
+}
+.site-ui
+  .notebook-editor:not([data-content-theme='dark'])
+  .vditor-reset
+  :is(h1, h2, h3, h4, h5, h6) {
+  color: #18202b;
+}
+.site-ui .notebook-editor:not([data-content-theme='dark']) .vditor-reset a {
+  color: #006d85;
+}
+.site-ui
+  .notebook-editor:not([data-content-theme='dark'])
+  .notebook-diagram:not(.notebook-diagram-paper) {
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+@media print {
+  body.notebook-printing > * {
+    display: none !important;
+  }
+  body.notebook-printing > .notebook-print-document {
+    display: block !important;
+    color: #000;
+    background: #fff;
+    font: 16px/1.8 sans-serif;
+  }
+  body.notebook-printing::before {
+    display: none !important;
+  }
+  .notebook-print-document :is(svg, img) {
+    max-width: 100%;
+    height: auto;
+  }
+  .notebook-print-document pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .notebook-print-document button {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .site-ui .notebook-editor .vditor-reset {
+    padding: 16px !important;
+  }
+  .site-ui .notebook-editor .vditor-toolbar {
+    padding: 4px;
+  }
+}
+[data-layout='table-scroll'] {
+  max-width: 100%;
+  overflow: auto;
+}

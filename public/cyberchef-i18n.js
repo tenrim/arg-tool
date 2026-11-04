@@ -1,5 +1,14 @@
 // Presentation-only Chinese localization. Recipes always retain upstream op/arg values.
-const pairs = source => Object.fromEntries(source.trim().split('\n').map(line => { const i=line.indexOf('|');return [line.slice(0,i),line.slice(i+1)]; }));
+const pairs = (source) =>
+  Object.fromEntries(
+    source
+      .trim()
+      .split('\n')
+      .map((line) => {
+        const i = line.indexOf('|');
+        return [line.slice(0, i), line.slice(i + 1)];
+      }),
+  );
 const operationNames = pairs(`
 ADD|逐字节加法
 AND|按位与
@@ -349,12 +358,20 @@ Quoted Printable|可打印编码
 Base|任意进制
 `);
 export function operationName(name) {
-  if(operationNames[name])return operationNames[name];
+  if (operationNames[name]) return operationNames[name];
   let m;
-  if((m=name.match(/^(From|To) (.+)$/)))return `${terms[m[2]]||m[2]}${m[1]==='From'?'解码':'编码'}`;
-  if((m=name.match(/^(.+) (Decode|Encode|Decrypt|Encrypt|Sign|Verify|Key Unwrap|Key Wrap|Compress|Decompress|Checksum)$/)))return `${terms[m[1]]||m[1]}${{Decode:'解码',Encode:'编码',Decrypt:'解密',Encrypt:'加密',Sign:'签名',Verify:'验签','Key Unwrap':'密钥解封装','Key Wrap':'密钥封装',Compress:'压缩',Decompress:'解压',Checksum:'校验和'}[m[2]]}`;
-  if((m=name.match(/^(.+) to (.+)$/)))return `${m[1]} 转 ${m[2]}`;
-  return ['ChaCha','RC4','Salsa20','XSalsa20','Rabbit'].includes(name)?`${name} 流加密`:`${name} 哈希`;
+  if ((m = name.match(/^(From|To) (.+)$/)))
+    return `${terms[m[2]] || m[2]}${m[1] === 'From' ? '解码' : '编码'}`;
+  if (
+    (m = name.match(
+      /^(.+) (Decode|Encode|Decrypt|Encrypt|Sign|Verify|Key Unwrap|Key Wrap|Compress|Decompress|Checksum)$/,
+    ))
+  )
+    return `${terms[m[1]] || m[1]}${{ Decode: '解码', Encode: '编码', Decrypt: '解密', Encrypt: '加密', Sign: '签名', Verify: '验签', 'Key Unwrap': '密钥解封装', 'Key Wrap': '密钥封装', Compress: '压缩', Decompress: '解压', Checksum: '校验和' }[m[2]]}`;
+  if ((m = name.match(/^(.+) to (.+)$/))) return `${m[1]} 转 ${m[2]}`;
+  return ['ChaCha', 'RC4', 'Salsa20', 'XSalsa20', 'Rabbit'].includes(name)
+    ? `${name} 流加密`
+    : `${name} 哈希`;
 }
 export const categories = pairs(`
 Favourites|常用操作
@@ -925,11 +942,14 @@ le|小端
 be|大端
 `);
 export function parameterName(name) {
-  if(Object.hasOwn(labels,name))return labels[name];
-  if(!name)return '文本';
-  if(/^R[123]-Q[1-5]$/.test(name))return '条件 '+name;
-  if(/^Add-Q[1-5]$/.test(name))return '加法条件 '+name.slice(4);
-  return name.replace(/[A-Za-z]+(?:-[A-Za-z]+)*/g,token=>words[token.toLowerCase()]||token).replace(/ +/g,' ').trim();
+  if (Object.hasOwn(labels, name)) return labels[name];
+  if (!name) return '文本';
+  if (/^R[123]-Q[1-5]$/.test(name)) return '条件 ' + name;
+  if (/^Add-Q[1-5]$/.test(name)) return '加法条件 ' + name.slice(4);
+  return name
+    .replace(/[A-Za-z]+(?:-[A-Za-z]+)*/g, (token) => words[token.toLowerCase()] || token)
+    .replace(/ +/g, ' ')
+    .trim();
 }
 const optionNames = pairs(`
 Space|空格
@@ -1200,7 +1220,9 @@ Input differential|输入差分
 Output differential|输出差分
 Cascade|级联
 `);
-Object.assign(labels,pairs(`
+Object.assign(
+  labels,
+  pairs(`
 CSS selector|CSS 选择器
 Windows|Windows 文件路径
 UNIX|UNIX 文件路径
@@ -1218,8 +1240,11 @@ All hashes|全部哈希
 Section (regex)|选取范围（正则）
 Add-Equals|加法等于条件
 Add-Counter1|加法计数器 1
-`));
-Object.assign(words,pairs(`
+`),
+);
+Object.assign(
+  words,
+  pairs(`
 selector|选择器
 function|函数
 hashes|哈希
@@ -1414,8 +1439,11 @@ singapore|新加坡
 turkey|土耳其
 universal|通用
 zulu|祖鲁
-`));
-Object.assign(optionNames,pairs(`
+`),
+);
+Object.assign(
+  optionNames,
+  pairs(`
 1+2=. (1+2 Break In, Find X1,X2)|1+2=.（破解并查找 X1、X2）
 4=5=/1=2 (Given X1,X2 find X4,X5)|4=5=/1=2（由 X1、X2 查找 X4、X5）
 /,5,U (Count chars to find X3)|/,5,U（计数字符以查找 X3）
@@ -1467,25 +1495,87 @@ Larrabee|Larrabee 架构
 Bitcoin scriptPubKey|比特币公钥脚本
 Bitcoin SegWit|比特币隔离见证
 Triple DES|三重 DES
-`));
+`),
+);
 // SI prefixes also apply to less frequently used unit choices.
-const prefixes={yocto:'幺',zepto:'仄',atto:'阿',femto:'飞',pico:'皮',nano:'纳',micro:'微',milli:'毫',centi:'厘',deci:'分',deca:'十',hecto:'百',kilo:'千',mega:'兆',giga:'吉',tera:'太',peta:'拍',exa:'艾',zetta:'泽',yotta:'尧',kibi:'二进制千',mebi:'二进制兆',gibi:'二进制吉',tebi:'二进制太',pebi:'二进制拍',exbi:'二进制艾',zebi:'二进制泽',yobi:'二进制尧'};
-for(const [prefix,zh]of Object.entries(prefixes))for(const [suffix,unit]of Object.entries({gram:'克',barn:'靶恩',bits:'位',bytes:'字节',metres:'米'}))words[prefix+suffix]=zh+unit;
+const prefixes = {
+  yocto: '幺',
+  zepto: '仄',
+  atto: '阿',
+  femto: '飞',
+  pico: '皮',
+  nano: '纳',
+  micro: '微',
+  milli: '毫',
+  centi: '厘',
+  deci: '分',
+  deca: '十',
+  hecto: '百',
+  kilo: '千',
+  mega: '兆',
+  giga: '吉',
+  tera: '太',
+  peta: '拍',
+  exa: '艾',
+  zetta: '泽',
+  yotta: '尧',
+  kibi: '二进制千',
+  mebi: '二进制兆',
+  gibi: '二进制吉',
+  tebi: '二进制太',
+  pebi: '二进制拍',
+  exbi: '二进制艾',
+  zebi: '二进制泽',
+  yobi: '二进制尧',
+};
+for (const [prefix, zh] of Object.entries(prefixes))
+  for (const [suffix, unit] of Object.entries({
+    gram: '克',
+    barn: '靶恩',
+    bits: '位',
+    bytes: '字节',
+    metres: '米',
+  }))
+    words[prefix + suffix] = zh + unit;
 const optionCache = new Map();
 export function optionName(value) {
-  const name=String(value);
-  if(Object.hasOwn(optionNames,name))return optionNames[name];
-  if(optionCache.has(name))return optionCache.get(name);
-  let translated=name;
-  if(/^(?:CBC|ECB)\/NoPadding$/.test(name))translated=name.replace('/NoPadding',' / 无填充');
-  else if(/^Example \d+$/.test(name))translated=name.replace('Example','示例');
-  else if(/^Date \(/.test(name))translated=name.replace('Date','日期');
-  else if(name.includes('/')&&/^(Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Brazil|Canada|Chile|Etc|Europe|Indian|Mexico|Pacific|US)\//.test(name)) {
-    try {translated=new Intl.DateTimeFormat('zh-CN',{timeZone:name,timeZoneName:'long'}).formatToParts(new Date('2026-01-01')).find(p=>p.type==='timeZoneName').value+`（${name}）`;}catch{translated='时区：'+name;}
-  } else translated=parameterName(name);
-  optionCache.set(name,translated);return translated;
+  const name = String(value);
+  if (Object.hasOwn(optionNames, name)) return optionNames[name];
+  if (optionCache.has(name)) return optionCache.get(name);
+  let translated = name;
+  if (/^(?:CBC|ECB)\/NoPadding$/.test(name)) translated = name.replace('/NoPadding', ' / 无填充');
+  else if (/^Example \d+$/.test(name)) translated = name.replace('Example', '示例');
+  else if (/^Date \(/.test(name)) translated = name.replace('Date', '日期');
+  else if (
+    name.includes('/') &&
+    /^(Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Brazil|Canada|Chile|Etc|Europe|Indian|Mexico|Pacific|US)\//.test(
+      name,
+    )
+  ) {
+    try {
+      translated =
+        new Intl.DateTimeFormat('zh-CN', { timeZone: name, timeZoneName: 'long' })
+          .formatToParts(new Date('2026-01-01'))
+          .find((p) => p.type === 'timeZoneName').value + `（${name}）`;
+    } catch {
+      translated = '时区：' + name;
+    }
+  } else translated = parameterName(name);
+  optionCache.set(name, translated);
+  return translated;
 }
-const types={string:'文本',byteArray:'字节数组',ArrayBuffer:'原始字节',number:'数值',BigNumber:'大整数',HTML:'HTML 内容',File:'文件',FileList:'文件列表',JSON:'JSON 数据',html:'HTML 内容'};
+const types = {
+  string: '文本',
+  byteArray: '字节数组',
+  ArrayBuffer: '原始字节',
+  number: '数值',
+  BigNumber: '大整数',
+  HTML: 'HTML 内容',
+  File: '文件',
+  FileList: '文件列表',
+  JSON: 'JSON 数据',
+  html: 'HTML 内容',
+};
 const descriptions = pairs(`
 Remove EXIF|无损移除 JPEG 的 EXIF 元数据；没有 EXIF 时原样返回。不重新编码图像，也不会清除 XMP、IPTC 等其他元数据。
 From Base64|将 Base64 字符串解码为原始字节；可选择字符表，并控制是否忽略无效字符。
@@ -1512,11 +1602,28 @@ Merge|合并分支处理的结果，作为一个整体交给后续操作。
 Sleep|等待指定毫秒数后继续处理链。可用停止按钮中断执行。
 `);
 export function operationDescription(name, definition) {
-  if(descriptions[name])return descriptions[name];
-  return `${operationName(name)}。输入：${types[definition.inputType]||definition.inputType}；输出：${types[definition.outputType]||definition.outputType}。${definition.args.some(a=>a.type!=='label')?'按下方参数设置后执行。':'无需设置参数。'}${definition.flowControl?'此操作会控制后续处理链的执行顺序。':''}`;
+  if (descriptions[name]) return descriptions[name];
+  return `${operationName(name)}。输入：${types[definition.inputType] || definition.inputType}；输出：${types[definition.outputType] || definition.outputType}。${definition.args.some((a) => a.type !== 'label') ? '按下方参数设置后执行。' : '无需设置参数。'}${definition.flowControl ? '此操作会控制后续处理链的执行顺序。' : ''}`;
 }
 export function localizedError(message) {
-  const raw=String(message);
-  const replacements=[[/Could not remove EXIF data from image:/gi,'无法移除图片的 EXIF：'],[/Given data (?:is not|isn’t|isn't) jpeg\./gi,'输入不是 JPEG 图片。'],[/Wrong JPEG data\./gi,'JPEG 数据已损坏。'],[/Invalid recipe/gi,'无效配方'],[/Invalid input/gi,'无效输入'],[/Invalid (.+?) length/gi,'$1 长度无效'],[/Invalid (.+)/gi,'$1 无效'],[/not a valid/gi,'不是有效的'],[/must be/gi,'必须为'],[/cannot be/gi,'不能为'],[/should be/gi,'应为'],[/not found/gi,'未找到'],[/is required/gi,'不能为空'],[/Error:/g,'错误：']];
-  let text=raw;for(const [regex,value]of replacements)text=text.replace(regex,value);return /[\u3400-\u9fff]/.test(text)?text:`操作执行失败：${raw}`;
+  const raw = String(message);
+  const replacements = [
+    [/Could not remove EXIF data from image:/gi, '无法移除图片的 EXIF：'],
+    [/Given data (?:is not|isn’t|isn't) jpeg\./gi, '输入不是 JPEG 图片。'],
+    [/Wrong JPEG data\./gi, 'JPEG 数据已损坏。'],
+    [/Invalid recipe/gi, '无效配方'],
+    [/Invalid input/gi, '无效输入'],
+    [/Invalid (.+?) length/gi, '$1 长度无效'],
+    [/Invalid (.+)/gi, '$1 无效'],
+    [/not a valid/gi, '不是有效的'],
+    [/must be/gi, '必须为'],
+    [/cannot be/gi, '不能为'],
+    [/should be/gi, '应为'],
+    [/not found/gi, '未找到'],
+    [/is required/gi, '不能为空'],
+    [/Error:/g, '错误：'],
+  ];
+  let text = raw;
+  for (const [regex, value] of replacements) text = text.replace(regex, value);
+  return /[\u3400-\u9fff]/.test(text) ? text : `操作执行失败：${raw}`;
 }

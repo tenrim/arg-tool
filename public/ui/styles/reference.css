@@ -1,0 +1,103 @@
+/* Character repertoires: dense browsing with isolated glyphs and exact code points. */
+.site-ui.workbench-app .character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 6px;
+  margin-block: 12px;
+}
+.site-ui.workbench-app [data-ui='button'][data-variant='character'] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 76px;
+  padding: 8px 4px;
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
+}
+.site-ui.workbench-app [data-ui='button'][data-variant='character'][aria-pressed='true'] {
+  border-color: var(--amber);
+  background: var(--surface);
+}
+.site-ui.workbench-app .character-glyph {
+  display: block;
+  font-family: var(--body);
+  font-size: 28px;
+  line-height: 1.4;
+  unicode-bidi: isolate;
+  min-height: 40px;
+}
+.site-ui.workbench-app .character-code {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.site-ui.workbench-app .character-detail {
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+.site-ui.workbench-app .character-detail > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+.site-ui.workbench-app .character-selected-glyph {
+  font-family: var(--body);
+  font-size: 44px;
+  line-height: 1.5;
+  unicode-bidi: isolate;
+  min-width: 64px;
+  text-align: center;
+}
+.site-ui.workbench-app .character-detail [data-ui='data-list'] {
+  min-width: 0;
+  flex: 1;
+}
+.site-ui.workbench-app .character-detail [data-ui='data-list'] dd {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.site-ui.workbench-app .character-grid > [data-ui='empty-state'] {
+  grid-column: 1/-1;
+}
+@media (max-width: 520px) {
+  .site-ui.workbench-app .character-grid {
+    grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+  }
+  .site-ui.workbench-app .character-detail > div:first-child {
+    align-items: start;
+    gap: 10px;
+  }
+  .site-ui.workbench-app .character-selected-glyph {
+    min-width: 42px;
+  }
+}
+
+/* Online calculator uses the available width; its own site owns the inner UI. */
+.online-graph {
+  display: grid;
+  gap: var(--ui-space-3);
+  min-width: 0;
+}
+.online-graph-host {
+  min-width: 0;
+}
+.online-graph-frame {
+  display: block;
+  width: 100%;
+  height: max(500px, calc(100dvh - 200px));
+  border: 1px solid var(--line);
+  background: var(--bg-deep);
+}
+.online-graph p {
+  margin: 0;
+}
+@media (max-width: 520px) {
+  .online-graph-frame {
+    height: max(540px, calc(100dvh - 160px));
+  }
+}

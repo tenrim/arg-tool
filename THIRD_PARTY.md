@@ -1,5 +1,10 @@
 # 第三方代码与授权
 
+### Desmos 在线函数绘图
+
+通过 iframe 展示 https://www.desmos.com/calculator 的官方网页，不分发其代码，不将其登记为本站开源依赖或宣称拥有其许可。首次进入才加载；输入、账号、保存与分享由 Desmos 处理。普通计算器继续使用原固定 Qalculate 运行包。
+
+
 ### 本地资料中文补充
 
 本轮中文名称、别名和说明作为附加层，保留原库所有记录、标准代码和原始字段，不是替换原库或自动翻译全文。具体覆盖与回退见 [中文适配说明](docs/REFERENCE_CHINESE_ADAPTATION.md)。
@@ -62,7 +67,16 @@
 - 仓库：<https://github.com/Zeecka/AperiSolve>；固定提交 `2a675c206cf7a4108682d6d96459c03680c9b2c4`。
 - 授权：MIT，Copyright (c) 2026 Zeecka，原文保留于 `upstream/aperisolve/LICENSE` 与 `public/vendor/aperisolve/LICENSE.txt`。
 - 原始代码：`decomposer.py`、`color_remapping.py`。在 `scripts/build-image-vendor.mjs` 中将 NumPy 位分解、RGB 叠加和随机映射操作移植为浏览器 RGBA 循环。源文件与输出摘要见 `public/vendor/aperisolve/UPSTREAM.json`。
-- 完整服务端扫描与 Linux 分析程序未部署。图片页提供官方中文版入口，当前图片不会自动上传。
+- 上述固定版本用于原有浏览器视觉算法。新增独立服务端模块采用另一固定版本，见下节；图片不会自动上传。
+
+### AperiSolve 独立文件分析器
+
+- 仓库：<https://github.com/Zeecka/AperiSolve>，固定提交 `feec31092f0e548513d76545293caa41eb4f1ad8`，MIT。原始分析器、PNG 工具与依赖文件保存在 `upstream/aperisolve-single/`，`SOURCE.json` 记录摘要，原始字节不修改。
+- 17 个服务端模块分别运行 file、ExifTool、GraphicsMagick identify、binwalk、Foremost、pngcheck、PCRT、zsteg、Steghide、OutGuess、JSteg、JPSeek、OpenStego、PDFiD、pdfinfo、strings 与 FFmpeg 频谱分析；两个视觉模块保留原浏览器移植。逐项范围、参数、资源边界见 [独立文件分析说明](docs/FORENSICS.md)。
+- 本站 `services/forensics/runner.py` 通过继承保留完整标准输出、标准错误、原始恢复文件和 ZIP；容器不运行原网站、自动队列或用户数据库。PNG 修复数据库仅含完整的上游 IHDR 算法查表数据。
+- JSteg 固定于 `cf206c26c711db215c11cb61bb479113ae8be275`；JPHS 固定于 `33a11e1bad146f5e9c0d3fe6475812a1cedb9b7e`，保留原构建兼容补丁；OpenStego 使用官方 0.8.6 Debian 包，来源和摘要见 `RUNTIME_SOURCE.json`。zsteg 0.2.13，PDFiD 使用固定 AperiSolve 携带的原文件。
+- 各程序及依赖并不统一采用 MIT。原始版权、许可与已验证容器的软件版本清单位于 `public/licenses/forensics/`；总声明为 `public/licenses/FORENSICS-NOTICE.txt`，任务页与关于页按实际组件列示。容器中的 JPHS、JSteg 源码保留在 `/opt/sources/`。Debian 安装包随维护源变化，实际发布镜像应重新导出清单。
+- 构建和测试镜像不等于正式网站已启用后端。服务器分析仅在明确启用服务、用户点击提交后执行；临时文件不作为公开分析历史保存。
 
 ### StegOnline / PngToy
 
@@ -273,7 +287,7 @@ Rust 1.85.1 / Emscripten 3.1.69 生成 ESM 加载器和 WASM，运行文件约 5
 
 npm 组件及传递依赖许可汇总于 `LICENSES.txt`，Python 原文在 `python/LICENSE.txt`、`python/CPYTHON-LICENSE.txt`，Lua 原文在 `LUA-LICENSE.txt`。维护脚本使用 esbuild 0.28.2（MIT）生成 ESM 包，保留法律注释；Pyodide、SQL 与 WASM 运行文件按原字节复制。Ook! 的语法适配、本站界面、限额、输入输出和 Worker 管理为原创实现，不将外部完整 IDE 作为已集成项目。
 
-未接入本轮的 Chef、Shakespeare、Piet、文言、LOLCODE、Ruby、C/C++、Piston、Judge0 和 TIO 不作为运行依赖展示。
+2026-10-08 这轮未接入 Chef、Shakespeare、Piet、文言、LOLCODE、Ruby、C/C++、Piston、Judge0 和 TIO。2026-11-03 新增服务器语言的实现与验收条件见 [代码运行扩展](docs/CODE_RUNNER.md)：包括 Ruby、C/C++ 等 17 种，来源由 `public/coderunner/server-catalog.js` 与 `sources.js` 登记。服务器隔离镜像已实际构建，17 种语言均已执行验证；实际版本和系统包见 `services/code-runner/RUNTIME.json`、`PACKAGES.txt`，完整原始许可位于 `public/licenses/CODE-RUNNER-NOTICE.txt`。这不表示正式网站已启用服务器运行。Piston、Judge0 和 TIO 仍未作为运行依赖接入。
 
 ## 历史统计：2026-10-08 统一许可证展示
 
@@ -415,7 +429,7 @@ Vditor 的本地图表资源现已接入：Mermaid（MIT）、ECharts（Apache-2
 - **ggmorse**：固定 `7b4822a8cfdbb1addfe497f3ae8186f142a4ee79`，核心MIT；FFT引用部分另附CC-BY-SA-3.0／4.0，Emscripten、musl、libc++、compiler-rt原文也随包保留。完整源码、桥接与滤波边界修正在 `upstream/expansion/ggmorse/`，维护脚本编译真实WASM，普通使用不需要SDK。
 - **abcjs／Tonejs/Midi／Periodic-Table-JSON／QuickJS**：复用本站已固定的本地包，分别承担真实ABC排谱、标准MIDI输出、完整118元素资料与安全代码谓词；继续保留各自现有MIT／CC-BY-SA-3.0及附带许可。
 
-完整对照及明确范围见 [本轮接入说明](docs/EXPANSION_2026-10.md)。运行时不执行上游网页、分析脚本、Service Worker、Cunningham查询或后台请求。
+完整对照及明确范围见 [本轮接入说明](docs/archive/EXPANSION_2026-10.md)。运行时不执行上游网页、分析脚本、Service Worker、Cunningham查询或后台请求。
 
 ## 本地公开元数据搜索
 
@@ -424,7 +438,7 @@ Vditor 的本地图表资源现已接入：Mermaid（MIT）、ECharts（Apache-2
 - `public/capabilities/search.js` 对公开工具名称、别名和操作元数据建立本地模糊索引，所有 `searchEntries` 调用复用该模型；严格名称与明确方向匹配优先。顶端、侧栏、首页及目录不自行建立另一套匹配规则。
 - 解谜输入、文件、结果、笔记和偏好不进入索引；不调用远程搜索服务、CDN 或运行时 npm。主构建保持离线且不需要 npm 安装依赖。作为共享搜索依赖，来源登记归网站关于页，不冒称每个计算工具都使用 Fuse.js 执行其算法。
 
-> 当前状态（2026-10-11）：83 项来源许可登记；使用第三方代码、数据或素材的工具页脚列出实际来源，纯本站实现与浏览器内置接口不展示为项目；实际清单以 `public/project-licenses.js` 和 `upstream-manifest.json` 的 `components` 为准。旧纸笔编辑器以及图论路径、几何作图、数字电路和专用依赖已移除，相关旧记录仅供历史追溯；退役记录见 `retired_components`。当前原生纸笔工具使用 cspuz_core。验证数字与覆盖范围统一见 [VERIFICATION.md](VERIFICATION.md)。
+> 当前来源范围：使用第三方代码、数据或素材的工具页脚列出实际来源，纯本站实现与浏览器内置接口不展示为项目；实际清单以 `public/project-licenses.js` 和 `upstream-manifest.json` 的 `components` 为准。旧纸笔编辑器以及图论路径、几何作图、数字电路和专用依赖已移除，相关旧记录仅供历史追溯；退役记录见 `retired_components`。当前原生纸笔工具使用 cspuz_core。验证数字与覆盖范围统一见 [VERIFICATION.md](VERIFICATION.md)。
 
 ## 五类完整固定资料（2026-10-17）
 
@@ -468,7 +482,7 @@ Vditor 的本地图表资源现已接入：Mermaid（MIT）、ECharts（Apache-2
 - libqalculate 5.13.0：GPL-2.0-or-later，所有官方计算源文件及全部函数／单位／变量／前缀／数据集定义参与编译。中文来自同版本 `po-defs/zh_CN.po`，未人工精选。
 - GMP 6.3.0：LGPL-3.0-or-later 或 GPL-2.0-or-later；MPFR 4.2.1：LGPL-3.0-or-later；libxml2 2.9.12：MIT。组合 WASM 按 GPL-3.0-or-later 提供，完整核心、依赖对应源码、桥接与构建步骤附在 `public/vendor/qalculate/source.zip`。
 - Emscripten 3.1.67：MIT/NCSA；所链接 musl、libc++、libc++abi、compiler-rt 的独立许可证均随包保存。依赖静态库取自固定公开构建镜像，镜像中旧版 libqalculate 不参与链接；来源摘要、重建参数与相应源码均保留。
-- Gnuplot 5.4.10：自有许可。未改动的浏览器运行包来自 `qalc.steg.gy`，其构建配方固定为 `rfblock/qalculate-nb` 的 `dde3d0f08c18248c6f62d38838490b4c3ba3425a`。没有复制该网页的编辑器、网页 UI 或统计代码；绘图数据由真实 Qalculate 内核产生。
+- Gnuplot 5.4.10 已退役，仅保留历史来源与许可记录，不属于当前运行依赖。历史包来自 `qalc.steg.gy`，构建配方为 `rfblock/qalculate-nb` 的 `dde3d0f08c18248c6f62d38838490b4c3ba3425a`。当前函数绘图为用户选择的 Desmos 在线 iframe；它不使用 Qalculate 绘图，也没有接入 Desmos API。
 - 完整摘要在 `public/vendor/qalculate/UPSTREAM.json`；关于页和当前计算工作区页末分别列出上述实际依赖。`source.zip` 可从许可目录下载。
 
 ## 已有上游能力补齐（2026-10-20 至 21）
@@ -479,10 +493,27 @@ Vditor 的本地图表资源现已接入：Mermaid（MIT）、ECharts（Apache-2
 - StegOnline 数据嵌入原服务和图像嵌入原算法采用现有同项目许可，原始文件保留在 `upstream/stegonline/`，运行适配由 `scripts/build-image-vendor.mjs` 生成。CyberChef 官方 Worker 字节不修改，断点、高亮与 Magic 使用其原消息和结果。
 - 118 元素数据保持原项目许可，生成器完整保留每条原始字段。原生接口声明来自对应固定源码，仅作为真实工作表的参数参考，不替代实际执行。
 
-上述运行依赖和各自条款同步进入关于页及实际工具页末。离线维护脚本、功能边界与本次验证见 [补齐记录](docs/UPSTREAM_COMPLETION_2026-10-20.md)。
+上述运行依赖和各自条款同步进入关于页及实际工具页末。离线维护脚本、功能边界与本次验证见 [补齐记录](docs/archive/UPSTREAM_COMPLETION_2026-10-20.md)。
+
+## 语言文字字符表（2026-10-26）
+
+沿用 Unicode License v3 数据，增加 UCD 17.0.0 的完整选定 Script／Script_Extensions，以及 CLDR JSON 48.2.0 的日、韩、希腊、俄、希伯来、阿拉伯、泰、印地语主字符／辅助／索引集合。原始数据、版本及摘要在 `upstream/character-tables/`；运行数据、LICENSE、NOTICE、SOURCE 在 `public/vendor/character-tables/`。第二轮扩展到 37 组文字，并完整收录同版 DerivedNumericValues 的 2,023 个数值字符（含 Unihan 派生记录）；整数与分数以原始精确字符串保存。日语及韩语汉字范围限定为对应 CLDR 集合，独立数字入口另外保留数值汉字。关于页与字符表实际页末均显示 UCD、CLDR 来源。详细范围及离线重建见 [字符表记录](docs/archive/CHARACTER_TABLES_2026-10-26.md)。pudone 仅为外链，不属于集成依赖。
 
 ## 2026-10-21 玩家工作区调整
 
 本轮没有升级或修改官方 vendor 运行字节。Qalculate 单位记号映射由 `scripts/build-qalculate-units.py` 从固定 `source.zip` 中的 units/currencies/prefixes XML 生成，输出 `public/qalculate/unit-definitions.json`，许可与来源见 `public/qalculate/UNIT-DEFINITIONS-NOTICE.txt`；完整对应源码和 GPL 原文继续随包。倍率、温标、前缀计算仍由官方内核执行。
 
 cubing.js 实际用于全部固定形状的状态与观察，cubejs 仅为普通三阶面转动生成兼容面色字符串，不加载求解器。Tonal 用于音符、和弦、音阶、音程及移调；cnchar 用于汉字属性、编码、笔顺、释义和组词。SeqViz 使用位置、搜索、翻译及本机文件原始记录，RDKit 使用结构图和结构标识，Astronomy Engine 使用真实观测及当地食象。专业原生工作表不再挂载；未用于当前操作的能力不冒称已经成为玩家功能。图片嵌入与 FFmpeg 命令保留在进阶折叠区。全部来源仍由关于页和实际任务页末共同展示。
+
+
+
+### 文件版本比较与多文件批量处理
+
+复用随包 fflate 0.8.3（MIT，`public/vendor/round2/fflate.js`，许可 `public/vendor/round2/LICENSES.txt`）读取普通 ZIP 与打包成功结果；未更改供应商字节，原固定来源记录沿用 `public/vendor/round2/UPSTREAM.json`。路径比较、队列、预设和页面为本站代码；SHA-256、图片画布编码使用浏览器 API。没有集成 diffoscope，没有上传输入文件。
+
+
+### 十项趣味工具（2026-11-03）
+
+pic-scramble、StegCloak、郭飞 hidden_watermark/CryptTool、Takuron 佛又曰 V2、MIT beast-codec、SpectroTrace、Spectrum、HideInfo 化物为图及 ScreenDrop 已接入本地工作区。视觉密码按 Naor–Shamir 二取二规则独立实现，不将参考的 itmm 页面冒称运行依赖。重计算在 Worker 执行；输入不上传。
+
+固定原始源码与逐文件摘要位于 `upstream/fun-tools/*/SOURCE.json`。维护构建为 `scripts/build-fun-tools.mjs`；运行资源及 SHA-256 在 `public/vendor/fun-tools/`。Spectrum 为 GPL-3.0-only；AAC 解码进程独立按其 GPL-2.0 条款提供；其余项目和依赖按各自 MIT、Apache-2.0 等原许可保留。完整许可、固定源码、FAAD2/MoonBit 源码与构建说明随 `fun-tools-sources.zip` 分发，实际项目页脚提供下载。详情见 [趣味工具接入](docs/FUN_TOOLS.md) 与 [固定源码构建说明](upstream/fun-tools/README.md)。

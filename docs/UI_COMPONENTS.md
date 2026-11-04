@@ -6,39 +6,49 @@
 
 本目录约定适用于网站页面、能力总览和全部任务，包括原工具兼容入口、按需加载的第四轮工具、图灵机、科普阅读与动态 CyberChef 参数。能力数量从统一登记生成，不把原工具页面总数作为任务数量。工具的计算引擎、文件和结果模型不归组件层管理；目录与工作区契约见 [能力架构](CAPABILITY_ARCHITECTURE.md)。
 
+## 样式维护入口
+
+公共样式修改 `public/ui/styles/` 中登记的源文件，运行 `npm run build:ui` 生成 `public/ui/components.css`。网页仍只加载一个公共样式文件。内部顺序见 `scripts/ui-style-source.mjs`；`audit:ui` 同时检查所有权和生成物过期，不能手改产物。
+
 ## 文件职责
 
-| 文件 | 职责 |
-| --- | --- |
-| `public/ui/index.js` | 页面使用的统一导出入口 |
-| `public/ui/core.js` | 实例登记、属性、内容组合、状态及生命周期 |
-| `public/ui/motion.js` | 进入／反馈、按 ID 匹配的集合过渡、取消与标签几何 |
-| `public/ui/controls.js` | Button / IconButton / Input / Textarea / Select / Option / Field / SearchField / FilePicker / Link |
-| `public/ui/layout.js` | ToolCard / Box / Card / ToolPanel / ToolHeader / Toolbar / FormGrid / CheckGroup / SplitView / Result / DataList / Table / Provenance / Navigation / ToolHelp |
-| `public/ui/conversion.js` | ConversionWorkbench：共享参数、输入／结果、双向操作和导出组成 |
-| `public/ui/feedback.js` | Status / Notice / Badge / EmptyState 与状态更新 |
-| `public/ui/overlays.js` | Dialog / Disclosure / TabList / TabPanel 及交互控制器 |
-| `public/ui/icons.js` | 侧栏、目录与页面共用的本地 SVG 图标 |
-| `public/ui/template.js` | 声明式组合、实例化与安全替换边界 |
-| `public/ui/pages.js` | 原六个静态页面的组成及初始应用布局 |
-| `public/ui/capabilities.js` | CapabilityButton／CapabilityGroup：统一任务按钮和就地展开列表 |
-| `SearchHighlight`／`SearchMatchDetails` | 搜索标题及命中片段共享组件；只按模型给出的原文区间组合文本和 mark，不解析 HTML |
-| `public/ui/components.css` | 公共控件的外观、状态、触控尺寸与响应式规则 |
-| `public/navigation.js` | 稳定五类／能力组定义、旧工具路由与网站页登记 |
-| `public/capabilities/registry.js` | 真实能力／专题归属、重新导出真实配对、旧操作／变体／方向别名、完整来源覆盖、代表入口、科普与统一搜索数据 |
-| `public/capabilities/topics.js`／`topic-model.js` | 纯静态成员和合并投影，专题 `actions`／原生及混合 `variants`，不拥有控制器或算法 |
-| `public/capabilities/operation-pairs.js`／`operation-policy.js` | 唯一真实逆向对；新增 78 项配方专用操作的发现边界与原因 |
-| `public/capabilities/search.js` | 精确匹配优先的公开元数据搜索及本地 Fuse.js 模糊补充，不读取解谜输入／结果 |
-| `public/workspace.js` | 顶端原位搜索输入、非模态结果浮层与键盘选择，不重建工具表单 |
-| `public/chef-tools/families.js` | 从登记投影原工具选择与 CyberChef 选板的功能族，保留真实方向 |
-| `public/knowledge/content.js`／`topics.js` | 逐功能文章、保留完整成员机制／实例／引用的专题内容投影、冻结／校验及知识搜索，不拥有 UI 或用户输入 |
-| `public/knowledge/page.js` | 科普目录／阅读组合，复用公共组件、焦点及取消契约 |
+| 文件                                                            | 职责                                                                                                                                                          |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `public/ui/index.js`                                            | 页面使用的统一导出入口                                                                                                                                        |
+| `public/ui/core.js`                                             | 实例登记、属性、内容组合、状态及生命周期                                                                                                                      |
+| `public/ui/motion.js`                                           | 进入／反馈、按 ID 匹配的集合过渡、取消与标签几何                                                                                                              |
+| `public/ui/controls.js`                                         | Button / IconButton / Input / Textarea / Select / Option / OptionGroup / Field / SearchField / FilePicker / Link                                              |
+| `public/ui/layout.js`                                           | ToolCard / Box / Card / ToolPanel / ToolHeader / Toolbar / FormGrid / CheckGroup / SplitView / Result / DataList / Table / Provenance / Navigation / ToolHelp |
+| `public/ui/conversion.js`                                       | ConversionWorkbench：共享参数、输入／结果、双向操作和导出组成                                                                                                 |
+| `public/ui/feedback.js`                                         | Status / Notice / Badge / EmptyState 与状态更新                                                                                                               |
+| `public/ui/overlays.js`                                         | Dialog / Disclosure / TabList / TabPanel 及交互控制器                                                                                                         |
+| `public/ui/icons.js`                                            | 侧栏、目录与页面共用的本地 SVG 图标                                                                                                                           |
+| `public/ui/template.js`                                         | 声明式组合、实例化与安全替换边界                                                                                                                              |
+| `public/ui/pages.js`                                            | 原六个静态页面的组成及初始应用布局                                                                                                                            |
+| `public/ui/capabilities.js`                                     | CapabilityButton／CapabilityGroup：统一任务按钮和就地展开列表                                                                                                 |
+| `SearchHighlight`／`SearchMatchDetails`                         | 搜索标题及命中片段共享组件；只按模型给出的原文区间组合文本和 mark，不解析 HTML                                                                                |
+| `public/ui/components.css`                                      | 公共控件的外观、状态、触控尺寸与响应式规则                                                                                                                    |
+| `public/navigation.js`                                          | 稳定五类／能力组定义、旧工具路由与网站页登记                                                                                                                  |
+| `public/capabilities/registry.js`                               | 真实能力／专题归属、重新导出真实配对、旧操作／变体／方向别名、完整来源覆盖、代表入口、科普与统一搜索数据                                                      |
+| `public/capabilities/topics.js`／`topic-model.js`               | 纯静态成员和合并投影，专题 `actions`／原生及混合 `variants`，不拥有控制器或算法                                                                               |
+| `public/capabilities/operation-pairs.js`／`operation-policy.js` | 唯一真实逆向对；新增 78 项配方专用操作的发现边界与原因                                                                                                        |
+| `public/capabilities/search.js`                                 | 精确匹配优先的公开元数据搜索及本地 Fuse.js 模糊补充，不读取解谜输入／结果                                                                                     |
+| `public/workspace.js`                                           | 顶端原位搜索输入、非模态结果浮层与键盘选择，不重建工具表单                                                                                                    |
+| `public/chef-tools/families.js`                                 | 从登记投影原工具选择与 CyberChef 选板的功能族，保留真实方向                                                                                                   |
+| `public/knowledge/content.js`／`topics.js`                      | 逐功能文章、保留完整成员机制／实例／引用的专题内容投影、冻结／校验及知识搜索，不拥有 UI 或用户输入                                                            |
+| `public/knowledge/page.js`                                      | 科普目录／阅读组合，复用公共组件、焦点及取消契约                                                                                                              |
 
 使用原生 ES 模块、真实 Animate UI 2.0.0 / Motion 14.4.0 本地运行包与局部 React 宿主。依赖由 `tools/ui-runtime/package-lock.json` 固定，维护时安装与编译，日常启动/构建直接使用随站运行包。组件仍返回原生元素：移动、隐藏或切换标签不会重建输入，不会丢失文件与监听器。`data-ui` 用于样式和检查；真实实例登记保存在 WeakMap 中，补一个属性不能将普通元素变成组件。
 
 正文不重复铺开操作说明。`tool-help.js` 通过 `ToolHelp` 与共用展开控制器提供页头说明；`data-tool-help` 将需要动态更新的说明原节点移入该区域，保留 ID 和可访问描述。按需页面可用 `appendToolHelpContent(id, ...nodes)` 追加，帮助尚未挂载时暂存、挂载后移交；共用按需加载器在模块初始化后调用 `collectToolHelpContent(id)` 移交带标记的节点。已有说明覆盖的静态段落直接删除。当前文件、选中项、读数、进度、错误和来源许可不属于这类说明。用户明确要求的科普文章是可见阅读内容，概念、例子与误区直接放在正文，阅读操作的用法仍归共享帮助。
 
+## 全局悬浮操作
+
+`mountFloatingAction(button, {primary:false})` 接收已有共享 Button 原节点，挂入当前文档唯一的右下角浮动操作栈。主要入口使用 `primary:true` 排在底部，其他入口在上方；隐藏按钮不占位，沿用节点监听、原有弹窗控制器与销毁逻辑。公共组件层负责安全区、间距、触屏尺寸、层级和配色，功能控制器只拥有点击行为。笔记本和输入键盘使用这个接口，不各自添加固定坐标。
+
 ## 组件组成
+
+按钮的悬停与键盘焦点颜色统一由 `ui/components.css` 的 `--ui-action-hover-bg` / `--ui-action-hover-ink` 提供。普通、secondary、quiet、choice 和 icon-button 使用淡黄底与黄色文字；primary 使用黄底深字，danger 保留危险色，自有图形表面不继承普通按钮颜色。选中态保持独立，禁用态不触发强调。页头仅调整排列与尺寸，不覆盖按钮 variant 的前景与背景。Vditor 通过共享组件样式层适配同一状态令牌，保留原节点、原生工具栏状态和固定 vendor 字节，不伪造 `data-ui` 标记。
 
 ```js
 import {Input, Field, Button, Card, ToolPanel, ToolHeader, Provenance} from './ui/index.js';
@@ -55,7 +65,7 @@ const page = ToolPanel({
 });
 ```
 
-组件选项共用 `id`、`className`、`attrs`、`text`、`children`、`hidden` 和 `on`。文字通过 `textContent` 插入。Button 默认 `type="button"`；表单提交按钮显式提供 `type: 'submit'` 或 `attrs.type`。IconButton 必须提供可访问名称。Field 自动关联控件与说明；Table 提供列标题、标题和安全文本行；DataList 组合字段与值。ToolPanel 的顺序为页头、内容、可选来源；有实际第三方项目时，来源保持页面最后。纯本站代码、浏览器内置接口不单独列为项目；project-sources 在工具依赖组合完成后统一移除原生接口条目及空来源栏，未登记外部项目继续明确报出许可缺失，不能隐藏。关于页的开源登记独立保留。
+组件选项共用 `id`、`className`、`attrs`、`text`、`children`、`hidden` 和 `on`。文字通过 `textContent` 插入。Button 默认 `type="button"`；表单提交按钮显式提供 `type: 'submit'` 或 `attrs.type`。IconButton 必须提供可访问名称。Field 自动关联控件与说明；Table 提供列标题、标题和安全文本行；DataList 组合字段与值。ToolPanel 的顺序为页头、内容、可选来源；有实际第三方项目时，来源保持页面最后。Provenance 统一生成默认收起的原生 details，内置“所用项目与来源”summary；调用方只提供来源内容，不重复添加标题，刷新来源时保留 summary 和当前展开状态。点击、Enter 或空格可展开，项目、用途、许可证、声明原文及源码下载入口完整保留。纯本站代码、浏览器内置接口不单独列为项目；project-sources 在工具依赖组合完成后统一移除原生接口条目及空来源栏，未登记外部项目继续明确报出许可缺失，不能隐藏。关于页的开源登记独立保留。
 
 页面可以使用 HTML 语义作为声明式组合语法：
 
@@ -84,11 +94,12 @@ render(container, `<div class="surface">
 ## 表单密度与可用空间
 
 - `SearchField({control, icon, label})` 将图标与输入组成单个搜索框，统一可访问名称和外层焦点。内部 Input 不再重复绘制边框、背景、阴影或焦点轮廓。
-- `FormGrid({density, minColumnWidth})` 按所在面板宽度以弹性行换行，默认最小字段宽 14rem，同一行控件底边对齐。完整行选项、文件和复合参数不会产生自动网格的空列。默认 `compact`，可使用 `comfortable`；窄屏保持至少 44px 控件高度。短参数可以并排，`Field({span:'full'})` 用于多行、格式＋内容及预设＋自定义等复合字段。
-- `SplitView({align:'start'})` 允许两侧面板按各自内容高度排列；省略时保持原本等高行为。结果可用 `Result({attrs:{'data-variant':'metric'}})` 强调单个数值，或 `reading` 表示长文阅读；共同外观仍由 `ui/components.css` 拥有，控制器保留原结果与输入节点。
+- `FormGrid({density, minColumnWidth, align})` 按所在面板宽度以弹性行换行，默认最小字段宽 14rem，同一行控件底边对齐；`align:'start'` 用于输入与实时读数等需要从标签顶端对齐的组合。完整行选项、文件和复合参数不会产生自动网格的空列。默认 `compact`，可使用 `comfortable`；窄屏保持至少 44px 控件高度。短参数可以并排，`Field({span:'full'})` 用于多行、格式＋内容及预设＋自定义等复合字段。
+- `reveal(node,{focus:false,block:'nearest'})` 同步使目的节点在各层滚动容器中可见；`focus:true` 同时恢复真实焦点。默认保留附近阅读位置，文章目录可用 `block:'start'` 对齐小节标题。公共滚动边距避开固定顶栏，不用固定延时等待布局。
+- `SplitView` 默认 `align:'start'`，两侧面板按各自内容高度排列；只有明确需要同高的可视区域才使用 `align:'stretch'`。结果可用 `Result({attrs:{'data-variant':'metric'}})` 强调单个数值，或 `reading` 表示长文阅读；共同外观仍由 `ui/components.css` 拥有，控制器保留原结果与输入节点。
 - `Button({variant:'danger'})` 用于会移除用户设置或保存内容的操作，以文字和边框标出风险；其语义和焦点行为仍为原生按钮。是否需要确认由真实操作的后果决定，不由颜色自动添加流程。
 - `CheckGroup({label})` 让相关开关按可用宽度成组换行。每项仍是独立 Field／原生 checkbox，整行点击有效；复选框和文字同行。动态 CyberChef 参数保留原顺序、参数索引及条件隐藏。多控件字段用具名 group，每个控件单独命名，避免一个 label 同时包含两个输入。
-- `SplitView({layout, minPaneWidth})` 将输入／结果或两组操作按实际容器宽度分栏／堆叠，默认最小面板宽度 320px，同一行面板默认拉伸到相同高度；面板内部内容仍从顶部自然排布，不用固定高度填充空白。`balanced` 用于始终并排的紧凑可视输入与预览，例如六点盲文；专用点阵和绘图坐标仍由工具负责。
+- `SplitView({layout, minPaneWidth})` 将输入／结果或两组操作按实际容器宽度分栏／堆叠，默认最小面板宽度 320px，同一行面板默认顶端对齐、保持各自内容高度；面板内部内容仍从顶部自然排布，不用固定高度填充空白。`balanced` 用于始终并排的紧凑可视输入与预览，例如六点盲文；专用点阵和绘图坐标仍由工具负责。
 - `Textarea({autoSize:true, minRows, maxRows})` 按内容与换行调整高度，长内容达到上限后内部滚动，默认 4–12 行。普通输入事件和宽度变化共用同一实现；程序修改使用 `setTextareaValue`。原生手动拖动高度仍有效；卸载会清理 ResizeObserver 和待执行帧。声明式模板可提供 `data-fit="content"` 与 `data-min-rows`。
 - `EmptyState` 与 Result 的 `data-state="empty"` 共用紧凑占位规则，不为没有输出的状态保留大型装饰区。真实结果、下载与处理链继续使用原始字节。
 
@@ -105,6 +116,7 @@ render(container, `<div class="surface">
 - `motion.js` 接收 core 的真实挂载、卸载、属性和结果内容变化。ToolPanel 进入优先调用真实 Animate UI Effect：可移动内容滑入＋淡入，根节点不变换；包含固定／粘性工具的表面淡入，其安全标题／控件滑入。原节点、监听器和文件保留，不新建第二套页面；中断从当前状态继续，已落定的新页面重新进入。结果与 Status 共用反馈；输入事件短暂抑制重复进入，持续进度不重启仍在播放的反馈。
 - `animatePresence(node, {kind:'enter'|'feedback'})` 用于操作切换或程序写入的结果，所有显式调用也共用连续输入抑制；`setTextareaValue` 同时处理只读结果反馈。持续计算、进度或模拟快照使用 `setTextareaValue(node, value, {feedback:false})`，保留即时内容和自适应高度，单次操作仍默认反馈；不能在页面关闭公共动效或创建独立动画。重复进入从当前绘制位置继续，切页／卸载、后台页面及系统减少动态效果会取消持有的动画。
 - 跨 ToolPanel 和同面板内改变真实功能／方向均在原控制器准备完成后调用共享 `animatePresence`，不依赖新节点挂载。路由准备期间用 `data-motion-pending` 抑制提前进入，避免慢加载内容出现时动画已播完；不延迟逻辑、焦点或取消。原生导航应用参数时的 `input/change` 事件仅带 `detail.uiSource='navigation'` 来源标记，不携带参数值；共享动效不把这些初始化事件计入连续输入抑制。真实输入、普通合成输入、减少动态与取消边界保持原规则。
+- `prepareInitialPresence()` 由公共 UI 入口导出，仅为初次启动协调两个渲染阶段，让控件挂载与首次尺寸通知在加载层仍可见时完成；不使用定时延迟。已在后台或等待期间进入后台时立即结束，并取消帧回调和可见性监听。启动模块随后同步解除自己的 inert、移除加载层并对真实面板调用原 `animatePresence`；隔离中的节点不播放提前入场，不能用整页回退淡入代替可见卡片效果。
 - `animateCollection(container, update, {key})` 用于有稳定记录 ID 的列表／可视选择器，先读取旧位置与变换，再同步执行 update，按键匹配新元素并插值。当前塔罗牌扇形切换使用此接口；最多测量 48 项，不复制退出节点，也不复制用户输入。
 - `tabsController` 的滑动指示条是 TabList 伪元素，无额外子节点。用布局坐标避免按压缩放污染宽度，并跟随窄屏换行后的实际行位置；ResizeObserver、滚动、字体加载及动态标签共用测量，销毁时清理监听。默认相对定位使用低优先级，不能覆盖页面已有的 sticky／fixed 布局。隐藏标签的状态即时生效；多个桌面面板仍由原响应式布局决定。
 - `disclosureController` 即时更新逻辑状态、inert、ARIA 和文案；普通折叠由实际 Animate UI Collapsible 拥有进入／退出，高度归零后隐藏原内容，关闭面板立即停止接受键盘输入。原生 details 使用 ::details-content；浮动菜单声明 `data-motion="popover"`，控制器保留该声明，未声明时才默认 collapse，避免高度动画裁切菜单或破坏属性面板滚动。浮层在打开及退出期间都保持脱离文档流，关闭立即停止命中，不能因移除 open 属性恢复普通排布而挤动表单。
@@ -141,7 +153,7 @@ npm run verify -- --files public/ui/controls.js
 
 转换控制器将程序回填的原始字符串与 textarea 的显示快照分开保存；原生文本框会将 CR／CRLF 显示为 LF。追加／读取使用 `adopt`／`getInput`，手动编辑清除原始快照；结果采纳和导出读取真实结果。不能从显示值重新构造引擎数据。
 
-工具元数据由 `capabilities/registry.js` 登记并使用 `tool-search.js` 的公共词汇，全部 `searchEntries` 调用委托 `capabilities/search.js` 的同一模型，首页、侧栏、总览、目录和全局搜索不能维护不同别名或模糊规则。固定本地 Fuse.js 7.5.0 在无直接匹配时提供近似拼写候选，只索引公开名称、别名和操作字段，不索引玩家内容；普通构建不安装 npm 依赖、不联网取库。全局搜索默认跨五类，代表入口、完整列表和搜索匹配相同稳定能力 ID。已有转换仍调用原算法；旧单向入口通过 `resolveCapability` 保留原方向，原表单方向下拉框保留源输入、立即取消并作废结果；“作为输入”显式采纳真实输出字节，再按需切换方向。保留具名兼容参数、各方向草稿及明确路由状态，不给哈希等操作推测逆向或承诺无损往返。
+工具元数据由 `capabilities/registry.js` 登记并使用 `tool-search.js` 的公共词汇，全部 `searchEntries` 调用委托 `capabilities/search.js` 的同一模型，首页、侧栏、总览、目录和全局搜索不能维护不同别名或模糊规则。固定本地 Fuse.js 7.5.0 在无直接匹配时提供近似拼写候选，只索引公开名称、别名和操作字段，不索引玩家内容；普通构建不安装 npm 依赖、不联网取库。全局搜索默认排除科普，可通过设置中的“搜索中显示科普”启用；显式科普分类搜索始终可用，代表入口、完整列表和搜索匹配相同稳定能力 ID。已有转换仍调用原算法；旧单向入口通过 `resolveCapability` 保留原方向，原表单方向下拉框保留源输入、立即取消并作废结果；“作为输入”显式采纳真实输出字节，再按需切换方向。保留具名兼容参数、各方向草稿及明确路由状态，不给哈希等操作推测逆向或承诺无损往返。
 
 顶端 `SearchField` 持有唯一的 `Input(role=combobox)`，结果用非模态浮层和 `listbox`／`option` 语义组成，实际焦点保留在输入框，通过 `aria-activedescendant` 表示键盘候选。Ctrl／⌘+K 聚焦原输入，上下键选择、Enter 打开、Escape 关闭；组合输入期间不抢占中文输入法，外部点击、焦点离开和任务切换关闭浮层。卸载清理所有监听和候选引用，不复制第二个输入或借用模态对话框实现顶端查找。
 
@@ -151,7 +163,7 @@ npm run verify -- --files public/ui/controls.js
 
 任务外壳组合当前标题、收藏、相关科普、使用说明、返回组、全部功能及原工具节点。相关科普与使用说明同属页头 `.heading-actions`；不生成分类面包屑、同组 peers 横排或原生方向按钮。原表单保留唯一的方向 Select，工具控制器仍拥有输入、参数、Worker 和结果：切换方向或任务时输入可按模型共享，旧结果同步作废，路由仍记住实际方向；原控件节点不能被导航层重新创建。浏览／详情、输入／结果布局使用公共响应式组合，公共样式与动效保持原有所有权。
 
-专题工作区在同一表单内选择其真实操作／原生变体，使用公共 Select／Field，名称为“操作”或具体用途，而非把所有成员统称“方向”。成员来自登记的 `actions`／`variants`，不另写菜单或算法；原控制器保留输入、文件、成员独立草稿和真实结果模型。切换时同步取消旧计算并作废旧结果；只有 `operation-pairs.js` 声明的实际逆向对可转移具名且语义兼容的参数，专题本身不可逆。来源按当前实际成员／方向刷新，不能将代码运行专题七种引擎同时列作一个语言的依赖。
+专题工作区在同一表单内选择其真实操作／原生变体，使用公共 Select／Field，名称为“操作”或具体用途，而非把所有成员统称“方向”。成员来自登记的 `actions`／`variants`，不另写菜单或算法；原控制器保留输入、文件、成员独立草稿和真实结果模型。切换时同步取消旧计算并作废旧结果；只有 `operation-pairs.js` 声明的实际逆向对可转移具名且语义兼容的参数，专题本身不可逆。来源按当前实际成员／方向刷新，不能将代码运行专题全部引擎同时列作一个语言的依赖。原生变体可声明 selectionGroup、selectionLabel、selectionOrder，由工作区使用公共 OptionGroup 组成分组选择，不复制语言目录或控制器。
 
 Base 家族、数字与字节、字符编码与码点、文字转义分别按真实格式选择操作。整体整数换进制的 `native:radix` 与逐字节 Binary／Decimal／Hex 表示保持不同语义；不能用统一表面排布抹去字节、码点和整数的输入单位。原生方向 Select 保留，独立草稿按实际成员及方向保存，切换家族或成员本身不采纳结果。
 
@@ -207,12 +219,23 @@ Base 家族、数字与字节、字符编码与码点、文字转义分别按真
 
 `ConversionLayout` 只组合方向／参数与操作卡片、响应式输入／结果卡片及状态；`ConversionWorkbench` 使用它提供原生转换控件，CyberChef 单项任务也使用同一布局。方向用原生 Select，执行及停止在上方，结果操作留在结果卡片。页面标题和说明由共享页头持有，不在任务内重复生成。移除反向快捷按钮后，先“作为输入”、再选方向仍通过原控制器采纳实际字节及已执行参数快照；纯方向切换不得采纳结果。
 
+两者均返回 `panes`、`inputCard` 和 `resultCard`。共享 SplitView 默认 `start`，输入／结果卡片各自按内容决定高度；确有等高需要的专用视图显式声明 `align: stretch`。切换文本、文件或媒体来源不再强制拉高短卡片；不复制输入节点或改变草稿归属。
+
+转换控件区让设置和执行共用可换行布局流：`FormGrid({layout:'flow'})` 在 `.ui-conversion-settings` 内保留现有方向和参数字段，`.ui-conversion-execution` 紧随参数排列执行／停止和真实状态，空间足够时按钮与字段底边同行。字段仍保留自己的标签、顺序与节点；短参数按内容所需宽度展示，`data-span="wide"` 的复合字段以 480px 为基准容纳预设与自定义控件，窄屏自然换行；`data-span="full"` 的长编辑器仍独占整行，隐藏分组和空状态不占位。嵌套参数分组应显式使用该布局，不能用 CSS 强制摊平任意内部表单。
+
+`ConversionLayout` 由一个外层 Card 承载完整工作区；设置区使用 Box，输入和结果是无独立边框的内部 Card 区段，分栏由细分隔线连接。内区标题只有一处，原文本控件继续保留 aria-label 和原节点。CyberChef 空结果使用明确 EmptyState，成功后由原结果模型替换成真实文本／图片／文件视图；不根据“只有一个 p 子节点”猜测空态。结果动作通过 `data-variant="result-actions"` 组合，笔记操作按原租约加入同一行，使用 quiet 次级外观。普通按钮按压、焦点、取消与动态偏好保持。
+
+有共享图片／音频／视频上传器的操作任务，由 `native-workspaces` 将原上传节点、文件信息与真实状态移动到任务输入卡片，离开时按原父节点和位置恢复；不复制上传控件，不重置素材模型，也不保留空的上传侧栏。CyberChef 输入来源的原 Field 与方向／参数一起位于顶部控件栏，上传器、文本编辑器和来源预览仍归输入卡片。输入与结果标题之下直接呈现内容，避免来源选择器把左侧编辑器单独下推；生成任务同步隐藏来源 Field，原来源选择、草稿、文件和显式结果采纳保持。
+
+自适应 Textarea 的 CSS 最小高度与 `minRows` 共用 `--ui-textarea-min-rows`，不以统一的 110px 覆盖两行声明。只读转换结果默认两行，长内容仍按实际内容增长至原上限并可滚动；程序写入继续使用 `setTextareaValue`。空 Status 和空来源预览不预留装饰位置。来源区使用同一响应式网格排列完整项目、用途、许可和原文折叠项；单个项目不被强行挤成窄列。
+
+带直接 Field 子项的 Toolbar 统一按控件底边对齐，并由操作栏拥有行间距，Field 不再重复添加底部外边距。旧模板中的 `r1-controls`、`spectrogram-controls` 同样通过 Toolbar 工厂生成。
+
 ### 紧凑布局回归
 
-首页收藏／最近使用及能力分组同排卡片底边对齐。转换参数中的预设与自定义控件保留原数据模型、具名 group 和独立标签，在宽容器并排、窄容器换行；自定义编辑同步清除不匹配的预设显示。小型符号输入与输出共用分栏，固定列数方阵在可用区域居中。`scripts/browser-layout-balance.mjs` 验证真实转换、点选、页面尺寸和正常／减少动态模式。
+首页收藏／最近使用及能力分组同排卡片顶部对齐，各自按内容确定高度。转换参数中的预设与自定义控件保留原数据模型、具名 group 和独立标签，在宽容器并排、窄容器换行；自定义编辑同步清除不匹配的预设显示。小型符号输入与输出共用分栏，固定列数方阵在可用区域居中。`scripts/browser-layout-balance.mjs` 验证真实转换、点选、页面尺寸和正常／减少动态模式。
 
 `confirmAction(button)` 仅在真实操作成功后显示短暂完成标记；再次操作、禁用或卸载时清除，保持原按钮文字和几何尺寸。`resizableDock` 在共享 motion 层过渡布局预留宽度，快速开合从当前绘制宽度接续，拖动、键盘调宽及响应式切换立即取消插值。
-
 
 ## 真实 Animate UI / Motion 接入（2026-10-19）
 
@@ -236,12 +259,35 @@ Base 家族、数字与字节、字符编码与码点、文字转义分别按真
 
 导入组件在真实节点 ref 创建时通过 core 注入的登记函数进入同一个生命周期表；不是给扫到的 DOM 补 data-ui，也不允许页面伪造登记。普通参数控制器继续只写原 select。菜单的视觉触发器属于组件适配层，不能另存参数草稿。
 
-笔记侧栏关闭同步设置 hidden/inert、保存与恢复焦点；原编辑器在退出完成后归位。快速重新打开取消旧归位回调，转到完整笔记页或窄屏时立即归位，不能让过期退出把新页面的编辑器重新隐藏。
+笔记侧栏关闭同步设置 hidden/inert、保存与恢复焦点；原编辑器在退出完成后归位。快速重新打开取消旧归位回调，转到完整笔记页时立即归位；笔记侧栏启用窄屏模式时移入原生抽屉，不能让过期退出把新页面的编辑器重新隐藏。
 
 ### 统一悬停与绘制层级
 
 - 共享 UI 自动为可见的 Button／IconButton 同级操作组以及侧栏导航装配上游 TriggerHighlightScope，不按页面单独仿写 hover；Tabs 和 Select 保留自身同源高亮所有者，避免双重装配。
+- 图形控件可用 `Button({appearance:'custom',variant:...})` 保留自身有意义的不透明表面，不交给移动高亮层清空背景；按压动画、焦点和原生按钮语义仍保留。外观变体仍归共享组件样式所有，例如重叠在白键上方的 `piano-key` 黑键。
 - 高亮在操作组统一的独立绘制层中移动，该层始终位于全部原控件和文字下方；禁止每个条目单独 isolation，否则背景跨越其他条目时会盖住文字。没有额外条目包装，不改变控件布局或点击区域。
 - 绘制宿主位于共享控件组的 Shadow DOM 中，slot 透传原控件；不增减 light DOM 子节点、不改变列表编号或来源页脚的位置。动态替换标签／列表不直接删除 React 管理的高亮节点；隐藏、禁用、移除与减少动态偏好统一清理。悬停与焦点反馈使用同一实现，触屏不依赖 hover 才显示操作。
 
 - 普通悬停不重新扫描或布局测量已装配的按钮组；只有成员／禁用／可见状态改变才同步结构。显式交互刷新动态偏好，避免连续输入期间的临时抑制永久残留。
+
+## 全站布局所有者修正（2026-10-26）
+
+未启用 JS 自适应的旧 Textarea 在支持 `field-sizing: content` 的浏览器中使用内容高度：普通编辑器至少四行、只读结果至少两行，上限十二行后滚动。直接写入 value、清空与动态 readOnly 均由浏览器同步布局；不支持的浏览器保留原 rows 回退。已有 `data-fit=content` 控件继续由原自适应所有者管理。
+
+resultRecording 的笔记／图稿按钮归入传入锚点所属的 Toolbar，或锚点 Card 内部，不作为 SplitView 的额外列。动作组可逐按钮换行，保持租约、禁用及原节点。公共 Card 的主题规则以应用／组件选择器拥有足够优先级，旧页面 class 不能覆盖编年史表面和直角。
+
+## 设置与播放偏好（2026-10-26）
+
+设置页复用 Field、Select、Button 的 switch 语义及 Disclosure。显示、使用习惯、声音、数据分别成组；宽屏组内两列，窄屏按原顺序单列。配色、直角与扫描线继续使用编年史主题。编辑区字号与输入／结果换行通过共享组件变量和根节点偏好生效，只改显示；自适应 Textarea 在偏好变更时重新测量。
+
+`bindRunShortcut(root, button)` 统一 Ctrl／⌘+Enter，读取根节点 `data-ui-run-shortcut`，拒绝组合输入、重复按键、禁用／隐藏按钮与外部弹窗，直接点击原执行按钮。ConversionLayout 自动绑定首个执行动作，控制器不重复绑定。`configureMediaPlayback(register)` 由 app 注入播放注册器；共享 audio/video 工厂不导入应用服务，创建时即应用全站播放偏好。
+
+`resizableDock({narrow:true})` 在窄屏把同一个工作区节点移入原生 Dialog，沿用 dialogController 的焦点和虚拟键盘可视高度；普通调用仍按原 onNarrow 回退。移动过程中不重建编辑器。参数预设使用 Disclosure、Field、Select 和 Toolbar，只显示当前工作区的安全参数预设。
+
+### 2026-11-03 输入与结果操作补充
+
+- `ConversionLayout.setResultReady(boolean)` 由原结果控制器调用，控制“查看结果”定位按钮；输入变更、取消与离页失效时同步关闭。不观察 DOM 猜测运算完成。Magic 候选可把 `panes.dataset.layout` 设置为 `stacked`，其他任务使用 `responsive`。
+- CyberChef 输入预处理与目标操作分开说明。Base 编码参数、Magic 分析参数和 AES 附加设置使用原控件的 Disclosure，不改引擎默认值、参数索引或草稿。折叠摘要显示默认／修改状态；关键输入要求保留在输入旁。
+- 共享输入节点（含分析文本）由 `native-workspaces` 搬入真实输入卡片并在离页恢复；输入控制器按来源选择显示当前唯一编辑入口，不复制文本状态。
+- 文件状态只显示一次：页面已持有包含文件名／数量／大小的状态时，FilePicker 使用 `showFilename: false`。未持有状态的使用方保留组件默认文件提示。
+- 移动端为常驻浮动操作区保留底部空间与滚动避让；沿用原笔记入口及品牌样式。首页仅顶部提供常驻全站搜索，侧栏筛选折叠且明确只筛选目录。

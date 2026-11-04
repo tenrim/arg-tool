@@ -1,0 +1,47 @@
+{
+  "snapshotDate": "2026-10-17",
+  "files": [
+    {
+      "path": "upstream/atlas-life-culture/AviList-v2025b-10Jun2026-extended.xlsx",
+      "url": "https://www.avilist.org/wp-content/uploads/2026/06/AviList-v2025b-10Jun2026-extended.xlsx",
+      "sha256": "2e1fd3374e23af732b04115b033dd9d97fc53ba275c312d02ef5d12cfb85c988",
+      "bytes": 8954422
+    },
+    {
+      "path": "upstream/atlas-life-culture/openopus-dump.json",
+      "url": "https://api.openopus.org/work/dump.json",
+      "sha256": "c71a0550a020d9c32b69f1c3298ee0511fc7984796ea3c6db2bb93ea9f4dbb01",
+      "bytes": 3324775
+    },
+    {
+      "path": "upstream/atlas-life-culture/OpenOpus-ALLDATA.md",
+      "url": "https://raw.githubusercontent.com/openopus-org/openopus_api/master/ALLDATA.md",
+      "sha256": "e6798423e8c114a08952b584b3fbe3c144d52e3e11b911ece0a812a8a33689a6",
+      "bytes": 1939
+    },
+    {
+      "path": "upstream/atlas-life-culture/OpenOpus-README.md",
+      "url": "https://raw.githubusercontent.com/openopus-org/openopus_api/master/README.md",
+      "sha256": "cf80fd74620167f57bc47c53ac148cc0f10cd88ad452bfedb18f4d164365bb8d",
+      "bytes": 5655
+    },
+    {
+      "path": "upstream/atlas-life-culture/AviList-CC-BY-4.0.txt",
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "bytes": 18657
+    },
+    {
+      "path": "upstream/atlas-life-culture/OpenOpus-home.html",
+      "url": "https://openopus.org/",
+      "sha256": "cf1910268963167bba32ec24cce8b721d184cd45301ee91b397c73d4f7cd7a55",
+      "bytes": 26472
+    },
+    {
+      "path": "upstream/atlas-life-culture/OpenOpus-CC0-1.0.txt",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "bytes": 7048
+    }
+  ]
+}

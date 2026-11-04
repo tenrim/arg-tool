@@ -1,0 +1,68 @@
+{
+  "snapshotDate": "2026-10-17",
+  "files": [
+    {
+      "path": "upstream/atlas-chinese/IOC-Multilingual-15.2.xlsx",
+      "bytes": 5429162,
+      "sha256": "fb130d0d2431867ca7cf562de385651ea0f7c7515c28d685e715199c97cd5d82",
+      "url": "https://www.worldbirdnames.org/Multiling%20IOC%2015.2.xlsx",
+      "role": "Unmodified official source or license."
+    },
+    {
+      "path": "upstream/atlas-chinese/IOC-master-list.html",
+      "bytes": 83262,
+      "sha256": "14a4500a480e6cdcb3dc8335147f1075c11e64fdca306fa292269ba9c057e615",
+      "url": "https://www.worldbirdnames.org/new/ioc-lists/master-list-2/",
+      "role": "Unmodified official source or license."
+    },
+    {
+      "path": "upstream/atlas-chinese/IOC-CC-BY-3.0.txt",
+      "bytes": 19467,
+      "sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76",
+      "url": "https://creativecommons.org/licenses/by/3.0/legalcode.txt",
+      "role": "Unmodified official source or license."
+    },
+    {
+      "path": "upstream/atlas-chinese/Wikidata-licensing.json",
+      "bytes": 7089,
+      "sha256": "b6937526955aa0c1faea5758928480969de91f911fa54ae0acf0c48598122902",
+      "url": "https://www.wikidata.org/w/api.php?action=query&prop=revisions&rvprop=content%7Cids&titles=Wikidata%3ALicensing&rvslots=main&format=json&maxlag=5",
+      "role": "Unmodified official source or license."
+    },
+    {
+      "path": "upstream/atlas-chinese/Wikidata-CC0-1.0.txt",
+      "bytes": 7048,
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "role": "Unmodified official source or license."
+    },
+    {
+      "path": "upstream/atlas-chinese/NOTICE.txt",
+      "bytes": 3519,
+      "sha256": "fe7c8ad959d52eb2f8506d6e9f61661f8328e17c72d3e2e3fb7855f0c774b27e",
+      "url": "https://www.worldbirdnames.org/new/ioc-lists/master-list-2/",
+      "role": "Local attribution and transformation notice."
+    },
+    {
+      "path": "upstream/atlas-chinese/wikidata-responses.json.gz",
+      "bytes": 6823059,
+      "sha256": "d24253967056fb093de37db250228b87adc78e6aed360f2c4cd85d855843d010",
+      "url": "https://www.wikidata.org/w/api.php",
+      "role": "Complete unmodified successful API response bodies with exact URLs and acquisition timestamps, losslessly gzip-compressed."
+    },
+    {
+      "path": "upstream/atlas-chinese/wikidata-composers.json",
+      "bytes": 216377,
+      "sha256": "261db7f64f0f874d92f20d4d26448de69ae5591e28030ea276c0195d1806663e",
+      "url": "https://www.wikidata.org/wiki/Wikidata:Data_access",
+      "role": "Deterministic exact-identity Chinese-label projection of archived API responses."
+    },
+    {
+      "path": "upstream/atlas-chinese/wikidata-music-forms.json",
+      "bytes": 6535,
+      "sha256": "b034c8667ac49357203ec653b98efa6492d9cadfc96c2296cdcb3923d3255615",
+      "url": "https://www.wikidata.org/wiki/Wikidata:Data_access",
+      "role": "Deterministic exact-identity Chinese-label projection of archived API responses."
+    }
+  ]
+}

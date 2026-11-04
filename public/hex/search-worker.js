@@ -6,7 +6,8 @@ const MAX_MATCHES = 10000;
 
 function bytes(value, limit, name) {
   const result = value instanceof ArrayBuffer ? new Uint8Array(value) : value;
-  if (!(result instanceof Uint8Array) || result.length > limit) throw new Error(`${name}不是允许大小的字节数据。`);
+  if (!(result instanceof Uint8Array) || result.length > limit)
+    throw new Error(`${name}不是允许大小的字节数据。`);
   return result;
 }
 
@@ -36,29 +37,44 @@ function scan(data, pattern, prefix, minStart, maxStart, visit) {
   }
 }
 
-export function searchBytes(value, needle, {direction = 'all', start = 0, wrap = true, maxMatches = MAX_MATCHES} = {}) {
+export function searchBytes(
+  value,
+  needle,
+  { direction = 'all', start = 0, wrap = true, maxMatches = MAX_MATCHES } = {},
+) {
   const data = bytes(value, MAX_BYTES, '待搜索文件');
   const pattern = bytes(needle, MAX_SEARCH_PATTERN_BYTES, '搜索内容');
   if (!pattern.length) throw new Error('搜索内容不能为空。');
   if (!['all', 'next', 'previous'].includes(direction)) throw new Error('搜索方向无效。');
-  if (!Number.isSafeInteger(start) || start < -1 || start > data.length) throw new Error('搜索位置超出文件范围。');
-  if (!Number.isSafeInteger(maxMatches) || maxMatches < 1 || maxMatches > MAX_MATCHES) throw new Error('搜索结果上限无效。');
-  const result = {offsets: [], hasMore: false, offset: null, wrapped: false};
+  if (!Number.isSafeInteger(start) || start < -1 || start > data.length)
+    throw new Error('搜索位置超出文件范围。');
+  if (!Number.isSafeInteger(maxMatches) || maxMatches < 1 || maxMatches > MAX_MATCHES)
+    throw new Error('搜索结果上限无效。');
+  const result = { offsets: [], hasMore: false, offset: null, wrapped: false };
   if (pattern.length > data.length) return result;
-  const prefix = prefixTable(pattern), last = data.length - pattern.length;
+  const prefix = prefixTable(pattern),
+    last = data.length - pattern.length;
   if (direction === 'all') {
-    scan(data, pattern, prefix, 0, last, offset => {
-      if (result.offsets.length === maxMatches) { result.hasMore = true; return false; }
+    scan(data, pattern, prefix, 0, last, (offset) => {
+      if (result.offsets.length === maxMatches) {
+        result.hasMore = true;
+        return false;
+      }
       result.offsets.push(offset);
     });
     result.offset = result.offsets[0] ?? null;
     return result;
   }
   const first = (min, max) => {
-    scan(data, pattern, prefix, min, max, offset => {result.offset = offset; return false;});
+    scan(data, pattern, prefix, min, max, (offset) => {
+      result.offset = offset;
+      return false;
+    });
   };
   const final = (min, max) => {
-    scan(data, pattern, prefix, min, max, offset => {result.offset = offset;});
+    scan(data, pattern, prefix, min, max, (offset) => {
+      result.offset = offset;
+    });
   };
   if (direction === 'next') {
     first(Math.max(0, start), last);
@@ -78,13 +94,13 @@ export function searchBytes(value, needle, {direction = 'all', start = 0, wrap =
 }
 
 if (typeof self !== 'undefined' && typeof self.postMessage === 'function') {
-  self.onmessage = event => {
+  self.onmessage = (event) => {
     const data = event?.data && typeof event.data === 'object' ? event.data : {};
-    const {id, revision} = data;
+    const { id, revision } = data;
     try {
-      self.postMessage({id, revision, ...searchBytes(data.bytes, data.pattern, data)});
+      self.postMessage({ id, revision, ...searchBytes(data.bytes, data.pattern, data) });
     } catch (error) {
-      self.postMessage({id, revision, error: error.message || '字节搜索失败，请重试。'});
+      self.postMessage({ id, revision, error: error.message || '字节搜索失败，请重试。' });
     }
   };
 }

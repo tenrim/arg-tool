@@ -1,4 +1,4 @@
-const entries=`Resize Image|填写目标宽高，可选择像素或百分比；勾选保持比例时按边界缩放。像素画建议使用最近邻算法。
+const entries = `Resize Image|填写目标宽高，可选择像素或百分比；勾选保持比例时按边界缩放。像素画建议使用最近邻算法。
 Rotate Image|填写旋转角度；结果保留在右侧，可继续裁剪或下载。
 Crop Image|手动填写左上角坐标和区域宽高，或启用自动裁边；坐标以图片左上角为原点。
 Flip Image|选择水平或垂直翻转，可用于倒写文字和镜像线索。
@@ -38,15 +38,50 @@ Play Media|选择媒体文件，或输入 Base64 / 十六进制数据，解码�
 Unzip|ZIP 沿用本页“读取 ZIP 目录”和“解压选中条目”，避免一次展开整个压缩包。密码 ZIP 可在完整处理链中使用上游操作。
 Entropy|计算字节随机程度并显示数值或图表；压缩内容也可能具有高熵，不能仅据此判断加密。
 Frequency distribution|统计 0–255 字节值的出现次数，显示分布图与完整数据。
+Magic|查看候选步骤、结果片段、熵、语言统计与文件类型；选择候选后在完整处理链中执行，获取完整结果。识别依据是统计推测；片段最多 100 字符，完整原始候选数据可展开或下载。
 CSV to JSON|粘贴 CSV，按实际文件设置分隔符和表头选项，生成 JSON。
 JSON to CSV|粘贴有效 JSON，选择需要的字段和分隔符，生成 CSV。
 HTTP request|填写请求网址、方法和参数，点击执行才发送请求。受目标网站跨域限制；作为请求正文的输入会发送至目标地址。
 DNS over HTTPS|填写域名与解析器，点击执行才发送 DNS 查询；需要联网。
 `;
-const help=Object.fromEntries(entries.trim().split('\n').map(line=>{const i=line.indexOf('|');return[line.slice(0,i),line.slice(i+1)];}));
-const domainHelp={
- crypto:'按操作要求输入文字、密文或密钥文件，再填写相应参数。二进制内容可选择十六进制、Base64 或本机文件输入；结果可下载或保留原始字节继续处理。',
- encoding:'通常使用“文字 / UTF-8”输入，粘贴待转换字符串。选择输入来源中的 Base64 或十六进制会额外先解码一次，请避免重复解码。',
- language:'粘贴文字后执行，转换结果可复制或继续处理；这里不做自然语言翻译。'
+const help = Object.fromEntries(
+  entries
+    .trim()
+    .split('\n')
+    .map((line) => {
+      const i = line.indexOf('|');
+      return [line.slice(0, i), line.slice(i + 1)];
+    }),
+);
+const domainHelp = {
+  crypto:
+    '按操作要求输入文字、密文或密钥文件，再填写相应参数。二进制内容可选择十六进制、Base64 或本机文件输入；结果可下载或保留原始字节继续处理。',
+  encoding:
+    '通常使用“直接粘贴文字（UTF-8）”输入，粘贴待转换字符串。选择输入来源中的 Base64 或十六进制会额外先解码一次，请避免重复解码。',
+  language: '粘贴文字后执行，转换结果可复制或继续处理；这里不做自然语言翻译。',
 };
-export const guidance=(op,group,fallback)=>help[op]||`${fallback} ${domainHelp[group.panel]||group.hint+'类功能在此共用输入与结果，可调整参数后执行。'}`;
+export const guidance = (op, group, fallback) =>
+  help[op] ||
+  `${fallback} ${domainHelp[group.panel] || group.hint + '类功能在此共用输入与结果，可调整参数后执行。'}`;
+
+export function inputGuidance(op, source) {
+  if (source === 'base64' || source === 'hex')
+    return `当前输入会先进行${source === 'base64' ? ' Base64' : '十六进制'}解码，再执行“${op}”。如果只是解码一层，请选择“直接粘贴文字（UTF-8）”。`;
+  if (/^From Base/.test(op))
+    return '直接粘贴编码串即可。输入方式保持“直接粘贴文字（UTF-8）”，当前操作负责解码；自定义字符表和严格模式在高级参数中。';
+  if (op === 'Magic')
+    return '粘贴未知编码或选择文件，点击转换查看候选。候选是统计推测，可复制片段或打开配方取得完整结果。';
+  if (/^AES /.test(op))
+    return '密钥须为 16、24 或 32 字节，格式须与实际填写内容一致。解密时还需使用加密时相同的模式和 IV；Hex 每两个字符表示一个字节。';
+  if (source === 'text')
+    return '粘贴待处理内容后点击转换。这里按 UTF-8 读取文字；处理文件原始字节请选择本机文件。';
+  return '';
+}
+export const INPUT_EXAMPLES = {
+  'From Base64': 'SGVsbG8gd29ybGQ=',
+  'To Base64': 'Hello world',
+  'From Base32': 'JBSWY3DPEB3W64TMMQ======',
+  'To Base32': 'Hello world',
+  ROT13: 'Uryyb jbeyq',
+  Magic: 'SGVsbG8gd29ybGQ=',
+};

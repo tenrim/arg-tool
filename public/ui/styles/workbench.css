@@ -1,0 +1,420 @@
+/* Inline command search shares the normal header field and keeps focus in it. */
+.site-ui.workbench-app .workspace-search-field {
+  margin: 0;
+  background: var(--surface);
+}
+.site-ui.workbench-app .workspace-search-shortcut {
+  flex: none;
+  font: 11px var(--mono);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2px 5px;
+}
+.site-ui.workbench-app .workspace-search-popover {
+  z-index: 190;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 12px 36px #0006;
+  padding: 8px;
+}
+.site-ui.workbench-app .workspace-search-info {
+  margin: 4px 8px 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.site-ui.workbench-app .workspace-search .workspace-search-item[data-ui='button'] {
+  margin: 0;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  text-align: start;
+}
+.site-ui.workbench-app .workspace-search-item strong {
+  font: 500 14px/1.6 var(--body);
+}
+.site-ui.workbench-app .workspace-search-item span {
+  font: 12px/1.5 var(--body);
+  color: var(--muted);
+}
+.site-ui.workbench-app .workspace-search .workspace-search-item:is(.is-current, :hover) {
+  border-color: var(--line);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.site-ui.workbench-app .heading-actions [data-task-navigation] {
+  font-size: 12px;
+}
+@media (max-width: 800px) {
+  .site-ui.workbench-app .workspace-search-shortcut {
+    display: none;
+  }
+  .site-ui.workbench-app .workspace-search-field {
+    gap: 6px;
+    padding-inline: 8px;
+  }
+  .site-ui.workbench-app .workspace-search-field > svg {
+    width: 17px;
+    height: 17px;
+  }
+  .site-ui.workbench-app .heading-actions {
+    flex-wrap: wrap;
+  }
+}
+.completion-keyboard.hg-theme-default {
+  background: var(--surface);
+  font-family: var(--body);
+}
+.completion-keyboard.hg-theme-default .hg-button {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: none;
+}
+.completion-keyboard.hg-theme-default .hg-button.hg-activeButton {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* B · 紧凑工作台。通用外观在此收口，页面只负责内容与排布。 */
+.site-ui.workbench-app .brand strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.site-ui .brand-logo {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.site-ui .about-brand-logo {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-block: 8px 20px;
+}
+.site-ui.workbench-app .workbench-rail-heading {
+  color: var(--ink);
+  font: 600 15px var(--body);
+}
+.site-ui.workbench-app .workbench-rail-heading .brand {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.site-ui.workbench-app .chronicle-heading {
+  border-bottom: 1px solid var(--line);
+}
+.site-ui.workbench-app [data-ui='tool-header'] h1 {
+  font: 600 calc(25px * var(--ui-font-scale, 1))/1.45 var(--body);
+  letter-spacing: 0;
+}
+.site-ui.workbench-app
+  :is(
+    [data-ui='card'],
+    .surface,
+    .workbench,
+    .hunt-inputs,
+    .hunt-results,
+    .hunt-extraction,
+    .r4-box
+  ) {
+  border-radius: var(--radius);
+}
+.site-ui.workbench-app
+  :is(
+    .app-icon-button,
+    .rail-tool,
+    .rail-directory-button,
+    .rail-badge,
+    .tool-directory,
+    .directory-card,
+    .workspace-outline,
+    .image-engine-tabs,
+    .r2-tabs,
+    .hunt-tabs,
+    .upload-zone,
+    .stat,
+    .r1-empty,
+    .resource-card,
+    .paper-intro,
+    .code-settings
+  ) {
+  border-radius: var(--radius);
+}
+.site-ui.workbench-app .rail-tool[aria-current='page'] {
+  border-color: transparent;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.site-ui.workbench-app .capability-representatives > .capability-button {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 8px 0;
+}
+.site-ui.workbench-app .capability-representatives > .capability-button:last-child {
+  border-bottom-color: transparent;
+}
+.site-ui.workbench-app .capability-representatives > .capability-button:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.site-ui.workbench-app .capability-categories > button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.site-ui.workbench-app .capability-categories > button[aria-pressed='true'] {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+.site-ui.workbench-app .home-quick-links a {
+  background: transparent;
+  padding: 8px 10px;
+}
+@media (max-width: 800px) {
+  .site-ui.workbench-app [data-ui='tool-header'] h1 {
+    font-size: calc(21px * var(--ui-font-scale, 1));
+  }
+}
+
+/* Imported Animate UI owns these surfaces; no parallel CSS height/entry tween. */
+.site-ui.workbench-app [data-animate-ui='collapsible'] {
+  transition: none;
+  overflow-anchor: none;
+}
+.site-ui.workbench-app :is(.rail-scroll, .rail-category-tree, .rail-task-list) {
+  overflow-anchor: none;
+}
+.site-ui.workbench-app [data-animate-ui='tabs']::after {
+  content: none;
+}
+.site-ui.workbench-app [data-slot='tabs-indicator'] {
+  border: 1px solid var(--line);
+  border-radius: var(--ui-control-radius);
+  background: var(--amber-bg);
+  pointer-events: none;
+}
+.site-ui.workbench-app [data-ui='field']:has(> .ui-check-indicator) {
+  position: relative;
+}
+.ui-check-indicator {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  color: var(--bg-deep);
+  z-index: 1;
+}
+.ui-check-indicator > span {
+  display: grid;
+  place-items: center;
+}
+.site-ui.workbench-app [data-ui='input'][data-animate-ui='checkbox']::before {
+  content: none;
+}
+@media (forced-colors: active) {
+  .ui-check-indicator {
+    display: none;
+  }
+}
+
+.ui-disclosure-host {
+  display: contents;
+}
+/* All shared hover surfaces paint BELOW every sibling's text, including while
+   gliding across a different item. No per-item stacking context or layout wrap. */
+:where(.ui-hover-group) {
+  position: relative;
+  isolation: isolate;
+}
+.ui-hover-group::part(hover-slot) {
+  display: contents;
+}
+.ui-hover-group::part(hover-surfaces) {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+/* Native actions and the pinned editor adapter share the same state colors.
+   Animate UI reads this surface and moves it below the original button text. */
+.site-ui.workbench-app
+  :is([data-ui='button'], [data-ui='icon-button']):not([data-appearance='custom']):not(
+    :disabled
+  ):not([aria-disabled='true']):not(
+    :where(
+      .primary-button,
+      [data-variant='primary'],
+      [data-variant='danger'],
+      [data-floating-priority='primary']
+    )
+  ):is(:hover, :focus-visible) {
+  background-color: var(--ui-action-hover-bg);
+  color: var(--ui-action-hover-ink);
+}
+.site-ui.workbench-app [data-ui='button'][data-variant='piano-key'] {
+  border: 1px solid #747b8d;
+  border-radius: 0 0 4px 4px;
+  padding: 0 0 10px;
+  font: 12px var(--mono);
+  min-height: 0;
+}
+.site-ui.workbench-app [data-ui='button'][data-variant='piano-key'][data-key-tone='white'] {
+  background: #eee;
+  color: #161b24;
+}
+.site-ui.workbench-app [data-ui='button'][data-variant='piano-key'][data-key-tone='black'] {
+  background: #17202c;
+  color: #fff;
+}
+.site-ui.workbench-app
+  [data-ui='button'][data-variant='piano-key'][data-key-tone='white']:is(:hover, :focus-visible) {
+  background: #fff;
+}
+.site-ui.workbench-app
+  [data-ui='button'][data-variant='piano-key'][data-key-tone='black']:is(:hover, :focus-visible) {
+  background: #293b50;
+}
+.site-ui.workbench-app [data-ui='button'][data-variant='piano-key'][data-key-tone].is-playing {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+.site-ui.workbench-app .rail-tool:focus-visible {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
+.main-footer > [data-ui-runtime-sources] {
+  grid-column: 1/-1;
+  font-size: 12px;
+  color: var(--muted);
+}
+[data-ui-runtime-sources] > div {
+  margin: 10px 0;
+  line-height: 1.8;
+}
+
+/* Calculator surfaces use the same palette and control states as all tools. */
+:where([data-ui='status']):empty {
+  display: none;
+}
+.site-ui [data-ui='card'][data-variant='calculator'] {
+  padding: 1rem;
+  border-color: var(--line);
+  background: var(--surface);
+}
+.site-ui [data-variant='calculator'] .qalculate-display {
+  padding: 0.75rem;
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
+}
+.site-ui [data-variant='calculator'] .qalculate-display [data-ui='textarea'] {
+  min-height: 3rem;
+  font: 500 calc(21px * var(--ui-font-scale, 1))/1.5 var(--mono);
+  text-align: right;
+  border-color: transparent;
+  background: transparent;
+  padding: 0.25rem;
+}
+.site-ui [data-variant='calculator'] .qalculate-display [data-ui='field'] > span {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.site-ui [data-variant='calculator'] output {
+  font: 600 calc(32px * var(--ui-font-scale, 1))/1.4 var(--mono);
+  text-align: right;
+  color: var(--ink);
+}
+.site-ui [data-variant='calculator'] .qalculate-keypad [data-ui='button'] {
+  min-height: 3rem;
+  padding: 0.5rem 0.15rem;
+  font-size: calc(19px * var(--ui-font-scale, 1));
+  background: var(--surface-raised);
+}
+.site-ui [data-variant='calculator'] [data-keypad='scientific'] [data-ui='button'] {
+  font-size: calc(17px * var(--ui-font-scale, 1));
+  white-space: nowrap;
+}
+.site-ui [data-variant='calculator'] .qalculate-keypad [data-ui='button'][data-variant='primary'] {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+.site-ui [data-variant='calculator'] .qalculate-memory [data-ui='button'] {
+  padding: 0.35rem 0.15rem;
+}
+.site-ui [data-variant='calculator'] [data-ui='toolbar'] > [data-ui='field'] {
+  min-width: 0;
+  flex: 1;
+}
+
+/* §2.1: a single numeric result is the scanning target, not its export actions. */
+.site-ui.workbench-app [data-ui='result'][data-variant='metric'] {
+  display: block;
+  min-block-size: 4.5rem;
+  margin: 0 0 var(--ui-space-4);
+  padding: 0;
+  font: 600 calc(var(--ui-text-value) * var(--ui-font-scale, 1))/1.5 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.site-ui.workbench-app [data-ui='result'][data-variant='metric'][data-state='empty'] {
+  color: var(--muted);
+}
+
+/* Full-page reading: prose and examples share the responsive article width.
+   Do not constrain individual paragraphs to a narrow column inside the reader. */
+.site-ui.workbench-app [data-ui='result'][data-variant='reading'] {
+  font: 400 calc(var(--ui-text-reading) * var(--ui-font-scale, 1))/1.9 var(--body);
+}
+.site-ui.workbench-app [data-variant='reading'] :is(p, li) {
+  line-height: 1.9;
+}
+.site-ui.workbench-app [data-variant='reading'] :is(h2, h3) {
+  font: 600 calc(var(--ui-text-section) * var(--ui-font-scale, 1))/1.6 var(--body);
+}
+.site-ui.workbench-app [data-variant='reading'] h4 {
+  font: 600 calc(var(--ui-text-body) * var(--ui-font-scale, 1))/1.6 var(--body);
+}
+
+/* §8.4 / §2.4: empty shortcuts explain how to populate them and stay secondary. */
+.site-ui.workbench-app .home-collection[data-empty='true'] {
+  padding: var(--ui-space-4);
+}
+.site-ui.workbench-app .home-collection[data-empty='true'] > [data-ui='card-title'] {
+  font-size: calc(var(--ui-text-body) * var(--ui-font-scale, 1));
+  margin-bottom: var(--ui-space-2);
+}
+.site-ui.workbench-app .home-collection[data-empty='true'] [data-ui='empty-state'] {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  text-align: start;
+  font: 400 calc(var(--ui-text-small) * var(--ui-font-scale, 1))/1.8 var(--body);
+}
+
+.site-ui [data-ui='card'][data-variant='calculator-side'] {
+  padding: 1rem;
+}
+.site-ui [data-variant='calculator'] .qalculate-keypad [data-key-role='operator'] {
+  color: var(--accent);
+}

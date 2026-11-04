@@ -1,0 +1,137 @@
+{
+  "c": {
+    "file": "main.c",
+    "compile": ["gcc", "-std=c17", "-O0", "main.c", "-lm", "-o", "program"],
+    "run": ["./program"],
+    "version": ["gcc", "--version"]
+  },
+  "cpp": {
+    "file": "main.cpp",
+    "compile": ["g++", "-std=c++20", "-O0", "main.cpp", "-o", "program"],
+    "run": ["./program"],
+    "version": ["g++", "--version"]
+  },
+  "csharp": {
+    "file": "Program.cs",
+    "compile": [
+      "dotnet",
+      "build",
+      "Runner.csproj",
+      "--nologo",
+      "-v:q",
+      "-p:UseSharedCompilation=false"
+    ],
+    "run": ["dotnet", "bin/Debug/net8.0/Runner.dll"],
+    "version": ["dotnet", "--version"]
+  },
+  "java": {
+    "file": "Main.java",
+    "compile": ["javac", "-encoding", "UTF-8", "Main.java"],
+    "run": ["java", "Main"],
+    "version": ["javac", "-version"]
+  },
+  "typescript": {
+    "file": "main.ts",
+    "compile": [
+      "tsc",
+      "main.ts",
+      "globals.d.ts",
+      "--target",
+      "ES2022",
+      "--module",
+      "commonjs",
+      "--strict",
+      "--noEmitOnError",
+      "--typeRoots",
+      "/usr/local/lib/node_modules/@types",
+      "--lib",
+      "ES2022"
+    ],
+    "run": ["node", "--require", "./stdin.cjs", "main.js"],
+    "version": ["tsc", "--version"]
+  },
+  "go": {
+    "file": "main.go",
+    "compile": ["go", "build", "-o", "program", "main.go"],
+    "run": ["./program"],
+    "version": ["go", "version"]
+  },
+  "rust": {
+    "file": "main.rs",
+    "compile": ["rustc", "--edition=2021", "main.rs", "-o", "program"],
+    "run": ["./program"],
+    "version": ["rustc", "--version"]
+  },
+  "php": {
+    "file": "main.php",
+    "run": ["php", "main.php"],
+    "version": ["php", "--version"]
+  },
+  "ruby": {
+    "file": "main.rb",
+    "run": ["ruby", "main.rb"],
+    "version": ["ruby", "--version"]
+  },
+  "r": {
+    "file": "main.R",
+    "run": ["Rscript", "--vanilla", "main.R"],
+    "version": ["Rscript", "--version"]
+  },
+  "perl": {
+    "file": "main.pl",
+    "run": ["perl", "main.pl"],
+    "version": ["perl", "-e", "print $^V"]
+  },
+  "bash": {
+    "file": "main.sh",
+    "run": ["bash", "--noprofile", "--norc", "main.sh"],
+    "version": ["bash", "--version"]
+  },
+  "kotlin": {
+    "file": "Main.kt",
+    "compile": [
+      "java",
+      "-cp",
+      "/opt/kotlin/lib/*",
+      "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler",
+      "-kotlin-home",
+      "/opt/kotlin",
+      "Main.kt",
+      "-include-runtime",
+      "-d",
+      "program.jar"
+    ],
+    "run": ["java", "-jar", "program.jar"],
+    "version": [
+      "java",
+      "-cp",
+      "/opt/kotlin/lib/*",
+      "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler",
+      "-kotlin-home",
+      "/opt/kotlin",
+      "-version"
+    ]
+  },
+  "swift": {
+    "file": "main.swift",
+    "compile": ["swiftc", "main.swift", "-o", "program"],
+    "run": ["./program"],
+    "version": ["swift", "--version"]
+  },
+  "dart": {
+    "file": "main.dart",
+    "run": ["dart", "main.dart"],
+    "version": ["dart", "--version"]
+  },
+  "scala": {
+    "file": "Main.scala",
+    "compile": ["scalac", "Main.scala"],
+    "run": ["scala", "-nc", "Main"],
+    "version": ["scalac", "-version"]
+  },
+  "powershell": {
+    "file": "main.ps1",
+    "run": ["pwsh", "-NoLogo", "-NoProfile", "-NonInteractive", "-File", "main.ps1"],
+    "version": ["pwsh", "-NoLogo", "-NoProfile", "-Command", "$PSVersionTable.PSVersion.ToString()"]
+  }
+}

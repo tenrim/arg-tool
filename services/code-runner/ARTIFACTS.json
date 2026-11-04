@@ -1,0 +1,57 @@
+[
+  {
+    "file": "scala-official.tgz",
+    "url": "https://www.scala-lang.org/files/archive/scala-2.13.16.tgz",
+    "sha256": "937f743be315302caad15be99ab1ca425ff7e63f15ef5790db6c81bb49543256"
+  },
+  {
+    "file": "powershell.deb",
+    "url": "https://packages.microsoft.com/repos/microsoft-ubuntu-jammy-prod/pool/main/p/powershell/powershell_7.4.6-1.deb_amd64.deb",
+    "sha256": "79642721f0bc9baf07dafaab68ece1cbd822f86722492acf9b4031d41029a735"
+  },
+  {
+    "file": "kotlin-lib/kotlin-compiler.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-compiler/2.1.20/kotlin-compiler-2.1.20.jar",
+    "sha256": "9c160024fb84cfaae2ebe40e2b2358b29497e8153f62a1ba61e253d3aab5e86b"
+  },
+  {
+    "file": "kotlin-lib/kotlin-stdlib.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.1.20/kotlin-stdlib-2.1.20.jar",
+    "sha256": "1bcc74e8ce84e2c25eaafde10f1248349cce3062b6e36978cbeec610db1e930a"
+  },
+  {
+    "file": "kotlin-lib/kotlin-stdlib-jdk7.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.1.20/kotlin-stdlib-jdk7-2.1.20.jar",
+    "sha256": "5343bf795783932e5fa538b0bca05af810bb07213edb9baa770c784068f57867"
+  },
+  {
+    "file": "kotlin-lib/kotlin-stdlib-jdk8.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.1.20/kotlin-stdlib-jdk8-2.1.20.jar",
+    "sha256": "ed22217b5dc0940a068d8be9440bbe2f7f9f51c466cdd1185e2385cdec19f238"
+  },
+  {
+    "file": "kotlin-lib/kotlin-script-runtime.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-script-runtime/2.1.20/kotlin-script-runtime-2.1.20.jar",
+    "sha256": "ae4397fbb3aa2a1ada09290e753bba99a4114548977c3115526b9958f4cb1a04"
+  },
+  {
+    "file": "kotlin-lib/kotlin-reflect.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
+    "sha256": "3277ac102ae17aad10a55abec75ff5696c8d109790396434b496e75087854203"
+  },
+  {
+    "file": "kotlin-lib/trove4j.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
+    "sha256": "c5fd725bffab51846bf3c77db1383c60aaaebfe1b7fe2f00d23fe1b7df0a439d"
+  },
+  {
+    "file": "kotlin-lib/kotlinx-coroutines-core-jvm.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
+    "sha256": "9860906a1937490bf5f3b06d2f0e10ef451e65b95b269f22daf68a3d1f5065c5"
+  },
+  {
+    "file": "kotlin-lib/annotations.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar",
+    "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05"
+  }
+]

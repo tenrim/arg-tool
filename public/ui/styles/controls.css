@@ -1,0 +1,449 @@
+/* Shared component presentation. Tool styles own only their composition and
+   specialized visualizations. Motion tokens and state feedback live here. */
+:root {
+  --ui-control-radius: var(--radius);
+  --ui-control-height: 44px;
+  --ui-field-gap: 6px;
+  --ui-card-padding: 18px;
+  --ui-action-hover-bg: var(--accent-bg);
+  --ui-action-hover-ink: var(--accent);
+}
+.site-ui.workbench-app [data-ui='floating-actions'] {
+  position: fixed;
+  inset-inline-end: calc(16px + env(safe-area-inset-right, 0px));
+  inset-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 140;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  max-inline-size: calc(100vw - 32px);
+  pointer-events: none;
+}
+.site-ui.workbench-app [data-ui='floating-actions'] > [data-ui='button'] {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-block-size: 48px;
+  padding: 10px 14px;
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 18px #0005;
+}
+.site-ui.workbench-app
+  [data-ui='floating-actions']
+  > [data-ui='button'][data-floating-priority='primary'] {
+  order: 1;
+  min-block-size: 56px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow:
+    0 4px 20px #f0a50038,
+    0 4px 14px #0005;
+}
+.site-ui.workbench-app
+  [data-ui='floating-actions']
+  > [data-ui='button'][data-floating-priority='primary']:not(:disabled):is(:hover, :focus-visible) {
+  background: var(--accent-strong);
+  color: var(--bg);
+  border-color: var(--accent-strong);
+}
+.site-ui.workbench-app
+  [data-ui='floating-actions']
+  > [data-ui='button'][aria-current='page']:not([data-floating-priority='primary']) {
+  color: var(--accent);
+}
+.site-ui.workbench-app [data-ui='floating-actions'] > [data-ui='button'] > svg {
+  inline-size: 20px;
+  block-size: 20px;
+  flex: none;
+}
+.site-ui.workbench-app [data-ui='floating-actions'] > [data-floating-priority='primary'] > svg {
+  inline-size: 24px;
+  block-size: 24px;
+}
+@media print {
+  [data-ui='floating-actions'] {
+    display: none !important;
+  }
+}
+/* Upstream Select owns focus, placement, scrolling and its animated highlight.
+   The transparent original field retains form/API identity, not hit testing. */
+.site-ui .ui-select-host {
+  display: inline-grid;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  vertical-align: middle;
+}
+.site-ui .ui-select-view {
+  display: contents;
+}
+.site-ui .ui-select-host > select[data-animate-ui='select'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  margin: 0;
+}
+.site-ui .ui-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--ui-control-height);
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--ui-control-radius);
+  background: var(--bg-deep);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms,
+    background-color 160ms;
+}
+.site-ui .ui-select-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.site-ui .ui-select-trigger:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+.site-ui .ui-select-trigger[data-popup-open] {
+  border-color: var(--cyan);
+}
+.site-ui .ui-select-trigger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.site-ui .ui-select-chevron {
+  flex: none;
+  transition: rotate var(--ui-menu-duration) var(--ui-menu-ease);
+}
+.site-ui .ui-select-trigger[data-popup-open] .ui-select-chevron {
+  rotate: 180deg;
+}
+.site-ui .ui-select-positioner {
+  z-index: 1000;
+  outline: 0;
+  min-width: var(--anchor-width);
+  max-width: min(600px, calc(100vw - 24px));
+}
+.site-ui .ui-select-popup {
+  min-width: var(--anchor-width);
+  max-height: min(var(--available-height), 360px);
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 12px 36px #0006;
+  overflow: auto;
+  overscroll-behavior: contain;
+  outline: none;
+  font-family: var(--body);
+  isolation: isolate;
+}
+.site-ui .ui-select-list {
+  outline: none;
+}
+.site-ui .ui-select-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  cursor: default;
+  outline: none;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.site-ui .ui-select-item[data-highlighted] {
+  background: var(--cyan-bg);
+  color: var(--cyan);
+}
+.site-ui .ui-select-item[data-selected] {
+  color: var(--accent);
+}
+.site-ui .ui-select-item[data-disabled] {
+  opacity: 0.4;
+}
+.site-ui .ui-select-check {
+  flex: none;
+  color: var(--accent);
+}
+.site-ui .ui-select-group {
+  padding: 8px 10px 4px;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+@media (pointer: coarse) {
+  .site-ui .ui-select-item {
+    min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-ui :is(.ui-select-trigger, .ui-select-chevron, .ui-select-popup, .ui-select-item) {
+    transition: none !important;
+  }
+}
+.site-ui.workbench-app :where(.chronicle-header) {
+  width: 100%;
+  margin-left: 0;
+}
+/* Resizable, non-modal companion workspace: both sides remain interactive. */
+.site-ui .layout.ui-dock-open {
+  padding-right: var(--ui-dock-width);
+}
+.site-ui .ui-dock {
+  position: fixed;
+  right: 0;
+  top: var(--site-header-height, 64px);
+  bottom: 0;
+  width: var(--ui-dock-width, 460px);
+  z-index: 130;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg-deep);
+  border-left: 1px solid var(--line);
+  box-shadow: -8px 0 24px #0003;
+}
+.site-ui .ui-dock[hidden] {
+  display: none;
+}
+.site-ui .ui-dock-sheet {
+  margin: 0 0 0 auto;
+  padding: 0;
+  width: min(100vw, 38rem);
+  max-width: 100vw;
+  height: var(--ui-viewport-height, 100dvh);
+  max-height: var(--ui-viewport-height, 100dvh);
+  top: var(--ui-viewport-top, 0px);
+}
+.site-ui .ui-dock-sheet .ui-dock {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.site-ui .ui-dock-sheet .ui-dock-body {
+  padding: 8px;
+}
+.site-ui .ui-dock[data-instant-close='true'] {
+  transition: none;
+}
+.site-ui .ui-dock-actions {
+  flex: none;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.site-ui .ui-dock-body {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 16px;
+  flex: 1;
+}
+.site-ui .ui-dock-resizer {
+  position: absolute;
+  left: -6px;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  cursor: col-resize;
+  touch-action: none;
+  z-index: 2;
+}
+.site-ui .ui-dock-resizer:hover,
+.site-ui .ui-dock-resizer:focus-visible {
+  background: var(--accent-bg);
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+.site-ui .ui-dock-dragging {
+  cursor: col-resize;
+  user-select: none;
+}
+.site-ui .ui-dock-body > [data-ui='tool-panel'] > .page-heading {
+  min-height: 0;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+}
+.site-ui .ui-dock-body [data-ui='card'] {
+  padding: 12px;
+}
+.site-ui .notebook-compact-index {
+  margin-block: 8px 16px;
+}
+.site-ui .notebook-compact-index > summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+  color: var(--muted);
+}
+.site-ui.workbench-app [data-ui='dialog'].ui-flow-dialog {
+  width: min(680px, calc(100vw - 24px));
+  padding: 20px;
+  overflow: auto;
+}
+.site-ui.workbench-app .ui-flow-dialog > [data-ui='toolbar'] {
+  justify-content: space-between;
+}
+.site-ui.workbench-app .ui-flow-dialog > [data-ui='field'],
+.site-ui.workbench-app .ui-flow-dialog > [data-ui='result'] {
+  margin-block: 14px;
+}
+.site-ui.workbench-app .ui-flow-dialog [data-ui='result'] {
+  display: grid;
+  gap: 8px;
+}
+.site-ui.workbench-app .ui-flow-dialog h2 {
+  margin: 0;
+}
+.site-ui.workbench-app .ui-flow-dialog :is(h3, h4, h5) {
+  margin: 14px 0 8px;
+  line-height: 1.5;
+}
+.site-ui.workbench-app .ui-flow-dialog h4 {
+  color: var(--accent);
+  font-size: 1em;
+}
+.site-ui.workbench-app .ui-flow-dialog h5 {
+  color: var(--muted);
+  font-size: 0.9em;
+}
+.site-ui.workbench-app .ui-flow-group {
+  display: grid;
+  gap: 8px;
+  padding: 0 0 4px 12px;
+  border-inline-start: 1px solid var(--line);
+  min-width: 0;
+}
+.site-ui.workbench-app .ui-flow-branch {
+  margin-block: 8px;
+  min-width: 0;
+}
+.site-ui.workbench-app .ui-flow-branch > summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.site-ui.workbench-app .ui-flow-family {
+  display: grid;
+  gap: 6px;
+  padding-block: 6px;
+  min-width: 0;
+}
+.site-ui.workbench-app .ui-flow-family > [data-ui='toolbar'] {
+  flex-wrap: wrap;
+}
+.site-ui.workbench-app .ui-flow-dialog [data-ui='search-field'] {
+  margin-block: 8px;
+}
+.site-ui.workbench-app [data-report-error] {
+  margin-block: 6px;
+}
+/* One shared rail: category links browse; disclosure buttons only expand;
+   every task link enters the registered workspace directly. */
+.site-ui.workbench-app .rail-category-heading {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.site-ui.workbench-app .rail-category-link {
+  flex: 1;
+  font-weight: 600;
+  color: var(--ink);
+}
+.site-ui.workbench-app .rail-category-toggle {
+  padding: 0;
+}
+.site-ui.workbench-app .rail-category-toggle > span {
+  display: inline-block;
+  font: 20px var(--body);
+  rotate: 90deg;
+}
+.site-ui.workbench-app .rail-category-toggle[aria-expanded='false'] > span {
+  rotate: 0deg;
+}
+.site-ui.workbench-app .rail-category-body {
+  padding-inline-start: 6px;
+}
+.site-ui.workbench-app .rail-section-toggle {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  min-height: 44px;
+}
+.site-ui.workbench-app .rail-section-toggle::after {
+  content: '›';
+  flex-shrink: 0;
+  rotate: 0deg;
+}
+.site-ui.workbench-app .rail-section-toggle[aria-expanded='true']::after {
+  rotate: 90deg;
+}
+.site-ui.workbench-app .rail-section-toggle > .rail-group-count {
+  overflow-wrap: normal;
+}
+.site-ui.workbench-app .rail-section[data-current='true'] > .rail-section-toggle {
+  color: var(--accent);
+}
+.site-ui.workbench-app .rail-task-list {
+  margin-inline-start: 12px;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid var(--line);
+}
+.site-ui.workbench-app .rail-task-list .rail-tool > svg {
+  display: none;
+}
+.site-ui.workbench-app .rail-groups .rail-tool {
+  min-height: 44px;
+}
+.site-ui.workbench-app .rail-more {
+  width: 100%;
+  font-size: 12px;
+  color: var(--cyan);
+}
+.site-ui.workbench-app .rail-match-location {
+  display: block;
+  margin-top: 2px;
+  font: 11px/1.6 var(--body);
+  color: var(--muted);
+}
+:root[data-ui-text='large'] {
+  --ui-font-scale: 1.2;
+}
+:root[data-ui-density='comfortable'] {
+  --ui-card-padding: 24px;
+  --ui-control-height: 48px;
+}
+:root[data-ui-density='comfortable'] .site-ui.workbench-app [data-ui='form-grid'] {
+  --ui-control-height: 48px;
+  --ui-input-padding: 11px 12px;
+  gap: 16px;
+}

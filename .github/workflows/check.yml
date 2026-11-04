@@ -52,7 +52,15 @@ jobs:
             echo "browser=true" >> "$GITHUB_OUTPUT"
           else
             npm run test:plan -- --base "${BASE_REF:-$(git rev-parse HEAD^ 2>/dev/null || echo 0000000000000000000000000000000000000000)}" --report /tmp/arg-plan.json
-            node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync('/tmp/arg-plan.json')); fs.appendFileSync(process.env.GITHUB_OUTPUT,'browser='+p.checks.some(c=>c.id.startsWith('browser:'))+'\n');"
+            node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          const p=JSON.parse(fs.readFileSync('/tmp/arg-plan.json'));
+          const current=JSON.parse(fs.readFileSync('dependencies.lock.json'));
+          const previous=JSON.parse(execFileSync('git',['show',(process.env.BASE_REF||'HEAD^')+':dependencies.lock.json'],{encoding:'utf8'}));
+          const snapshot=current.snapshot!==previous.snapshot;
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,'source='+snapshot+'\n'+'browser='+(snapshot||p.checks.some(c=>c.id.startsWith('browser:')))+'\n');
+          NODE
           fi
       - if: steps.plan.outputs.browser == 'true'
         run: |
@@ -60,7 +68,7 @@ jobs:
           npx --prefix test-tools playwright install --with-deps chromium
           echo "CHROMIUM_PATH=$(node -e "console.log(require('./test-tools/node_modules/playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
       - name: Prepare static output for selected deployment smoke
-        if: steps.plan.outputs.full != 'true' && steps.plan.outputs.browser == 'true'
+        if: steps.plan.outputs.full != 'true' && steps.plan.outputs.source != 'true' && steps.plan.outputs.browser == 'true'
         run: |
           if node -e "const p=require('/tmp/arg-plan.json');process.exit(p.checks.some(c=>c.id==='browser:deployment')?0:1)"; then
             npm run build
@@ -70,6 +78,8 @@ jobs:
         run: |
           if [ "${{ steps.plan.outputs.full }}" = true ]; then
             npm run verify:all -- --report /tmp/arg-verification.json
+          elif [ "${{ steps.plan.outputs.source }}" = true ]; then
+            ARG_SOURCE_REPORT=/tmp/arg-verification.json npm run verify:source
           else
             npm run verify -- --base "${BASE_REF:-$(git rev-parse HEAD^ 2>/dev/null || echo 0000000000000000000000000000000000000000)}" --report /tmp/arg-verification.json
           fi

@@ -6,7 +6,17 @@
   <meta name="description" content="迷雾工具箱：ARG 与 Puzzlehunt 解谜工具，密码编码、中英文查词、纸笔解题、图片隐写、SSTV 与音视频分析。">
   <meta name="theme-color" content="#0a0e17">
   <title>迷雾工具箱</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48 64x64 128x128 256x256" href="./branding/20261028-toolbox/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="./branding/20261028-toolbox/logo.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="./branding/20261028-toolbox/apple-touch-icon.png">
+  <link rel="manifest" href="./site-manifest.json?v=20261028-toolbox">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="迷雾工具箱">
+  <meta property="og:image" content="https://www.tool.mistarg.cn/branding/20261028-toolbox/share-1200x630.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.tool.mistarg.cn/branding/20261028-toolbox/share-1200x630.png">
   <link rel="preload" href="./fonts/noto-serif-sc-ui.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./fonts/noto-sans-sc-ui.woff2" as="font" type="font/woff2" crossorigin>
@@ -21,7 +31,8 @@
   <link rel="stylesheet" href="./coderunner/style.css">
   <link rel="stylesheet" href="./desktop-layout.css">
   <link rel="stylesheet" href="./workspace.css">
-  <script type="module" src="./app.js"></script>
+  <link rel="modulepreload" href="./app.js">
+  <link rel="modulepreload" href="./vendor/ui-runtime/runtime.js">
 <link rel="stylesheet" href="./science/style.css">
 <link rel="stylesheet" href="./reference/style.css">
 <link rel="stylesheet" href="./discovery/style.css">
@@ -40,6 +51,17 @@
   <link rel="stylesheet" href="./ui/components.css">
 </head>
 <body class="scanlines">
-  <noscript>迷雾工具箱在本地浏览器中运行，请启用 JavaScript 使用工具。</noscript>
+  <div id="app-startup" role="status" aria-live="polite" aria-busy="true">
+    <div class="startup-content">
+      <img class="startup-logo" src="./branding/20261028-toolbox/logo.svg" width="64" height="64" alt="">
+      <div class="startup-symbol" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="startup-brand">迷雾工具箱</p>
+      <p id="startup-message">正在准备工具…</p>
+      <a id="startup-retry" href="./index.html">重新加载</a>
+    </div>
+  </div>
+  <noscript><style>#app-startup{display:none}</style>迷雾工具箱在本地浏览器中运行，请启用 JavaScript 使用工具。</noscript>
+  <script src="./startup-guard.js"></script>
+  <script id="startup-entry" type="module" src="./startup.js"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+# Index authored sources, tests, specifications and maintenance scripts.
+# Large pinned upstream archives/data are implementation provenance, not this corpus.
+outputs/
+upstream/
+public/vendor/
+public/data/
+public/licenses/
+android-test/
+dist/
+node_modules/
+test-tools/node_modules/
+tools/**/node_modules/
+*.zip
+*.gz
+*.pdf
+*.csv
+*.jsonl
+*.min.js
+*.map
+# Tooling metadata is read directly; avoid expanding this evolving manifest
+# into typed datasets. Source locations and pins are also documented in prose.
+tools/reference-code.json
+# Web app icon metadata is read directly; avoid frozen JSON dataset evolution.
+public/site-manifest.json
+# Index maintained sources, not duplicated generated output or obsolete rules.
+public/ui/components.css
+public/knowledge/catalogue.js
+docs/archive/
+tools/format/*.json

@@ -1,0 +1,13 @@
+node_modules/
+**/node_modules/
+public/vendor/
+upstream/
+outputs/
+dist/
+.reference-code/
+android-test/
+docs/archive/
+public/knowledge/catalogue.js
+public/ui/components.css
+
+tools/format/python/

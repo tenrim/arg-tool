@@ -11,7 +11,7 @@ function resourceFailure(url) {
   // A module import can fail inside an upstream async bake. Report explicitly
   // rather than leaving the client waiting for a Worker error event/timeout.
   failureReported = true;
-  self.postMessage({action: 'resourceError', data: {message: error.message}});
+  self.postMessage({ action: 'resourceError', data: { message: error.message } });
   return error;
 }
 // Keep docURL as a path for Jimp's path.join, then make its requests absolute
@@ -20,37 +20,58 @@ function resourceFailure(url) {
 self.fetch = async (input, options) => {
   const request = typeof input === 'string' ? new URL(input, resourceBase).href : input;
   const url = new URL(request instanceof Request ? request.url : request);
-  const localAsset = url.origin === resourceBase.origin && url.pathname.startsWith(new URL('vendor/cyberchef/', resourceBase).pathname);
+  const localAsset =
+    url.origin === resourceBase.origin &&
+    url.pathname.startsWith(new URL('vendor/cyberchef/', resourceBase).pathname);
   let response;
-  try { response = await fetchResource(request, options); }
-  catch (error) { throw localAsset ? resourceFailure(url) : error; }
+  try {
+    response = await fetchResource(request, options);
+  } catch (error) {
+    throw localAsset ? resourceFailure(url) : error;
+  }
   if (localAsset && !response.ok) throw resourceFailure(url);
   return response;
 };
 self.importScripts = (...urls) => {
   // Upstream also requests modules using docURL's root-relative paths. Resolve
   // both forms explicitly, including when this Worker has a blob: location.
-  const scripts = urls.map(url => new URL(url, resourceBase).href);
+  const scripts = urls.map((url) => new URL(url, resourceBase).href);
   try {
     const encodings = new URL('./vendor/cyberchef/modules/Encodings.js', resourceBase).href;
     if (self.CyberChefOperationCorrections && scripts.includes(encodings)) {
       self.CyberChefOperationCorrections.importEncodings(() => loadScripts(...scripts));
     } else loadScripts(...scripts);
+  } catch {
+    throw resourceFailure(scripts[0]);
   }
-  catch { throw resourceFailure(scripts[0]); }
   self.CyberChefOperationCorrections?.apply(self.OpModules);
 };
-function initialize({data: message}) {
+function initialize({ data: message }) {
   if (message?.action !== 'initialize') return;
   self.removeEventListener('message', initialize);
   try {
     const base = new URL(message.data.resourceBase);
-    if (!['https:', 'http:'].includes(base.protocol) || base.origin !== self.location.origin || base.username || base.password) throw new Error('CyberChef 组件资源地址无效，请刷新页面后重试。');
+    if (
+      !['https:', 'http:'].includes(base.protocol) ||
+      base.origin !== self.location.origin ||
+      base.username ||
+      base.password
+    )
+      throw new Error('CyberChef 组件资源地址无效，请刷新页面后重试。');
     resourceBase = base;
     self.importScripts('./cyberchef-operation-corrections.js');
     self.importScripts('./vendor/cyberchef/ChefWorker.js');
   } catch (error) {
-    if (!failureReported) self.postMessage({action: 'bootstrapError', data: {message: error.message}});
+    if (!failureReported)
+      self.postMessage({ action: 'bootstrapError', data: { message: error.message } });
   }
 }
 self.addEventListener('message', initialize);
+// GCHQ CyberChef 11b86fec, src/core/ChefWorker.js:16 and Chef.mjs:20-22.
+// Replace only per-session state. OpModules and loaded scripts remain reusable.
+self.addEventListener('message', ({ data }) => {
+  if (data?.action === 'clearSession' && self.chef) {
+    self.chef = new self.chef.constructor();
+    self.inputNum = -1;
+  }
+});

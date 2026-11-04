@@ -1,16 +1,71 @@
 /* Reader composition only: surfaces, controls and motion use shared UI. */
-.knowledge-workspace{min-width:0}
-.knowledge-catalogue,.knowledge-reader{display:grid;gap:12px;align-content:start;min-width:0;scroll-margin-top:80px}
-.knowledge-list{grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));max-height:620px;overflow:auto;scrollbar-gutter:stable}
-.knowledge-list>[data-ui=empty-state]{grid-column:1/-1}
-.knowledge-topic{width:100%}
-.knowledge-article{display:grid;gap:var(--ui-space-8);min-width:0;overflow-wrap:anywhere}
-.knowledge-article>h2,.knowledge-article>p,.knowledge-section>h3,.knowledge-section>p,.knowledge-example>h4,.knowledge-example>p{margin:0}
-.knowledge-section{display:grid;gap:var(--ui-space-3);min-width:0}
-.knowledge-section>ul{margin:0;padding-inline-start:24px}
-.knowledge-section>ul>li+li{margin-block-start:8px}
-.knowledge-example{display:grid;gap:12px;min-width:0}
-.knowledge-example [data-ui=data-list]{margin:0}
-.knowledge-related-section{display:grid;gap:12px;margin-block-start:8px}
-.knowledge-related-section>h3{margin:0}
-@media(max-width:759px){.knowledge-list{max-height:480px}}
+.knowledge-workspace {
+  min-width: 0;
+}
+.knowledge-catalogue,
+.knowledge-reader {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+  scroll-margin-top: 80px;
+}
+.knowledge-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  max-height: 620px;
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+.knowledge-list > [data-ui='empty-state'] {
+  grid-column: 1/-1;
+}
+.knowledge-topic {
+  width: 100%;
+}
+.knowledge-article {
+  display: grid;
+  gap: var(--ui-space-8);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.knowledge-article > h2,
+.knowledge-article > p,
+.knowledge-section > h3,
+.knowledge-section > p,
+.knowledge-example > h4,
+.knowledge-example > p {
+  margin: 0;
+}
+.knowledge-section {
+  display: grid;
+  gap: var(--ui-space-3);
+  min-width: 0;
+}
+.knowledge-section > ul {
+  margin: 0;
+  padding-inline-start: 24px;
+}
+.knowledge-section > ul > li + li {
+  margin-block-start: 8px;
+}
+.knowledge-example {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.knowledge-example [data-ui='data-list'] {
+  margin: 0;
+}
+.knowledge-related-section {
+  display: grid;
+  gap: 12px;
+  margin-block-start: 8px;
+}
+.knowledge-related-section > h3 {
+  margin: 0;
+}
+@media (max-width: 759px) {
+  .knowledge-list {
+    max-height: 480px;
+  }
+}

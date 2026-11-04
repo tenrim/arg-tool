@@ -6,7 +6,11 @@ export function initAmbient(canvas) {
   if (!context) return;
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const glyphs = '01ABCDEF<>/{}[]:.';
-  let width = 0, height = 0, phase = 0, frame = 0, previous = 0;
+  let width = 0,
+    height = 0,
+    phase = 0,
+    frame = 0,
+    previous = 0;
   function paint() {
     context.clearRect(0, 0, width, height);
     context.font = '12px "JetBrains Mono", monospace';
@@ -17,31 +21,52 @@ export function initAmbient(canvas) {
         if (y < 0 || y > height) continue;
         context.globalAlpha = (1 - tail / 12) * 0.46;
         context.fillStyle = column % 7 === 0 ? '#f0a500' : '#00d4ff';
-        context.fillText(glyphs[(column * 17 + tail * 7 + Math.floor(phase / 40)) % glyphs.length], column * 26, y);
+        context.fillText(
+          glyphs[(column * 17 + tail * 7 + Math.floor(phase / 40)) % glyphs.length],
+          column * 26,
+          y,
+        );
       }
     }
     context.globalAlpha = 1;
   }
   function resize() {
     const box = canvas.getBoundingClientRect();
-    width = box.width; height = box.height;
+    width = box.width;
+    height = box.height;
     const scale = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
-    context.setTransform(scale, 0, 0, scale, 0, 0); paint();
+    canvas.width = Math.round(width * scale);
+    canvas.height = Math.round(height * scale);
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+    paint();
   }
   function animate(time) {
-    if (time - previous > 90) { phase += 3; previous = time; paint(); }
+    if (time - previous > 90) {
+      phase += 3;
+      previous = time;
+      paint();
+    }
     frame = requestAnimationFrame(animate);
   }
   function update() {
-    cancelAnimationFrame(frame); frame = 0;
+    cancelAnimationFrame(frame);
+    frame = 0;
     if (!document.hidden && !reducedMotion.matches) frame = requestAnimationFrame(animate);
     else paint();
   }
-  const observer = new ResizeObserver(resize); observer.observe(canvas);
+  const observer = new ResizeObserver(resize);
+  observer.observe(canvas);
   reducedMotion.addEventListener('change', update);
   document.addEventListener('visibilitychange', update);
-  window.addEventListener('pagehide', () => { cancelAnimationFrame(frame); observer.disconnect(); });
-  window.addEventListener('pageshow', () => { observer.observe(canvas); resize(); update(); });
-  resize(); update();
+  window.addEventListener('pagehide', () => {
+    cancelAnimationFrame(frame);
+    observer.disconnect();
+  });
+  window.addEventListener('pageshow', () => {
+    observer.observe(canvas);
+    resize();
+    update();
+  });
+  resize();
+  update();
 }

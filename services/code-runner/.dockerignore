@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!runner.py
+!profiles.json
+!kotlin-lib/
+!kotlin-lib/**
+!scala-official.tgz
+!powershell.deb

@@ -10,40 +10,59 @@ export const article = {
   aliases: ['Enigma', '恩尼格玛', '转子密码机', '转子、反射器与逐键步进'],
   sources: [
     {
-      id: 'history', title: 'Enigma cipher machine',
+      id: 'history',
+      title: 'Enigma cipher machine',
       publisher: 'Australian Signals Directorate（澳大利亚信号局）',
       url: 'https://www.asd.gov.au/about/history/asd-stories/2022-04-01-enigma-cipher-machine',
-      language: 'en', kind: 'official-doc', locator: '设备用途、无线电通信与破译历史',
+      language: 'en',
+      kind: 'official-doc',
+      locator: '设备用途、无线电通信与破译历史',
     },
     {
-      id: 'working', title: 'Enigma explained',
+      id: 'working',
+      title: 'Enigma explained',
       publisher: 'Crypto Museum（设备复原研究）',
       url: 'https://www.cryptomuseum.com/crypto/enigma/working.htm',
-      language: 'en', kind: 'author-spec', locator: 'Circuit diagram / Rotor stepping / Reflector / Steckerbrett',
+      language: 'en',
+      kind: 'author-spec',
+      locator: 'Circuit diagram / Rotor stepping / Reflector / Steckerbrett',
     },
     {
-      id: 'wiring', title: 'Enigma wiring',
+      id: 'wiring',
+      title: 'Enigma wiring',
       publisher: 'Crypto Museum（设备复原研究）',
       url: 'https://www.cryptomuseum.com/crypto/enigma/wiring.htm',
-      language: 'en', kind: 'author-spec', locator: 'Enigma I：转子 I、II、III 与反射器 UKW-B 的接线',
+      language: 'en',
+      kind: 'author-spec',
+      locator: 'Enigma I：转子 I、II、III 与反射器 UKW-B 的接线',
     },
     {
-      id: 'stepping', title: 'Enigma: Actions Involved in the Double Stepping of the Middle Rotor',
+      id: 'stepping',
+      title: 'Enigma: Actions Involved in the Double Stepping of the Middle Rotor',
       publisher: 'David H. Hamer（机械动作研究原作者）',
       url: 'https://www.cryptomuseum.com/people/hamer/files/double_stepping.pdf',
-      language: 'en', kind: 'author-spec', locator: 'Rotor stepping；Table 1 及复现用转子顺序',
+      language: 'en',
+      kind: 'author-spec',
+      locator: 'Rotor stepping；Table 1 及复现用转子顺序',
     },
     {
-      id: 'guide', title: 'Enigma, the Bombe, and Typex',
+      id: 'guide',
+      title: 'Enigma, the Bombe, and Typex',
       publisher: 'GCHQ CyberChef 操作作者',
       url: 'https://github.com/gchq/CyberChef/wiki/Enigma,-the-Bombe,-and-Typex/ed7ab8b92789111139fb98d23a9bf2249311b6a7',
-      language: 'en', kind: 'official-doc', locator: 'How to encrypt/decrypt with Enigma；参数、分组与已知明文',
+      language: 'en',
+      kind: 'official-doc',
+      locator: 'How to encrypt/decrypt with Enigma；参数、分组与已知明文',
     },
     {
-      id: 'engine', title: '本站固定版本的 Enigma 操作说明与参数',
+      id: 'engine',
+      title: '本站固定版本的 Enigma 操作说明与参数',
       publisher: 'GCHQ CyberChef（Apache-2.0）',
-      url: '/vendor/cyberchef/catalogue.json', language: 'en', kind: 'implementation',
-      locator: 'Enigma：Model、转子接线、Ring setting、Initial value、Reflector、Plugboard、Strict output',
+      url: '/vendor/cyberchef/catalogue.json',
+      language: 'en',
+      kind: 'implementation',
+      locator:
+        'Enigma：Model、转子接线、Ring setting、Initial value、Reflector、Plugboard、Strict output',
     },
   ],
   sections: [
@@ -64,12 +83,16 @@ export const article = {
         '标准军用结构的反射器将不同接点成对连接，因此在转子位置固定时，整机的字母映射可相互还原，且字母不会映射为自身。按键引起的转子步进会改变映射，相同输入字母在不同位置可能产生不同结果。',
       ],
       sourceIds: ['working'],
-      examples: [{
-        label: '信号通路',
-        input: '按键动作：转子步进后接通电路',
-        output: '键盘 → 插线板 → 入口轮 → 右转子 → 中转子 → 左转子\n→ 反射器\n→ 左转子反查 → 中转子反查 → 右转子反查 → 入口轮 → 插线板 → 灯板',
-        explanation: '左、中、右均指操作员视角下的安装位置。罗马数字表示转子型号，不限定安装位置；例如，转子 I 也可安装在右侧。',
-      }],
+      examples: [
+        {
+          label: '信号通路',
+          input: '按键动作：转子步进后接通电路',
+          output:
+            '键盘 → 插线板 → 入口轮 → 右转子 → 中转子 → 左转子\n→ 反射器\n→ 左转子反查 → 中转子反查 → 右转子反查 → 入口轮 → 插线板 → 灯板',
+          explanation:
+            '左、中、右均指操作员视角下的安装位置。罗马数字表示转子型号，不限定安装位置；例如，转子 I 也可安装在右侧。',
+        },
+      ],
     },
     {
       title: '参数',
@@ -79,12 +102,16 @@ export const article = {
         '环位可用 A—Z 或 01—26 记录，其中 A 对应 01。本文使用字母记法，AAA 的三个位置依次对应左、中、右转子。',
       ],
       sourceIds: ['guide', 'working'],
-      examples: [{
-        label: '示例参数',
-        input: '机型：3-rotor（三转子）\n转子从左到右：I、II、III\n环位：A、A、A\n输入前窗口：A、A、A\n反射器：B\n插线板：留空，无交换对\nStrict output：开启，移除非字母字符并按五字母分组',
-        output: 'AAAAA 和 HELLOWORLD 两个实例均使用以上参数，每次运算从窗口 AAA 开始。',
-        explanation: '本站三转子模式不使用“第 4 转子”参数。以上为教学设置，不代表某份历史电报的密钥。',
-      }],
+      examples: [
+        {
+          label: '示例参数',
+          input:
+            '机型：3-rotor（三转子）\n转子从左到右：I、II、III\n环位：A、A、A\n输入前窗口：A、A、A\n反射器：B\n插线板：留空，无交换对\nStrict output：开启，移除非字母字符并按五字母分组',
+          output: 'AAAAA 和 HELLOWORLD 两个实例均使用以上参数，每次运算从窗口 AAA 开始。',
+          explanation:
+            '本站三转子模式不使用“第 4 转子”参数。以上为教学设置，不代表某份历史电报的密钥。',
+        },
+      ],
     },
     {
       title: '加密示例',
@@ -94,12 +121,16 @@ export const article = {
         '以上接点字母已计入转子偏移。右转子处于 B 时，其有效映射与原始接线表的零偏移映射不同。后续按键须按各自的窗口位置计算整条通路。',
       ],
       sourceIds: ['wiring', 'engine'],
-      examples: [{
-        label: '逐键运算',
-        input: '初始窗口 AAA；全部设置同上\n第 1 次：输入 A，步进后 AAB\n第 2 次：输入 A，步进后 AAC\n第 3 次：输入 A，步进后 AAD\n第 4 次：输入 A，步进后 AAE\n第 5 次：输入 A，步进后 AAF',
-        output: '第 1 次：B\n第 2 次：D\n第 3 次：Z\n第 4 次：G\n第 5 次：O\n合并密文：BDZGO',
-        explanation: '第一次按键的接点变化为 A → C → D → F → S → S → E → B。本例五次相同输入产生不同结果；其他位置或更长输入仍可能出现重复的输出字母。',
-      }],
+      examples: [
+        {
+          label: '逐键运算',
+          input:
+            '初始窗口 AAA；全部设置同上\n第 1 次：输入 A，步进后 AAB\n第 2 次：输入 A，步进后 AAC\n第 3 次：输入 A，步进后 AAD\n第 4 次：输入 A，步进后 AAE\n第 5 次：输入 A，步进后 AAF',
+          output: '第 1 次：B\n第 2 次：D\n第 3 次：Z\n第 4 次：G\n第 5 次：O\n合并密文：BDZGO',
+          explanation:
+            '第一次按键的接点变化为 A → C → D → F → S → S → E → B。本例五次相同输入产生不同结果；其他位置或更长输入仍可能出现重复的输出字母。',
+        },
+      ],
     },
     {
       title: '解密与输出格式',
@@ -109,12 +140,16 @@ export const article = {
         'Strict output 开启时，非字母字符被移除，输出按五字母分组。分组空格仅用于书写，不表示原文的单词边界；原有空格、标点和大小写也无法据此恢复。',
       ],
       sourceIds: ['guide', 'engine'],
-      examples: [{
-        label: '加解密往返',
-        input: '每次都从 AAA 开始，转子 I—II—III，环位 AAA，反射器 B，无插线板\n第一次输入：HELLOWORLD\n第二次把第一次的密文作为输入，设置保持一致',
-        output: '第一次：ILBDA AMTAZ\n第二次：HELLO WORLD',
-        explanation: '去掉仅为分组添加的空格，密文是 ILBDAAMTAZ，还原文字是 HELLOWORLD。本站不会据此恢复原文是否有空格、标点或大小写。',
-      }],
+      examples: [
+        {
+          label: '加解密往返',
+          input:
+            '每次都从 AAA 开始，转子 I—II—III，环位 AAA，反射器 B，无插线板\n第一次输入：HELLOWORLD\n第二次把第一次的密文作为输入，设置保持一致',
+          output: '第一次：ILBDA AMTAZ\n第二次：HELLO WORLD',
+          explanation:
+            '去掉仅为分组添加的空格，密文是 ILBDAAMTAZ，还原文字是 HELLOWORLD。本站不会据此恢复原文是否有空格、标点或大小写。',
+        },
+      ],
     },
     {
       title: '转子步进',
@@ -123,12 +158,15 @@ export const article = {
         '双步进由缺口位置和拨爪机构决定，仅在相应位置发生，每次按键中转子仍只走一步。标准军用步进机构与普通逢 26 进位的计数器不同；将其简化为后者，会在涉及进位的消息中产生不同结果。',
       ],
       sourceIds: ['stepping'],
-      examples: [{
-        label: '双步进序列',
-        input: '此例改用从左到右 III—II—I，环位 AAA\n窗口起点 ADQ，连续按两次字母',
-        output: 'ADQ → AER → BFS\n中转子：D → E → F',
-        explanation: '右侧 I 从 Q 到 R 时推动中转子 D→E；下一次按键，中转子 E→F，同时推动左转子 A→B。此例使用 III—II—I，与前述加解密实例的 I—II—III 顺序不同。',
-      }],
+      examples: [
+        {
+          label: '双步进序列',
+          input: '此例改用从左到右 III—II—I，环位 AAA\n窗口起点 ADQ，连续按两次字母',
+          output: 'ADQ → AER → BFS\n中转子：D → E → F',
+          explanation:
+            '右侧 I 从 Q 到 R 时推动中转子 D→E；下一次按键，中转子 E→F，同时推动左转子 A→B。此例使用 III—II—I，与前述加解密实例的 I—II—III 顺序不同。',
+        },
+      ],
     },
     {
       title: '解谜应用',

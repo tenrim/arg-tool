@@ -1,10 +1,20 @@
 # Auto detect text files and perform LF normalization
-* text=auto eol=lf
+* text=auto
+# First-party source remains LF on Windows as well as CI.
+*.js text eol=lf
+*.mjs text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.py text eol=lf
+*.ps1 text eol=lf
+*.toml text eol=lf
 # Pinned runtime/source bytes are checked against upstream SHA-256 manifests.
 public/vendor/** -text
 upstream/** -text
 public/licenses/** -text
 public/fonts/** -text
 
-# Importer source hashes must survive archive/checkout byte-for-byte.
+# 固定摘要覆盖维护脚本时也保留原字节。
 scripts/** -text whitespace=cr-at-eol

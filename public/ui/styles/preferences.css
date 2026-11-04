@@ -1,0 +1,148 @@
+/* Display preferences never rewrite editor bytes or export formats. */
+.site-ui.workbench-app [data-ui='textarea'] {
+  --ui-control-text-size: var(--ui-editor-size, 14px);
+}
+.site-ui.workbench-app :is(textarea[data-ui], pre[data-ui], .cm-editor, .CodeMirror) {
+  --ui-font-scale: 1;
+  font-size: var(--ui-editor-size, 14px);
+}
+html[data-input-wrap='scroll'] .site-ui.workbench-app textarea[data-ui]:not([readonly]) {
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+html[data-input-wrap='wrap'] .site-ui.workbench-app textarea[data-ui]:not([readonly]) {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+html[data-result-wrap='scroll']
+  .site-ui.workbench-app
+  :is(textarea[data-ui][readonly], pre[data-ui]) {
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+html[data-result-wrap='wrap']
+  .site-ui.workbench-app
+  :is(textarea[data-ui][readonly], pre[data-ui]) {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Settings: explanations and controls share compact, content-sized rows. */
+.site-ui.workbench-app .settings-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.site-ui.workbench-app .settings-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+  align-items: start;
+}
+.site-ui.workbench-app .settings-fields > [data-ui='disclosure'] {
+  grid-column: 1/-1;
+}
+.site-ui.workbench-app .settings-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 220px);
+  grid-template-areas: 'label control' 'hint control';
+  gap: 4px 16px;
+  margin: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.site-ui.workbench-app .settings-row > [data-ui='field-label'] {
+  grid-area: label;
+  margin: 0;
+  color: var(--ink);
+}
+.site-ui.workbench-app .settings-row > [data-ui='field-description'] {
+  grid-area: hint;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.site-ui.workbench-app .settings-row > :is(input, button, .ui-select-host) {
+  grid-area: control;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+}
+.site-ui.workbench-app [data-variant='setting-toggle'] {
+  width: 48px;
+  height: 28px;
+  min-height: 28px;
+  min-width: 48px;
+  padding: 3px;
+  justify-self: end;
+  border: 1px solid var(--line);
+  background: var(--bg-deep);
+  position: relative;
+}
+.site-ui.workbench-app [data-variant='setting-toggle']::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  background: var(--muted);
+}
+.site-ui.workbench-app [data-variant='setting-toggle'][aria-checked='true'] {
+  background: var(--amber-strong, #d48806);
+  border-color: var(--amber, #f0a500);
+}
+.site-ui.workbench-app [data-variant='setting-toggle'][aria-checked='true']::after {
+  left: 24px;
+  background: var(--bg-deep);
+}
+.site-ui.workbench-app .settings-favorites {
+  max-height: 320px;
+  overflow: auto;
+}
+.site-ui.workbench-app .settings-favorite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.site-ui.workbench-app .settings-favorite > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.site-ui.workbench-app .settings-favorite > [data-ui='toolbar'] {
+  flex-shrink: 0;
+}
+.site-ui.workbench-app #settings-volume-value {
+  display: inline;
+  margin-inline-start: 12px;
+  color: var(--muted);
+}
+.site-ui.workbench-app .settings-columns [data-ui='disclosure'] {
+  margin-block: 12px;
+}
+.site-ui.workbench-app #settings-storage [data-ui='data-list'] {
+  margin-top: 0;
+}
+@media (max-width: 1100px) {
+  .site-ui.workbench-app .settings-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .site-ui.workbench-app .settings-row {
+    grid-template-columns: minmax(0, 1fr) 120px;
+    gap: 4px 10px;
+  }
+  .site-ui.workbench-app .settings-row > .ui-select-host {
+    width: 120px;
+  }
+}

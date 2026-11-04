@@ -1,18 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {spawnSync} from 'node:child_process';
-import {createHash} from 'node:crypto';
-import {fileURLToPath} from 'node:url';
+import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
 const importer = fileURLToPath(new URL('../scripts/import-knowledge-sources.py', import.meta.url));
-const currentCommit = 'a'.repeat(40), oldCommit = 'b'.repeat(40);
+const currentCommit = 'a'.repeat(40),
+  oldCommit = 'b'.repeat(40);
 const path = 'src/core/operations/ToBase58.mjs';
 const relative = 'cyberchef/' + path;
-const remote = commit => 'https://raw.githubusercontent.com/gchq/CyberChef/' + commit + '/' + path;
-const cachedContent = 'cached source\n', freshContent = 'new pinned source\n';
-const digest = value => createHash('sha256').update(value).digest('hex');
-const matchingManifest = () => ({commit: currentCommit, files: [{path: relative,
-  source_url: remote(currentCommit), sha256: digest(cachedContent)}]});
+const remote = (commit) =>
+  'https://raw.githubusercontent.com/gchq/CyberChef/' + commit + '/' + path;
+const cachedContent = 'cached source\n',
+  freshContent = 'new pinned source\n';
+const digest = (value) => createHash('sha256').update(value).digest('hex');
+const matchingManifest = () => ({
+  commit: currentCommit,
+  files: [{ path: relative, source_url: remote(currentCommit), sha256: digest(cachedContent) }],
+});
 
 // Load only the production cache predicate and fetch function. The importer's
 // top-level collector, thread pool, downloads and corpus rewrites cannot run.
@@ -66,9 +71,19 @@ with tempfile.TemporaryDirectory(prefix='knowledge-source-cache-') as directory:
 `;
 
 function exercise(manifest, options = {}) {
-  const child = spawnSync(process.env.PYTHON || 'python3', ['-c', pythonHarness, importer], {encoding: 'utf8',
-    input: JSON.stringify({manifest, currentCommit, path, relative, cachedContent, freshContent, ...options}),
-    timeout: 10_000});
+  const child = spawnSync(process.env.PYTHON || 'python3', ['-c', pythonHarness, importer], {
+    encoding: 'utf8',
+    input: JSON.stringify({
+      manifest,
+      currentCommit,
+      path,
+      relative,
+      cachedContent,
+      freshContent,
+      ...options,
+    }),
+    timeout: 10_000,
+  });
   assert.equal(child.error, undefined, String(child.error));
   assert.equal(child.status, 0, child.stderr);
   return JSON.parse(child.stdout);
@@ -77,9 +92,13 @@ function exercise(manifest, options = {}) {
 function assertFresh(result) {
   assert.equal(result.eligible, false);
   assert.equal(result.errorName, undefined);
-  assert.deepEqual(result.calls, [{url: remote(currentCommit), timeout: 45}]);
+  assert.deepEqual(result.calls, [{ url: remote(currentCommit), timeout: 45 }]);
   assert.equal(result.finalContent, freshContent);
-  assert.deepEqual(result.record, {path: relative, source_url: remote(currentCommit), sha256: digest(freshContent)});
+  assert.deepEqual(result.record, {
+    path: relative,
+    source_url: remote(currentCommit),
+    sha256: digest(freshContent),
+  });
 }
 
 test('knowledge sources: matching commit, URL, digest and bytes reuse the pinned cache without network', () => {
@@ -134,13 +153,13 @@ test('knowledge sources: absent or ambiguous file records cannot qualify same-pa
   absent.files = [];
   assertFresh(exercise(absent));
   const duplicate = matchingManifest();
-  duplicate.files.push({...duplicate.files[0]});
+  duplicate.files.push({ ...duplicate.files[0] });
   assertFresh(exercise(duplicate));
 });
 
 test('knowledge sources: matching provenance still rejects tampered bytes without downloading over evidence', () => {
   const tampered = 'tampered source\n';
-  const result = exercise(matchingManifest(), {cachedContent: tampered});
+  const result = exercise(matchingManifest(), { cachedContent: tampered });
   assert.equal(result.eligible, true);
   assert.equal(result.errorName, 'AssertionError');
   assert.match(result.error, /Changed source mirror/);
@@ -150,10 +169,14 @@ test('knowledge sources: matching provenance still rejects tampered bytes withou
 });
 
 test('knowledge sources: a missing file is fetched from the fixed remote even with matching manifest metadata', () => {
-  const result = exercise(matchingManifest(), {cachedFileExists: false});
+  const result = exercise(matchingManifest(), { cachedFileExists: false });
   assert.equal(result.eligible, true);
   assert.equal(result.errorName, undefined);
-  assert.deepEqual(result.calls, [{url: remote(currentCommit), timeout: 45}]);
+  assert.deepEqual(result.calls, [{ url: remote(currentCommit), timeout: 45 }]);
   assert.equal(result.finalContent, freshContent);
-  assert.deepEqual(result.record, {path: relative, source_url: remote(currentCommit), sha256: digest(freshContent)});
+  assert.deepEqual(result.record, {
+    path: relative,
+    source_url: remote(currentCommit),
+    sha256: digest(freshContent),
+  });
 });

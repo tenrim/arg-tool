@@ -3,6 +3,7 @@
 Usage: python scripts/install-cyberchef.py /path/to/release.zip /path/to/LICENSE
 This maintenance step is not required for normal builds.
 """
+
 import argparse
 import hashlib
 import json
@@ -38,13 +39,28 @@ with zipfile.ZipFile(args.archive) as archive:
         file.parent.mkdir(parents=True, exist_ok=True)
         file.write_bytes(data)
         file.chmod(0o644)
-        records.append({"path": destination, "upstream_path": entry.filename, "sha256": hashlib.sha256(data).hexdigest()})
+        records.append(
+            {
+                "path": destination,
+                "upstream_path": entry.filename,
+                "sha256": hashlib.sha256(data).hexdigest(),
+            }
+        )
 root.mkdir(parents=True, exist_ok=True)
 (root / "LICENSE.txt").write_bytes(args.license.read_bytes())
-(root / "UPSTREAM.json").write_text(json.dumps({
-    "project": "CyberChef", "version": "11.5.0",
-    "commit": "8cd426dd4f40f1423912d5fad91b578a86a65112",
-    "repository": "https://github.com/gchq/CyberChef",
-    "archive_sha256": checksums[0][1], "files": records,
-}, indent=2) + "\n")
+(root / "UPSTREAM.json").write_text(
+    json.dumps(
+        {
+            "project": "CyberChef",
+            "version": "11.5.0",
+            "commit": "8cd426dd4f40f1423912d5fad91b578a86a65112",
+            "repository": "https://github.com/gchq/CyberChef",
+            "archive_sha256": checksums[0][1],
+            "files": records,
+        },
+        indent=2,
+    )
+    + "\n",
+    encoding="utf-8",
+)
 print(f"Imported {len(records)} unchanged runtime files and upstream license notices.")

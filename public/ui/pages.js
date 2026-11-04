@@ -1,11 +1,13 @@
-import {ToolPanel, Box} from './layout.js';
-import {Link} from './controls.js';
-import {render} from './template.js';
+import { ToolPanel, Box } from './layout.js';
+import { Link } from './controls.js';
+import { render } from './template.js';
 
 // Page composition only; controls, fields and surfaces instantiate shared factories.
 export function CyberchefPage() {
-  const panel = ToolPanel({id: "panel-cyberchef", className: 'panel', hidden: true});
-  render(panel, `
+  const panel = ToolPanel({ id: 'panel-cyberchef', className: 'panel', hidden: true });
+  render(
+    panel,
+    `
         <div class="page-heading" data-index="01"><div><p class="eyebrow">// 01. 密码 / 编码与处理链</p><h1>CyberChef 完整处理链</h1></div><span class="page-tag">密码 · 编码 · 组合处理链</span></div>
         <div class="chef-intro"><p>选择操作并调整参数，构建处理链。输入和结果直接显示在本站，点击「执行处理链」开始转换。</p></div>
         <div id="cyberchef-stage" class="chef-stage">
@@ -22,14 +24,17 @@ export function CyberchefPage() {
           <div class="chef-status-row"><p id="cyberchef-status" class="status" role="status" aria-live="polite">正在准备 CyberChef…</p><button id="cyberchef-retry" class="secondary-button" hidden>重试</button></div>
         </div>
 
-        <footer class="tool-provenance" aria-label="使用的具体项目"><p class="micro-label">// 所用项目与来源</p><ul><li><a href="https://github.com/gchq/CyberChef" target="_blank" rel="noopener noreferrer">CyberChef v11.5.0 ↗</a><span>密码、编码及处理链运算引擎</span></li></ul></footer>
-      `);
+        <footer class="tool-provenance" aria-label="使用的具体项目"><ul><li><a href="https://github.com/gchq/CyberChef" target="_blank" rel="noopener noreferrer">CyberChef v11.5.0 ↗</a><span>密码、编码及处理链运算引擎</span></li></ul></footer>
+      `,
+  );
   return panel;
 }
 
 export function ImagePage() {
-  const panel = ToolPanel({id: "panel-image", className: 'panel', hidden: true});
-  render(panel, `
+  const panel = ToolPanel({ id: 'panel-image', className: 'panel', hidden: true });
+  render(
+    panel,
+    `
         <div class="page-heading" data-index="02"><div><p class="eyebrow">// 02. 图片观察与线索提取</p><h1>图片分析</h1></div><span class="page-tag">图像调整 · 隐写 · 文字与信息</span></div>
         <div class="surface">
           <label class="upload-zone" for="image-input"><span class="upload-symbol" aria-hidden="true">▧</span><strong>选择或拖入图片</strong><span>PNG、JPEG、GIF、WebP · 最多 32 MB / 8 百万像素</span><input id="image-input" type="file" accept="image/png,image/jpeg,image/gif,image/webp"></label>
@@ -72,55 +77,74 @@ export function ImagePage() {
           <div class="button-row wrap"><button id="image-copy" class="quiet-button" disabled>复制结果</button><button id="image-save-text" class="quiet-button" disabled>下载文本结果</button><button id="lsb-download" class="quiet-button" disabled>下载提取字节</button></div><p id="image-status" class="status" role="status" aria-live="polite"></p>
         </div>
 
-        <footer class="tool-provenance" aria-label="使用的具体项目"><p class="micro-label">// 所用项目与来源</p><ul>
+        <footer class="tool-provenance" aria-label="使用的具体项目"><ul>
           <li><a href="https://github.com/Zeecka/AperiSolve" target="_blank" rel="noopener noreferrer">AperiSolve</a><span>本地位平面分解、RGB 叠加和颜色重映射</span></li>
           <li><a href="https://github.com/Ge0rg3/StegOnline" target="_blank" rel="noopener noreferrer">StegOnline</a><span>位平面浏览、多位 LSB 提取与 PNG 原始像素解码（PngToy）</span></li>
           <li><a href="https://github.com/cozmo/jsQR" target="_blank" rel="noopener noreferrer">jsQR 1.4.0</a><span>二维码识别</span></li>
           <li><a href="https://github.com/MikeKovarik/exifr" target="_blank" rel="noopener noreferrer">exifr 7.1.3</a><span>EXIF / XMP / IPTC / GPS 元数据读取</span></li>
           <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API" target="_blank" rel="noopener noreferrer">浏览器 Canvas API</a><span>原始通道、灰度、反色、对比度和 PNG 数据块界面</span></li>
         </ul></footer>
-      `);
+      `,
+  );
   return panel;
 }
 
 export function AudioPage() {
-  const panel = ToolPanel({id: "panel-audio", className: 'panel', hidden: true});
-  render(panel, `
+  const panel = ToolPanel({ id: 'panel-audio', className: 'panel', hidden: true });
+  render(
+    panel,
+    `
         <div class="page-heading" data-index="03"><div><p class="eyebrow">// 03. AUDIO & SIGNALS</p><h1>音频分析</h1></div><span class="page-tag">波形 · 频谱 · 倒放</span></div>
         <div class="surface"><label class="upload-zone" for="audio-input"><span class="upload-symbol" aria-hidden="true">∿</span><strong>选择或拖入音频</strong><span>浏览器支持的音频格式 · 最多 32 MB / 5 分钟</span><input id="audio-input" type="file" accept="audio/*"></label><p id="audio-info" class="file-info">尚未选择音频</p><audio id="audio-player" controls preload="metadata"></audio><div class="control-bar wrap"><label class="compact-label">速度<select id="audio-speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><label class="compact-label">分析声道<select id="audio-channel" disabled><option value="mix">合并声道</option><option value="left">左 / 第一个声道</option><option value="right">右 / 第二个声道</option></select></label><button id="audio-reverse" class="secondary-button" disabled>倒放预览</button><button id="audio-dtmf" class="secondary-button" disabled>识别电话按键音</button></div><canvas id="waveform-canvas" class="waveform" width="1000" height="140" aria-label="音频波形，点击可跳转播放时间" tabindex="0"></canvas>
           <div class="spectrogram-controls"><label>FFT 大小<select id="fft-size"><option>512</option><option>1024</option><option selected>2048</option><option>4096</option><option>8192</option></select></label><label>最低频率 / Hz<input id="min-hz" type="number" min="0" value="0"></label><label>最高频率 / Hz<input id="max-hz" type="number" min="1" value="12000"></label><button id="audio-spectrum" class="primary-button" disabled>生成频谱图</button><button id="spectrum-download" class="secondary-button" disabled>下载频谱图</button></div><div class="spectrum-frame"><canvas id="spectrogram-canvas" width="900" height="256" aria-label="音频频谱图"></canvas></div><p id="spectrum-axis" class="help" hidden></p><div class="rule"></div><h2>导出音频片段</h2><div class="button-row wrap"><label class="compact-label">起点 / 秒<input id="audio-start" type="number" min="0" step="0.1" value="0"></label><label class="compact-label">终点 / 秒<input id="audio-end" type="number" min="0" step="0.1" value="0"></label><button id="audio-export" class="secondary-button" disabled>导出 WAV</button></div><div class="rule"></div><h2>生成摩斯音频</h2><div class="button-row wrap"><label class="compact-label grow">英文文本<input id="morse-audio-text" type="text" value="ARG TOOLS" maxlength="200"></label><label class="compact-label">速度 / WPM<input id="morse-wpm" type="number" min="5" max="50" value="18"></label><button id="morse-audio-save" class="secondary-button">生成并下载 WAV</button></div><label class="field-label" for="audio-output">信号识别结果</label><textarea id="audio-output" class="standalone-editor" readonly></textarea><p id="audio-status" class="status" role="status"></p>
         </div>
-        <footer class="tool-provenance" aria-label="使用的具体项目"><p class="micro-label">// 所用项目与来源</p><ul><li><a href="https://github.com/indutny/fft.js" target="_blank" rel="noopener noreferrer">fft.js 4.0.4 ↗</a><span>频谱与 DTMF 分析中的 FFT 运算</span></li></ul></footer>
-      `);
+        <footer class="tool-provenance" aria-label="使用的具体项目"><ul><li><a href="https://github.com/indutny/fft.js" target="_blank" rel="noopener noreferrer">fft.js 4.0.4 ↗</a><span>频谱与 DTMF 分析中的 FFT 运算</span></li></ul></footer>
+      `,
+  );
   return panel;
 }
 
 export function FilePage() {
-  const panel = ToolPanel({id: "panel-file", className: 'panel', hidden: true});
-  render(panel, `
+  const panel = ToolPanel({ id: 'panel-file', className: 'panel', hidden: true });
+  render(
+    panel,
+    `
         <div class="page-heading" data-index="04"><div><p class="eyebrow">// 04. FILE INSPECTION</p><h1>文件检查</h1></div><span class="page-tag">文件头 · 字符串 · 摘要</span></div>
         <div class="surface"><label class="upload-zone" for="file-input"><span class="upload-symbol" aria-hidden="true">01</span><strong>选择或拖入文件</strong><span>最多 32 MB · 仅分析字节，不执行文件</span><input id="file-input" type="file"></label><div id="file-stats" class="stats-grid"></div><div class="button-row wrap"><button id="file-hash" class="secondary-button" disabled>计算 SHA-256</button><button id="file-strings" class="secondary-button" disabled>提取可打印字符串</button><label class="compact-label">十六进制起始偏移<input id="hex-offset" type="number" min="0" step="16" value="0"></label><button id="file-hex" class="secondary-button" disabled>查看字节</button></div><label class="field-label" for="file-output">检查结果</label><textarea id="file-output" class="standalone-editor hex-editor" readonly></textarea><button id="file-copy" class="quiet-button">复制结果</button><p id="file-status" class="status" role="status"></p></div>
-        <footer class="tool-provenance" aria-label="使用的具体项目"><p class="micro-label">// 所用项目与来源</p><ul><li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Crypto_API" target="_blank" rel="noopener noreferrer">浏览器 Web API</a><span>文件、字节分析与 Web Crypto 哈希</span></li></ul></footer>
-      `);
+        <footer class="tool-provenance" aria-label="使用的具体项目"><ul><li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Crypto_API" target="_blank" rel="noopener noreferrer">浏览器 Web API</a><span>文件、字节分析与 Web Crypto 哈希</span></li></ul></footer>
+      `,
+  );
   return panel;
 }
 
 export function SymbolsPage() {
-  const panel = ToolPanel({id: "panel-symbols", className: 'panel', hidden: true});
-  render(panel, `
+  const panel = ToolPanel({ id: 'panel-symbols', className: 'panel', hidden: true });
+  render(
+    panel,
+    `
         <div class="page-heading" data-index="05"><div><p class="eyebrow">// 05. SYMBOL REFERENCE</p><h1>符号对照</h1></div><span class="page-tag">摩斯与英文盲文</span></div>
         <div class="surface"><h2>六点盲文</h2><div class="symbol-compose"><div id="braille-dots" class="braille-dots" role="group" aria-label="六点盲文输入"></div><div class="symbol-result" role="status" aria-live="polite" aria-atomic="true"><span class="symbol-result-label">识读结果</span><span id="braille-symbol" aria-hidden="true">⠀</span><strong id="braille-letter">空白</strong></div></div><div class="rule"></div><h2>常用符号表</h2><div id="symbol-table" class="symbol-table"></div></div>
-        <footer class="tool-provenance" aria-label="使用的具体项目"><p class="micro-label">// 所用项目与来源</p><ul><li><a href="https://github.com/kfarnung/puzzle-lib" target="_blank" rel="noopener noreferrer">puzzle-lib 1.7.0 ↗</a><span>摩斯与英文六点盲文映射</span></li></ul></footer>
-      `);
+        <footer class="tool-provenance" aria-label="使用的具体项目"><ul><li><a href="https://github.com/kfarnung/puzzle-lib" target="_blank" rel="noopener noreferrer">puzzle-lib 1.7.0 ↗</a><span>摩斯与英文六点盲文映射</span></li></ul></footer>
+      `,
+  );
   return panel;
 }
 
 export function mountInitialLayout() {
-  const skip = Link({className: 'skip', text: '跳到工具内容', attrs: {href: '#main'}});
-  const header = Box({tag: 'header', className: 'site-header'});
-  const sidebar = Box({tag: 'aside', id: 'sidebar', className: 'sidebar'});
-  const main = Box({tag: 'main', id: 'main', attrs: {tabindex: '-1'}});
+  const skip = Link({ className: 'skip', text: '跳到工具内容', attrs: { href: '#main' } });
+  const header = Box({ tag: 'header', className: 'site-header' });
+  const sidebar = Box({ tag: 'aside', id: 'sidebar', className: 'sidebar' });
+  const main = Box({ tag: 'main', id: 'main', attrs: { tabindex: '-1' } });
   main.append(CyberchefPage(), ImagePage(), AudioPage(), FilePage(), SymbolsPage());
-  const layout = Box({className: 'layout', children: [sidebar, main]});
-  document.body.replaceChildren(skip, header, layout);
+  const layout = Box({ className: 'layout', children: [sidebar, main] });
+  const startup = document.getElementById('app-startup');
+  if (startup)
+    for (const node of [skip, header, layout]) {
+      node.inert = true;
+      node.dataset.startupInert = 'true';
+    }
+  // Moving even the SAME loading node through replaceChildren disconnects its
+  // CSS animations and restarts their phase. Keep it connected through startup.
+  if (startup) document.body.append(skip, header, layout);
+  else document.body.replaceChildren(skip, header, layout);
 }

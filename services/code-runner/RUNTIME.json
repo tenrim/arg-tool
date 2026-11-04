@@ -1,0 +1,46 @@
+{
+  "builtImage": "mist-code-runner:20261103",
+  "id": "sha256:7ce4b43845397f947a970938eb38bc6a10f55ebcf6715e98fd3ebe126a66689b",
+  "created": "2026-11-03T02:55:16.363259792Z",
+  "platform": "linux/amd64",
+  "size": 5970221560,
+  "bases": [
+    {
+      "name": "dart:3.6.0",
+      "id": "sha256:44eba4602897befa7306ed6243189770b19c2e2f3ef6b2bddf2b4230ac66a81c",
+      "digests": ["dart@sha256:4598f4a37cda764808c931d9e1d77f8eb2aa283439702d7bc11205dd50846239"]
+    },
+    {
+      "name": "swift:6.0.3-noble",
+      "id": "sha256:58f54bdad2c7c7d1edfb195f76e1f70271a4114270661d4f09033c9624bf8bc3",
+      "digests": ["swift@sha256:1a1c10372d9c6c0ba9b6151085e0a26ee83a79968b3c738a47a70eac1a70bba4"]
+    }
+  ],
+  "versions": {
+    "c": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "cpp": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "csharp": "8.0.133",
+    "java": "javac 21.0.12.1",
+    "typescript": "Version 5.7.2 / Node.js v18.19.1",
+    "go": "go version go1.22.2 linux/amd64",
+    "rust": "rustc 1.75.0 (82e1608df 2023-12-21) (built from a source tarball)",
+    "php": "PHP 8.3.6 (cli) (built: Oct 19 2026 15:16:58) (NTS)\nCopyright (c) The PHP Group\nZend Engine v4.3.6, Copyright (c) Zend Technologies\n    with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies",
+    "ruby": "ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]",
+    "r": "Rscript (R) version 4.3.3 (2024-02-29)",
+    "perl": "v5.38.2",
+    "bash": "GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)\nCopyright (C) 2022 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.",
+    "kotlin": "info: kotlinc-jvm 2.1.20 (JRE 21.0.12.1+1-1-24.04.4-Ubuntu)",
+    "swift": "Swift version 6.0.3 (swift-6.0.3-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+    "dart": "Dart SDK version: 3.6.0 (stable) (Thu Dec 5 07:46:24 2024 -0800) on \"linux_x64\"",
+    "scala": "Scala compiler version 2.13.16 -- Copyright 2002-2025, LAMP/EPFL and Lightbend, Inc. dba Akka",
+    "powershell": "7.4.6"
+  },
+  "sources": {
+    "Dockerfile": "81dc789593e921b689ec558256102ea8563152b5bd8318e4b646aeb0ed5f1cfd",
+    "profiles.json": "c81b7c29086756ac9588067c38359f98f19117804ccab7892c8489e5234dab16",
+    "runner.py": "d22343d39ea1a5c374ccbb2471eca7a7d9b57b31fa8e33c4b813c711e88b00c7",
+    "ARTIFACTS.json": "9fcf80b71f5001418bfd676a6e5ce6dac21da501329ecf1b78331504eeb28c98"
+  },
+  "noticeSha256": "66ea380b970b36b3ff6450a2e7c7cd3e4bc75ff500021360f584d3e7c3500125",
+  "packagesSha256": "02ebead974c16ebc8a260d4d37063ccf10621e9d59c5faa8e99a545023b7b78d"
+}

@@ -1,12 +1,19 @@
-import {create, attributes, uid, onDisconnect} from './core.js';
-import {animatePresence} from './motion.js';
+import { create, attributes, uid, onDisconnect } from './core.js';
+import { animatePresence } from './motion.js';
 const textareaFits = new WeakMap();
-export function setTextareaValue(node, value, {feedback = true} = {}) {node.value = String(value ?? '');textareaFits.get(node)?.();if (feedback && node.readOnly && node.value) animatePresence(node,{kind:'feedback'});}
+export function setTextareaValue(node, value, { feedback = true } = {}) {
+  node.value = String(value ?? '');
+  textareaFits.get(node)?.();
+  if (feedback && node.readOnly && node.value) animatePresence(node, { kind: 'feedback' });
+}
 
 function button(name, options) {
   const node = create(name, 'button', options);
   if (!node.hasAttribute('type')) node.type = options.type || 'button';
   if (options.variant) node.dataset.variant = options.variant;
+  // Graphics controls (e.g. piano keys) own an opaque, meaningful surface.
+  // Keep shared press/focus behavior without transferring their paint to a menu.
+  if (options.appearance === 'custom') node.dataset.appearance = 'custom';
   if (options.layout === 'stacked') node.dataset.layout = 'stacked';
   if (options.disabled != null) node.disabled = options.disabled;
   if (options.label) node.setAttribute('aria-label', options.label);
@@ -19,55 +26,78 @@ export function IconButton(options = {}) {
 }
 export function Input(options = {}) {
   const node = create('input', 'input', options);
-  attributes(node, {type: options.type, placeholder: options.placeholder});
+  attributes(node, { type: options.type, placeholder: options.placeholder });
   if (options.value != null) node.value = options.value;
   return node;
 }
 export function Textarea(options = {}) {
   const node = create('textarea', 'textarea', options);
-  attributes(node, {rows: options.rows, placeholder: options.placeholder});
+  attributes(node, { rows: options.rows, placeholder: options.placeholder });
   if (options.value != null) node.value = options.value;
   if (options.autoSize || node.dataset.fit === 'content') {
     node.dataset.fit = 'content';
-    let frame, lastWidth = -1;
+    let frame,
+      lastWidth = -1;
     const minRows = options.minRows || Number(node.dataset.minRows) || 4;
     const maxRows = options.maxRows || Number(node.dataset.maxRows) || 12;
+    node.style.setProperty('--ui-textarea-min-rows', minRows);
     const fit = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         if (!node.isConnected || !node.clientWidth) return;
-        const style = getComputedStyle(node), line = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.75;
+        const style = getComputedStyle(node),
+          line = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.75;
         const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
         node.style.height = '0px';
         node.style.height = `${Math.min(maxRows * line + padding + 2, Math.max(minRows * line + padding + 2, node.scrollHeight + 2))}px`;
       });
     };
-    const resize = new ResizeObserver(() => {if (node.clientWidth !== lastWidth) {lastWidth = node.clientWidth; fit();}});
-    resize.observe(node); node.addEventListener('input', fit);
+    const resize = new ResizeObserver(() => {
+      if (node.clientWidth !== lastWidth) {
+        lastWidth = node.clientWidth;
+        fit();
+      }
+    });
+    resize.observe(node);
+    node.addEventListener('input', fit);
+    document.addEventListener('arg:preferenceschange', fit);
     textareaFits.set(node, fit);
-    onDisconnect(node, () => {resize.disconnect();node.removeEventListener('input', fit);cancelAnimationFrame(frame);textareaFits.delete(node);});
+    onDisconnect(node, () => {
+      resize.disconnect();
+      node.removeEventListener('input', fit);
+      document.removeEventListener('arg:preferenceschange', fit);
+      cancelAnimationFrame(frame);
+      textareaFits.delete(node);
+    });
   }
   return node;
 }
-export const Select = options => create('select', 'select', options);
+export const Select = (options) => create('select', 'select', options);
+export const OptionGroup = (options) => create('option-group', 'optgroup', options);
 export function Option(text, value = text, defaultSelected = false, selected = false) {
-  const node = create('option', 'option', {text});
-  node.value = value; node.defaultSelected = defaultSelected; node.selected = selected;
+  const node = create('option', 'option', { text });
+  node.value = value;
+  node.defaultSelected = defaultSelected;
+  node.selected = selected;
   return node;
 }
 export function Field(options = {}) {
   const node = create('field', options.tag || 'label', options);
   if (!options.className) node.classList.add('ui-field');
   if (options.span) node.dataset.span = options.span;
-  if (options.label != null) node.append(create('field-label', 'span', {text: options.label}));
+  if (options.label != null) node.append(create('field-label', 'span', { text: options.label }));
   if (options.control) {
     const control = options.control;
     if (!control.id) control.id = uid('field');
     if (node.tagName === 'LABEL') node.htmlFor = control.id;
     node.append(control);
     if (options.description || options.error) {
-      const hint = create('field-description', 'span', {id: uid('field-hint'), text: options.error || options.description});
-      node.append(hint); control.setAttribute('aria-describedby', hint.id);
+      const hint = create('field-description', 'span', {
+        id: uid('field-hint'),
+        text: options.error || options.description,
+      });
+      node.append(hint);
+      control.setAttribute('aria-describedby', hint.id);
       if (options.error) control.setAttribute('aria-invalid', 'true');
     }
   }
@@ -89,22 +119,32 @@ export function SearchField(options = {}) {
 export function FilePicker(options = {}) {
   const node = create('file-picker', options.tag || 'label', options);
   if (options.input) {
-    if (node.tagName === 'LABEL') node.htmlFor = options.input.id || (options.input.id = uid('file'));
+    if (node.tagName === 'LABEL')
+      node.htmlFor = options.input.id || (options.input.id = uid('file'));
     node.append(options.input);
     if (options.triggerLabel) {
       options.input.hidden = true;
-      const trigger = Button({className: options.buttonClass || 'secondary-button', text: options.triggerLabel});
-      trigger.addEventListener('click', event => {event.preventDefault(); options.input.click();});
+      const trigger = Button({
+        className: options.buttonClass || 'secondary-button',
+        text: options.triggerLabel,
+      });
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        options.input.click();
+      });
       node.append(trigger);
-      if(options.showFilename !== false){
-        const filename = create('file-name', 'span', {text: '尚未选择文件'});
-        const changed=()=>{filename.textContent = [...options.input.files].map(file => file.name).join('、') || '尚未选择文件';};
-        options.input.addEventListener('change',changed);
-        onDisconnect(node,()=>options.input.removeEventListener('change',changed));
+      if (options.showFilename !== false) {
+        const filename = create('file-name', 'span', { text: '尚未选择文件' });
+        const changed = () => {
+          filename.textContent =
+            [...options.input.files].map((file) => file.name).join('、') || '尚未选择文件';
+        };
+        options.input.addEventListener('change', changed);
+        onDisconnect(node, () => options.input.removeEventListener('change', changed));
         node.append(filename);
       }
     }
   }
   return node;
 }
-export const Link = options => create('link', 'a', options);
+export const Link = (options) => create('link', 'a', options);

@@ -1,21 +1,168 @@
-import {render as uiRender} from '../ui/index.js';
-import {$,esc,field,area,button,status,action,mount,setStatus,sendTo,webSource} from './common.js';
-import {analyze,vigenere} from './analysis-engine.js';
-import {CyberChefClient} from '../cyberchef-client.js';
-import {resultRecording} from '../result-recording.js';
-export function initAnalysis(){
- mount('analysis','密文分析',`<div class="r1-columns"><div class="surface">${field('待分析文本',area('analysis-input','粘贴密文、编码串或可疑文本。',12))}<div class="button-row wrap">${button('analysis-run','分析特征',true)}${button('analysis-magic','尝试自动解码')}${button('analysis-stop','停止')}</div>${status('analysis-status')}<div class="button-row wrap">${button('analysis-sub','送到单表替换')}</div></div><div class="surface"><h2>特征与建议</h2><div id="analysis-summary" class="r1-empty">输入文本后开始分析。</div><div id="analysis-frequency" class="r1-frequency" aria-label="英文字母频率"></div></div></div><div class="surface r1-gap"><h2>候选与密钥</h2><div id="analysis-details"></div>${field('尝试维吉尼亚密钥',`<input id="analysis-key" maxlength="100" placeholder="输入英文密钥，也可点击候选密钥长度。">`)}${button('analysis-vig','按此密钥解码')}${field('候选明文 / 自动解码结果',area('analysis-output','分析结果不会自动认定为正确答案。',8))}</div>`,[['CyberChef','https://github.com/gchq/CyberChef','Magic 自动识别与解码 · Apache-2.0'],webSource]);
- const recording=resultRecording({id:'analysis-result',anchor:$('analysis-output').parentElement,onLeave:()=>cancel()});
- let chef=null,generation=0;
- const cancel=()=>{recording.clear();generation++;chef?.close();chef=null;};
- $('analysis-input').addEventListener('input',()=>{cancel();$('analysis-output').value='';$('analysis-summary').textContent='';$('analysis-frequency').replaceChildren();$('analysis-details').replaceChildren();});
- action('analysis-run','analysis-status',()=>{cancel();const text=$('analysis-input').value;if(!text.trim())throw Error('请先输入文本。');if(text.length>20000)throw Error('统计分析最多 20,000 个字符。');const a=analyze(text);uiRender($('analysis-summary'), `<div class="stats-grid"><div class="stat"><span>字符 / 英文字母</span><strong>${a.total} / ${a.n}</strong></div><div class="stat"><span>重合指数 IC</span><strong>${a.ic.toFixed(4)}</strong></div><div class="stat"><span>字符熵</span><strong>${a.entropy.toFixed(3)}</strong></div></div><ul>${a.hints.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`);
- uiRender($('analysis-frequency'), a.counts.map((n,i)=>`<div><span>${String.fromCharCode(65+i)}</span><meter min="0" max="${Math.max(...a.counts,1)}" value="${n}"></meter><small>${n}</small></div>`).join(''));
- uiRender($('analysis-details'), `<p>重复二元组：${esc(a.bigrams.map(x=>x.join('×')).join('　')||'无')}</p><p>重复三元组：${esc(a.trigrams.map(x=>x.join('×')).join('　')||'无')}</p><p>重复三元组间距：${esc(a.repeats.map(x=>x.text+':'+x.gap).join('　')||'无')}</p><h3>凯撒移位候选（英文卡方评分，越小越接近常见字频）</h3><div class="r1-candidates">${a.shifts.slice(0,5).map(x=>`<button class="secondary-button" data-shift="${x.shift}">移位 ${x.shift} · ${Number.isFinite(x.score)?x.score.toFixed(1):'—'}<small>${esc(x.text.slice(0,100))}</small></button>`).join('')}</div><h3>密钥长度试探</h3><div class="button-row wrap">${a.periods.sort((a,b)=>b.ic-a.ic).slice(0,8).map(x=>`<button class="secondary-button" data-key="${x.key}">${x.length} 位 · IC ${x.ic.toFixed(3)}</button>`).join('')}</div>`);
- for(const b of $('analysis-details').querySelectorAll('[data-shift]'))b.onclick=()=>{const text=a.shifts.find(x=>x.shift===+b.dataset.shift).text;$('analysis-output').value=text;recording.publish({text,name:'凯撒候选.txt'});};for(const b of $('analysis-details').querySelectorAll('[data-key]'))b.onclick=()=>{$('analysis-key').value=b.dataset.key;const decoded=vigenere(text,b.dataset.key);$('analysis-output').value=decoded;recording.publish({text:decoded,name:'维吉尼亚候选.txt'});};recording.publish({text:JSON.stringify(a,null,2),name:'密文统计.json'});setStatus('analysis-status','统计完成。建议需要结合题目核对。');});
- action('analysis-vig','analysis-status',()=>{const text=vigenere($('analysis-input').value,$('analysis-key').value);$('analysis-output').value=text;recording.publish({text,name:'维吉尼亚候选.txt'});});
- action('analysis-magic','analysis-status',async()=>{cancel();const gen=generation,text=$('analysis-input').value;if(!text.trim())throw Error('请先输入文本。');if(text.length>12000)throw Error('自动解码最多 12,000 个字符。');chef=new CyberChefClient();const client=chef;setStatus('analysis-status','正在尝试编码与格式，首次加载可能需要片刻…');try{const r=await client.bake(text,[{op:'Magic',args:[3,false,false,'']}]);if(gen===generation){$('analysis-output').value=new TextDecoder().decode(r.bytes);recording.publish({bytes:r.bytes.slice(),name:'自动解码结果.bin'});setStatus('analysis-status','候选已生成；请核对内容与题意。');}}catch(e){if(gen===generation)throw e;}finally{client.close();if(chef===client)chef=null;}});
- $('analysis-stop').onclick=()=>{cancel();setStatus('analysis-status','已停止。');};$('analysis-sub').onclick=()=>sendTo('sub-input',$('analysis-input').value,'substitution');
- $('analysis-key').addEventListener('input',()=>recording.clear());$('analysis-output').addEventListener('input',()=>recording.clear());
- window.addEventListener('pagehide',cancel);
+import { render as uiRender, Box } from '../ui/index.js';
+import {
+  $,
+  esc,
+  field,
+  area,
+  button,
+  status,
+  action,
+  mount,
+  setStatus,
+  sendTo,
+  webSource,
+} from './common.js';
+import { analyze, vigenere } from './analysis-engine.js';
+import { acquireCyberChef, releaseCyberChef } from '../cyberchef-client.js';
+import { magicResult } from '../chef-tools/structured-result.js';
+import { resultRecording } from '../result-recording.js';
+export function initAnalysis() {
+  mount(
+    'analysis',
+    '密文分析',
+    `<div class="r1-columns"><div class="surface">${field('待分析文本', area('analysis-input', '粘贴密文、编码串或可疑文本。', 12))}<div class="button-row wrap">${button('analysis-run', '分析特征', true)}${button('analysis-magic', '尝试自动解码')}${button('analysis-stop', '停止')}</div>${status('analysis-status')}<div class="button-row wrap">${button('analysis-sub', '送到单表替换')}</div></div><div class="surface"><h2>特征与建议</h2><div id="analysis-summary" class="r1-empty">输入文本后开始分析。</div><div id="analysis-frequency" class="r1-frequency" aria-label="英文字母频率"></div></div></div><div class="surface r1-gap"><h2>候选与密钥</h2><div id="analysis-details"></div>${field('尝试维吉尼亚密钥', `<input id="analysis-key" maxlength="100" placeholder="输入英文密钥，也可点击候选密钥长度。">`)}${button('analysis-vig', '按此密钥解码')}${field('候选明文 / 自动解码结果', area('analysis-output', '分析结果不会自动认定为正确答案。', 8))}</div>`,
+    [
+      ['CyberChef', 'https://github.com/gchq/CyberChef', 'Magic 自动识别与解码 · Apache-2.0'],
+      webSource,
+    ],
+  );
+  const recording = resultRecording({
+    id: 'analysis-result',
+    anchor: $('analysis-output').parentElement,
+    onLeave: () => cancel(),
+  });
+  const magicHost = Box();
+  $('analysis-output').parentElement.before(magicHost);
+  let chef = null,
+    generation = 0;
+  const cancel = () => {
+    recording.clear();
+    generation++;
+    chef?.close();
+    chef = null;
+    magicHost.replaceChildren();
+    $('analysis-output').parentElement.hidden = false;
+    $('analysis-output').value = '';
+  };
+  $('analysis-input').addEventListener('input', () => {
+    cancel();
+    $('analysis-output').value = '';
+    $('analysis-summary').textContent = '';
+    $('analysis-frequency').replaceChildren();
+    $('analysis-details').replaceChildren();
+  });
+  action('analysis-run', 'analysis-status', () => {
+    cancel();
+    const text = $('analysis-input').value;
+    if (!text.trim()) throw Error('请先输入文本。');
+    if (text.length > 20000) throw Error('统计分析最多 20,000 个字符。');
+    const a = analyze(text);
+    uiRender(
+      $('analysis-summary'),
+      `<div class="stats-grid"><div class="stat"><span>字符 / 英文字母</span><strong>${a.total} / ${a.n}</strong></div><div class="stat"><span>重合指数 IC</span><strong>${a.ic.toFixed(4)}</strong></div><div class="stat"><span>字符熵</span><strong>${a.entropy.toFixed(3)}</strong></div></div><ul>${a.hints.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`,
+    );
+    uiRender(
+      $('analysis-frequency'),
+      a.counts
+        .map(
+          (n, i) =>
+            `<div><span>${String.fromCharCode(65 + i)}</span><meter min="0" max="${Math.max(...a.counts, 1)}" value="${n}"></meter><small>${n}</small></div>`,
+        )
+        .join(''),
+    );
+    uiRender(
+      $('analysis-details'),
+      `<p>重复二元组：${esc(a.bigrams.map((x) => x.join('×')).join('　') || '无')}</p><p>重复三元组：${esc(a.trigrams.map((x) => x.join('×')).join('　') || '无')}</p><p>重复三元组间距：${esc(a.repeats.map((x) => x.text + ':' + x.gap).join('　') || '无')}</p><h3>凯撒移位候选（英文卡方评分，越小越接近常见字频）</h3><div class="r1-candidates">${a.shifts
+        .slice(0, 5)
+        .map(
+          (x) =>
+            `<button class="secondary-button" data-shift="${x.shift}">移位 ${x.shift} · ${Number.isFinite(x.score) ? x.score.toFixed(1) : '—'}<small>${esc(x.text.slice(0, 100))}</small></button>`,
+        )
+        .join('')}</div><h3>密钥长度试探</h3><div class="button-row wrap">${a.periods
+        .sort((a, b) => b.ic - a.ic)
+        .slice(0, 8)
+        .map(
+          (x) =>
+            `<button class="secondary-button" data-key="${x.key}">${x.length} 位 · IC ${x.ic.toFixed(3)}</button>`,
+        )
+        .join('')}</div>`,
+    );
+    for (const b of $('analysis-details').querySelectorAll('[data-shift]'))
+      b.onclick = () => {
+        const text = a.shifts.find((x) => x.shift === +b.dataset.shift).text;
+        $('analysis-output').value = text;
+        recording.publish({ text, name: '凯撒候选.txt' });
+      };
+    for (const b of $('analysis-details').querySelectorAll('[data-key]'))
+      b.onclick = () => {
+        $('analysis-key').value = b.dataset.key;
+        const decoded = vigenere(text, b.dataset.key);
+        $('analysis-output').value = decoded;
+        recording.publish({ text: decoded, name: '维吉尼亚候选.txt' });
+      };
+    recording.publish({ text: JSON.stringify(a, null, 2), name: '密文统计.json' });
+    setStatus('analysis-status', '统计完成。建议需要结合题目核对。');
+  });
+  action('analysis-vig', 'analysis-status', () => {
+    const text = vigenere($('analysis-input').value, $('analysis-key').value);
+    $('analysis-output').value = text;
+    recording.publish({ text, name: '维吉尼亚候选.txt' });
+  });
+  action('analysis-magic', 'analysis-status', async () => {
+    cancel();
+    const gen = generation,
+      text = $('analysis-input').value;
+    if (!text.trim()) throw Error('请先输入文本。');
+    if (text.length > 12000) throw Error('自动解码最多 12,000 个字符。');
+    chef = acquireCyberChef((text) => {
+      if (gen === generation) setStatus('analysis-status', text);
+    });
+    const client = chef;
+    try {
+      const r = await client.bake(text, [{ op: 'Magic', args: [3, false, false, ''] }]);
+      if (gen === generation) {
+        $('analysis-output').parentElement.hidden = true;
+        magicHost.replaceChildren(
+          magicResult(r.dish.value, {
+            isCurrent: () => gen === generation,
+            onRecipe: async (steps) => {
+              cancel();
+              const selected = generation;
+              chef = acquireCyberChef((message) => {
+                if (selected === generation) setStatus('analysis-status', message);
+              });
+              const current = chef;
+              try {
+                const decoded = await current.bake(text, steps);
+                if (selected !== generation) return;
+                $('analysis-output').value = new TextDecoder().decode(decoded.bytes);
+                recording.publish({ bytes: decoded.bytes.slice(), name: '候选解码结果.bin' });
+                setStatus('analysis-status', '候选配方执行完成，请结合题意核对。');
+              } catch (error) {
+                if (selected === generation) setStatus('analysis-status', error.message, true);
+              } finally {
+                releaseCyberChef(current);
+                if (chef === current) chef = null;
+              }
+            },
+          }),
+        );
+        recording.publish({ bytes: r.bytes.slice(), name: '自动识别候选.json' });
+        setStatus('analysis-status', '候选已生成；请核对内容与题意。');
+      }
+    } catch (e) {
+      if (gen === generation) throw e;
+    } finally {
+      releaseCyberChef(client);
+      if (chef === client) chef = null;
+    }
+  });
+  $('analysis-stop').onclick = () => {
+    cancel();
+    setStatus('analysis-status', '已停止。');
+  };
+  $('analysis-sub').onclick = () => sendTo('sub-input', $('analysis-input').value, 'substitution');
+  $('analysis-key').addEventListener('input', () => recording.clear());
+  $('analysis-output').addEventListener('input', () => recording.clear());
+  window.addEventListener('pagehide', cancel);
 }

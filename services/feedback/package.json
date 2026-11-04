@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": {"node": ">=24"},
-  "scripts": {"start": "node --env-file=.env server.mjs", "verify-mail": "node --env-file=.env server.mjs --verify"},
-  "dependencies": {"nodemailer": "10.1.1"}
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file=.env server.mjs",
+    "verify-mail": "node --env-file=.env server.mjs --verify"
+  },
+  "dependencies": {
+    "nodemailer": "10.1.1"
+  }
 }

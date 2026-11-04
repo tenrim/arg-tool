@@ -1,0 +1,206 @@
+/* HTML startup status is visible before the application/UI runtime arrives.
+   Its fallback animation cannot depend on the runtime it is waiting to load. */
+#app-startup {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg, #0a0e17);
+  color: var(--ink, #e2e8f0);
+  font: 16px/1.6 var(--body, system-ui, sans-serif);
+  text-align: center;
+}
+#app-startup .startup-content {
+  max-width: 28rem;
+}
+#app-startup .startup-brand {
+  margin: 24px 0 8px;
+  font: 600 clamp(24px, 5vw, 32px)/1.5 var(--serif, serif);
+  letter-spacing: 0.08em;
+}
+#app-startup .startup-logo {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin: 0 auto 24px;
+}
+#startup-message {
+  margin: 0;
+  color: var(--muted, #a1a8b6);
+  font-size: 14px;
+}
+#app-startup .startup-symbol {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  height: 18px;
+}
+#app-startup .startup-symbol span {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--accent, #f0a500);
+  background: var(--accent, #f0a500);
+  align-self: center;
+}
+#app-startup .startup-symbol span:nth-child(2) {
+  opacity: 0.65;
+}
+#app-startup .startup-symbol span:nth-child(3) {
+  opacity: 0.3;
+}
+#startup-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 20px;
+  padding: 8px 20px;
+  border: 1px solid var(--accent, #f0a500);
+  color: var(--accent, #f0a500);
+  text-decoration: none;
+}
+#startup-retry[hidden] {
+  display: none;
+}
+#startup-retry:focus-visible {
+  outline: 2px solid var(--cyan, #00d4ff);
+  outline-offset: 4px;
+}
+.site-ui main :is(h2, h3, [tabindex='-1']) {
+  scroll-margin-block-start: calc(var(--site-header-height, 64px) + 16px);
+  scroll-margin-block-end: 16px;
+}
+.site-ui [data-ui='disclosure'][data-variant='outline'] {
+  border: 1px solid var(--line);
+  padding: var(--ui-space-3);
+  background: var(--bg-deep);
+}
+.site-ui [data-variant='outline'] nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 4px;
+  margin-top: var(--ui-space-3);
+  max-height: 50vh;
+  overflow: auto;
+}
+.site-ui [data-variant='outline'] nav > [data-ui='button'] {
+  text-align: start;
+  min-height: 44px;
+  white-space: normal;
+}
+.site-ui [data-variant='unit-readout'] {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+}
+.site-ui [data-variant='unit-readout'] > span {
+  font-size: var(--ui-text-small);
+  color: var(--muted);
+}
+.site-ui.workbench-app [data-ui='form-grid'][data-align='start'] {
+  align-items: flex-start;
+}
+.site-ui.workbench-app [data-variant='unit-readout'] > [data-ui='result'][data-variant='metric'] {
+  font-size: calc(clamp(20px, 4vw, 32px) * var(--ui-font-scale, 1));
+  margin: 0;
+  min-block-size: var(--ui-control-height);
+  display: flex;
+  align-items: center;
+}
+.site-ui [data-layout='action-stack'] {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.site-ui.workbench-app [data-ui='toolbar'][data-variant='action-bar'] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding-block-start: 16px;
+  border-block-start: 1px solid var(--line);
+  margin: 0;
+  min-width: 0;
+}
+.site-ui.workbench-app [data-variant='action-bar'] > [data-ui='toolbar'] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
+}
+@keyframes ui-startup-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-ui-motion='reduce'])
+    #app-startup[data-animate='true']:not([data-state='error'])
+    .startup-symbol
+    span {
+    animation: ui-startup-pulse 1.2s ease-in-out infinite;
+  }
+  :root:not([data-ui-motion='reduce'])
+    #app-startup[data-animate='true']:not([data-state='error'])
+    .startup-symbol
+    span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  :root:not([data-ui-motion='reduce'])
+    #app-startup[data-animate='true']:not([data-state='error'])
+    .startup-symbol
+    span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+/* Interface hierarchy: page landing focus is not a full-window control ring. */
+.site-ui main#main:focus {
+  outline: none;
+}
+/* Headers may size actions, but never override their semantic variant colors. */
+.site-ui.workbench-app [data-ui='tool-header'] .heading-actions [data-ui='button'] {
+  font-size: 12px;
+}
+.site-ui.workbench-app
+  :is(
+    [data-ui='select'],
+    [data-ui='field-label'],
+    [data-ui='button'],
+    [data-ui='icon-button'],
+    .ui-select-trigger
+  ) {
+  font-family: var(--mono);
+}
+.site-ui.workbench-app [data-ui='provenance'].tool-provenance {
+  opacity: 1;
+  color: var(--muted);
+}
+.site-ui.workbench-app [data-ui='provenance'].tool-provenance :is(a, .project-license) {
+  color: var(--muted);
+}
+.site-ui.workbench-app [data-ui='provenance'].tool-provenance a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.site-ui.workbench-app [data-ui='provenance'] .project-notices > summary {
+  color: var(--muted);
+}
+.site-ui.workbench-app [data-ui='provenance'].tool-provenance :is(p, li, a, span, summary) {
+  font-family: var(--body);
+  font-size: 12px;
+  line-height: 1.65;
+}

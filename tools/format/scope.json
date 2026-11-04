@@ -1,0 +1,15 @@
+[
+  "public/**/*.js",
+  "public/**/*.css",
+  "scripts/**/*.mjs",
+  "services/**/*.mjs",
+  "tests/**/*.mjs",
+  "tools/ui-runtime/entry.js",
+  "package.json",
+  ".prettierrc.json",
+  ".github/**/*.yml",
+  "tools/format/*.json",
+  "tools/reference-code.json",
+  "test-tools/package.json",
+  "services/feedback/package.json"
+]

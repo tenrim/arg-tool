@@ -1,4 +1,7 @@
-import './audit-ui.mjs';
+await import('./build-knowledge-catalogue.mjs');
+await import('./audit-fun-tools.mjs');
+await import('./build-ui-styles.mjs');
+await import('./audit-ui.mjs');
 import './build-round-one.mjs';
 import './build-turing.mjs';
 import './build-basics.mjs';

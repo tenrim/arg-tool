@@ -1,0 +1,345 @@
+/* Component motion. Logical visibility, focus and actions remain synchronous.
+   Discrete display/overlay transitions let native dialogs leave visually after
+   close(), while browsers without this capability close them immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-ui .ui-dock {
+    transition: display var(--ui-dialog-presence-duration, 200ms) allow-discrete;
+  }
+  .site-ui.workbench-app
+    :is([data-ui='button'], [data-ui='icon-button'], [data-ui='link'], summary) {
+    transition:
+      background-color var(--ui-motion-fast),
+      border-color var(--ui-motion-fast),
+      color var(--ui-motion-fast),
+      box-shadow var(--ui-motion-fast),
+      scale var(--ui-motion-press) var(--ui-motion-ease);
+  }
+  .site-ui.workbench-app
+    :is([data-ui='button'], [data-ui='icon-button']):not([data-animate-ui]):not(:disabled):active {
+    scale: 0.98;
+  }
+  .site-ui.workbench-app
+    :is(
+      [data-ui='input'],
+      [data-ui='select'],
+      [data-ui='textarea'],
+      [data-ui='search-field'],
+      [data-ui='file-picker'],
+      [data-ui='field']:has(> input:is([type='checkbox'], [type='radio']))
+    ) {
+    transition:
+      border-color var(--ui-motion-fast),
+      background-color var(--ui-motion-fast),
+      box-shadow var(--ui-motion-fast),
+      color var(--ui-motion-fast);
+  }
+  .site-ui.workbench-app
+    [data-ui='field']:has(> input:is([type='checkbox'], [type='radio'])):active {
+    background-color: var(--cyan-bg);
+  }
+  .site-ui.workbench-app [data-ui='input']:is([type='checkbox'], [type='radio']) {
+    transition:
+      scale var(--ui-motion-press) var(--ui-motion-ease),
+      background-color var(--ui-motion-fast),
+      border-color var(--ui-motion-fast);
+  }
+  .site-ui.workbench-app [data-ui='input']:is([type='checkbox'], [type='radio'])::before {
+    transition:
+      scale var(--ui-motion-enter) var(--ui-motion-ease),
+      opacity var(--ui-motion-fast);
+  }
+  .site-ui.workbench-app [data-ui='input']:is([type='checkbox'], [type='radio']):active {
+    scale: 0.9;
+  }
+  .site-ui.workbench-app [data-ui='card'] {
+    transition:
+      border-color var(--ui-motion-fast),
+      box-shadow var(--ui-motion-fast);
+  }
+  .site-ui.workbench-app [data-ui='card']:has(> [data-ui='button']):hover {
+    border-color: rgba(240, 165, 0, 0.4);
+  }
+  .site-ui.workbench-app [data-ui='table'] [data-ui='table-row'] {
+    transition: background-color var(--ui-motion-fast);
+  }
+  .site-ui.workbench-app [data-ui='table'] tbody [data-ui='table-row']:hover {
+    background-color: var(--surface-raised);
+  }
+  .site-ui.workbench-app [data-ui='button'][aria-pressed] > svg {
+    transition:
+      color var(--ui-motion-fast),
+      fill var(--ui-motion-fast);
+  }
+  /* Dialog/Sheet content uses the actual upstream choreography through Motion.
+    CSS only keeps the native top layer present while its exit is painted. */
+  .site-ui.workbench-app [data-ui='dialog'] {
+    transition:
+      display var(--ui-dialog-presence-duration, 200ms) allow-discrete,
+      overlay var(--ui-dialog-presence-duration, 200ms) allow-discrete;
+  }
+  .site-ui.workbench-app [data-ui='dialog']::backdrop {
+    opacity: 0;
+    backdrop-filter: blur(0);
+    transition:
+      opacity var(--ui-overlay-duration) var(--ui-overlay-ease),
+      backdrop-filter var(--ui-overlay-duration) var(--ui-overlay-ease),
+      display var(--ui-dialog-presence-duration, 200ms) allow-discrete,
+      overlay var(--ui-dialog-presence-duration, 200ms) allow-discrete;
+  }
+  .site-ui.workbench-app [data-ui='dialog'][open]::backdrop {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+  @starting-style {
+    .site-ui.workbench-app [data-ui='dialog'][open]::backdrop {
+      opacity: 0;
+      backdrop-filter: blur(0);
+    }
+  }
+  .site-ui.workbench-app [data-ui='disclosure'] > summary::after,
+  .site-ui.workbench-app [aria-expanded]::after {
+    transition: rotate var(--ui-motion-enter) var(--ui-motion-ease);
+  }
+  .site-ui.workbench-app [data-motion='collapse'] {
+    interpolate-size: allow-keywords;
+    height: auto;
+    overflow: clip;
+    opacity: 1;
+    transition:
+      height var(--ui-motion-expand) var(--ui-motion-ease),
+      opacity var(--ui-motion-fast),
+      padding-block var(--ui-motion-expand),
+      margin-block var(--ui-motion-expand),
+      display var(--ui-motion-expand) allow-discrete;
+  }
+  .site-ui.workbench-app [data-motion='collapse'][hidden] {
+    height: 0;
+    opacity: 0;
+    padding-block: 0;
+    margin-block: 0;
+  }
+  @starting-style {
+    .site-ui.workbench-app [data-motion='collapse']:not([hidden]) {
+      height: 0;
+      opacity: 0;
+      padding-block: 0;
+      margin-block: 0;
+    }
+  }
+  @supports selector(::details-content) {
+    .site-ui.workbench-app [data-ui='disclosure'] {
+      interpolate-size: allow-keywords;
+    }
+    .site-ui.workbench-app [data-ui='disclosure']::details-content {
+      /* Include first/last child margins in the animated height. overflow:clip
+         alone permits margin collapse, which jumps at the visibility edges. */
+      display: flow-root;
+      block-size: 0;
+      opacity: 0;
+      overflow: clip;
+      transition:
+        block-size var(--ui-height-duration) var(--ui-height-ease),
+        opacity var(--ui-motion-fast),
+        content-visibility var(--ui-height-duration) allow-discrete;
+    }
+    .site-ui.workbench-app [data-ui='disclosure'][open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+    .site-ui.workbench-app [data-ui='disclosure'][data-motion='popover']::details-content {
+      block-size: auto;
+      overflow: visible;
+    }
+  }
+  .site-ui.workbench-app .category-arrow {
+    transition: transform var(--ui-motion-enter) var(--ui-motion-ease);
+  }
+  .site-ui.workbench-app .rail-category-toggle > span {
+    transition: rotate var(--ui-motion-expand) var(--ui-motion-ease);
+  }
+  .site-ui.workbench-app [data-ui='disclosure'].rail-group > summary::after {
+    transition: transform var(--ui-motion-enter) var(--ui-motion-ease);
+  }
+  .site-ui.workbench-app [data-ui='tab-list']::after {
+    transition:
+      translate var(--ui-motion-enter) var(--ui-motion-ease),
+      width var(--ui-motion-enter) var(--ui-motion-ease);
+  }
+  .site-ui.workbench-app [data-ui='button'][data-action-feedback='success']::before {
+    animation: ui-confirm var(--ui-motion-enter) var(--ui-motion-ease);
+  }
+  @keyframes ui-confirm {
+    from {
+      opacity: 0;
+      scale: 0.5;
+      rotate: -18deg;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+      rotate: 0deg;
+    }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-ui.workbench-app :is([data-ui='button'], [data-ui='icon-button']):not(:disabled):hover {
+      box-shadow: 0 2px 8px #0002;
+    }
+  }
+  .site-ui.workbench-app [data-ui='button'][aria-busy='true']::after {
+    animation: ui-busy var(--ui-motion-busy) linear infinite;
+  }
+  @keyframes ui-busy {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  .site-ui.workbench-app [data-motion='popover'] {
+    transform-origin: top center;
+    opacity: 1;
+    scale: 1;
+    transition:
+      opacity var(--ui-menu-duration) var(--ui-menu-ease),
+      scale var(--ui-menu-duration) var(--ui-menu-ease),
+      display var(--ui-menu-duration) allow-discrete;
+  }
+  .site-ui.workbench-app [data-motion='popover'][hidden] {
+    opacity: 0;
+    scale: 0.96;
+    pointer-events: none;
+  }
+  @starting-style {
+    .site-ui.workbench-app [data-motion='popover']:not([hidden]) {
+      opacity: 0;
+      scale: 0.96;
+    }
+  }
+  @media (min-width: 1100px) {
+    /* Responsive placement is immediate. Only an intentional desktop toggle
+     animates the gutter with the rail, avoiding overlap on drawer/rail resize. */
+    .site-ui.workbench-app [data-motion='shell'][data-sidebar-motion='toggle'] {
+      transition: padding-left var(--ui-slide-duration) var(--ui-slide-ease);
+    }
+    .site-ui.workbench-app:has([data-sidebar-motion='toggle']) .chronicle-header {
+      transition:
+        margin-left var(--ui-slide-duration) var(--ui-slide-ease),
+        width var(--ui-slide-duration) var(--ui-slide-ease);
+    }
+    .site-ui.workbench-app [data-motion='rail'] {
+      opacity: 1;
+      translate: 0 0;
+      transition: none;
+    }
+    .site-ui.workbench-app
+      [data-motion='shell'][data-sidebar-motion='toggle']
+      > [data-motion='rail'] {
+      transition:
+        translate var(--ui-slide-duration) var(--ui-slide-ease),
+        display var(--ui-slide-duration) allow-discrete;
+    }
+    .site-ui.workbench-app.rail-collapsed [data-motion='rail'] {
+      opacity: 1;
+      translate: -100% 0;
+    }
+    @starting-style {
+      .site-ui.workbench-app:not(.rail-collapsed)
+        [data-motion='shell'][data-sidebar-motion='toggle']
+        > [data-motion='rail'] {
+        opacity: 1;
+        translate: -100% 0;
+      }
+    }
+  }
+}
+.site-ui.workbench-app [data-ui='tab-list'] {
+  padding-bottom: 3px;
+}
+.site-ui.workbench-app [data-ui='tab-list'][data-indicator='ready']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: var(--ui-tab-width, 0px);
+  translate: var(--ui-tab-x, 0px) var(--ui-tab-y, 0px);
+  border-radius: 2px;
+  background: var(--accent);
+  pointer-events: none;
+}
+.site-ui.workbench-app [data-ui='button'][aria-busy='true'] {
+  position: relative;
+  opacity: 0.85;
+  cursor: progress;
+}
+.site-ui.workbench-app [data-ui='button'][aria-busy='true']::after {
+  content: '';
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.site-ui.workbench-app [data-ui='status'][data-state='success']::before {
+  content: '\2713 ';
+  color: var(--cyan);
+}
+.site-ui.workbench-app [data-ui='button'][data-action-feedback='success'] {
+  position: relative;
+}
+.site-ui.workbench-app [data-ui='button'][data-action-feedback='success']::before {
+  content: '\2713';
+  position: absolute;
+  right: 3px;
+  top: 0;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--cyan);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ui-motion-press: 0ms;
+    --ui-motion-busy: 0ms;
+    --ui-motion-fast: 0ms;
+    --ui-motion-enter: 0ms;
+    --ui-motion-overlay: 0ms;
+    --ui-motion-expand: 0ms;
+  }
+  .site-ui.workbench-app [data-ui],
+  .site-ui.workbench-app [data-ui]::before,
+  .site-ui.workbench-app [data-ui]::after,
+  .site-ui.workbench-app [data-ui='dialog']::backdrop {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 799px) {
+  .site-ui.workbench-app
+    :is(
+      [data-ui='input']:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+          [type='file']
+        ):not([type='color']),
+      [data-ui='select'],
+      [data-ui='textarea']
+    ):not(:where([data-ui='search-field'] input)) {
+    font-size: calc(var(--ui-control-text-size, 16px) * var(--ui-font-scale, 1));
+  }
+  :root {
+    --ui-card-padding: 14px;
+  }
+  .site-ui.workbench-app [data-ui='search-field'] [data-ui='input'] {
+    font-size: calc(var(--ui-control-text-size, 16px) * var(--ui-font-scale, 1));
+  }
+  .site-ui.workbench-app [data-ui='form-grid'][data-density='compact'] {
+    --ui-control-height: 44px;
+  }
+  :where([data-ui='tool-help']) {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+}

@@ -8,6 +8,12 @@
     "node": ">=24"
   },
   "scripts": {
+    "format": "node scripts/format.mjs --write",
+    "format:check": "node scripts/format.mjs --check",
+    "build:knowledge": "node scripts/build-knowledge-catalogue.mjs",
+    "build:ui": "node scripts/build-ui-styles.mjs",
+    "audit:events": "node scripts/audit-events.mjs",
+    "audit:knowledge": "node scripts/audit-knowledge-catalogue.mjs",
     "dev": "node scripts/build-vendor.mjs && node scripts/server.mjs",
     "start": "node scripts/build-vendor.mjs && node scripts/server.mjs",
     "build": "node scripts/build.mjs",
@@ -23,6 +29,9 @@
     "verify:all": "node scripts/verify-all.mjs",
     "test:plan": "node scripts/verify-affected.mjs --plan",
     "audit:architecture": "node scripts/audit-architecture.mjs",
+    "audit:repository": "node scripts/audit-repository.mjs",
+    "format:python": "python scripts/format-python.py",
+    "format:python:check": "python scripts/format-python.py --check",
     "setup": "npm run deps:install && npm run build",
     "deps:install": "python scripts/source-dependencies.py install",
     "deps:check": "python scripts/source-dependencies.py check",
@@ -30,7 +39,10 @@
     "deps:fetch": "python scripts/source-dependencies.py fetch",
     "prestart": "npm run deps:check",
     "predev": "npm run deps:check",
-    "prebuild": "npm run deps:check && npm run audit:integrity"
+    "prebuild": "npm run deps:check && npm run audit:integrity",
+    "setup:code-runner": "node scripts/prepare-code-runner.mjs && docker build -t mist-code-runner:20261103 services/code-runner",
+    "setup:forensics": "docker build -t mist-forensics:20261104-limit20 -f services/forensics/Dockerfile .",
+    "verify:source": "node scripts/verify-source.mjs"
   },
   "license": "GPL-3.0-or-later"
 }

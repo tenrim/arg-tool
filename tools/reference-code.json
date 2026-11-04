@@ -1,0 +1,52 @@
+{
+  "endpoint": "http://127.0.0.1:19200",
+  "projectPrefix": "mistprojectv2",
+  "references": [
+    {
+      "id": "ittools",
+      "folder": "it-tools",
+      "prefix": "mistrefittools",
+      "url": "https://github.com/CorentinTh/it-tools",
+      "commit": "d505845f918e946ec300af7b36efc107e2f66e9e",
+      "license": "GPL-3.0 (see LICENSE and source headers)",
+      "use": "工具分类、表单、单位和日期计算界面"
+    },
+    {
+      "id": "cyberchef",
+      "folder": "CyberChef",
+      "prefix": "mistrefcyberchef",
+      "url": "https://github.com/gchq/CyberChef",
+      "commit": "11b86fecdb5d8f6244cf931e1f87cec887ec1f1f",
+      "license": "Apache-2.0",
+      "use": "配方、Worker、二进制结果与运算取消"
+    },
+    {
+      "id": "omnitools",
+      "folder": "omni-tools",
+      "prefix": "mistrefomnitools",
+      "url": "https://github.com/iib0011/omni-tools",
+      "commit": "60bc64f5a6974f3c802c5ec06cb3cf7f824485e1",
+      "license": "MIT",
+      "use": "浏览器内多工具工作台、媒体与文件操作"
+    },
+    {
+      "id": "animateui",
+      "folder": "animate-ui",
+      "prefix": "mistrefanimateui",
+      "url": "https://github.com/animate-ui/animate-ui",
+      "commit": "c28163655493f98bff9dc0362301a6242f74a1fd",
+      "license": "MIT + Commons Clause",
+      "use": "进入动画、折叠、焦点、减少动态和交互状态"
+    },
+    {
+      "id": "qalculate",
+      "folder": "libqalculate",
+      "prefix": "mistrefqalculate",
+      "url": "https://github.com/Qalculate/libqalculate",
+      "commit": "132d7b2f150de1ace81c02a93701a012e10fb97c",
+      "license": "GPL-2.0-or-later",
+      "use": "表达式、单位、精度、数值解析与计算边界"
+    }
+  ],
+  "projectStateId": "project-v2"
+}

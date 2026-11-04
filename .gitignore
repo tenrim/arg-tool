@@ -1,17 +1,56 @@
 node_modules/
-/dist/
-/release/
-/.cache/
-/outputs/
+dist/
+!public/vendor/**/dist/
+!public/vendor/**/dist/**
+!upstream/**/dist/
+!upstream/**/dist/**
+!upstream/round2/sources/proj4-2.22.0/node_modules/
+!upstream/round2/sources/proj4-2.22.0/node_modules/mgrs/
+!upstream/round2/sources/proj4-2.22.0/node_modules/mgrs/mgrs.js
 .env
 .env.*
 !.env.example
 *.zip
+.DS_Store
+.sites-runtime/
+/outputs/
+
+!public/vendor/coderunner/python/python_stdlib.zip
+!public/vendor/qalculate/source.zip
+!public/vendor/fun-tools/fun-tools-sources.zip
+
+# Python maintenance scripts may produce local bytecode.
 __pycache__/
 *.py[cod]
+
+# Reproducible expansion browser fixtures/downloads; never release user media.
+.tmp-expansion-tests/
+
+# Local Android toolchains, staging assets, test keys and APK artifacts.
+/outputs/apk-build/
+/outputs/android-signing/
+/outputs/android-signing-backup/
+/outputs/android-release/
+
+# Local reference repositories and XERJ state (not product dependencies).
+/.reference-code/
+
+# Isolated Python formatting tool (development only).
+/tools/format/python/
+
+# Local diagnostics are never repository source.
+/debug.log
+
+# Explicit code-runner compiler downloads; provenance stays in ARTIFACTS.json.
+/services/code-runner/kotlin-lib/
+/services/code-runner/*.tgz
+/services/code-runner/*.deb
+/services/code-runner/*.part
+
+# 独立源码发行：依赖、缓存与交付产物不进入 Git。
+/release/
+/.cache/
+/.openai/
 /public/vendor/
 /public/fonts/
 /upstream/
-
-# Chromium 本地诊断日志，不属于发布源码。
-/debug.log

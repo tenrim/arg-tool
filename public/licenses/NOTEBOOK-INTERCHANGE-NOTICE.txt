@@ -1,0 +1,16 @@
+迷雾工具箱笔记本图稿交换补充说明（2026-11-01）
+
+XMind ZIP 读取与打包沿用本站固定 fflate 0.8.3（MIT）。原始许可在
+vendor/round2/LICENSES.txt；固定源码和摘要在 upstream/round2/sources/fflate-0.8.3
+及 public/vendor/round2/UPSTREAM.json。未更改第三方运行文件。
+
+OPML、Markdown 与 XMind 大纲转换、笔记管理、历史与引用逻辑为本站实现。
+格式依据：
+https://opml.org/spec2.opml
+https://github.com/xmindltd/xmind-model/blob/master/schemas/topic.json
+https://github.com/xmindltd/xmind-model/blob/master/schemas/sheet.json
+
+本次未复制 XMind 程序或分发其 SDK，不宣称实现 XMind 全部格式特性。
+XMind 支持 content.json 结构的大纲交换；旧 XML 格式会明确拒绝。
+导入文件原始字节保留于图稿来源。XMind 导出包附带完整 mist-drawing.json，
+以保存各交换格式不能表达的本站图稿信息。

@@ -4,6 +4,7 @@ TZif files retain the PSF wheel's unchanged bytes. This is upstream's complete
 default zic build (backward included, optional backzone not enabled); all IANA
 source files, including backzone, remain available for original-record lookup.
 """
+
 import argparse
 import hashlib
 import io
@@ -18,8 +19,16 @@ UP = ROOT / "upstream/timezones"
 OUT = ROOT / "public/vendor/timezones"
 VERSION = "2026e"
 PINS = [
-    ("tzdata2026e.tar.gz", "https://data.iana.org/time-zones/releases/tzdata2026e.tar.gz", "b26882805f26aac59d5b222978e6580484b834ccdc98be89df2f05a6dc53a652"),
-    ("tzdata-2026.5-py2.py3-none-any.whl", "https://files.pythonhosted.org/packages/94/21/1e5995a1c920cce14e4bffae20c665ec10e7ed03ab25e006cd741092b718/tzdata-2026.5-py2.py3-none-any.whl", "b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac"),
+    (
+        "tzdata2026e.tar.gz",
+        "https://data.iana.org/time-zones/releases/tzdata2026e.tar.gz",
+        "b26882805f26aac59d5b222978e6580484b834ccdc98be89df2f05a6dc53a652",
+    ),
+    (
+        "tzdata-2026.5-py2.py3-none-any.whl",
+        "https://files.pythonhosted.org/packages/94/21/1e5995a1c920cce14e4bffae20c665ec10e7ed03ab25e006cd741092b718/tzdata-2026.5-py2.py3-none-any.whl",
+        "b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac",
+    ),
 ]
 FILES = []
 
@@ -63,8 +72,27 @@ def main():
     assert originals["version"].strip() == VERSION
     save(OUT / "IANA-LICENSE.txt", originals["LICENSE"])
     # The raw source set is complete, not a curated historical rule sample.
-    source_names = ["africa", "antarctica", "asia", "australasia", "europe", "northamerica", "southamerica", "etcetera", "backward", "backzone", "factory"]
-    for name in source_names + ["zone.tab", "zone1970.tab", "iso3166.tab", "zonenow.tab", "theory.html", "NEWS"]:
+    source_names = [
+        "africa",
+        "antarctica",
+        "asia",
+        "australasia",
+        "europe",
+        "northamerica",
+        "southamerica",
+        "etcetera",
+        "backward",
+        "backzone",
+        "factory",
+    ]
+    for name in source_names + [
+        "zone.tab",
+        "zone1970.tab",
+        "iso3166.tab",
+        "zonenow.tab",
+        "theory.html",
+        "NEWS",
+    ]:
         save(OUT / "source" / (name + ".txt"), originals[name])
 
     zone_bytes = {}
@@ -73,7 +101,7 @@ def main():
         assert 'IANA_VERSION = "2026e"' in package_init
         for name in wheel.namelist():
             if name.startswith("tzdata/zoneinfo/") and not name.endswith("/"):
-                relative = name[len("tzdata/zoneinfo/"):]
+                relative = name[len("tzdata/zoneinfo/") :]
                 data = wheel.read(name)
                 if data.startswith(b"TZif"):
                     zone_bytes[relative] = data
@@ -93,7 +121,14 @@ def main():
             if not line or line.startswith("#"):
                 continue
             row = line.split("\t")
-            metadata.setdefault(row[2], {"countries": row[0].split(","), "coordinates": row[1], "comment": row[3] if len(row) > 3 else ""})
+            metadata.setdefault(
+                row[2],
+                {
+                    "countries": row[0].split(","),
+                    "coordinates": row[1],
+                    "comment": row[3] if len(row) > 3 else "",
+                },
+            )
     records, rules, links, backzones = {}, {}, {}, {}
     for name in source_names:
         current = None
@@ -111,7 +146,9 @@ def main():
             else:
                 current = None
                 if parts[0] == "Rule":
-                    rules.setdefault(("backzone:" if name == "backzone" else "") + parts[1], []).append(item)
+                    rules.setdefault(
+                        ("backzone:" if name == "backzone" else "") + parts[1], []
+                    ).append(item)
                 elif parts[0] == "Link" and name != "backzone":
                     links[parts[2]] = {"target": parts[1], **item}
 
@@ -127,11 +164,28 @@ def main():
     zones = []
     for zone in sorted(zone_bytes):
         target = canonical(zone)
-        details = metadata.get(zone, metadata.get(target, {"countries": [], "coordinates": "", "comment": ""}))
+        details = metadata.get(
+            zone, metadata.get(target, {"countries": [], "coordinates": "", "comment": ""})
+        )
         zones.append({"id": zone, "canonical": target, **details})
-    index = {"version": VERSION, "distribution": "tzdata 2026.5", "scope": "IANA default zic build; backward enabled; optional backzone not compiled; POSIX timescale", "zoneCount": len(zones), "zones": zones, "countries": countries}
+    index = {
+        "version": VERSION,
+        "distribution": "tzdata 2026.5",
+        "scope": "IANA default zic build; backward enabled; optional backzone not compiled; POSIX timescale",
+        "zoneCount": len(zones),
+        "zones": zones,
+        "countries": countries,
+    }
     save(OUT / "index.json", json.dumps(index, ensure_ascii=False, separators=(",", ":")) + "\n")
-    save(OUT / "source-records.json", json.dumps({"zones": records, "rules": rules, "links": links, "backzones": backzones}, ensure_ascii=False, separators=(",", ":")) + "\n")
+    save(
+        OUT / "source-records.json",
+        json.dumps(
+            {"zones": records, "rules": rules, "links": links, "backzones": backzones},
+            ensure_ascii=False,
+            separators=(",", ":"),
+        )
+        + "\n",
+    )
     notice = """IANA Time Zone Database 2026e / PSF tzdata 2026.5
 
 IANA data: https://data.iana.org/time-zones/releases/tzdata2026e.tar.gz
@@ -145,9 +199,21 @@ POSIX timestamps do not count leap seconds. Future footer rules are projections
 of this release, not a prediction that governments will retain those policies.
 """
     save(OUT / "NOTICE.txt", notice)
-    manifest = {"name": "IANA Time Zone Database / PSF tzdata", "version": VERSION, "distributionVersion": "2026.5", "repositories": ["https://www.iana.org/time-zones", "https://github.com/python/tzdata"], "zoneCount": len(zones), "compiledScope": index["scope"], "files": FILES}
-    (OUT / "UPSTREAM.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"IANA {VERSION}: {len(zones)} complete default TZif names, {len(records)} Zone blocks, {len(backzones)} optional backzone records; {len(FILES)} pinned artifacts")
+    manifest = {
+        "name": "IANA Time Zone Database / PSF tzdata",
+        "version": VERSION,
+        "distributionVersion": "2026.5",
+        "repositories": ["https://www.iana.org/time-zones", "https://github.com/python/tzdata"],
+        "zoneCount": len(zones),
+        "compiledScope": index["scope"],
+        "files": FILES,
+    }
+    (OUT / "UPSTREAM.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        f"IANA {VERSION}: {len(zones)} complete default TZif names, {len(records)} Zone blocks, {len(backzones)} optional backzone records; {len(FILES)} pinned artifacts"
+    )
 
 
 if __name__ == "__main__":

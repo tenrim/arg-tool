@@ -1,83 +1,61 @@
-# 迷雾工具箱 · 开源源码版
+# 迷雾工具箱
 
-可自行部署的中文 ARG / Puzzlehunt 解谜工作台。保留编解码与加解密、资料查询、图片音视频与文件处理、其他工具和科普五类入口；常规处理在浏览器本地执行。
+面向 ARG 与 Puzzlehunt 玩家的中文解谜工作台。当前同步版本为 **V2.0**，原创程序代码按 GPL-3.0-or-later 开源，第三方引擎、资料与素材保留各自许可证。
 
-此分支只分发原创实现、适配与构建脚本、测试、来源和许可记录。第三方引擎、原始源码、字典、数据和字体单独放在依赖包中，不进入源码 Git 历史。原创程序代码为 **GPL-3.0-or-later**；第三方各自许可不变。详见 [LICENSE](LICENSE)、[开源范围](OPEN_SOURCE.md)、[第三方说明](THIRD_PARTY.md)。
+## 本地部署
 
-当前同步版本 **V1.4**，源码快照来自服务器分支 `ce5535e6`。新增笔记本及图稿、专题工作区、扩充资料与符号工具、动图处理、综合计算器与分类单位换算、可选在线查询及 256 篇科普；详见 [中文更新日志](CHANGELOG.md)。
-
-## 支持项目
-
-如果这个工具箱对你有帮助，欢迎通过 [爱发电赞助 musicraft](https://afdian.com/a/musicraft)，支持后续开发与维护。
-
-## 本地运行
-
-需要 **Node.js 24+、Python 3.12+**。正常部署不需要 Rust，也不需要 npm 安装生产依赖。
-
-获取源码后，在源码目录运行：
+准备 Node.js 24+ 和 Python 3.12+，下载或克隆本仓库后执行：
 
 ```sh
 npm run setup
 npm start
 ```
 
-`setup` 自动从项目的固定发布地址下载运行依赖，验证整包与全部文件的尺寸和 SHA-256，再构建静态站点。依赖已正确安装时不再联网；下载缓存会在校验通过后复用。适配过的运行文件和本地数据由项目发布提供，不要求每个部署者重新编译 WASM 或寻找多个上游包。
+`setup` 自动下载约 634 MB 的固定依赖包，校验整包及全部文件后生成 `dist/`。首次安装需要访问 GitHub；完成后普通本地工具、启动和构建不需要联网。根目录不需要安装 npm 运行依赖。Python 仅用于源码版依赖准备及检查。
 
-浏览器打开 `http://localhost:3000`。不要直接双击 HTML：Worker 和 WASM 需要 HTTP 服务。首次准备依赖需要联网，日后常规使用和构建保持离线。
+打开终端显示的本机 HTTP 地址。不要双击 HTML 文件。`npm run build` 可重新生成静态目录，支持放在站点根目录或子目录；代码及 WASM 必须通过 HTTP/HTTPS 使用。
 
-离线部署也可手动取得匹配的 `arg-tool-dependencies.zip` 后运行：
+断网安装可先取得匹配的依赖发布附件，再执行：
 
 ```sh
 npm run deps:install -- --archive /path/to/arg-tool-dependencies.zip
 npm run build
-npm start
 ```
 
-安装只接受 [dependencies.lock.json](dependencies.lock.json) 列出的路径、尺寸和 SHA-256，先在临时目录验证全部文件，再写入依赖目录。损坏、额外文件及不匹配版本会报错，不执行依赖包中的安装脚本。安装需要约 340 MB 的最终空间和额外临时空间。
+自动下载支持断线重试和缓存。显式 `--url https://...` 可指定镜像，但文件仍须匹配仓库固定的大小、SHA-256 和逐文件摘要。详见 [依赖安装说明](docs/SOURCE_DISTRIBUTION.md)。
 
-维护者已有匹配的完整工作目录时，可以完全离线导入：
+## 工具与数据
+
+- 编解码、古典与现代密码、CyberChef 本地处理链，保留真实参数和原始字节。
+- 图片、音视频、文件与 ZIP 处理，新增文件版本比较和批量处理。
+- 综合计算器、单位换算、生活计算、完整选定资料库和逐项科普。
+- 本机笔记、项目／标签、附件、历史版本、脑图和白板，支持完整备份。
+- Gilbert 图片混淆、视觉密码、StegCloak、文字水印、兽音译者、佛又曰、图片声音转换、化物为图与二维码传文件。
+- 原有浏览器本地代码运行继续可用；服务器语言、文件分析和在线查询按下节另行配置。
+
+完整变更见 [更新日志](CHANGELOG.md)，来源与许可见 [第三方说明](THIRD_PARTY.md) 和工具内实际来源页脚。
+
+## 可选服务与联网入口
+
+`npm start` 管理网站和可选服务。默认不启用文件分析容器、多语言服务器沙箱或邮件反馈，不使用原站配置。纯静态 `dist/` 也能使用本地工具，但没有服务器 API。
+
+Linux Docker 环境可执行以下独立准备命令：
 
 ```sh
-npm run deps:install -- --from /path/to/full-checkout
+npm run setup:forensics
+npm run setup:code-runner
 ```
 
-默认安装不需要账号、访问维护者的服务器或私有仓库。固定下载地址、整包哈希和逐文件清单都记录在 dependencies.lock.json；不使用 latest。网络受限时可通过 `npm run deps:install -- --url https://your-mirror.example/fixed.zip` 指定同一文件的 HTTPS 镜像，原有哈希仍必须匹配。
+第二条命令会自动下载并校验固定编译器附件后构建镜像。这些维护构建需要联网及相应镜像源，不属于前端依赖包。启用变量、反向代理、上传与隔离限制见 [开源部署说明](docs/SOURCE_DEPLOYMENT.md)、[文件分析](docs/FORENSICS.md) 和 [代码沙箱](docs/CODE_RUNNER.md)。运行前明确配置自己的域名；不用 SSH 时无需任何 SSH 身份。
 
-## 构建静态站点
+OEIS 等在线查询仅在主动提交时请求指定来源，使用边界见对应工具。Desmos 函数绘图首次进入时联网加载官方 iframe；它不是离线绘图引擎。源码版“报告问题”默认只在本机生成报告，可复制或下载；部署者可显式配置自己的同源邮件服务。
 
-```sh
-npm run build
-```
+## 开发与分支
 
-构建前检查固定依赖及来源完整性，完成后将 `dist/` 放到任意静态 HTTP/HTTPS 服务器。支持子目录部署；`.wasm` 应使用 `application/wasm`。此源码版不绑定个人域名、Sites 项目或 1Panel 实例。生成后的工具无需运行时 CDN，首次访问仍需加载部署者托管的本地引擎。
+开发入口见 [开发指导](docs/DEVELOPMENT_GUIDE.md)。格式与浏览器工具是可选开发依赖，网页主构建仍离线。固定第三方文件不能直接修改；维护导入及对应源码随依赖包完整提供。
 
-常规工具不会自动上传文件；用户主动选择的 HTTP、DNS 等联网操作仍会发出请求。服务器也可能记录访问日志。
+服务器 `main` 使用 Gitee；此独立源码工作区的 `codex/open-source` 推送到 GitHub `main`。同步使用已提交快照和明确的发行适配，不合并服务器分支历史，不带入 SMTP、SSH 身份、Android 测试产物、玩家文件或本机研究输出。原创代码授权范围见 [OPEN_SOURCE.md](OPEN_SOURCE.md) 与 [LICENSE](LICENSE)。
 
-## 问题反馈与部署配置
+## 赞助
 
-运行 `npm start` 可在一个入口提供网页和可选在线查询；静态部署只提供本地工具，在线查询需要同源 Node 服务。查询仅在主动提交时发出，本地工具不依赖查询服务。默认只能复制或下载问题报告，没有收件邮箱或自动发送服务。若部署者自行运行可选的反馈服务，可在 [public/deployment.js](public/deployment.js) 配置同源地址；SMTP 凭据只能配置在服务器环境中，不能写进前端。可选服务代码位于 `services/feedback/`。
-
-关于页保留原作者归属和完整第三方许可证，移除个人打赏与关联站点推广。现有偏好格式、路由和工具数据处理保持兼容。
-
-## 开发与维护
-
-```sh
-npm ci --ignore-scripts --prefix test-tools
-npm run test:plan -- --files public/site-pages.js
-npm run verify -- --files public/site-pages.js
-```
-
-构建产物的真实 HTTP 部署回归：`npm run verify -- --files scripts/browser-deployment.mjs`（先构建并安装 test-tools）。实测范围与公开下载缺口见 [GitHub 独立部署记录](docs/GITHUB_DEPLOYMENT_VERIFICATION.md)。
-
-浏览器检查使用 Playwright，可用 `CHROMIUM_PATH` 指定 Chrome/Chromium。按 [测试策略](docs/TESTING_POLICY.md) 选择范围；完整验证是 `npm run verify:all`。组件规范见 [UI 开发规则](docs/UI_DEVELOPMENT_RULES.md)、[组件文档](docs/UI_COMPONENTS.md) 和 [模块边界](docs/MODULE_BOUNDARIES.md)。
-
-`main` 用于原站部署。本分支采用独立源码历史，后续从 main 按需迁移原创功能及相关测试，不直接合并完整部署分支。依赖更新需要重新固定清单、导出依赖包并验证；普通构建不升级上游。
-
-维护者导出依赖包：
-
-```sh
-npm run deps:check
-npm run deps:export -- --archive /path/to/arg-tool-dependencies.zip
-```
-
-发布时将依赖 ZIP 作为独立发布附件，不提交到 Git；源码用 `git archive` 导出。FFmpeg 等组件的对应源码义务不能仅靠附一个许可证满足，见 [开源范围与分发边界](OPEN_SOURCE.md)。
+如果工具箱帮到了你，欢迎通过 [爱发电支持 musicraft](https://afdian.com/a/musicraft)，支持后续维护。
