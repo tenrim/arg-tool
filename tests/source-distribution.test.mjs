@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
-import { readFile } from 'node:fs/promises';
+import { spawnSync, execFileSync } from 'node:child_process';
+import { readFile, mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { sourceSnapshotChanged } from '../scripts/source-check-scope.mjs';
 
 test('dependency installer roundtrip, integrity, path safety and failure preservation', () => {
   const result = spawnSync(process.env.PYTHON || 'python', ['tests/source-dependencies_test.py'], {
@@ -50,8 +53,40 @@ test('source deployment keeps optional services local by default and SSH explici
     );
   }
   const workflow = await readFile('.github/workflows/check.yml', 'utf8');
-  assert(workflow.includes('current.snapshot!==previous.snapshot'));
+  assert(workflow.includes('sourceSnapshotChanged({base:'));
   assert(workflow.includes('npm run test:plan -- --base'));
   assert(workflow.includes('npm run verify:source'));
   assert(workflow.includes('npm run verify:all'));
+});
+
+test('CI snapshot comparison handles real Git manifests larger than one MiB', async () => {
+  const cwd = await mkdtemp(join(tmpdir(), 'mist-source-scope-'));
+  const git = (args) =>
+    execFileSync('git', ['-c', `safe.directory=${cwd.replaceAll('\\', '/')}`, ...args], {
+      cwd,
+      stdio: 'pipe',
+    });
+  try {
+    git(['init', '--quiet']);
+    const lock = { snapshot: 'old', files: [], padding: 'x'.repeat(2 * 1024 * 1024) };
+    await writeFile(join(cwd, 'dependencies.lock.json'), JSON.stringify(lock));
+    git(['add', 'dependencies.lock.json']);
+    git([
+      '-c',
+      'user.name=验证夹具',
+      '-c',
+      'user.email=test@example.invalid',
+      'commit',
+      '--quiet',
+      '-m',
+      '保存固定依赖验证夹具',
+    ]);
+    assert.equal(sourceSnapshotChanged({ base: 'HEAD', cwd }), false);
+    lock.snapshot = 'new';
+    await writeFile(join(cwd, 'dependencies.lock.json'), JSON.stringify(lock));
+    assert.equal(sourceSnapshotChanged({ base: 'HEAD', cwd }), true);
+  } finally {
+    assert(cwd.startsWith(join(tmpdir(), 'mist-source-scope-')));
+    await rm(cwd, { recursive: true, force: true });
+  }
 });

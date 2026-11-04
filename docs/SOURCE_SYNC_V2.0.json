@@ -40,7 +40,8 @@
     "build": "passed, 386 modules / 41 stylesheets / 147 tool routes + 8 website routes",
     "real_http": "4 real HTTP root/subdirectory / PC/mobile / normal/reduced-motion cases passed; Chef, Gilbert pixel roundtrip, beast Unicode roundtrip, country data, Python/QuickJS, FFmpeg, calculator, notebook, local-only report; no missing or external requests",
     "clean_archive": "Windows clean Git archive extracted successfully. Two dependency installation attempts failed: the same upstream ggmorse-to-file.php example disappeared after verification, first in temporary staging and then in the destination before final check. The unchanged original file and its hash are in the ZIP; no installation success is claimed for this Windows environment.",
-    "docs": "78 current Markdown files / 296 local file links passed"
+    "docs": "78 current Markdown files / 296 local file links passed",
+    "linux_clean_install": "GitHub Actions 41764464989: anonymous download, exact 52601-file installation/check and npm ci passed; next CI scope step hit the default Node 1 MiB Git output buffer. Scope reader fixed with a real 2 MiB Git-manifest regression."
   },
   "scope": "独立源码分发、固定资源及代表性部署；未重新验收每个历史工具，也未在本轮部署服务器或运行真实 Docker 分析与编译任务。",
   "excluded_original_files": [

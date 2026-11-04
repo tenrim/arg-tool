@@ -54,11 +54,9 @@ jobs:
             npm run test:plan -- --base "${BASE_REF:-$(git rev-parse HEAD^ 2>/dev/null || echo 0000000000000000000000000000000000000000)}" --report /tmp/arg-plan.json
             node --input-type=module <<'NODE'
           import fs from 'node:fs';
-          import {execFileSync} from 'node:child_process';
+          import {sourceSnapshotChanged} from './scripts/source-check-scope.mjs';
           const p=JSON.parse(fs.readFileSync('/tmp/arg-plan.json'));
-          const current=JSON.parse(fs.readFileSync('dependencies.lock.json'));
-          const previous=JSON.parse(execFileSync('git',['show',(process.env.BASE_REF||'HEAD^')+':dependencies.lock.json'],{encoding:'utf8'}));
-          const snapshot=current.snapshot!==previous.snapshot;
+          const snapshot=sourceSnapshotChanged({base:process.env.BASE_REF||'HEAD^'})||['scripts/verify-source.mjs','scripts/source-check-scope.mjs','.github/workflows/check.yml'].some(file=>p.files.includes(file));
           fs.appendFileSync(process.env.GITHUB_OUTPUT,'source='+snapshot+'\n'+'browser='+(snapshot||p.checks.some(c=>c.id.startsWith('browser:')))+'\n');
           NODE
           fi

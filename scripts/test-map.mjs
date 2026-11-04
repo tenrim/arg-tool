@@ -92,6 +92,7 @@ export const browserFile = (name) =>
 // First matching rule owns a file. Narrow rules precede folder defaults.
 // Unit test import dependencies are added automatically, including re-exports.
 export const rules = [
+  [/^scripts\/source-check-scope\.mjs$/, [], ['source-distribution']],
   [/^public\/branding\/|^public\/site-manifest\.json$/, ['deployment'], []],
   [/^scripts\/fetch-fun-tools\.py$/, [], ['fun-tools']],
   [
