@@ -2,6 +2,7 @@ import {
   render as uiRender,
   Card,
   SplitView,
+  ImageInputPreview,
   Box,
   TabList,
   Button,
@@ -28,12 +29,13 @@ export function mountFileWorkspace({ navigate, routeState }) {
     className: 'surface',
     attrs: { 'data-native-section': 'file-upload' },
   });
+  const preview = ImageInputPreview();
   sharedFile.append(
     SplitView({
       minPaneWidth: '260px',
       children: [
         fileAnalysisSurface.querySelector('.upload-zone'),
-        Box({ children: [$('file-stats'), $('file-status')] }),
+        Box({ children: [$('file-stats'), $('file-status'), preview.node] }),
       ],
     }),
   );
@@ -121,6 +123,7 @@ export function mountFileWorkspace({ navigate, routeState }) {
     const generation = ++state.fileGeneration;
     state.file = null;
     state.fileSource = null;
+    preview.show(null);
     fileButtons.forEach((id) => ($(id).disabled = true));
     $('file-stats').textContent = '';
     $('file-output').value = '';
@@ -134,6 +137,7 @@ export function mountFileWorkspace({ navigate, routeState }) {
       const info = fileAnalysis(bytes);
       state.file = bytes;
       state.fileSource = file;
+      preview.show(file);
       if (!preserveEditor) hexEditor.load(bytes, { name: file.name, generation });
       document.dispatchEvent(new Event('arg:fileready'));
       uiRender(

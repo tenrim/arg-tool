@@ -1,4 +1,4 @@
-import { onDisconnect } from '../ui/index.js';
+import { onDisconnect, setFieldLabelVisibility } from '../ui/index.js';
 
 // A capability selects existing controls. It never constructs a second tool,
 // replaces a file input, or copies a simulator's rules into the navigation.
@@ -34,8 +34,10 @@ export function mountNativeWorkspaces({
   function restore() {
     removeDirectionListeners();
     removeDirectionListeners = () => {};
-    for (const { node, parent, next } of sourcePlacements.reverse())
+    for (const { node, parent, next, labelVisibility } of sourcePlacements.reverse()) {
       parent.insertBefore(node, next?.parentNode === parent ? next : null);
+      setFieldLabelVisibility(node, labelVisibility);
+    }
     sourcePlacements.length = 0;
     for (const [control, { options, label, text }] of directionFields) {
       const value = control.value;
@@ -151,8 +153,16 @@ export function mountNativeWorkspaces({
       )
     ) {
       for (const node of sources)
-        sourcePlacements.push({ node, parent: node.parentNode, next: node.nextSibling });
+        sourcePlacements.push({
+          node,
+          parent: node.parentNode,
+          next: node.nextSibling,
+          labelVisibility: node.dataset.labelVisibility,
+        });
       inputCard.querySelector('[data-ui=card-title]').after(...sources);
+      for (const node of sources)
+        if (node.contains(document.getElementById('analysis-input')))
+          setFieldLabelVisibility(node, 'screen-reader');
     }
     // Shared help can live inside its animation shell. Preserve the actual
     // help node and its ancestors, rather than assuming every shared surface
@@ -282,12 +292,6 @@ export function mountNativeWorkspaces({
       hide(document.getElementById('extract-indices').closest('label'));
     if (target.panel === 'video') {
       const mode = document.getElementById('video-mode').value;
-      if (!['native', 'capabilities'].includes(mode)) {
-        hide(document.getElementById('video-format-field'));
-        hide(document.getElementById('video-advanced'));
-        hide(document.getElementById('video-native-args')?.closest('label'));
-        hide(document.getElementById('video-capabilities'));
-      }
       if (mode === 'animation') {
         for (const id of ['video-start', 'video-duration'])
           hide(document.getElementById(id).closest('label'));
@@ -295,13 +299,6 @@ export function mountNativeWorkspaces({
         hide(document.getElementById('video-status'));
         hide(document.getElementById('video-results').closest('.hunt-results'));
       }
-      if (['native', 'capabilities'].includes(mode)) {
-        hide(document.getElementById('video-start').closest('label'));
-        hide(document.getElementById('video-duration').closest('label'));
-      }
-      if (mode === 'frame') hide(document.getElementById('video-duration').closest('label'));
-      if (!['frames', 'gif'].includes(mode))
-        hide(document.getElementById('video-fps').closest('label'));
     }
     for (const bar of panel.querySelectorAll('.r2-tabs,.image-engine-tabs')) hide(bar);
     const slice = target.slice;

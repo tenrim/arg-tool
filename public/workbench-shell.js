@@ -20,7 +20,12 @@ import {
   getRecentEntries,
   recordTool,
 } from './preferences.js';
-import { loadRegistry, searchEntries, capabilityCategories } from './capabilities/registry.js';
+import {
+  loadRegistry,
+  searchEntries,
+  capabilityCategories,
+  subscribeRegistry,
+} from './capabilities/registry.js';
 import { requestCapability } from './capabilities/browser.js';
 import { mountCapabilitySidebar } from './capabilities/sidebar.js';
 import {
@@ -30,6 +35,7 @@ import {
   Toolbar,
   animateCollection,
   mountFloatingAction,
+  onDisconnect,
 } from './ui/index.js';
 
 // Original UI only. The catalogue, engines and file controls stay in their
@@ -72,7 +78,11 @@ export function mountWorkbenchShell(header, { navigate, search }) {
     node('span', '全部工具'),
     node('span', String(pages.length), 'rail-badge'),
   );
-  const filter = Input({ type: 'search', placeholder: '只筛选左侧目录' }),
+  const filter = Input({
+      type: 'search',
+      placeholder: '只筛选左侧目录',
+      attrs: { 'data-tool-search': '' },
+    }),
     filterLabel = SearchField({
       className: 'rail-filter',
       control: filter,
@@ -199,7 +209,11 @@ export function mountWorkbenchShell(header, { navigate, search }) {
   directoryClose.setAttribute('aria-label', '关闭工具目录');
   directoryClose.append(uiIcon('close'));
   directoryHead.append(directoryClose);
-  const directoryInput = Input({ type: 'search', placeholder: '搜索工具、算法或格式' }),
+  const directoryInput = Input({
+      type: 'search',
+      placeholder: '搜索工具、算法或格式',
+      attrs: { 'data-tool-search': '' },
+    }),
     directorySearch = SearchField({
       className: 'directory-search',
       control: directoryInput,
@@ -301,6 +315,15 @@ export function mountWorkbenchShell(header, { navigate, search }) {
         }
       });
   }
+  const unsubscribeRegistry = subscribeRegistry((value) => {
+    registry = value;
+    sidebar.setRegistry(value);
+    all.querySelector('.rail-badge').textContent = String(value.coverage.visibleToolCount);
+    refreshCollections();
+    filterRail();
+    if (directory.open) renderDirectory();
+  });
+  onDisconnect(groups, unsubscribeRegistry);
   function renderDirectory() {
     const term = directoryInput.value.trim();
     for (const b of filters.children)
@@ -539,5 +562,13 @@ export function mountWorkbenchShell(header, { navigate, search }) {
   });
   loadOperations();
   refreshCollections();
-  return { setActive, close: closeDrawer, openDirectory, openSearch: search.open };
+  return {
+    setActive,
+    close() {
+      closeDrawer();
+      directoryModal.close();
+    },
+    openDirectory,
+    openSearch: search.open,
+  };
 }

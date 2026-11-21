@@ -417,6 +417,10 @@ async function workerContracts(scope) {
   assert.equal(retry.result.items[0].id, 'bird:5');
   // Delay the real file response, cancel synchronously, then complete a fresh query.
   await open(page, 'classical-music');
+  // Returning to a populated page may already have prepared the next query.
+  await page.evaluate(async () =>
+    (await import(new URL('prepared-worker.js', document.baseURI))).clearPreparedWorker(),
+  );
   const gate = scope.gate((path) => path.endsWith('music.json'));
   await page.locator('#classical-music-run').click();
   await gate.started;

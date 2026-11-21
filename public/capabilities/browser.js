@@ -14,7 +14,12 @@ import {
   onDisconnect,
 } from '../ui/index.js';
 import { capabilityVariant } from './routes.js';
-import { loadRegistry, searchEntries, capabilityCategories } from './registry.js';
+import {
+  loadRegistry,
+  searchEntries,
+  capabilityCategories,
+  subscribeRegistry,
+} from './registry.js';
 
 export function requestCapability(entry, op, variant = entry.preferredVariant) {
   document.dispatchEvent(
@@ -53,7 +58,7 @@ export function mountCapabilityBrowser(
     id: searchId,
     type: 'search',
     placeholder: '查找功能、格式或线索',
-    attrs: { autocomplete: 'off' },
+    attrs: { autocomplete: 'off', 'data-tool-search': '' },
   });
   const search = SearchField({
     control: input,
@@ -222,8 +227,13 @@ export function mountCapabilityBrowser(
       });
   }
   load();
+  const unsubscribeRegistry = subscribeRegistry((value) => {
+    registry = value;
+    render();
+  });
   document.addEventListener('arg:preferenceschange', render);
   onDisconnect(groups, () => {
+    unsubscribeRegistry();
     revision++;
     document.removeEventListener('arg:preferenceschange', render);
   });

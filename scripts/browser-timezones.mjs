@@ -241,6 +241,10 @@ try {
         'vendor/timezones/zoneinfo/Asia/Kathmandu',
         'vendor/timezones/source-records.json',
       ]) {
+        // Fault injection exercises a cold request, including normally cached resources.
+        await page.evaluate(async () =>
+          (await import(new URL('idle-worker.js', document.baseURI))).clearIdleLookup(),
+        );
         state.fail(path);
         await page.locator('#timezones-run').click();
         await page.waitForFunction(
@@ -252,6 +256,10 @@ try {
         assert.match(await page.locator('#timezones-result').textContent(), /UTC\+05:45/);
       }
       for (const action of ['stop', 'edit', 'leave']) {
+        // Fault injection exercises a cold request, including normally cached resources.
+        await page.evaluate(async () =>
+          (await import(new URL('idle-worker.js', document.baseURI))).clearIdleLookup(),
+        );
         const held = state.hold('vendor/timezones/zoneinfo/Asia/Kathmandu');
         await page.locator('#timezones-run').click();
         await held.started;

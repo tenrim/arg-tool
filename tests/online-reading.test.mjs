@@ -45,13 +45,11 @@ const bounds = (view) => {
   );
 };
 
-test('all nine provider dispatch paths reach their own domain using saved responses', async () => {
+test('all seven provider dispatch paths reach their own domain using saved responses', async () => {
   const language = await Promise.all(
       ['zdic-character', 'cnk-writing', 'pokewiki-pikachu'].map(fixture),
     ),
-    science = await Promise.all(
-      ['science/simbad-name', 'science/vizier-records', 'science/pubchem-search'].map(fixture),
-    ),
+    science = await Promise.all(['science/pubchem-search'].map(fixture)),
     oeis = await fixture('reference/oeis-A001129'),
     places = await fixture('reference/places-search');
   // No successful COD live response was available. This one explicit protocol
@@ -71,11 +69,7 @@ test('all nine provider dispatch paths reach their own domain using saved respon
       value,
       ['读音与字形', '正文', '基本资料'][index],
     ]),
-    ...science.map((value, index) => [
-      ['simbad', 'vizier', 'pubchem'][index],
-      value,
-      ['天体身份', '天体数据', '物质基本信息'][index],
-    ]),
+    ...science.map((value, index) => [['pubchem'][index], value, ['物质基本信息'][index]]),
     ['oeis', { record: oeis, result: { parameters: { mode: 'search' } } }, '数列项'],
     [
       'placenames',
@@ -91,8 +85,8 @@ test('all nine provider dispatch paths reach their own domain using saved respon
     ],
     ['cod', cod, '晶体结构'],
   ];
-  assert.equal(cases.length, 9);
-  assert.equal(new Set(cases.map(([provider]) => provider)).size, 9);
+  assert.equal(cases.length, 7);
+  assert.equal(new Set(cases.map(([provider]) => provider)).size, 7);
   for (const [provider, value, expected] of cases) {
     const original = JSON.stringify(value),
       view = onlineReading(provider, freeze(value.record), freeze(value.result));
@@ -152,29 +146,6 @@ test('oversized actual-shape dictionary input obeys a total text and section bud
     view = onlineReading('zdic', freeze(row), value.result);
   assert.equal(view.truncated, true);
   assert.equal(view.sections.length, READING_LIMITS.sections);
-  assert.equal(JSON.stringify(row), original);
-  bounds(view);
-});
-
-test('real missing scientific values stay absent while an actual zero stays visible', async () => {
-  const value = await fixture('science/simbad-name'),
-    row = structuredClone(value.record);
-  Object.assign(row.fields, {
-    ra: null,
-    dec: '',
-    plx_value: null,
-    plx_err: undefined,
-    rvz_radvel: null,
-    rvz_redshift: 0,
-  });
-  const original = JSON.stringify(row),
-    view = onlineReading('simbad', freeze(row), freeze(value.result)),
-    fields = new Map(view.sections.flatMap((section) => section.fields));
-  assert.equal(fields.has('赤经'), false);
-  assert.equal(fields.has('赤纬'), false);
-  assert.equal(fields.has('视差'), false);
-  assert.equal(fields.has('视向速度'), false);
-  assert.equal(fields.get('红移'), '0');
   assert.equal(JSON.stringify(row), original);
   bounds(view);
 });

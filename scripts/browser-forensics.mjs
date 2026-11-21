@@ -21,10 +21,26 @@ try {
     const panel = page.locator('#panel-' + task.id);
     await panel.waitFor({ state: 'visible' });
     assert.ok(
-      await panel.getByRole('button', { name: '上传并处理', exact: true }).isVisible(),
+      await panel
+        .getByRole('button', {
+          name: task.engine === 'image-survey' ? '上传并分析图片' : '上传并处理',
+          exact: true,
+        })
+        .isVisible(),
       task.engine,
     );
-    assert.match(await panel.locator('.tool-provenance').innerText(), /AperiSolve/);
+    const sources = panel.locator('.tool-provenance');
+    if (
+      !(await sources
+        .locator('summary')
+        .first()
+        .evaluate((summary) => summary.parentElement.open))
+    )
+      await sources.locator('summary').first().click();
+    assert.match(
+      await panel.locator('.tool-provenance').innerText(),
+      task.engine === 'stegoveritas' ? /StegoVeritas/ : /AperiSolve/,
+    );
     await panel
       .locator('.tool-provenance details')
       .evaluateAll((nodes) => nodes.forEach((n) => (n.open = true)));
@@ -56,7 +72,7 @@ try {
     );
   }
   assert.deepEqual(errors, []);
-  console.log('17 个入口、成员切换、来源、未配置失败恢复及 320px 布局通过');
+  console.log(FORENSICS_TASKS.length + ' 个入口、成员切换、来源、未配置失败恢复及 320px 布局通过');
 } finally {
   await browser.close();
   await site.close();

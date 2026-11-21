@@ -1,6 +1,7 @@
 // Offline generator. Only pinned upstream literals execute here, never player code.
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import { runInNewContext } from 'node:vm';
 const root = 'upstream/expansion/hunt',
   out = 'public/vendor/expansion/hunt';
@@ -36,7 +37,10 @@ english.idioms = (await read('cipher-machine', 'others/english-idioms.txt'))
   .map((word) => ({ word, flags: 16 }));
 const counts = {};
 for (const [key, rows] of Object.entries(english)) {
-  await writeFile(`${out}/english-${key}.json`, JSON.stringify(rows));
+  const filename = `${out}/english-${key}.json`;
+  const json = JSON.stringify(rows);
+  await writeFile(filename, json);
+  if (key === 'standard') await writeFile(filename + '.gz', gzipSync(json, { level: 9 }));
   counts[key] = { records: rows.length, unique: new Set(rows.map((x) => x.word)).size };
 }
 const idioms = evaluate(

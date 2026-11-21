@@ -23,6 +23,9 @@ packages = {
     "flask": "python3-flask",
     "flask-sqlalchemy": "python3-flask-sqlalchemy",
     "sqlalchemy": "python3-sqlalchemy",
+    "prettytable": "python3-prettytable",
+    "python-magic": "python3-magic",
+    "distro": "python3-distro",
 }
 result = {}
 common = "\n\n".join(
@@ -36,11 +39,15 @@ for name, package in packages.items():
         path.read_text(errors="replace") + "\n\nReferenced common license texts:\n" + common
     )
 for name, path in [
+    ("stegoveritas", "/opt/stegoveritas/LICENSE.md"),
     ("jsteg", "/opt/sources/jsteg/LICENSE"),
     ("jpseek", "/opt/sources/jphs/COPYING"),
     ("pdfid", "/usr/local/bin/pdfid"),
 ]:
     result[name] = Path(path).read_text(errors="replace")
+result["prettytable"] += "\n\nwcwidth dependency:\n" + Path(
+    "/usr/share/doc/python3-wcwidth/copyright"
+).read_text(errors="replace")
 result["jpseek"] += "\n\nJPEG library:\n" + Path("/opt/sources/jphs/jpeg-8a/README").read_text(
     errors="replace"
 )

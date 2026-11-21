@@ -306,6 +306,10 @@ try {
     await p.getByLabel('裁剪顶部（像素）', { exact: true }).fill('0');
     await p.getByLabel('裁剪宽度（像素）', { exact: true }).fill('1');
     await p.getByLabel('裁剪高度（像素）', { exact: true }).fill('1');
+    await page.evaluate(async () =>
+      (await import('./preferences.js')).setPreferences({ showAdvancedParameters: true }),
+    );
+    await p.getByText('声音合成参数', { exact: true }).click();
     await choose(p, 'SpectroTrace 参数', 'advanced');
     await p.getByLabel('时长（秒）', { exact: true }).fill('2');
     await p.getByRole('button', { name: '重置声音参数', exact: true }).click();

@@ -209,11 +209,14 @@ test(
         output += chunk.toString();
       });
     });
-    const get = (path, encoding, method = 'GET') =>
+    const get = (path, encoding, method = 'GET', headers = {}) =>
       new Promise((resolve, reject) => {
         const req = request(
           base + path,
-          { method, headers: encoding === undefined ? {} : { 'Accept-Encoding': encoding } },
+          {
+            method,
+            headers: encoding === undefined ? headers : { ...headers, 'Accept-Encoding': encoding },
+          },
           (response) => {
             const chunks = [];
             response.on('data', (chunk) => chunks.push(chunk));
@@ -254,6 +257,23 @@ test(
     assert.equal(head.status, 200);
     assert.equal(head.headers['content-encoding'], 'gzip');
     assert.equal(head.body.length, 0);
+    const dictionary = '/vendor/expansion/hunt/english-standard.json';
+    const first = await get(dictionary, 'gzip');
+    assert.equal(first.status, 200);
+    assert.equal(first.headers['content-encoding'], 'gzip');
+    assert.deepEqual(gunzipSync(first.body), await readFile('public' + dictionary));
+    assert.match(first.headers.etag, /^"[a-f0-9]{64}"$/);
+    const second = await get(dictionary, 'gzip', 'GET', {
+      'If-None-Match': '"previous", W/' + first.headers.etag,
+    });
+    assert.equal(second.status, 304);
+    assert.equal(second.headers.vary, 'Accept-Encoding');
+    assert.equal(second.body.length, 0);
+    const identity = await get(dictionary, 'identity', 'HEAD', {
+      'If-None-Match': first.headers.etag,
+    });
+    assert.equal(identity.status, 200);
+    assert.notEqual(identity.headers.etag, first.headers.etag);
     const plain = await get('/vendor/timezones/index.json', 'gzip');
     assert.equal(plain.status, 200);
     assert.equal(plain.headers['content-type'], 'application/json');

@@ -2,9 +2,175 @@
 // and matching behavior coverage, not a blanket feature-to-feature exemption.
 export const bridges = [
   [
+    'public/clue-analysis/chef-adapter.js',
+    'public/chef-tools/catalog.js',
+    '线索分析读取固定操作名称和参数，使用原有引擎执行。',
+  ],
+  [
+    'public/clue-analysis/chef-puzzle-adapters.js',
+    'public/chef-tools/catalog.js',
+    '线索分析从固定目录获取允许的解谜操作及原始参数。',
+  ],
+  [
     'public/feedback/ui.js',
     'public/deployment.js',
     '部署者显式配置同源反馈；独立部署回归覆盖本机默认行为。',
+  ],
+  [
+    'public/ui/image-input-preview.js',
+    'public/forensics/image-format.js',
+    '原图预览与分析入口依据相同的文件头；browser-image-survey-tools 验证改后缀的图片与跨页交接。',
+  ],
+  [
+    'public/clue-analysis/presentation.js',
+    'public/round1/analysis-engine.js',
+    '候选展示复用原英文卡方统计，仅作辅助排序；不重写算法或宣称正确概率。',
+  ],
+  [
+    'public/round1/analysis-conditions.js',
+    'public/expansion/classical-catalog.js',
+    '已知条件复用八种古典密码的全部原参数、默认值和限制说明；audit-parameters 往返验证。',
+  ],
+  [
+    'public/round1/analysis-conditions.js',
+    'public/expansion/view-common.js',
+    '复用原参数控件构造器，不复制字段或建立第二套算法状态；audit-page 验证。',
+  ],
+  [
+    'public/video/index.js',
+    'public/animation/index.js',
+    '视频工作台继续挂载原 GIF/APNG 所有者，共用原文件输入；video 页面路由回归。',
+  ],
+  [
+    'public/video/index.js',
+    'public/result-recording.js',
+    '视频输出经原笔记结果租约发布，输入、参数、停止和离页同步作废。',
+  ],
+  [
+    'public/clue-analysis/hanzi-worker.js',
+    'public/round1/hanzi-components.js',
+    '汉字部件查询与原页面共用递归匹配实现，puzzle-hanzi 验证原完整数据。',
+  ],
+  [
+    'public/clue-analysis/catalog-adapters.js',
+    'public/completion/job.js',
+    '多语言盲文复用原可终止 Worker；规则表从完整固定目录读取。',
+  ],
+  [
+    'public/clue-analysis/puzzle-adapters.js',
+    'public/completion/job.js',
+    '旗语、GS8、混淆还原和 T9 复用原任务执行器；puzzle-engines 实测。',
+  ],
+  [
+    'public/clue-analysis/puzzle-adapters.js',
+    'public/fun-tools/client.js',
+    '文字隐写及趣味编码复用原隔离 Worker，取消真实终止。',
+  ],
+  [
+    'public/clue-analysis/puzzle-profiles.js',
+    'public/completion/bytes.js',
+    '从原字节编码清单枚举，避免独立维护算法目录。',
+  ],
+  [
+    'public/clue-analysis/puzzle-profiles.js',
+    'public/expansion/classical-catalog.js',
+    '古典密码的默认字母表和参数仅来自原定义。',
+  ],
+  [
+    'public/clue-analysis/puzzle-profiles.js',
+    'public/expansion/keyboard-core.js',
+    '复用原完整键盘映射清单，不复制映射数据。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/completion/bytes.js',
+    '原解码器在独立 Worker 中执行并严格保留完整字节。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/completion/codes.js',
+    '原整数与键盘转换在分析 Worker 中执行。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/completion/numerals.js',
+    '复用原扩展整数规则与精确整数实现。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/engine.js',
+    '复用原移位、栅栏、仿射、盲文和摩斯算法，不读取页面状态。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/expansion/classical-core.js',
+    '八种古典密码共用原实现与原参数，puzzle-engines 检查往返。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/expansion/keyboard-core.js',
+    '原键盘转换保留歧义、严格未知字符校验。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/hunt-extract.js',
+    '页面与分析共用同一答案提取所有者，Unicode 与索引语义不分叉。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/round1/analysis-engine.js',
+    '仿射候选复用原英文卡方排序，分值不称为概率。',
+  ],
+  [
+    'public/round1/analysis.js',
+    'public/clue-analysis/puzzle-profiles.js',
+    '页面只投影实际登记的分析策略标题。',
+  ],
+  [
+    'public/round1/analysis.js',
+    'public/clue-analysis/sources.js',
+    '来源列表与任务契约共用，固定原实现署名不省略。',
+  ],
+  ['public/round1/analysis.js', 'public/project-licenses.js', '来源页脚读取既有准确许可证元数据。'],
+  [
+    'public/round1/analysis-conditions.js',
+    'public/chef-tools/schema.js',
+    '有条件解密复用原参数表单及默认值，参数变化同步作废分析。',
+  ],
+  [
+    'public/round1/analysis-conditions.js',
+    'public/clue-analysis/conditional-operations.js',
+    '参数补充页只能选择分析已允许的文本密码操作。',
+  ],
+  [
+    'public/clue-analysis/chef-adapter.js',
+    'public/cyberchef-client.js',
+    '线索分析复用原 Worker 协议和完整字节；browser-clue-analysis 检查完整配方、取消和跨引擎续接。',
+  ],
+  [
+    'public/clue-analysis/chef-adapter.js',
+    'public/chef-tools/parameter-model.js',
+    '自动分析与原表单共用默认参数语义，不导入 UI；clue-analysis 参数与表单回归。',
+  ],
+  [
+    'public/clue-analysis/local-adapters.js',
+    'public/completion/job.js',
+    '复用原可终止的拼读字母 Worker，保留其结果与取消所有权；browser-clue-analysis 实测。',
+  ],
+  [
+    'public/clue-analysis/local-adapters.js',
+    'public/completion/codes.js',
+    '仅复用原 NATO 字母表进行候选筛选，实际转换通过 completionJob。',
+  ],
+  [
+    'public/clue-analysis/worker.js',
+    'public/basics/core.js',
+    '分析独立 Worker 调用原罗马数字引擎，不创建或读取原页面状态。',
+  ],
+  [
+    'public/clue-analysis/worker.js',
+    'public/round1/analysis-engine.js',
+    '分析 Worker 复用原密文统计，非有限分值明确标记，不当作正确率。',
   ],
   [
     'public/fun-tools/common.js',
@@ -13,8 +179,8 @@ export const bridges = [
   ],
   [
     'public/round1/analysis.js',
-    'public/chef-tools/structured-result.js',
-    '密文分析和 CyberChef 工作区共用真实 Magic 候选投影，不拥有另一套输入或运算状态；browser-chef-experience 验证。',
+    'public/clue-analysis/index.js',
+    '文本分析页面使用有界的真实引擎会话，输入变化与离页取消；browser-clue-analysis page 验证。',
   ],
   [
     'public/fun-tools/worker.js',
@@ -489,8 +655,8 @@ export const bridges = [
   ['public/chef-tools/task-view.js', 'public/cyberchef-client.js', 'Chef task execution adapter'],
   [
     'public/round1/analysis.js',
-    'public/cyberchef-client.js',
-    'Explicit automatic decoding through Chef',
+    'public/clue-analysis/presentation.js',
+    '文本分析页面仅投影完整执行图，不从候选摘要重建结果。',
   ],
   [
     'public/round1/symbols.js',
@@ -601,7 +767,10 @@ const shared = new Set([
   'public/capabilities/input-session.js',
   'public/capabilities/task-lifecycle.js',
 ]);
+// These helpers transfer an unused or completed worker to its actual controller.
 const sharedRoot = new Set([
+  'public/prepared-worker.js',
+  'public/idle-worker.js',
   'public/navigation.js',
   'public/tool-search.js',
   'public/cyberchef-i18n.js',
@@ -616,6 +785,7 @@ export function isDiscoveryData(file) {
     [
       'public/navigation.js',
       'public/capabilities/registry.js',
+      'public/capabilities/analysis-access.js',
       'public/capabilities/routes.js',
       'public/capabilities/search.js',
       'public/practical/catalog.js',
@@ -636,6 +806,7 @@ export function isDiscoveryData(file) {
       'public/file-workbench/catalog.js',
       'public/fun-tools/catalog.js',
       'public/forensics/catalog.js',
+      'public/forensics/stegoveritas-catalog.js',
       'public/external-guide/catalog.js',
       'public/coderunner/catalog.js',
       'public/coderunner/server-catalog.js',

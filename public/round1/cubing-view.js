@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import { puzzles } from '../vendor/round1/cubing/lib/cubing/puzzles/index.js';
 import {
   Box,
@@ -213,7 +214,7 @@ export function mountCubing(panel, { facelets = async () => null, selectSources 
     clear({ keepPlaying: true });
     const current = revision;
     try {
-      worker = new Worker(new URL('./cubing-worker.js', import.meta.url), { type: 'module' });
+      worker = takeWorker(new URL('./cubing-worker.js', import.meta.url), { type: 'module' });
       updateStatus(status, '正在载入形状与状态…');
       timer = setTimeout(() => {
         if (current === revision) {

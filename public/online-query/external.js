@@ -108,116 +108,6 @@ function basicField(provider, spec) {
     set,
   };
 }
-function complexField(provider, spec) {
-  if (spec.type === 'cone') {
-    const fields = [
-      basicField(provider, {
-        name: 'cone-ra',
-        label: '赤经（ICRS 度）',
-        type: 'number',
-        step: 'any',
-      }),
-      basicField(provider, {
-        name: 'cone-dec',
-        label: '赤纬（ICRS 度）',
-        type: 'number',
-        step: 'any',
-      }),
-      basicField(provider, {
-        name: 'cone-radius',
-        label: '半径（度，最多 1）',
-        type: 'number',
-        step: 'any',
-      }),
-    ];
-    return {
-      node: Box({
-        attrs: { role: 'group', 'aria-label': spec.label },
-        children: [
-          Box({ tag: 'p', text: spec.label }),
-          FormGrid({ children: fields.map((field) => field.node) }),
-        ],
-      }),
-      get() {
-        const values = fields.map((field) => field.get());
-        if (values.every((value) => value === undefined)) return null;
-        if (values.some((value) => value === undefined))
-          throw Error('天区范围须同时填写赤经、赤纬和半径。');
-        return { ra: values[0], dec: values[1], radius: values[2] };
-      },
-      set(value) {
-        fields.forEach((field, i) => field.set(value?.[['ra', 'dec', 'radius'][i]]));
-      },
-    };
-  }
-  const rows = Box({ className: 'online-query-conditions' }),
-    add = Button({ text: '添加筛选条件' }),
-    entries = [];
-  let sequence = 0,
-    enabled = true;
-  const refresh = (active = enabled) => {
-    enabled = active;
-    add.disabled = !active || entries.length >= 8;
-  };
-  function append(value = {}) {
-    const index = sequence++,
-      columns = [
-        basicField(`${provider}-condition-${index}`, {
-          name: 'column',
-          label: '列名',
-          type: 'text',
-        }),
-        basicField(`${provider}-condition-${index}`, {
-          name: 'operator',
-          label: '比较',
-          type: 'choice',
-          options: ['=', '!=', '<', '<=', '>', '>='].map((value) => [value, value]),
-          value: '=',
-        }),
-        basicField(`${provider}-condition-${index}`, { name: 'value', label: '值', type: 'text' }),
-      ],
-      remove = Button({ text: '移除此条件' }),
-      row = FormGrid({ children: [...columns.map((field) => field.node), remove] });
-    const entry = { columns, row };
-    entries.push(entry);
-    rows.append(row);
-    columns.forEach((field, i) =>
-      field.set(value[['column', 'operator', 'value'][i]] ?? (i === 1 ? '=' : '')),
-    );
-    remove.onclick = () => {
-      entries.splice(entries.indexOf(entry), 1);
-      row.remove();
-      refresh();
-      rows.dispatchEvent(new Event('input', { bubbles: true }));
-    };
-    refresh();
-  }
-  add.onclick = () => {
-    if (entries.length < 8) append();
-  };
-  append();
-  return {
-    node: Box({
-      attrs: { role: 'group', 'aria-label': spec.label },
-      children: [Box({ tag: 'p', text: spec.label }), rows, add],
-    }),
-    refresh,
-    get() {
-      return entries.flatMap(({ columns }) => {
-        const [column, operator, value] = columns.map((field) => field.get());
-        if (column === undefined && value === undefined) return [];
-        if (column === undefined || value === undefined)
-          throw Error('每条筛选条件都须填写列名和值。');
-        return [{ column, operator, value }];
-      });
-    },
-    set(values) {
-      for (const { row } of entries) row.remove();
-      entries.length = 0;
-      for (const value of values?.length ? values : [{}]) append(value);
-    },
-  };
-}
 function mountProvider(main, spec) {
   const endpoint = new URL('../api/query/' + spec.id, import.meta.url),
     modes = new Map();
@@ -232,9 +122,7 @@ function mountProvider(main, spec) {
     .map((item, index) => {
       const fields = item.fields.map((field) => ({
           spec: field,
-          ...(['cone', 'conditions'].includes(field.type)
-            ? complexField(spec.id + '-' + item.id, field)
-            : basicField(spec.id + '-' + item.id, field)),
+          ...basicField(spec.id + '-' + item.id, field),
         })),
         grid = FormGrid({ hidden: index !== 0, children: fields.map((field) => field.node) }),
         hint = Box({ tag: 'p', text: item.hint, hidden: index !== 0 || !item.hint });

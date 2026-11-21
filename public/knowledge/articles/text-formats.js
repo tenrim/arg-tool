@@ -5,10 +5,46 @@ export const articles = [
     capabilityIds: ['native:cipher-detect'],
     relatedIds: ['native:cipher-detect'],
     topicGroup: 'cipher-analysis',
-    title: '密文智能识别',
-    summary: '先测字符分布，再检验移位和周期候选；格式相似只产生提示。',
-    aliases: ['密文识别', 'IC', '字频', '启发式'],
+    title: '文本线索分析',
+    summary: '由文本格式提出候选，调用原转换引擎串联处理；统计和格式相似不等于答案正确。',
+    aliases: ['密文智能识别', '密文识别', 'IC', '字频', '启发式', '跨工具分析'],
     sources: [
+      {
+        id: 'magic',
+        title: 'CyberChef Magic 的候选探索与统计排序',
+        publisher: 'GCHQ',
+        url: 'https://github.com/gchq/CyberChef/blob/11b86fecdb5d8f6244cf931e1f87cec887ec1f1f/src/core/lib/Magic.mjs#L243-L347',
+        language: 'en',
+        kind: 'implementation',
+        locator: '固定参考提交，243–347 行',
+      },
+      {
+        id: 'pipeline',
+        title: '文本分析会话、去重与预算',
+        publisher: '迷雾工具箱',
+        url: '/clue-analysis/session.js',
+        language: 'zh-CN',
+        kind: 'implementation',
+        locator: 'createAnalysisSession',
+      },
+      {
+        id: 'native',
+        title: '原生文本转换适配器与参数',
+        publisher: '迷雾工具箱',
+        url: '/clue-analysis/local-adapters.js',
+        language: 'zh-CN',
+        kind: 'implementation',
+        locator: 'localAdapters',
+      },
+      {
+        id: 'puzzle',
+        title: '解谜文字分析策略与原引擎调用',
+        publisher: '迷雾工具箱',
+        url: '/clue-analysis/puzzle-profiles.js',
+        language: 'zh-CN',
+        kind: 'implementation',
+        locator: 'PUZZLE_PROFILES',
+      },
       {
         id: 'entropy',
         title: 'Shannon Diversity Index：频率概率与熵公式',
@@ -48,6 +84,26 @@ export const articles = [
     ],
     sections: [
       {
+        title: '文本转换图',
+        paragraphs: [
+          '候选分析先检查文本是否符合转换条件，再执行实际转换。每份完整结果作为一个节点，操作、参数和匹配依据构成连接节点的边；相同类型与内容的结果合并，仍保留各条处理关系。格式匹配是一种启发式线索，不能证明字符串的来源或作者意图。',
+          'CyberChef Magic 按输入特征尝试匹配操作，并结合 UTF-8 有效性、语言统计等性质排列候选。其 data 字段只有开头片段；本站重新执行完整配方取得全部输出，随后再由 NATO 拼读字母、罗马数字、敲击码／方阵、波多码等已接通工具继续转换。',
+          '方阵自动尝试采用无关键词、行在前的标准 5×5 或 6×6 排列，敲击码采用 C/K 合并；五位波多码尝试 ITA1、ITA2 与 US_TTY，不自动反转位序。自定义方阵、其他字母表和需要密钥的算法并不因此被穷尽。',
+          '解谜策略还调用本站原有的扩展字节编码、整数编码、键盘映射、文字隐写、盲文、古典密码、字词查询和答案提取。调度先完成当前转换层，各适用工具轮流执行提案，再继续后代；已知条件执行后从其结果继续。仿射参数按原英文卡方分数排序，多语言盲文使用随包完整规则目录提出候选，实际执行仍受次数与时间预算限制。',
+          '需要算法、密钥、IV、运算模式或转子配置的处理，通过原 CyberChef 参数定义补充条件，再把实际输出交回分析流程。猜测分支、缺少条件、执行失败和达到限额均单独记录；默认每条分支只作一层泛用试解，持续模式可在所选层数内组合；相同节点与参数不重复执行。',
+        ],
+        sourceIds: ['magic', 'pipeline', 'native', 'puzzle'],
+        examples: [
+          {
+            label: '跨工具的两层转换',
+            input: 'QWxmYSBCcmF2byBDaGFybGll',
+            output: 'Alfa Bravo Charlie → ABC',
+            explanation:
+              'Base64 还原得到完整拼读词组，再由无线电拼读字母转换取出 A、B、C。ABC 仍需结合题意判断。',
+          },
+        ],
+      },
+      {
         title: '规则与机制',
         paragraphs: [
           '本站对 A–Z 统计频数 fᵢ、样本长度 N，并以 IC=Σfᵢ(fᵢ−1)/(N(N−1)) 衡量不放回抽取两字符相同的概率。全体字符另以 H=−Σpᵢlog₂pᵢ 计算熵，二者使用的字符集合不同。',
@@ -67,8 +123,9 @@ export const articles = [
         title: '边界与参数',
         paragraphs: [
           '英语模型不适用于任意中文或极短密文。高熵也可能来自压缩；格式匹配不能确认编码，候选的可读性须结合题面核对。',
+          '自动分析只接受文本，默认受转换层数、时间与结果数量限制，未找到候选不等于不存在编码。非 UTF-8 或含控制字节的中间结果不强行按文字解码；已知压缩封装可继续尝试还原文本，其余适合的字节可按原字符编码目录尝试。目录选项不保证固定引擎均支持，不支持的编码单独记录。隐藏字符检查仅报告类别和位置，不自动删除原文字符。',
         ],
-        sourceIds: ['implementation', 'entropy', 'chi', 'ic'],
+        sourceIds: ['implementation', 'entropy', 'chi', 'ic', 'pipeline', 'native'],
         examples: [],
       },
     ],

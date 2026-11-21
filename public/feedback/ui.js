@@ -8,6 +8,7 @@ import {
   Field,
   Input,
   Textarea,
+  ImageInputPreview,
   Select,
   Option,
   Status,
@@ -46,6 +47,7 @@ export function mountFeedback({ getTask }) {
     contact = Input({ attrs: { maxlength: 160 }, placeholder: '选填，便于联系你补充信息' });
   const attachment = Input({ id: 'report-files', type: 'file', attrs: { multiple: true } }),
     attachmentInfo = Box({ tag: 'p' });
+  const screenshots = [ImageInputPreview(), ImageInputPreview()];
   const preview = Textarea({
     id: 'report-preview',
     autoSize: true,
@@ -75,6 +77,7 @@ export function mountFeedback({ getTask }) {
         ? [
             Field({ label: '截图或示例文件（选填，最多 2 个，合计 4 MB）', control: attachment }),
             attachmentInfo,
+            ...screenshots.map((preview) => preview.node),
           ]
         : []),
       Box({
@@ -140,6 +143,7 @@ export function mountFeedback({ getTask }) {
     const rev = ++fileRevision;
     files = [];
     const selected = [...attachment.files];
+    screenshots.forEach((preview) => preview.show(null));
     attachmentInfo.textContent = '正在准备附件…';
     send.disabled = true;
     try {
@@ -155,6 +159,7 @@ export function mountFeedback({ getTask }) {
         prepared.push({ name: file.name, type: file.type, data: btoa(binary) });
       }
       files = prepared;
+      screenshots.forEach((preview, index) => preview.show(selected[index]));
       attachmentInfo.textContent = selected
         .map((f) => `${f.name} · ${f.size.toLocaleString()} 字节`)
         .join('；');

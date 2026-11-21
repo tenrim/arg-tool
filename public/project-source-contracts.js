@@ -1,4 +1,5 @@
 import { FILE_TASKS } from './file-workbench/catalog.js';
+import { ANALYSIS_SOURCES } from './clue-analysis/sources.js';
 import { FUN_SOURCES } from './fun-tools/sources.js';
 import { SERVER_LANGUAGES } from './coderunner/server-catalog.js';
 import { serverLanguageSources } from './coderunner/sources.js';
@@ -63,6 +64,7 @@ export const TASK_PROJECT_SOURCES = Object.freeze(
         'https://github.com/101arrowz/fflate': '将完整结果文件在浏览器内打包下载。',
       }),
     ),
+    entry('cipher-detect', 'analysis', ANALYSIS_SOURCES),
     entry('function-plot', 'function-plot', []),
     entry(
       'character-tables',
@@ -164,6 +166,23 @@ export const TASK_PROJECT_SOURCES = Object.freeze(
           '完整动画 ZIP 打包，保存全部原始帧、合成帧、参数和原文件。',
       },
     ),
+    ...[
+      'concat',
+      'replace-audio',
+      'crop',
+      'detect',
+      'segments',
+      'sync',
+      'channels',
+      'clip',
+      'mute',
+      'resize',
+      'rotate',
+      'speed',
+      'subtitle',
+      'inspect',
+      'capabilities',
+    ].map((mode) => entry('video-' + mode, 'video', ['https://github.com/ffmpegwasm/ffmpeg.wasm'])),
     entry('video-native', 'video', ['https://github.com/ffmpegwasm/ffmpeg.wasm'], {
       'https://github.com/ffmpegwasm/ffmpeg.wasm':
         '固定本地 FFmpeg 核心的原生命令、格式、编解码器、滤镜及完整帮助；只处理显式选择的本机文件。',
@@ -201,8 +220,6 @@ export const TASK_PROJECT_SOURCES = Object.freeze(
       'https://github.com/publicsuffix/list',
       'https://github.com/nk2028/opencc-js',
     ]),
-    entry('simbad', 'simbad', ['https://simbad.cds.unistra.fr/simbad/']),
-    entry('vizier', 'vizier', ['https://vizier.cds.unistra.fr/']),
     entry('cod', 'cod', ['https://www.crystallography.net/cod/']),
     entry('pubchem', 'pubchem', ['https://pubchem.ncbi.nlm.nih.gov/']),
     entry('placenames', 'placenames', ['https://dmfw.mca.gov.cn/']),

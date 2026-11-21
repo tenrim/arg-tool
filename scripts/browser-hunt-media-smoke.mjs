@@ -55,6 +55,7 @@ try {
   assert.equal(await p.locator('#video-results img').count(), 1);
   console.log('FFmpeg real video frame extraction passed');
   await chooseNativeTask(p, 'native:video-audio');
+  await p.locator('#video-range').selectOption('clip');
   await p.locator('#video-duration').fill('1');
   await p.locator('#video-run').click();
   await p.waitForFunction(

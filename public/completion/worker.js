@@ -19,6 +19,7 @@ import { hamming } from './hamming.js';
 import { gs8 } from './gs8.js';
 import { marine } from './marine.js';
 import { keyboardLayouts, layoutCode } from './keyboard-layout.js';
+let lastDictionary, lastRows, gs8Table;
 self.onmessage = async ({ data: { task, input, options: o = {} } }) => {
   try {
     if (typeof input !== 'string' || input.length > 2000000)
@@ -58,18 +59,24 @@ self.onmessage = async ({ data: { task, input, options: o = {} } }) => {
     else if (task === 'marine-signals') ({ output, svg } = await marine(input, o));
     else if (task === 'prussian') ({ output, svg } = await prussian(input, o));
     else if (task === 'gs8') {
-      const response = await fetch(
-        new URL('../vendor/completion/gs8/symbols.json', import.meta.url),
-      );
-      if (!response.ok) throw Error('GS8 完整码表加载失败。');
-      output = gs8(input, o, await response.json());
+      if (!gs8Table) {
+        const response = await fetch(
+          new URL('../vendor/completion/gs8/symbols.json', import.meta.url),
+        );
+        if (!response.ok) throw Error('GS8 完整码表加载失败。');
+        gs8Table = await response.json();
+      }
+      output = gs8(input, o, gs8Table);
     } else if (task === 'keyboard-extra')
       output = o.mode.startsWith('layout-')
         ? layoutCode(input, o, await keyboardLayouts())
         : keyboardCode(input, o.mode, o.direction);
     else if (task === 't9') {
-      const rows = await loadEnglishRecords(o.dictionary);
-      const matches = t9Matches(rows, input.trim());
+      if (!lastRows || lastDictionary !== o.dictionary) {
+        lastRows = await loadEnglishRecords(o.dictionary);
+        lastDictionary = o.dictionary;
+      }
+      const matches = t9Matches(lastRows, input.trim());
       output = matches.join('\n');
     } else if (task === 'color-codes') {
       const value = ['resistor', 'capacitor'].includes(o.mode)

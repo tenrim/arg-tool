@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 // A cancelled computation loses its entire WASM instance. Restoring explicit
 // definitions/options in a fresh instance cannot deliver an old result.
 export function qalculateClient(onStatus = () => {}) {
@@ -15,7 +16,7 @@ export function qalculateClient(onStatus = () => {}) {
   }
   function run(op, data = {}) {
     if (!worker) {
-      worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+      worker = takeWorker(new URL('./worker.js', import.meta.url), { type: 'module' });
       worker.onmessage = ({ data }) => {
         const p = pending.get(data.id);
         if (!p) return;

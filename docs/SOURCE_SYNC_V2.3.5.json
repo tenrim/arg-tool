@@ -1,0 +1,10 @@
+{
+  "version": "V2.3.5",
+  "date": "2026-11-22",
+  "main_head": "7657f180fb7156c8c074ad3ee54c26dd09ff66e7",
+  "snapshot": "7657f180fb7156c8c074ad3ee54c26dd09ff66e7-workspace-ff58861b2069",
+  "workspace_sha256": "ff58861b2069d6f6258193db49281a5f96e29c06b6a86f18cf6dc34746977b60",
+  "source_imported": 278,
+  "source_removed": 8,
+  "dependency_files_changed": 44
+}

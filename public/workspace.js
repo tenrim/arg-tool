@@ -15,6 +15,7 @@ import {
 import { sitePages } from './navigation.js';
 import {
   loadRegistry,
+  subscribeRegistry,
   searchEntries,
   capabilityCategories,
   literalSearchEvidence,
@@ -30,6 +31,7 @@ export function mountToolSearch(header, navigate) {
     placeholder: '查找工具',
     attrs: {
       autocomplete: 'off',
+      'data-tool-search': '',
       role: 'combobox',
       'aria-autocomplete': 'list',
       'aria-controls': 'workspace-search-results',
@@ -252,7 +254,12 @@ export function mountToolSearch(header, navigate) {
   });
   listen(document, 'arg:panelchange', close);
   listen(document, 'arg:preferenceschange', render);
+  const unsubscribeRegistry = subscribeRegistry((value) => {
+    registry = value;
+    if (expanded) render();
+  });
   onDisconnect(root, () => {
+    unsubscribeRegistry();
     destroyed = true;
     abort.abort();
     close();

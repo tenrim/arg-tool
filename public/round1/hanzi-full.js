@@ -17,6 +17,7 @@ import {
   updateStatus,
 } from '../ui/index.js';
 import { resultRecording } from '../result-recording.js';
+import { loadHanziResource } from './hanzi-resources.js';
 export function mountHanziFull(panel, load) {
   const mode = Select({
       id: 'hanzi-full-mode',
@@ -81,11 +82,14 @@ export function mountHanziFull(panel, load) {
     drawings = [],
     index = 0,
     library,
+    timer,
     started = false;
   const motion = matchMedia('(prefers-reduced-motion: reduce)'),
     recording = resultRecording({ id: 'hanzi-full-result', anchor: summary, panel });
   const clear = () => {
     revision++;
+    clearTimeout(timer);
+    updateStatus(status, '');
     if (drawController?.type === 'animation')
       try {
         drawController.pauseAnimation();
@@ -144,26 +148,106 @@ export function mountHanziFull(panel, load) {
   run.onclick = async () => {
     clear();
     const current = revision;
-    controller = new AbortController();
+    const request = new AbortController();
+    controller = request;
+    let timedOut = false;
+    const query = input.value.trim(),
+      selectedMode = mode.value,
+      selectedDrawMode = motion.matches ? 'normal' : drawMode.value;
+    updateStatus(status, '正在载入汉字资料…');
+    timer = setTimeout(() => {
+      if (current !== revision) return;
+      timedOut = true;
+      request.abort();
+      updateStatus(status, '汉字资料载入超时，请重试。', 'error');
+    }, 30000);
     try {
-      const chars = [...input.value.trim()];
+      const chars = [...query];
       if (!chars.length || chars.length > 50) throw Error('请输入 1–50 个汉字。');
       library = await load();
       if (current !== revision) return;
-      let result;
-      if (mode.value === 'draw') {
-        drawController = library.cc.draw(input.value, {
-          el: host,
-          type: motion.matches ? 'normal' : drawMode.value,
-          animation: { autoAnimate: false },
-        });
-        result = { characters: input.value, mode: motion.matches ? 'normal' : drawMode.value };
-      } else if (mode.value === 'explain' || mode.value === 'words') {
-        const value = await library.cc[mode.value](input.value);
+      request.signal.throwIfAborted();
+      let result,
+        missing = false;
+      if (selectedMode === 'draw') {
+        if (chars.some((char) => !library.cc.isCnChar(char)))
+          throw Error('笔顺演示请输入汉字，不含标点或拉丁字母。');
+        const data = new Map(
+          await Promise.all(
+            [...new Set(chars)].map(async (char) => [
+              char,
+              await loadHanziResource('draw', char, { signal: request.signal }),
+            ]),
+          ),
+        );
         if (current !== revision) return;
+        // Normal/animation modes accept original HanziWriter loaders through
+        // cnchar's flattened style options; stroke mode signals actual rendered
+        // completion through the public onComplete callback.
+        await new Promise((resolve, reject) => {
+          let loaded = 0,
+            completed = 0,
+            settled = false;
+          const finish = (error) => {
+            if (settled) return;
+            settled = true;
+            request.signal.removeEventListener('abort', aborted);
+            if (error) reject(error);
+            else resolve();
+          };
+          const aborted = () => finish(request.signal.reason);
+          request.signal.addEventListener('abort', aborted, { once: true });
+          drawController = library.cc.draw(query, {
+            el: host,
+            type: selectedDrawMode,
+            animation: { autoAnimate: false },
+            onComplete: () => {
+              if (selectedDrawMode !== 'stroke' || ++completed === chars.length) finish();
+            },
+            style: {
+              charDataLoader: (char, accept, fail) => {
+                const record = data.get(char);
+                if (record) accept(record);
+                else fail(Error('笔顺资料未就绪，请重试。'));
+              },
+              onLoadCharDataSuccess: () => {
+                if (++loaded === chars.length) finish();
+              },
+              onLoadCharDataError: () => finish(Error('笔顺资料载入失败，请重试。')),
+            },
+          });
+          if (!drawController) finish(Error('笔顺绘制未启动，请重试。'));
+        });
+        if (current !== revision) return;
+        await new Promise((resolve, reject) => {
+          const aborted = () => {
+            cancelAnimationFrame(frame);
+            reject(request.signal.reason);
+          };
+          const frame = requestAnimationFrame(() => {
+            request.signal.removeEventListener('abort', aborted);
+            resolve();
+          });
+          request.signal.addEventListener('abort', aborted, { once: true });
+        });
+        if (current !== revision) return;
+        if (!host.querySelector('svg path')) throw Error('笔顺未能绘制，请重试。');
+        result = { characters: query, mode: selectedDrawMode };
+      } else if (selectedMode === 'explain' || selectedMode === 'words') {
+        let value;
+        if (selectedMode === 'explain') {
+          const data = await loadHanziResource('explanation', chars[0], { signal: request.signal });
+          if (current !== revision) return;
+          if (Object.hasOwn(data, query) && data[query]) {
+            library.cc.explain.addExplain(query, data[query]);
+            value = await library.cc.explain(query);
+          } else value = '';
+        } else value = await library.cc.words(query);
+        if (current !== revision) return;
+        missing = Array.isArray(value) ? value.length === 0 : !value;
         const text = Array.isArray(value) ? value.join('、') : String(value || '未收录');
-        summary.append(Box({ tag: 'p', text }));
-        result = { query: input.value, kind: mode.value, result: value };
+        summary.append(Box({ tag: 'p', text: missing ? '未收录匹配的字词资料。' : text }));
+        result = { query, kind: selectedMode, result: value };
       } else {
         if (!graphics) {
           const response = await fetch(
@@ -208,9 +292,27 @@ export function mountHanziFull(panel, load) {
       const text = JSON.stringify(result, null, 2);
       setTextareaValue(output, text);
       recording.publish({ text, name: '汉字完整记录.json' });
-      updateStatus(status, '已载入；未收录项会明确标出，完整原始记录可展开查看。', 'success');
+      updateStatus(
+        status,
+        missing
+          ? '当前本地资料未收录匹配项。'
+          : '已载入；未收录项会明确标出，完整原始记录可展开查看。',
+        missing ? 'info' : 'success',
+      );
     } catch (e) {
-      if (current === revision) updateStatus(status, e.message, 'error');
+      request.abort();
+      if (current === revision) {
+        host.replaceChildren();
+        summary.replaceChildren();
+        recording.clear();
+        setTextareaValue(output, '');
+        updateStatus(status, timedOut ? '汉字资料载入超时，请重试。' : e.message, 'error');
+      }
+    } finally {
+      if (current === revision) {
+        clearTimeout(timer);
+        controller = null;
+      }
     }
   };
   stop.onclick = () => {
@@ -247,11 +349,14 @@ export function mountHanziFull(panel, load) {
       show();
     }
   };
-  for (const n of [mode, input, drawMode])
-    n.addEventListener('input', () => {
+  for (const n of [mode, input, drawMode]) {
+    const changed = () => {
       clear();
       controls();
-    });
+    };
+    n.addEventListener('input', changed);
+    n.addEventListener('change', changed);
+  }
   const leave = ({ detail }) => {
       if (detail?.name !== 'hanzi') clear();
     },

@@ -1,4 +1,6 @@
 import { mountHanziFull } from './hanzi-full.js';
+import { onDisconnect } from '../ui/index.js';
+import { componentMatches } from './hanzi-components.js';
 import {
   $,
   esc,
@@ -86,6 +88,14 @@ export function initHanzi() {
     ],
   );
   mountHanziFull($('panel-hanzi'), load);
+  const prepareLibrary = ({ detail }) => {
+    if (detail?.name === 'hanzi' && !navigator.connection?.saveData)
+      script('./vendor/hanzi-full/cnchar-all.js').catch(() => {});
+  };
+  document.addEventListener('arg:panelchange', prepareLibrary);
+  onDisconnect($('panel-hanzi'), () =>
+    document.removeEventListener('arg:panelchange', prepareLibrary),
+  );
   const recording = resultRecording({
     id: 'hanzi-result',
     anchor: $('hanzi-output').parentElement,
@@ -165,29 +175,28 @@ export function initHanzi() {
         from: mode === 'simplified' ? 't' : 'cn',
         to: mode === 'simplified' ? 'cn' : 't',
       })(text);
-    else if (mode === 'sound')
-      out = [...new Set([...cc.spellToWord(text), ...cc.spellToWord(text, 'trad')])].join(' ');
-    else if (mode === 'stroke') {
+    else if (mode === 'sound') {
+      const syllable = text.normalize('NFC').toLowerCase(),
+        options = /[0-5āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/u.test(syllable) ? [] : ['alltone'];
+      out = [...new Set(cc.spellToWord(syllable, ...options))].join(' ');
+    } else if (mode === 'stroke') {
       const n = Number(text);
       if (!Number.isInteger(n) || n < 1 || n > 64) throw Error('请输入 1–64 的整数笔画数。');
       out = [...new Set([...cc.strokeToWord(n), ...cc.strokeToWord(n, 'trad')])].join(' ');
     } else if (mode === 'component') {
-      const parts = [...text.replace(/\s/g, '')];
-      function contains(c, p, seen = new Set()) {
-        if (c === p) return true;
-        if (seen.has(c)) return false;
-        seen.add(c);
-        return [...(dict.get(c)?.decomposition || '')].some(
-          (x) => x === p || (dict.has(x) && contains(x, p, seen)),
-        );
-      }
-      out = [...dict.keys()].filter((c) => parts.every((p) => contains(c, p))).join(' ');
-    } else if (mode === 'idiom')
-      out = cc
-        .idiom(/[?？]/.test(text) ? [...text].map((c) => (/[?？]/.test(c) ? '' : c)) : text)
-        .slice(0, 1000)
-        .join('\n');
-    else if (mode === 'xhy') out = cc.xhy(text, 'fuzzy').slice(0, 1000).join('\n');
+      out = componentMatches(dict, text).join(' ');
+    } else if (mode === 'idiom') {
+      const pattern = [...text],
+        matches = /[?？]/.test(text)
+          ? cc
+              .idiom(
+                pattern.map((c) => (/[?？]/.test(c) ? '' : c)),
+                'char',
+              )
+              .filter((word) => [...word].length === pattern.length)
+          : cc.idiom(text);
+      out = matches.join('\n');
+    } else if (mode === 'xhy') out = cc.xhy(text, 'fuzzy').join('\n');
     else if (mode === 'four' || mode === 'cangjie') {
       const entries = Object.entries({ ...cc.code.dict.code, ...cc.trad.dict.code });
       out = text

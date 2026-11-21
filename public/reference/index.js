@@ -1,3 +1,4 @@
+import { lookupWorker, releaseLookup } from '../idle-worker.js';
 import {
   element as uiElement,
   DataList,
@@ -29,9 +30,10 @@ function controls(id) {
         ]),
       ) +
       field(
-        '国家／地区代码（可留空）',
+        '关联国家／地区代码（仅现行，可留空）',
         '<input id="currencies-region" maxlength="2" placeholder="如 CN" autocapitalize="characters">',
-      )
+      ) +
+      '<p id="currencies-region-note" class="help" hidden>历史货币按资料原文的使用实体检索；上方国家范围仅适用于现行货币，历史模式不使用该条件。</p>'
     );
   if (id === 'marine')
     return (
@@ -91,6 +93,8 @@ function controls(id) {
                 ['medium_airport', '中型机场'],
                 ['small_airport', '小型机场'],
                 ['heliport', '直升机场'],
+                ['seaplane_base', '水上机场'],
+                ['balloonport', '气球场'],
                 ['closed', '已关闭'],
               ]
             : [
@@ -222,12 +226,22 @@ export function initReference() {
         stop();
       },
     });
+    function syncCurrencyScope() {
+      if (id === 'currencies') {
+        const historic = $('currencies-filter').value === 'historic';
+        $('currencies-region').disabled = historic;
+        $('currencies-region-note').hidden = !historic;
+      }
+    }
     const params = () => ({
       query: query.value,
       recordId,
       deck,
       mode: $(id + '-mode')?.value,
-      region: $(id + '-region')?.value.trim(),
+      region:
+        id === 'currencies' && $('currencies-filter').value === 'historic'
+          ? ''
+          : $(id + '-region')?.value.trim(),
       filter: $(id + '-filter')?.value,
       maxMagnitude: $(id + '-max-magnitude')?.value,
       bits:
@@ -346,6 +360,7 @@ export function initReference() {
       );
     }
     function run() {
+      syncCurrencyScope();
       const nextPage = page,
         selected = recordId;
       invalidate('正在载入资料并查询…');
@@ -361,7 +376,7 @@ export function initReference() {
         buttons();
       };
       try {
-        worker = new Worker(new URL('./worker.js', import.meta.url));
+        worker = lookupWorker(new URL('./worker.js', import.meta.url), { group: id });
         buttons();
         timer = setTimeout(() => fail('查询超过 30 秒，已停止。请缩小条件后重试。'), 30000);
         worker.onerror = (e) => {
@@ -370,11 +385,13 @@ export function initReference() {
         };
         worker.onmessage = ({ data }) => {
           if (current !== revision) return;
-          stop();
           if (data.error) {
             fail(data.error);
             return;
           }
+          releaseLookup(worker);
+          worker = null;
+          clearTimeout(timer);
           render(data.result);
         };
         worker.postMessage({
@@ -392,10 +409,12 @@ export function initReference() {
       run();
     };
     form.addEventListener('input', () => {
+      syncCurrencyScope();
       invalidate();
       if (id === 'colors') browser?.refreshPlot();
     });
     form.addEventListener('change', () => {
+      syncCurrencyScope();
       invalidate();
       if (id === 'iching')
         for (const b of $('iching-lines').children)

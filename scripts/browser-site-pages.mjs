@@ -422,7 +422,7 @@ try {
     const versions = page.locator('#about-versions'),
       versionSummary = versions.locator(':scope>summary'),
       currentVersion = versions.locator(`[data-current-version="${APP_VERSION}"]`);
-    assert.equal(APP_VERSION, 'V2.0');
+    assert.equal(APP_VERSION, 'V2.3.5');
     assert.equal(await versions.getAttribute('open'), null, 'Version history starts collapsed');
     assert.equal(await versionSummary.textContent(), `版本更新 · ${APP_VERSION}`);
     assert.equal(await currentVersion.isVisible(), false);
@@ -430,7 +430,7 @@ try {
     await currentVersion.waitFor({ state: 'visible' });
     assert.equal(
       await currentVersion.textContent(),
-      `${APP_VERSION} · 文件分析、多语言运行与全新首页`,
+      `${APP_VERSION} · 文本线索分析提速`,
     );
     assert.equal(
       await versions.locator('[data-release-version="V1.0"]').count(),
@@ -451,8 +451,18 @@ try {
     assert.equal(await previousRelease.count(), 1, 'V1.2 保留为历史记录');
     assert.equal(await previousRelease.getAttribute('open'), null);
     const currentChanges = await versions.locator(':scope>ul').textContent();
-    for (const feature of ['文件分析', '代码运行', '工具推荐', 'Magic', '二维码传文件'])
+    for (const feature of ['候选', '完整词库', '12.59 秒'])
       assert.ok(currentChanges.includes(feature), feature + ' 列入当前公告');
+    assert.equal(await versions.locator('[data-release-version="V2.3"]').count(), 1);
+    const v21Changes = await versions.locator('[data-release-version="V2.1"]').textContent();
+    for (const feature of ['高级参数', '参数预设', 'Unicode', '汉字', 'COD', 'SIMBAD', 'VizieR'])
+      assert.ok(v21Changes.includes(feature), feature + ' 保留在 V2.1 历史公告');
+    const v20Release = versions.locator('[data-release-version="V2.0"]');
+    assert.equal(await v20Release.count(), 1, 'V2.0 保留为历史记录');
+    assert.equal(await v20Release.getAttribute('open'), null);
+    const v20Changes = await v20Release.textContent();
+    for (const feature of ['文件分析', '代码运行', '工具推荐', 'Magic', '二维码传文件'])
+      assert.ok(v20Changes.includes(feature), feature + ' 保留在 V2.0 历史公告');
     const historicalVersion = versions.locator('[data-release-version="V0.9"]');
     assert.equal(await historicalVersion.count(), 1);
     assert.equal(

@@ -2,6 +2,7 @@ import {
   element as uiElement,
   Option as uiOption,
   Box,
+  ImageInputPreview,
   Button,
   Toolbar,
   Select,
@@ -28,7 +29,7 @@ import {
   localizedError,
 } from './cyberchef-i18n.js';
 import { loadRegistry } from './capabilities/registry.js';
-import { classifyCatalogue } from './chef-tools/catalog.js';
+import { classifyCatalogue, getCatalogue } from './chef-tools/catalog.js';
 import { operationFamilies, matchFamilies } from './chef-tools/families.js';
 import { resultRecording } from './result-recording.js';
 const $ = (id) => document.getElementById(id);
@@ -427,7 +428,14 @@ export function initCyberChef() {
     removeInput = Button({ text: '删除当前输入' });
   let activeInput = 0;
   const drafts = [{ name: '输入 1', text: '', bytes: null }];
+  const originalPreview = ImageInputPreview();
+  $('chef-input-info').after(originalPreview.node);
+  function showOriginal(file) {
+    drafts[activeInput].original = file;
+    originalPreview.show(file);
+  }
   const refreshInputs = () => {
+    originalPreview.show(drafts[activeInput].original);
     inputTabs.replaceChildren(...drafts.map((d, i) => uiOption(d.name, String(i))));
     inputTabs.value = String(activeInput);
   };
@@ -493,6 +501,7 @@ export function initCyberChef() {
     fileRevision++;
     readingFile = false;
     fileBytes = null;
+    showOriginal(null);
     $('chef-input-info').textContent =
       `${new TextEncoder().encode(input.value).length} 字节 / UTF-8`;
     $('chef-file').value = '';
@@ -505,6 +514,7 @@ export function initCyberChef() {
     invalidate('正在读取文件…');
     const current = ++fileRevision;
     fileBytes = null;
+    showOriginal(null);
     input.value = '';
     $('chef-input-info').textContent = '正在读取新文件…';
     readingFile = true;
@@ -514,6 +524,7 @@ export function initCyberChef() {
       const bytes = new Uint8Array(await file.arrayBuffer());
       if (current !== fileRevision) return;
       fileBytes = bytes;
+      showOriginal(file);
       input.value = new TextDecoder().decode(bytes.slice(0, 200000));
       $('chef-input-info').textContent =
         `${file.name} · ${bytes.length.toLocaleString()} 原始字节 · 文本预览`;
@@ -521,6 +532,7 @@ export function initCyberChef() {
     } catch (error) {
       if (current === fileRevision) {
         fileBytes = null;
+        showOriginal(null);
         input.value = '';
         $('chef-input-info').textContent = '文件未载入';
         message(localizedError(error.message), true);
@@ -536,6 +548,7 @@ export function initCyberChef() {
     fileRevision++;
     readingFile = false;
     fileBytes = null;
+    showOriginal(null);
     input.value = '';
     $('chef-file').value = '';
     $('chef-input-info').textContent = '0 字节';
@@ -560,6 +573,7 @@ export function initCyberChef() {
   $('chef-to-input').onclick = () => {
     if (!result) return;
     fileBytes = result.bytes.slice();
+    showOriginal(null);
     input.value = new TextDecoder().decode(fileBytes.slice(0, 200000));
     $('chef-input-info').textContent = `${fileBytes.length} 字节 · 上一步结果`;
     $('chef-file').value = '';
@@ -636,9 +650,7 @@ export function initCyberChef() {
     loading = (async () => {
       message('正在准备 CyberChef 运算引擎…');
       try {
-        const response = await fetch(new URL('./vendor/cyberchef/catalogue.json', import.meta.url));
-        if (!response.ok) throw Error('操作目录加载失败');
-        catalogue = await response.json();
+        catalogue = await getCatalogue();
         families = operationFamilies(classifyCatalogue(catalogue), await loadRegistry());
         $('chef-category').replaceChildren(uiOption('全部操作', 'all'));
         for (const category of catalogue.categories)
@@ -684,6 +696,7 @@ export function initCyberChef() {
     if (payload !== undefined) {
       fileRevision++;
       readingFile = false;
+      showOriginal(null);
       fileBytes = typeof payload === 'string' ? null : new Uint8Array(payload).slice();
       input.value =
         typeof payload === 'string'

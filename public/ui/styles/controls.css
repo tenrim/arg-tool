@@ -447,3 +447,18 @@
   --ui-input-padding: 11px 12px;
   gap: 16px;
 }
+
+.site-ui.workbench-app [data-ui='image-input-preview'] {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+}
+.site-ui.workbench-app :is([data-ui='original-image'], .input-original-canvas) {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 14rem;
+  object-fit: contain;
+}

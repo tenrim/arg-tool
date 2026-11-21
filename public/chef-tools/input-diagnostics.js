@@ -19,7 +19,7 @@ export function inputWarnings(op, input, args, source = 'text') {
   const count = [...input.matchAll(invalid)].length;
   return count
     ? [
-        `当前宽容选项忽略了 ${count} 个非字符表字符（不含空白）。能输出字节不代表输入是有效 Base64；请核对原文，或在高级参数中关闭忽略字符并开启严格模式`,
+        `当前宽容选项忽略了 ${count} 个非字符表字符（不含空白）。能输出字节不代表输入是有效 Base64；请核对原文，或在设置中开启“显示高级参数”，再关闭忽略字符并开启严格模式`,
       ]
     : [];
 }

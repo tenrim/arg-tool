@@ -109,6 +109,12 @@ export function runCode(input, { env = process.env, signal, spawnImpl = spawn } 
     child.on('error', () => finish(Error('代码运行服务未就绪，请检查独立沙箱环境')));
     child.once('close', (code) => {
       if (cancelling || settled) return;
+      if (code === 125 && /No such image/i.test(diagnostic))
+        return finish(
+          Object.assign(Error('服务器代码运行环境缺失，请联系维护者恢复；本地运行语言仍可使用。'), {
+            code: 'ENGINE_UNAVAILABLE',
+          }),
+        );
       if (code !== 0) return finish(Error('代码沙箱启动或执行失败：' + diagnostic));
       try {
         const result = JSON.parse(Buffer.concat(chunks).toString('utf8'));

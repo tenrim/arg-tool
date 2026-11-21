@@ -22,6 +22,7 @@ async function readDataset(url) {
   parts.push(decoder.decode());
   return JSON.parse(parts.join(''));
 }
+let pendingDataset, datasetURL;
 self.onmessage = async ({ data }) => {
   try {
     const base = new URL(data.resourceBase);
@@ -33,7 +34,16 @@ self.onmessage = async ({ data }) => {
     const area = celestial ? 'atlas-celestial' : 'atlas-life-culture',
       metadata = data.kind === 'birds' && data.params?.view === 'metadata',
       file = metadata ? 'birds-metadata' : data.kind === 'classical-music' ? 'music' : data.kind;
-    const dataset = await readDataset(new URL('vendor/' + area + '/' + file + '.json', base));
+    const url = new URL('vendor/' + area + '/' + file + '.json', base);
+    if (url.href !== datasetURL) {
+      datasetURL = url.href;
+      pendingDataset = readDataset(url).catch((error) => {
+        if (datasetURL === url.href) datasetURL = undefined;
+        throw error;
+      });
+    }
+    const dataset = await pendingDataset;
+    if (data.prepare === true) return;
     if (!dataset?.meta || !Array.isArray(metadata ? dataset.sheets : dataset.records))
       throw Error('资料文件结构无效。');
     const core = await import(new URL(area + '/core.js', base).href),
@@ -46,6 +56,6 @@ self.onmessage = async ({ data }) => {
     const result = core[metadata ? 'queryBirdMetadata' : names[data.kind]](dataset, data.params);
     self.postMessage({ result: { ...result, meta: dataset.meta } });
   } catch (error) {
-    self.postMessage({ error: error?.message || '资料查询失败。' });
+    if (!data.prepare) self.postMessage({ error: error?.message || '资料查询失败。' });
   }
 };

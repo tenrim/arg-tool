@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 export function fileJob() {
   let worker, reject, timer;
   function cancel() {
@@ -11,7 +12,7 @@ export function fileJob() {
     cancel();
     return new Promise((resolve, fail) => {
       reject = fail;
-      worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+      worker = takeWorker(new URL('./worker.js', import.meta.url), { type: 'module' });
       const finish = (error, value) => {
         clearTimeout(timer);
         worker?.terminate();

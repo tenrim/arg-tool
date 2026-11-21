@@ -35,6 +35,8 @@ test('capabilities: retired selected reference databases have no discovery or le
     'crystals',
     'it-rfc',
     'it-instructions',
+    'simbad',
+    'vizier',
     ...[
       'gaussian',
       'quadratic',

@@ -236,9 +236,48 @@ async function prepareEsoteric(code, input) {
   }
   harden();
 }
+// Each worker is still dedicated to one run. Only bootstrap trusted runtimes
+// here; stdin, databases, VM globals and player code belong to execution.
+const loaders = new Map([
+  ['javascript', async () => (await import(base + 'quickjs.js')).load(base + 'quickjs.wasm')],
+  [
+    'lua',
+    async () => {
+      const { LuaFactory } = await import(base + 'lua.js');
+      return new LuaFactory(base + 'lua.wasm');
+    },
+  ],
+  [
+    'sql',
+    () => {
+      importScripts(base + 'sql.js');
+      return initSqlJs({ locateFile: () => base + 'sql-wasm.wasm' });
+    },
+  ],
+  [
+    'python',
+    () => {
+      importScripts(base + 'python/pyodide.js');
+      return loadPyodide({
+        indexURL: base + 'python/',
+        jsglobals: Object.create(null),
+        stdout: (s) => append(s + '\n'),
+        stderr: (s) => append(s + '\n', true),
+      });
+    },
+  ],
+]);
+let runtimeReady;
+function readyRuntime(id) {
+  return (runtimeReady ??= Promise.resolve()
+    .then(loaders.get(id))
+    .catch((error) => {
+      runtimeReady = undefined;
+      throw error;
+    }));
+}
 async function executeJS(code, input) {
-  const q = await import(base + 'quickjs.js'),
-    module = await q.load(base + 'quickjs.wasm');
+  const module = await readyRuntime('javascript');
   harden();
   const runtime = module.newRuntime();
   runtime.setMemoryLimit(32 * 1024 * 1024);
@@ -293,13 +332,7 @@ async function executeJS(code, input) {
   }
 }
 async function executePython(code, input) {
-  importScripts(base + 'python/pyodide.js');
-  const py = await loadPyodide({
-    indexURL: base + 'python/',
-    jsglobals: Object.create(null),
-    stdout: (s) => append(s + '\n'),
-    stderr: (s) => append(s + '\n', true),
-  });
+  const py = await readyRuntime('python');
   // Preload trusted stdlib I/O before removing host APIs. No package installation or auto-loading.
   py.runPython('import sys, io, traceback');
   py.globals.set('__arg_stdin', input);
@@ -328,8 +361,7 @@ async function executePython(code, input) {
   }
 }
 async function executeLua(code, input) {
-  const { LuaFactory } = await import(base + 'lua.js'),
-    factory = new LuaFactory(base + 'lua.wasm');
+  const factory = await readyRuntime('lua');
   await factory.mountFile('/input.txt', new TextEncoder().encode(input));
   const lua = await factory.createEngine({
     injectObjects: false,
@@ -351,8 +383,7 @@ async function executeLua(code, input) {
   }
 }
 async function executeSQL(code, dbBytes) {
-  importScripts(base + 'sql.js');
-  const SQL = await initSqlJs({ locateFile: () => base + 'sql-wasm.wasm' });
+  const SQL = await readyRuntime('sql');
   harden();
   const db = dbBytes ? new SQL.Database(new Uint8Array(dbBytes)) : new SQL.Database();
   const tables = [];
@@ -386,6 +417,10 @@ async function executeSQL(code, dbBytes) {
   }
 }
 listen('message', async ({ data }) => {
+  if (data.kind === 'prepare-runtime') {
+    if (loaders.has(data.language)) await readyRuntime(data.language).catch(() => {});
+    return;
+  }
   try {
     if (data.kind === 'init') {
       language = data.language;

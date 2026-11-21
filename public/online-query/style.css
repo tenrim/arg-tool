@@ -36,10 +36,6 @@
 .online-query-actions {
   margin-block: 1rem;
 }
-.online-query-conditions {
-  display: grid;
-  gap: 0.75rem;
-}
 .online-query-reading {
   display: grid;
   gap: 1rem;

@@ -7,6 +7,7 @@ import {
   Field,
   FormGrid,
   Input,
+  ImageInputPreview,
   Option,
   Select,
   Status,
@@ -50,6 +51,11 @@ export function mountStegExtras(host, { getImage, request, apply, stop }) {
   const payload = Input({ id: 'steg-embed-file', type: 'file' }),
     hidden = Input({ id: 'steg-hidden-image', type: 'file', attrs: { accept: 'image/*' } }),
     channel = Select({ id: 'steg-embed-channel' });
+  function fileField(label, input) {
+    const preview = ImageInputPreview();
+    input.addEventListener('change', () => preview.show(input.files[0]));
+    return Box({ children: [Field({ label, control: input }), preview.node] });
+  }
   for (const c of 'rgb') channel.append(Option(c.toUpperCase(), c));
   const bit = Input({ id: 'steg-embed-bit', type: 'number', value: 0, attrs: { min: 0, max: 7 } }),
     pad = Input({ id: 'steg-pad', type: 'checkbox' }),
@@ -172,12 +178,13 @@ export function mountStegExtras(host, { getImage, request, apply, stop }) {
         ],
       }),
       Disclosure({
+        preference: 'advancedParameters',
         children: [
           Box({ tag: 'summary', text: '嵌入与验证（进阶）' }),
           FormGrid({
             children: [
-              Field({ label: '数据载荷（复用上方 RGB 位平面及顺序）', control: payload }),
-              Field({ label: '隐藏图片', control: hidden }),
+              fileField('数据载荷（复用上方 RGB 位平面及顺序）', payload),
+              fileField('隐藏图片', hidden),
               Field({ label: '图片嵌入通道', control: channel }),
               Field({ label: '图片嵌入位平面', control: bit }),
             ],

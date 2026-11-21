@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Button,
@@ -170,7 +171,7 @@ export function mountNativeScience(panel, kind) {
     const current = revision;
     try {
       const program = JSON.parse(input.value);
-      worker = new Worker(new URL('./worker.js', import.meta.url));
+      worker = takeWorker(new URL('./worker.js', import.meta.url));
       run.disabled = true;
       stop.disabled = false;
       updateStatus(status, '正在执行…');

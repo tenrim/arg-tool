@@ -450,6 +450,21 @@
   gap: 16px;
 }
 
+.site-ui.workbench-app [data-ui='image-input-preview'] {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+}
+.site-ui.workbench-app :is([data-ui='original-image'], .input-original-canvas) {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 14rem;
+  object-fit: contain;
+}
+
 /* --- forms --- */
 /* ARG Chronicle index.html theme and assets/css/index.css scanline recipe. */
 .site-ui.scanlines::before,
@@ -821,6 +836,19 @@
   margin: 0;
 }
 .site-ui.workbench-app
+  [data-ui='field'][data-label-visibility='screen-reader']
+  > :is([data-ui='field-label'], span:first-child) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.site-ui.workbench-app
   [data-ui='form-grid']
   > :is([data-span='full'], [data-ui='check-group'], [data-ui='file-picker']) {
   flex-basis: 100%;
@@ -857,6 +885,9 @@
   max-width: 100%;
 }
 .site-ui.workbench-app .chef-args[data-ui='form-grid'] > .ct-advanced {
+  flex: 0 1 auto;
+}
+.site-ui.workbench-app .chef-args[data-ui='form-grid'] > .ct-advanced[open] {
   flex-basis: 100%;
 }
 .site-ui.workbench-app :is(.ct-directions, .capability-topic-settings [data-ui='field']) {
@@ -1642,9 +1673,10 @@
   margin: 0;
 }
 .site-ui.workbench-app .ct-source-field {
-  --ui-field-min-width: 180px;
+  --ui-field-min-width: 280px;
 }
 .site-ui.workbench-app .ui-conversion {
+  --ui-conversion-editor-min-height: calc(4 * var(--ui-editor-size, 14px) * 1.75 + 24px);
   display: grid;
   gap: 16px;
   min-width: 0;
@@ -1692,11 +1724,36 @@
 .site-ui.workbench-app
   .ui-conversion-controls
   [data-ui='form-grid']
-  > [data-ui='field'][data-span='full'],
-.site-ui.workbench-app .ui-conversion-controls .ct-advanced {
+  > [data-ui='field'][data-span='full'] {
   flex: 1 1 100%;
   min-width: 0;
   margin: 0;
+}
+.site-ui.workbench-app .ui-conversion-controls .ct-advanced {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+}
+.site-ui.workbench-app .ui-conversion-controls .ct-advanced[open] {
+  flex-basis: 100%;
+}
+.site-ui.workbench-app .ui-conversion-options {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.site-ui.workbench-app .ui-conversion-options:empty,
+:root:not([data-ui-parameter-presets='true']) .site-ui.workbench-app .ui-conversion-options {
+  display: none;
+}
+.site-ui.workbench-app [data-parameter-presets] {
+  min-width: 0;
+  max-width: 100%;
+}
+.site-ui.workbench-app [data-parameter-presets] > [data-ui='toolbar'] {
+  margin-top: 8px;
+  gap: 8px;
+  align-items: end;
 }
 .site-ui.workbench-app
   .ui-conversion-controls
@@ -1745,6 +1802,16 @@
 .site-ui.workbench-app .ui-conversion [data-ui='textarea'] {
   margin: 0;
 }
+.site-ui.workbench-app .ui-conversion-panes .ui-conversion-editor,
+.site-ui.workbench-app .ui-conversion-panes > [data-ui='card'] > [data-ui='textarea'],
+.site-ui.workbench-app
+  .ui-conversion-panes
+  > [data-ui='card']
+  > [data-ui='field']
+  > [data-ui='textarea'],
+.site-ui.workbench-app .ui-conversion-panes > [data-ui='card'] > .ct-result > .ct-output {
+  min-block-size: var(--ui-conversion-editor-min-height);
+}
 .site-ui.workbench-app .ui-conversion [data-ui='card'] > p {
   margin-block: 0;
 }
@@ -1775,7 +1842,7 @@
 }
 .site-ui.workbench-app .ui-result-placeholder {
   width: 100%;
-  min-height: 64px;
+  min-height: var(--ui-conversion-editor-min-height, 7rem);
   margin: 0;
   padding: 16px 12px;
   background: var(--bg-deep);
@@ -1919,7 +1986,7 @@
   gap: 8px 16px;
 }
 .site-ui.workbench-app .ct-input-guidance > p {
-  flex: 1 1 260px;
+  flex: 1 1 320px;
   margin: 0;
 }
 .site-ui.workbench-app .ct-input-guidance > button {
@@ -3305,6 +3372,45 @@
 .site-ui [data-variant='calculator'] .qalculate-keypad [data-key-role='operator'] {
   color: var(--accent);
 }
+.image-survey-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+  gap: 0.75rem;
+}
+.image-survey-gallery figure {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.image-survey-gallery img {
+  display: block;
+  width: 100%;
+  height: 8rem;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.image-survey-results {
+  display: grid;
+  gap: var(--ui-space-3);
+}
+.image-survey-results > [data-ui='card'] {
+  min-width: 0;
+}
+.site-ui.workbench-app .image-survey-heading {
+  align-items: center;
+}
+.site-ui.workbench-app .image-survey-heading > [data-ui='card-title'] {
+  margin: 0;
+}
+.image-survey-heading > [data-ui='button'] {
+  margin-inline-start: auto;
+}
+.image-survey-text {
+  max-block-size: 16rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 
 /* --- home --- */
 /* Homepage composition uses the Chronicle tokens and shared interaction states. */
@@ -3759,6 +3865,14 @@
 
 /* --- preferences --- */
 /* Display preferences never rewrite editor bytes or export formats. */
+:root:not([data-ui-advanced-parameters='true'])
+  .site-ui.workbench-app
+  [data-optional-setting='advanced-parameters'],
+:root:not([data-ui-parameter-presets='true'])
+  .site-ui.workbench-app
+  [data-optional-setting='parameter-presets'] {
+  display: none !important;
+}
 .site-ui.workbench-app [data-ui='textarea'] {
   --ui-control-text-size: var(--ui-editor-size, 14px);
 }

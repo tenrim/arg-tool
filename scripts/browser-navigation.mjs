@@ -32,6 +32,12 @@ export async function chooseNativeTask(page, id, direction) {
   await page.waitForFunction(() => document.documentElement.dataset.startupState === 'ready');
   const selected = await page.evaluate(
     async ({ id, direction }) => {
+      // This helper selects algorithm fixtures; discovery/access behavior is
+      // tested via the visible puzzle in browser-analysis-unlock.mjs.
+      if (id === 'native:cipher-detect') {
+        const { analysisAccess } = await import('./capabilities/analysis-access.js');
+        analysisAccess.submit('拨开迷雾');
+      }
       const { loadRegistry, resolveCapability } = await import('./capabilities/registry.js');
       const { entry, direction: resolvedDirection } = resolveCapability(
         await loadRegistry(),

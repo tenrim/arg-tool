@@ -258,8 +258,13 @@ try {
     );
     assert.equal(await page.locator('.molecule-image').count(), 0);
     await page.locator('#chem-input').fill('CCO');
-    await page.locator('#chemistry-run').click();
-    await page.locator('#chemistry-stop').click();
+    // A warmed RDKit can finish between two browser automation round trips.
+    await page.evaluate(() => {
+      document.getElementById('chemistry-run').click();
+      const stop = document.getElementById('chemistry-stop');
+      if (stop.disabled) throw Error('运行期间应能立即停止');
+      stop.click();
+    });
     await page.waitForTimeout(300);
     assert.match(await page.locator('#chemistry-status').textContent(), /已停止/);
     assert.equal(await page.locator('#chemistry-output').textContent(), '');
@@ -288,6 +293,11 @@ try {
     await page.locator('#chem-input').fill('H2O');
     await run('chemistry');
     if (scenario === 'blob-subpath') {
+      const clearCachedWorkers = () =>
+        page.evaluate(async () => {
+          (await import(new URL('idle-worker.js', document.baseURI))).clearIdleLookup();
+          (await import(new URL('prepared-worker.js', document.baseURI))).clearPreparedWorker();
+        });
       // Resource outages must leave a usable form, and a fresh run must recover.
       for (const [id, file, expected] of [
         ['astronomy', 'science/core.js', '计算组件载入失败'],
@@ -323,12 +333,17 @@ try {
           await page.locator('#chem-input').fill(file.includes('RDKit') ? 'CCO' : 'H2O');
         }
         const url = 'https://arg.test' + prefix + file;
+        await clearCachedWorkers();
         await ctx.route(url, (r) => r.fulfill({ status: 503, body: 'Unavailable' }));
         await page.locator('#' + id + '-run').click();
-        await page.waitForFunction(
-          ({ id, expected }) =>
-            document.getElementById(id + '-status').textContent.includes(expected),
-          { id, expected },
+        const status = page.locator('#' + id + '-status');
+        await page.waitForFunction((id) => {
+          const status = document.getElementById(id + '-status');
+          return status.classList.contains('error') || status.textContent === '处理完成';
+        }, id);
+        assert.ok(
+          (await status.textContent()).includes(expected),
+          file + ' ' + (await status.textContent()),
         );
         assert.equal(await page.locator('#' + id + '-run').isEnabled(), true);
         assert.equal(await page.locator('#' + id + '-stop').isDisabled(), true);
@@ -339,6 +354,7 @@ try {
           assert.match(await page.locator('#sequence-output').textContent(), /MAG/);
       }
       await go('astronomy');
+      await clearCachedWorkers();
       await page.evaluate(() => {
         window.__workingWorker = Worker;
         window.Worker = class {

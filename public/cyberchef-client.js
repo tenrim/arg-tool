@@ -4,9 +4,26 @@ const RESOURCE_BASE = new URL('./', import.meta.url);
 const ROOT = new URL('./vendor/cyberchef/', import.meta.url);
 // One idle engine across tool pages; never pool an active/failed computation.
 let idleClient = null;
+let preparingClient = null;
+// Only the visible analysis page requests a speculative, input-free bootstrap.
+// A real task can take it mid-download; only an unclaimed bootstrap is cancelled on leave.
+export function prepareCyberChef() {
+  if ((idleClient && !idleClient.closed) || preparingClient || navigator.connection?.saveData) return;
+  if (typeof Worker === 'undefined') return;
+  const client = new CyberChefClient();
+  preparingClient = client;
+  client.ready.catch(() => {
+    if (preparingClient === client) preparingClient = null;
+  });
+}
+export function cancelCyberChefPreparation() {
+  preparingClient?.close();
+  preparingClient = null;
+}
 export function acquireCyberChef(onStatus = () => {}) {
-  const client = idleClient;
-  idleClient = null;
+  const client = preparingClient || idleClient;
+  if (preparingClient) preparingClient = null;
+  else idleClient = null;
   if (!client || client.closed) return new CyberChefClient(onStatus);
   client.onStatus = onStatus;
   return client;
@@ -49,7 +66,7 @@ export class CyberChefClient {
         this.fail(new Error(data.message));
       else if (message.action === 'bakeComplete') {
         if (!this.pending) return;
-        if (data.error) this.fail(new Error(data.error.displayStr || String(data.error)));
+        if (data.error) this.rejectBake(new Error(data.error.displayStr || String(data.error)));
         // Upstream OperationError/DishError stop early but keep error=false.
         // A normal completed recipe reports its full length (including disabled steps).
         else if (
@@ -57,7 +74,9 @@ export class CyberChefClient {
           data.progress < this.pending.recipeConfig.length &&
           !this.pending.recipeConfig[data.progress]?.breakpoint
         ) {
-          this.fail(new Error(String(data.dish?.value || '处理链未完成，请检查输入和参数。')));
+          this.rejectBake(
+            new Error(String(data.dish?.value || '处理链未完成，请检查输入和参数。')),
+          );
         } else if ([7, 8].includes(data.dish?.type)) {
           const files = data.dish.type === 7 ? [data.dish.value] : data.dish.value;
           if (
@@ -111,7 +130,7 @@ export class CyberChefClient {
         this.response = null;
         pending?.resolve({ ...response, bytes });
       } else if (message.action === 'bakeError')
-        this.fail(new Error(data.error?.displayStr || String(data.error)));
+        this.rejectBake(new Error(data.error?.displayStr || String(data.error)));
       else if (message.action === 'highlightsCalculated') {
         const task = this.highlightPending;
         this.highlightPending = null;
@@ -156,6 +175,17 @@ export class CyberChefClient {
   }
   fail(error) {
     this.close(error);
+  }
+  // ChefWorker reports completed operation failures separately from worker/resource
+  // failures (11b86fec, src/core/ChefWorker.js:99-134). Reset the dish, retain code.
+  // Timeouts, cancellation, malformed messages and resource errors still terminate.
+  rejectBake(error) {
+    clearTimeout(this.timer);
+    const pending = this.pending;
+    this.pending = null;
+    this.response = null;
+    this.worker.postMessage({ action: 'clearSession' });
+    pending?.reject(error);
   }
   async highlight(recipeConfig, direction, pos) {
     await this.ready;

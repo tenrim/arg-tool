@@ -1,3 +1,5 @@
+import { takeWorker } from '../prepared-worker.js';
+import { lookupWorker, releaseLookup } from '../idle-worker.js';
 import { Link, onDisconnect, setState, setTextareaValue, updateStatus } from '../ui/index.js';
 import { notebookActions } from '../handoff/button.js';
 const sessions = new Map();
@@ -23,7 +25,8 @@ export function startWorkerJob(
       ended = true;
       clearTimeout(timer);
       signal?.removeEventListener('abort', abort);
-      worker?.terminate();
+      if (!error && !audio && worker) releaseLookup(worker);
+      else worker?.terminate();
       error ? reject(error) : resolve(value);
     };
     const abort = () => end(Object.assign(Error('已停止'), { name: 'AbortError' }));
@@ -31,9 +34,9 @@ export function startWorkerJob(
       reject(Object.assign(Error('已停止'), { name: 'AbortError' }));
       return;
     }
-    worker = new Worker(new URL(audio ? '../audio-worker.js' : './worker.js', import.meta.url), {
-      type: 'module',
-    });
+    worker = audio
+      ? takeWorker(new URL('../audio-worker.js', import.meta.url), { type: 'module' })
+      : lookupWorker(new URL('./worker.js', import.meta.url), { type: 'module' });
     timer = setTimeout(() => end(Error('运算超时，已停止；请缩小输入范围后重试。')), timeoutMs);
     signal?.addEventListener('abort', abort, { once: true });
     worker.onmessage = ({ data }) => {

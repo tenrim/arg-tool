@@ -135,7 +135,8 @@ export function rdkitReport(R, input, query = '') {
   let mol, q;
   try {
     mol = R.get_mol(input);
-    if (!mol || !mol.is_valid()) throw Error('无法解析分子结构');
+    if (!mol || !mol.is_valid())
+      throw Object.assign(Error('无法解析分子结构'), { code: 'INVALID_MOLECULE' });
     if (mol.get_num_atoms() > 5000) throw Error('单个分子最多 5000 个显式原子');
     const fields = {
       版本: R.version(),
@@ -190,7 +191,8 @@ export function rdkitClue(R, input) {
   let mol;
   try {
     mol = R.get_mol(input);
-    if (!mol || !mol.is_valid()) throw Error('无法解析分子结构');
+    if (!mol || !mol.is_valid())
+      throw Object.assign(Error('无法解析分子结构'), { code: 'INVALID_MOLECULE' });
     if (mol.get_num_atoms() > 5000) throw Error('单个分子最多 5000 个显式原子');
     const descriptors = JSON.parse(mol.get_descriptors());
     return {

@@ -43,6 +43,7 @@ export function mountText(host, meta) {
   const secret = Textarea({ autoSize: true, minRows: 2, maxRows: 8, attrs: { maxlength: 250000 } });
   const text = Textarea({
     id: meta.id + '-input',
+    className: 'ui-conversion-editor',
     autoSize: true,
     minRows: 4,
     maxRows: 14,
@@ -68,6 +69,7 @@ export function mountText(host, meta) {
   const textField = Field({
     label: meta.id === 'text-steganography' ? '公开文本（承载隐藏内容）' : '输入文字',
     control: text,
+    labelVisibility: 'screen-reader',
   });
   ui.parameters.append(direction.field);
   if (meta.id === 'text-steganography')
@@ -96,7 +98,8 @@ export function mountText(host, meta) {
         ),
     },
   });
-  ui.input.append(upload.box, load, textField);
+  ui.input.append(textField);
+  ui.layout.support.append(Toolbar({ children: [upload.box, load] }));
   if (meta.id === 'text-steganography') ui.input.append(secretField);
   function sync() {
     if (meta.id === 'text-steganography') implementation(ui, engine.control.value);
@@ -107,6 +110,8 @@ export function mountText(host, meta) {
         ? '公开文本（承载隐藏内容）'
         : '含隐藏信息的文本';
       text.setAttribute('aria-label', textField.querySelector('[data-ui=field-label]').textContent);
+      ui.layout.inputCard.querySelector('[data-ui=card-title]').textContent =
+        textField.querySelector('[data-ui=field-label]').textContent;
       text.placeholder = encoding
         ? wm
           ? '输入需要加入水印的公开文本'
@@ -190,6 +195,7 @@ export function mountText(host, meta) {
       (value) => {
         const result = Textarea({
           id: meta.id + '-output',
+          className: 'ui-conversion-editor',
           value,
           autoSize: true,
           minRows: 2,

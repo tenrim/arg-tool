@@ -16,32 +16,7 @@ const choice = (name, label, options, value, extra = {}) => ({
   ...extra,
 });
 const mode = (id, label, fields, hint = '') => ({ id, label, fields, hint });
-const sid = [
-  number('oid', 'SIMBAD 对象编号', undefined, { required: true, min: 1 }),
-  choice(
-    'section',
-    '资料部分',
-    [
-      ['basic', '基本资料'],
-      ['identifiers', '全部别名'],
-      ['photometry', '测光记录'],
-      ['bibliography', '文献记录'],
-    ],
-    'basic',
-  ),
-  text('after', '继续游标（标识符或文献）'),
-];
 const cid = [number('cid', 'PubChem CID', undefined, { required: true, min: 1 })];
-const cone = [
-  number('ra', '赤经（ICRS 度）', undefined, {
-    required: true,
-    min: 0,
-    max: 359.999999,
-    step: 'any',
-  }),
-  number('dec', '赤纬（ICRS 度）', undefined, { required: true, min: -90, max: 90, step: 'any' }),
-  number('radius', '搜索半径（度）', 0.01, { required: true, min: 0.000001, max: 1, step: 'any' }),
-];
 const cnkExtra = [
   mode('tune-search', '查找词牌', [text('query', '词牌名称', { required: true, max: 80 })]),
   mode('tune-detail', '完整词谱', [
@@ -122,69 +97,6 @@ export const QUERY_PAGES = Object.freeze([
       ]),
       mode('detail', '完整作品', [number('id', '作品编号', undefined, { required: true, min: 1 })]),
       ...cnkExtra,
-    ],
-  },
-  {
-    id: 'simbad',
-    title: 'SIMBAD 天体在线查询',
-    home: 'https://simbad.cds.unistra.fr/simbad/',
-    sourceHosts: ['simbad.cds.unistra.fr', 'simbad.u-strasbg.fr', 'cds.unistra.fr'],
-    notice:
-      '查询太阳系外天体的名称、坐标、测量和文献。坐标、参考系与原始单位保持原值；SIMBAD 不是一份完备星表。',
-    modes: [
-      mode('name', '名称或目录标识', [
-        text('query', '天体名称或目录编号', {
-          required: true,
-          max: 200,
-          placeholder: '例如 M31、Sirius',
-        }),
-        number('after', '对象游标', 0, { min: 0 }),
-      ]),
-      mode('cone', '天区范围', [
-        ...cone,
-        number('after', '结果起点（25 的倍数）', 0, { min: 0, max: 225, step: 25 }),
-      ]),
-      mode('detail', '指定天体资料', sid),
-    ],
-  },
-  {
-    id: 'vizier',
-    title: 'VizieR 星表在线查询',
-    home: 'https://vizier.cds.unistra.fr/viz-bin/VizieR',
-    sourceHosts: [
-      'vizier.cds.unistra.fr',
-      'tapvizier.cds.unistra.fr',
-      'cdsarc.cds.unistra.fr',
-      'cds.unistra.fr',
-    ],
-    notice:
-      '使用官方 ASU 接口，保留完整列定义、单位和来源。数据检索须限定条件或天区，当前查询窗口最多 250 条；不声称下载完整星表。',
-    modes: [
-      mode('catalogs', '查找星表', [
-        text('query', '星表名或关键词', {
-          required: true,
-          max: 120,
-          placeholder: '例如 Hipparcos',
-        }),
-      ]),
-      mode('columns', '查看全部列定义', [
-        text('table', '星表 / 数据表编号', {
-          required: true,
-          max: 160,
-          placeholder: '例如 I/239/hip_main',
-        }),
-      ]),
-      mode(
-        'records',
-        '检索表内记录',
-        [
-          text('table', '星表 / 数据表编号', { required: true, max: 160 }),
-          { name: 'conditions', label: '筛选条件', type: 'conditions' },
-          { name: 'cone', label: '天区范围（可选，须一起填写）', type: 'cone' },
-          number('offset', '结果起点（25 的倍数）', 0, { min: 0, max: 225, step: 25 }),
-        ],
-        '先通过列定义核对字段名称、单位和用途。筛选条件与天区至少填写一项。',
-      ),
     ],
   },
   {

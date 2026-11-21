@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Button,
@@ -535,7 +536,7 @@ export function mountAtlas(main) {
         updateButtons();
       };
       try {
-        worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+        worker = takeWorker(new URL('./worker.js', import.meta.url), { type: 'module' });
         const task = worker;
         timer = setTimeout(() => fail(Error('查询超过 30 秒，请重试或缩小条件。')), 30000);
         task.onmessage = ({ data }) => {

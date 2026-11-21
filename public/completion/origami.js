@@ -106,6 +106,7 @@ export function mountOrigami(host) {
       children: [Box({ tag: 'summary', children: '粘贴或编辑折痕' }), input],
     }),
     advanced = Disclosure({
+      preference: 'advancedParameters',
       children: [
         Box({ tag: 'summary', children: '物理、导入与显示参数' }),
         FormGrid({

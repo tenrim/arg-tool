@@ -2,6 +2,9 @@
 // A shared visual change exercises component/layout contracts, not all engines.
 export const browserSuites = [
   'deployment',
+  'bot-tools',
+  'bot-tools-network',
+  'bot-tools-text',
   'notebook-storage',
   'notebook-links',
   'graphic-contracts',
@@ -43,6 +46,8 @@ export const browserSuites = [
   'release-layout',
   'hunt-smoke',
   'hunt-media-smoke',
+  'video',
+  'video-editing',
   'paper-removal',
   'coderunner',
 ];
@@ -76,9 +81,16 @@ browserSuites.push('knowledge-loading');
 browserSuites.push('startup', 'workbench-repairs');
 browserSuites.push('ui-consistency', 'settings', 'character-tables', 'header-actions');
 browserSuites.push('workbench-additions');
+browserSuites.push('conversion-options');
+browserSuites.push('action-feedback');
+browserSuites.push('query-words');
+browserSuites.push('query-hanzi');
+browserSuites.push('clue-analysis', 'clue-stream', 'worker-reuse');
+browserSuites.push('analysis-unlock');
 browserSuites.push('fun-tools');
 browserSuites.push('fun-tools-advanced');
 browserSuites.push('forensics');
+browserSuites.push('stegoveritas', 'image-survey', 'image-survey-tools', 'page-preparation');
 browserSuites.push('coderunner-server', 'novice-workflow', 'homepage', 'disclosure-motion');
 // Explicit integration checks require the isolated server image and synthetic fixtures.
 // Keep them discoverable without silently invoking remote services in an offline suite.
@@ -92,6 +104,13 @@ export const browserFile = (name) =>
 // First matching rule owns a file. Narrow rules precede folder defaults.
 // Unit test import dependencies are added automatically, including re-exports.
 export const rules = [
+  [
+    /^public\/(?:page-preparation|prepared-worker)\.js$|^scripts\/browser-page-preparation\.mjs$/,
+    ['page-preparation', 'worker-reuse'],
+    [],
+  ],
+  [/^scripts\/browser-image-survey\.mjs$/, ['image-survey'], ['image-survey']],
+  [/^scripts\/browser-image-survey-tools\.mjs$/, ['image-survey-tools'], ['image-survey']],
   [/^scripts\/source-check-scope\.mjs$/, [], ['source-distribution']],
   [/^public\/branding\/|^public\/site-manifest\.json$/, ['deployment'], []],
   [/^scripts\/fetch-fun-tools\.py$/, [], ['fun-tools']],
@@ -103,6 +122,44 @@ export const rules = [
   [/^scripts\/test-forensics-cancel\.mjs$/, [], ['forensics']],
   [/^scripts\/verify-source\.mjs$/, ['deployment'], ['source-distribution']],
   [/^public\/deployment\.js$/, ['deployment'], ['source-distribution']],
+  [/^public\/idle-worker\.js$|^scripts\/browser-worker-reuse\.mjs$/, ['worker-reuse'], []],
+  [
+    /^public\/capabilities\/analysis-(?:access|unlock)\.js$|^scripts\/browser-analysis-unlock\.mjs$|^tests\/analysis-access\.test\.mjs$/,
+    ['analysis-unlock'],
+    ['analysis-access'],
+  ],
+  [
+    /^public\/round1\/analysis(?:-candidates)?\.js$|^public\/clue-analysis\/session\.js$|^scripts\/browser-clue-stream\.mjs$/,
+    ['clue-analysis', 'clue-stream'],
+    ['clue-analysis'],
+  ],
+  [
+    /^public\/round1\/analysis(?:-statistics|-conditions)?\.js$|^public\/clue-analysis\/|^public\/hunt-extract\.js$|^public\/round1\/hanzi-components\.js$|^scripts\/browser-clue-analysis\.mjs$|^tests\/clue-analysis\.test\.mjs$/,
+    ['clue-analysis'],
+    ['clue-analysis'],
+  ],
+  [/^public\/chef-tools\/parameter-model\.js$/, ['clue-analysis', 'chef-tools'], ['clue-analysis']],
+  [/^scripts\/browser-query-hanzi\.mjs$/, ['query-hanzi'], []],
+  [
+    /^public\/round1\/(?:hanzi-full|hanzi-resources)\.js$/,
+    ['query-hanzi', 'upstream-completion'],
+    ['upstream-completion'],
+  ],
+  [/^scripts\/browser-query-words\.mjs$/, ['query-words'], []],
+  [/^public\/hunt-worker\.js$/, ['query-words', 'hunt-smoke', 'expansion']],
+  [/^public\/round1\/hanzi\.js$/, ['query-words', 'round-one']],
+  [/^scripts\/browser-action-feedback\.mjs$/, ['action-feedback'], []],
+  [/^scripts\/browser-conversion-options\.mjs$/, ['conversion-options'], []],
+  [
+    /^public\/ui\/conversion\.js$|^public\/ui\/styles\/(?:conversion|preferences)\.css$/,
+    ['conversion-options', 'ui-components', 'ui-layout'],
+    ['ui-policy', 'preferences'],
+  ],
+  [
+    /^services\/bot-tools\/|^tests\/bot-tools\.test\.mjs$|^scripts\/browser-bot-tools(?:-network|-text)?\.mjs$/,
+    ['bot-tools', 'bot-tools-network', 'bot-tools-text'],
+    ['bot-tools'],
+  ],
   [/^scripts\/browser-disclosure-motion\.mjs$/, ['disclosure-motion'], []],
   [
     /^public\/home-page\.js$|^public\/ui\/styles\/home\.css$|^scripts\/browser-homepage\.mjs$/,
@@ -120,13 +177,18 @@ export const rules = [
     ['fun-tools'],
   ],
   [
+    /^upstream\/stegoveritas\/|^tests\/stegoveritas(?:\.test\.mjs|_engine\.py)$|^scripts\/(?:browser-stegoveritas|test-stegoveritas-http)\.mjs$/,
+    ['stegoveritas'],
+    ['stegoveritas'],
+  ],
+  [
     /^public\/forensics\/|^services\/forensics\/|^upstream\/aperisolve-single\/|^public\/licenses\/forensics\/|^public\/licenses\/FORENSICS-NOTICE\.txt$|^public\/knowledge\/(articles|chapters)\/forensics\.js$|^scripts\/(browser-forensics(?:-live)?|import-forensics|test-forensics-(?:engines|options))\.mjs$|^tests\/forensics\.test\.mjs$/,
     ['forensics'],
     ['forensics'],
   ],
   [
     /^public\/file-workbench\/|^public\/parameter-presets\.js$|^public\/knowledge\/articles\/file-workbench\.js$|^scripts\/browser-workbench-additions\.mjs$|^tests\/file-workbench\.test\.mjs$/,
-    ['workbench-additions'],
+    ['workbench-additions', 'conversion-options'],
     ['file-workbench'],
   ],
   [/^public\/notebook\/archive-ui\.js$/, ['notebook-management', 'notebook-storage'], ['notebook']],
@@ -168,7 +230,7 @@ export const rules = [
   ],
   [
     /^public\/(?:settings-page|playback-preferences|tool-preferences)\.js$|^public\/ui\/shortcuts\.js$|^scripts\/browser-settings\.mjs$/,
-    ['settings'],
+    ['settings', 'conversion-options'],
     ['preferences'],
   ],
   [/^scripts\/browser-ui-consistency\.mjs$/, ['ui-consistency']],
@@ -220,6 +282,7 @@ export const rules = [
   [
     /^tools\/ui-runtime\/|^scripts\/build-ui-runtime\.mjs$|^public\/ui\/animate-ui\.js$/,
     [
+      'action-feedback',
       'ui-runtime',
       'ui-motion',
       'ui-components',
@@ -404,7 +467,10 @@ export const rules = [
     ],
   ],
   [/^public\/ui\/index\.js$/, ['ui-components', 'ui-layout', 'ui-motion', 'layout-balance']],
-  [/^public\/ui\/(?:core|controls|overlays)\.js$/, ['ui-components', 'ui-layout', 'ui-motion']],
+  [
+    /^public\/ui\/(?:core|controls|overlays)\.js$/,
+    ['ui-components', 'ui-layout', 'ui-motion', 'conversion-options'],
+  ],
   [/^public\/ui\/pages\.js$/, ['ui-layout', 'smoke']],
   [/^public\/ui\//, ['ui-components', 'ui-layout']],
   [
@@ -462,6 +528,9 @@ export const rules = [
   [/^public\/image-png\.js$/, ['image-loading', 'metadata']],
   [/^public\/audio-worker\.js$/, ['expansion', 'expansion-morse'], ['media', 'expansion-morse']],
   [/^public\/image-.+\.js$/, ['smoke', 'metadata']],
+  [/^public\/video\//, ['video', 'video-editing']],
+  [/^scripts\/browser-video\.mjs$/, ['video']],
+  [/^scripts\/browser-video-editing\.mjs$/, ['video-editing']],
   [/^public\/hunt-media\.js$/, ['family-workspaces', 'hunt-media-smoke']],
   [/^public\/stereo-worker\.js$/, ['hunt-media-smoke']],
   [/^public\/hunt-(?:tools|worker)\.js$/, ['hunt-smoke', 'expansion']],

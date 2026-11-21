@@ -26,127 +26,6 @@ const freeze = (value) => {
   return value;
 };
 
-test('SIMBAD name/basic reading exposes identity, ICRS frame, epoch and actual source units without inventing missing measurements', () => {
-  const { record, result } = fixture('simbad-name'),
-    before = JSON.stringify({ record, result }),
-    reading = scienceReading('simbad', freeze(record), freeze(result)),
-    shown = fields(reading);
-  assert.equal(reading.title, 'M  31');
-  assert.equal(shown['天体类型（原分类代码）'], 'AGN');
-  assert.match(shown['赤经'], /10\.684708333333333 deg/);
-  assert.equal(shown['坐标参考系'], 'ICRS');
-  assert.equal(shown['坐标历元'], 'J2000');
-  assert.equal(shown['视向速度'], '-300 km.s-1');
-  assert.equal(shown['文献数量'], undefined);
-  assert.equal(shown['视差'], undefined);
-  assert.equal(JSON.stringify({ record, result }), before);
-  const detail = scienceReading('simbad', record, {
-    ...result,
-    parameters: { mode: 'detail', oid: 1575544, section: 'basic' },
-  });
-  assert.equal(fields(detail)['主要标识符'], 'M  31');
-});
-
-test('SIMBAD cone keeps its original frame, angular-distance unit and separate band measurements', () => {
-  const reading = read('simbad', 'simbad-cone'),
-    shown = fields(reading),
-    bands = table(reading, '天区返回的测光值');
-  assert.match(shown['距查询中心角距离'], /^7\.879335328886527e-7（原服务未标注单位）$/);
-  assert.equal(shown['原始坐标表示'], '00 42 44.330 +41 16 07.50');
-  assert.deepEqual(
-    bands.rows.find((row) => row[0] === 'B'),
-    ['B', '4.36', '原服务未标注'],
-  );
-  assert.equal(
-    bands.rows.find((row) => row[0] === 'R'),
-    undefined,
-  );
-});
-
-test('SIMBAD photometry labels the band/system and retains uncertainty and literature; identifiers and bibliography are actual content', () => {
-  const photo = read('simbad', 'simbad-photometry'),
-    shown = fields(photo);
-  assert.equal(photo.title, 'B 波段测光');
-  assert.equal(shown['测光系统'], 'Vega（V）');
-  assert.equal(shown['测光值'], '4.36');
-  assert.equal(shown['不确定度'], '0.02');
-  assert.match(shown['论文入口'], /2007ApJS/);
-  assert.equal(photo.sections[0].paragraphs, undefined);
-  assert.equal(fields(read('simbad', 'simbad-identifiers'))['标识符'], '2C   56');
-  const bibliography = fields(read('simbad', 'simbad-detail'));
-  assert.equal(bibliography['出版年份'], '1850');
-  assert.match(bibliography['论文题名（原文）'], /Catalogue/);
-  assert.match(bibliography['论文入口'], /ui\.adsabs\.harvard\.edu/);
-  const zero = scienceReading(
-    'simbad',
-    { title: 'Zero', fields: { filter: 'X', flux: 0, flux_err: 0, system: 'custom' } },
-    { parameters: { section: 'photometry' }, columns: [] },
-  );
-  assert.equal(fields(zero)['测光值'], '0');
-  assert.equal(fields(zero)['测光系统'], 'custom');
-});
-
-test('VizieR separates catalogue contents from explicit schema and real data', () => {
-  const catalogue = read('vizier', 'vizier-catalogs'),
-    schema = read('vizier', 'vizier-columns');
-  assert.match(catalogue.title, /Hipparcos/);
-  assert.deepEqual(
-    catalogue.sections.filter((section) => !section.collapsed).map((section) => section.title),
-    ['可查询的资料'],
-  );
-  const credit = catalogue.sections.find((section) => section.title === '资料出处');
-  assert.equal(credit.collapsed, true);
-  assert.deepEqual(credit.fields, [
-    ['作者／机构', 'ESA 1997'],
-    ['文献', '1997HIP...C......0E'],
-    ['许可', 'https://cds.unistra.fr/vizier-org/licences_vizier.html'],
-  ]);
-  assert.match(catalogue.sections[0].paragraphs[0], /赤经/);
-  assert.doesNotMatch(
-    JSON.stringify(catalogue),
-    /目录表标识|本次返回字段数|格式／类型|不将不同星表/,
-  );
-  const columns = table(schema, '字段与单位');
-  assert.deepEqual(columns.columns, ['项目', '单位', '说明']);
-  const ra = columns.rows.find((row) => row[0].includes('RAICRS'));
-  assert.equal(ra[0], '赤经 · RAICRS');
-  assert.equal(ra[1], 'deg');
-  assert.match(ra[2], /J1991\.25/);
-  assert.equal(columns.rows.length, 50);
-});
-test('VizieR values retain precision, units, zero and exact descriptions without displaying missing fields', () => {
-  const { record, result } = fixture('vizier-records'),
-    before = JSON.stringify({ record, result }),
-    reading = scienceReading('vizier', record, result),
-    rows = table(reading, '天体数据').rows;
-  assert.deepEqual(
-    rows.find((row) => row[0].includes('RAICRS')),
-    ['赤经 · RAICRS', '000.00091185', 'deg'],
-  );
-  assert.equal(reading.sections.find((section) => section.title === '字段说明').collapsed, true);
-  assert.match(
-    table(reading, '字段说明').rows.find((row) => row[0].includes('RAICRS'))[1],
-    /J1991\.25/,
-  );
-  assert.equal(JSON.stringify({ record, result }), before);
-  const custom = scienceReading(
-    'vizier',
-    {
-      id: 'T:1',
-      title: 'Record',
-      fields: { RA: 0, empty: ' ', null: null, unknown: '<script>x</script>' },
-    },
-    {
-      parameters: { mode: 'records', table: 'T' },
-      columns: [{ name: 'RA', ucd: 'pos.eq.ra', unit: 'rad', description: 'Original frame' }],
-    },
-  );
-  assert.deepEqual(table(custom, '天体数据').rows, [
-    ['赤经 · RA', '0', 'rad'],
-    ['unknown', '<script>x</script>', '—'],
-  ]);
-});
-
 test('COD search/detail summarizes documented schema units and original publication without claiming an available live service', () => {
   // Protocol edge fixture, not a downloaded COD record. The field units are
   // documented by COD's public MySQL schema.
@@ -182,6 +61,16 @@ test('COD search/detail summarizes documented schema units and original publicat
     assert.equal(shown['原始 CIF 链接'], 'https://www.crystallography.net/cod/1000000.cif');
   }
   assert.equal(JSON.stringify(record), before);
+});
+
+test('COD duplicate details retain their own record and show the linked original COD number', () => {
+  const value = fixture('cod-detail-duplicate'),
+    before = JSON.stringify(value),
+    reading = scienceReading('cod', value.record, value.result);
+  assert.equal(fields(reading)['COD 编号'], '1000000');
+  assert.equal(fields(reading)['重复记录对应 COD 编号'], '2011331');
+  assert.equal(fields(reading)['DOI'], '10.1107/S0108270100008532');
+  assert.equal(JSON.stringify(value), before);
 });
 
 test('COD CIF reading extracts only explicit scalar fields, skips multiline quotations and leaves uncertainty unchanged', () => {
@@ -306,8 +195,9 @@ test('PubChem structure preserves real atom IDs/atomic numbers/coordinates/bonds
 
 test('science reader does not generate data for unknown providers and accepts absent optional fields without false values', () => {
   assert.equal(scienceReading('unknown', { fields: {} }, {}), null);
-  assert.equal(scienceReading('simbad', null, {}), null);
-  for (const provider of ['simbad', 'vizier', 'cod', 'pubchem']) {
+  for (const retired of ['simbad', 'vizier'])
+    assert.equal(scienceReading(retired, { fields: { main_id: 'retired' } }, {}), null);
+  for (const provider of ['cod', 'pubchem']) {
     const reading = scienceReading(
       provider,
       { id: '1', title: 'Original', fields: {} },

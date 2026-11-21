@@ -1,5 +1,18 @@
 import { FORENSICS_TASKS } from '../../forensics/catalog.js';
+import { IMAGE_SURVEY } from '../../forensics/stegoveritas-catalog.js';
 const details = {
+  [IMAGE_SURVEY]: [
+    '文件头用于选择适用的检查。字符串、文件签名和元数据是不同类型的证据；位平面分离可以让同一位上的像素图案变得可见。',
+    '一张在文字元数据中写有线索的 PNG',
+    '元数据报告可以显示原标签，字符串报告可能同时列出相同文字和字节偏移。',
+    '两个工具可能看到同一段字节。没有提取到文件也无法排除使用了其他隐写方式。',
+  ],
+  stegoveritas: [
+    'StegoVeritas 组合图像增强、调色板索引和位提取方法。RGBA 交织按像素、位编号、颜色顺序生成字节；候选扫描使用原始 40／48 组组合，再用文件特征识别与雕刻查找内容。每组原字节均可导出，识别结果不是存在隐写的证明。',
+    'RGBA 图片的红、绿、蓝、透明通道分别选择最低位',
+    '按像素依次取 R、G、B、A 的最低位，每八位组成一个字节',
+    '调色板图必须保留索引；颜色转换会改变分析对象。图片尾随数据可能是合法附加信息。完整拆帧、元数据、文件雕刻和已有位平面功能复用工具箱原工具。',
+  ],
   exiftool: [
     '元数据标签可以分布在不同容器和目录中，同名标签不一定是同一字段。ExifTool 的 -a 保留重复标签，-u 显示未知标签，-g1 按实际位置分组。本站同时保留原始命令输出，避免键值对象覆盖同名字段。',
     '一张包含 EXIF Make=Canon 和 XMP 作者字段的 JPEG',
@@ -116,6 +129,17 @@ export const articles = FORENSICS_TASKS.map((t) => {
     language: 'en',
     kind: 'implementation',
   };
+  if (t.engine === 'stegoveritas')
+    Object.assign(source, {
+      title: 'StegoVeritas 1.11 原始发行包',
+      publisher: 'Michael Bann / bannsec',
+      url: 'https://pypi.org/project/stegoveritas/1.11/',
+    });
+  if (t.engine === IMAGE_SURVEY)
+    Object.assign(source, {
+      title: 'AperiSolve 分析器注册与格式分派',
+      url: 'https://github.com/Zeecka/AperiSolve/blob/feec31092f0e548513d76545293caa41eb4f1ad8/aperisolve/analyzers/registry.py',
+    });
   return {
     id: 'function-native:' + t.id,
     capabilityIds: ['native:' + t.id],
@@ -135,7 +159,9 @@ export const articles = FORENSICS_TASKS.map((t) => {
       {
         title: '运行范围',
         paragraphs: [
-          '本站按用户选定的单项工具运行，不自动调用其他分析器。完整报告与提取文件均可下载，未找到内容、密码错误、格式不支持和超过资源限额分别保留实际诊断。',
+          t.engine === IMAGE_SURVEY
+            ? '常规检查包括文件属性、图层和适用的隐写提取。深入检查增加文件雕刻、图像增强等步骤。结果逐项显示，可下载原始报告，也可带着原图进入对应工具继续检查。'
+            : '本站按用户选定的单项工具运行，不自动调用其他分析器。完整报告与提取文件均可下载，未找到内容、密码错误、格式不支持和超过资源限额分别保留实际诊断。',
         ],
         sourceIds: ['analyzer'],
       },

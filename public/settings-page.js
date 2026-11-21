@@ -116,6 +116,16 @@ export function mountSettings({ navigate, notebook, downloadSettings }) {
         ['wrap', '自动换行'],
         ['scroll', '横向滚动'],
       ]),
+      row(
+        'showAdvancedParameters',
+        '显示高级参数',
+        '在工具中显示高级参数入口，需要调整时再展开。关闭不清除已填写的参数。',
+      ),
+      row(
+        'showParameterPresets',
+        '显示参数预设',
+        '在工具中显示保存和套用参数的入口。关闭不删除已保存的预设。',
+      ),
     ],
   });
   const favorites = Box({ id: 'settings-favorites', className: 'settings-favorites' });

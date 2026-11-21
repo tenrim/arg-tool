@@ -113,6 +113,20 @@ test('discovery: currency snapshot, leading-zero numeric codes and linked countr
   assert.ok(q({ filter: 'historic' }).items.every((r) => !r.countryCodes.length));
   assert.throws(() => q({ region: 'XX' }), /有效/);
 });
+test('discovery: historic currencies reject unsupported modern region filters and retain source entity lookup', () => {
+  assert.throws(
+    () => queryCurrencies({ filter: 'historic', region: 'FR' }, currencies, countries),
+    /历史货币不支持按现代国家代码筛选.*清除国家条件/,
+  );
+  const result = queryCurrencies({ filter: 'historic', query: 'France' }, currencies, countries);
+  assert.ok(result.items.some((row) => row.id === 'FRF:historic'));
+  assert.ok(result.items.every((row) => row.countryCodes.length === 0));
+  assert.ok(
+    queryCurrencies({ filter: 'current', region: 'FR' }, currencies, countries).items.some(
+      (row) => row.id === 'EUR:current',
+    ),
+  );
+});
 test('discovery: 36 authentic flags, Chinese meanings and ordered repeated sequences', () => {
   assert.equal(flags.length, 36);
   assert.equal(new Set(flags.map((r) => r.id)).size, 36);

@@ -10,7 +10,7 @@ import {
   animatePresence,
 } from './ui/index.js';
 import { base64ToBytes, textFromBytes } from './engine.js';
-import { loadRegistry, resolveCapability } from './capabilities/registry.js';
+import { loadRegistry, resolveCapability, subscribeRegistry } from './capabilities/registry.js';
 import { capabilityRoute } from './capabilities/routes.js';
 
 function shuffled(items) {
@@ -276,7 +276,12 @@ export function createHomeIntroduction({ navigate, browse }) {
   );
   intro.append(hero, starter);
   fillShortcuts();
+  const unsubscribeRegistry = subscribeRegistry((registry) => {
+    recommendationRegistry = registry;
+    showRecommendations();
+  });
   onDisconnect(intro, () => {
+    unsubscribeRegistry();
     disposed = true;
   });
   return { intro, help, example };

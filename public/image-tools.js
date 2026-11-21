@@ -1,3 +1,4 @@
+import { takeWorker } from './prepared-worker.js';
 import { captureFailure } from './feedback/model.js';
 import { element as uiElement, tabsController, onDisconnect } from './ui/index.js';
 import { hexDump } from './media.js';
@@ -192,7 +193,7 @@ export function initImageTools() {
     const current = task;
     return new Promise((resolve, reject) => {
       rejectTask = reject;
-      worker = new Worker(new URL('./image-worker.js', import.meta.url), { type: 'module' });
+      worker = takeWorker(new URL('./image-worker.js', import.meta.url), { type: 'module' });
       const timer = (activeTimer = setTimeout(() => {
         if (current === task) {
           stop();

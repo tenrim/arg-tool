@@ -410,6 +410,9 @@ try {
     location.hash = 'video?task=native%3Avideo-native';
   });
   await page.waitForSelector('#video-format:visible');
+  await page.evaluate(async () =>
+    (await import('./preferences.js')).setPreferences({ showAdvancedParameters: true }),
+  );
   await page.locator('#video-advanced>summary').click();
   await page.waitForSelector('#video-capabilities:visible');
   await page.waitForFunction(() => document.getElementById('video-mode').value === 'native');

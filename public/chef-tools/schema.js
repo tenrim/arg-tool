@@ -9,43 +9,9 @@ import {
   FormGrid,
 } from '../ui/index.js';
 import { parameterName, optionName, operationName } from '../cyberchef-i18n.js';
+import { schemas, defaults, populate } from './parameter-model.js';
+export { schemas, defaults, populate } from './parameter-model.js';
 const elem = uiElement;
-export const schemas = (operation) => operation.args.filter((arg) => arg.type !== 'label');
-export function defaults(operation) {
-  const args = schemas(operation).map((arg) => {
-    if (arg.type === 'toggleString')
-      return { option: arg.toggleValues[0], string: arg.value || '' };
-    if (Array.isArray(arg.value)) {
-      const option = arg.value[arg.defaultIndex || 0];
-      return typeof option === 'object'
-        ? arg.type.startsWith('editable')
-          ? option.value
-          : option.name
-        : option;
-    }
-    if (
-      arg.type === 'number' &&
-      typeof arg.value === 'string' &&
-      arg.value.trim() &&
-      Number.isFinite(Number(arg.value))
-    )
-      return Number(arg.value);
-    return arg.value ?? '';
-  });
-  schemas(operation).forEach((arg, i) => {
-    if (arg.type.startsWith('populate')) populate(arg, args[i], args);
-  });
-  return args;
-}
-export function populate(arg, name, args) {
-  const selected = arg.value.find((v) => v.name === name);
-  if (!selected) return;
-  if (Array.isArray(arg.target))
-    arg.target.forEach((index, i) => {
-      args[index] = selected.value[i];
-    });
-  else args[arg.target] = selected.value;
-}
 
 export function renderParameters(fields, definition, step, onChange) {
   const expanded = fields.querySelector('.ct-advanced')?.open || false;
@@ -191,16 +157,21 @@ export function renderParameters(fields, definition, step, onChange) {
   }
   visibility();
   const compactBase = /^(?:From|To) Base(?:32|45|58|62|64|85|92)$/.test(step.op);
-  const advancedNames = compactBase
+  const optionalNames = compactBase
     ? args.map((a) => a.name)
     : step.op === 'Magic'
-      ? ['Depth', 'Intensive mode', 'Extensive language support']
+      ? ['Intensive mode', 'Extensive language support']
       : /^AES /.test(step.op)
-        ? ['IV from input', 'IV length', 'Additional Authenticated Data']
+        ? ['IV from input', 'IV Length', 'Additional Authenticated Data', 'Include IV in output']
         : [];
+  const advancedNames = optionalNames.filter((name) => args.some((arg) => arg.name === name));
   if (advancedNames.length && fields.closest('.ct-tool')) {
     const summary = elem('summary');
-    const advanced = Disclosure({ className: 'ct-advanced', children: [summary] });
+    const advanced = Disclosure({
+      className: 'ct-advanced',
+      preference: 'advancedParameters',
+      children: [summary],
+    });
     advanced.open = expanded;
     const body = FormGrid({ layout: 'flow' });
     for (const field of [...fields.querySelectorAll('[data-arg]')]) {
@@ -215,12 +186,7 @@ export function renderParameters(fields, definition, step, onChange) {
           advancedNames.includes(a.name) &&
           JSON.stringify(step.args[i]) !== JSON.stringify(original[i]),
       ).length;
-      summary.textContent =
-        `高级参数 · ${changed ? '已调整 ' + changed + ' 项' : '默认设置'}` +
-        (step.op === 'From Base64'
-          ? (step.args[1] ? ' · 忽略非字符表字符' : ' · 保留非字符表字符') +
-            (step.args[2] ? ' · 严格模式' : ' · 宽松模式')
-          : '');
+      summary.textContent = `高级参数${changed ? ' · 已调整 ' + changed + ' 项' : ''}`;
     };
     refreshSummary();
     advanced.append(body);
@@ -228,7 +194,9 @@ export function renderParameters(fields, definition, step, onChange) {
   }
   if (step.op === 'Generate PGP Key Pair' && fields.closest('.ct-tool')) {
     const password = fields.querySelector('[data-arg="1"]');
-    const advanced = elem('details', undefined, 'ct-advanced');
+    const advanced = Disclosure({
+      className: 'ct-advanced',
+    });
     advanced.append(elem('summary', '私钥密码（可选）'), password);
     fields.append(advanced);
   }

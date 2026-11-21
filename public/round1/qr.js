@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import { attachQRAdvanced } from '../completion/qr-view.js';
 import { element as uiElement, onDisconnect } from '../ui/index.js';
 import {
@@ -344,7 +345,7 @@ export function initQR() {
     if (!active || disposed) return;
     cancel();
     const gen = generation;
-    worker = new Worker(new URL('./qr-worker.js', import.meta.url), { type: 'module' });
+    worker = takeWorker(new URL('./qr-worker.js', import.meta.url), { type: 'module' });
     const w = worker;
     $('qr-output').value = '';
     $('qr-hits').replaceChildren();

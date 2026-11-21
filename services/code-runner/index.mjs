@@ -26,7 +26,9 @@ export function createCodeRunnerService({ env = process.env, execute = runCode }
   return {
     async handle(req, res) {
       if (req.method !== 'POST') return reply(res, 405, { error: '仅支持 POST' });
-      const origins = (env.CODE_RUNNER_ORIGINS || '').split(',');
+      const origins = (
+        env.CODE_RUNNER_ORIGINS || ''
+      ).split(',');
       origins.push(
         `http://localhost:${req.socket.localPort}`,
         `http://127.0.0.1:${req.socket.localPort}`,
@@ -69,7 +71,11 @@ export function createCodeRunnerService({ env = process.env, execute = runCode }
         const result = await execute(job, { env, signal: controller.signal });
         reply(res, 200, result);
       } catch (error) {
-        reply(res, controller.signal.aborted ? 408 : 422, { error: error.message });
+        const unavailable = error.code === 'ENGINE_UNAVAILABLE';
+        reply(res, controller.signal.aborted ? 408 : unavailable ? 503 : 422, {
+          error: error.message,
+          ...(unavailable ? { code: error.code } : {}),
+        });
       } finally {
         clearTimeout(readTimer);
         res.removeListener('close', abort);

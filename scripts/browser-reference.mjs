@@ -228,6 +228,9 @@ try {
     await go('countries');
     await page.locator('#countries-query').fill('中国');
     const url = 'https://arg.test' + prefix + 'vendor/reference/countries.json';
+    await page.evaluate(async () =>
+      (await import(new URL('idle-worker.js', document.baseURI))).clearIdleLookup(),
+    );
     await ctx.route(url, (r) => r.fulfill({ status: 503, body: 'Unavailable' }));
     await page.locator('#countries-run').click();
     await page.waitForSelector('#countries-status.error');
@@ -240,6 +243,9 @@ try {
     const seen = new Promise((resolve) => (requestSeen = resolve)),
       release = new Promise((resolve) => (releaseResponse = resolve)),
       done = new Promise((resolve) => (responseDone = resolve));
+    await page.evaluate(async () =>
+      (await import(new URL('idle-worker.js', document.baseURI))).clearIdleLookup(),
+    );
     await ctx.route(url, async (r) => {
       requestSeen();
       await release;

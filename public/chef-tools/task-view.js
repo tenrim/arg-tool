@@ -11,6 +11,7 @@ import {
   Field,
   FormGrid,
   ConversionLayout,
+  ImageInputPreview,
   setState,
   setTextareaValue,
   updateStatus,
@@ -70,10 +71,12 @@ export function taskView({ id, groups, shared, applyImage, defaultOp, openRecipe
       },
     },
   });
-  q('.ct-input').before(Toolbar({ className: 'ct-input-guidance', children: [hint, example] }));
+  const inputSupport = Toolbar({ className: 'ct-input-guidance', children: [hint, example] });
   const errorDetails = Disclosure({ hidden: true });
   q('.ct-status').after(errorDetails);
   const inputPreview = sourcePreview(q('.ct-source-preview'));
+  const localPreview = ImageInputPreview();
+  q('.ct-source-preview').after(localPreview.node);
   const directionSelect = Select({ className: 'ct-direction', attrs: { 'aria-label': '方向' } });
   const directionBar = Field({
     className: 'ct-directions',
@@ -98,6 +101,7 @@ export function taskView({ id, groups, shared, applyImage, defaultOp, openRecipe
     }),
     actions: [q('.ct-run'), q('.ct-stop')],
     status: Box({ children: [q('.ct-status'), errorDetails] }),
+    inputSupport,
     input: inputNodes,
     result: resultNodes,
   });
@@ -208,6 +212,8 @@ export function taskView({ id, groups, shared, applyImage, defaultOp, openRecipe
     hint.textContent = inputGuidance(selected, source);
     hint.hidden = noInput || !hint.textContent;
     example.hidden = !INPUT_EXAMPLES[selected];
+    inputSupport.hidden = hint.hidden && example.hidden;
+    workspace.support.hidden = inputSupport.hidden;
     q('.ct-input').hidden = noInput || !['text', 'hex', 'base64'].includes(source);
     q('.ct-file').hidden = noInput || source !== 'file';
     const info = q('.ct-input-info');
@@ -219,6 +225,7 @@ export function taskView({ id, groups, shared, applyImage, defaultOp, openRecipe
           : '';
     info.hidden = !info.textContent;
     workspace.panes.dataset.align = 'start';
+    localPreview.show(source === 'file' && !noInput ? localFile : null);
     if (source === 'result' && !noInput) inputPreview.show(previous);
     else {
       inputPreview.clear();

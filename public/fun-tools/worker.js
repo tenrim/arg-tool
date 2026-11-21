@@ -1,9 +1,19 @@
 /* Classic worker keeps original UMD dependencies intact and isolated. */
 self.onmessage = async ({ data }) => {
   try {
+    if (data.prepare) {
+      if (['buddha-codec', 'beast-codec', 'text-steganography'].includes(data.task)) {
+        await import('./text-engine.js');
+        if (data.task === 'buddha-codec' && !self.CryptoJS)
+          importScripts('../vendor/fun-tools/crypto-js.js');
+      } else if (data.task === 'screen-drop') await import('./screen-model.js');
+      else if (data.task === 'spectral-images') await import('../media.js');
+      else await import('./image-engine.js');
+      return;
+    }
     let result;
     if (data.kind === 'qr') {
-      importScripts('../vendor/fun-tools/qrcode.js');
+      if (!self.QRCode) importScripts('../vendor/fun-tools/qrcode.js');
       const qr = self.QRCode.create(data.packet, { errorCorrectionLevel: 'L' });
       const scale = 6,
         width = (qr.modules.size + 8) * scale,
@@ -19,7 +29,7 @@ self.onmessage = async ({ data }) => {
           }
       result = { width, height: width, data: pixels };
     } else if (data.kind === 'scan') {
-      importScripts('../vendor/jsqr.js');
+      if (!self.jsQR) importScripts('../vendor/jsqr.js');
       const code = self.jsQR(data.image.data, data.image.width, data.image.height, {
         inversionAttempts: 'attemptBoth',
       });
@@ -30,7 +40,8 @@ self.onmessage = async ({ data }) => {
     } else if (data.kind === 'text') {
       if (data.task === 'text-steganography' && data.options.engine === 'stegcloak')
         importScripts('../vendor/fun-tools/stegcloak.min.js');
-      if (data.task === 'buddha-codec') importScripts('../vendor/fun-tools/crypto-js.js');
+      if (data.task === 'buddha-codec' && !self.CryptoJS)
+        importScripts('../vendor/fun-tools/crypto-js.js');
       const { textTransform } = await import('./text-engine.js');
       result = textTransform(data.task, data.text, data.options);
     } else if (data.kind === 'views') {
@@ -80,6 +91,7 @@ self.onmessage = async ({ data }) => {
     }
     self.postMessage({ result });
   } catch (error) {
+    if (data.prepare) return;
     self.postMessage({ error: error.message || String(error) });
   }
 };

@@ -583,7 +583,11 @@ export function hoverOwner(node) {
   // the site header and changes hit testing far outside the hovered control.
   while (owner) {
     if (owner.matches('main,.panel,.layout,.ui-dock,[data-ui=tool-panel]')) return null;
-    if (shadowHosts.has(owner.tagName) && (!owner.shadowRoot || hoverShadows.has(owner.shadowRoot)))
+    if (
+      shadowHosts.has(owner.tagName) &&
+      getComputedStyle(owner).display !== 'contents' &&
+      (!owner.shadowRoot || hoverShadows.has(owner.shadowRoot))
+    )
       break;
     owner = owner.parentElement;
   }

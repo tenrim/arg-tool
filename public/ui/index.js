@@ -1,5 +1,6 @@
 export * from './core.js';
 export * from './controls.js';
+export * from './image-input-preview.js';
 export * from './layout.js';
 export * from './feedback.js';
 export * from './overlays.js';

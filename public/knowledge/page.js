@@ -22,7 +22,12 @@ import {
   reveal,
 } from '../ui/index.js';
 import { capabilityCategories, capabilityGroupDefinitions } from '../navigation.js';
-import { loadRegistry, resolveCapability } from '../capabilities/registry.js';
+import {
+  loadRegistry,
+  resolveCapability,
+  isDiscoverableArticle,
+  subscribeRegistry,
+} from '../capabilities/registry.js';
 import { capabilityRoute } from '../capabilities/routes.js';
 import { ARTICLES, ARTICLE_ALIASES } from './catalogue.js';
 
@@ -226,6 +231,7 @@ export function mountKnowledge(
       content ? content.searchArticles(query.value, { limit: ARTICLES.length }) : ARTICLES
     ).filter(
       (article) =>
+        isDiscoverableArticle(article) &&
         (!category || topicCategory(article) === category) &&
         (!topic || article.topicGroup === topic),
     );
@@ -288,6 +294,10 @@ export function mountKnowledge(
 
   function chooseArticle(id, options = {}) {
     if (destroyed) return false;
+    if (
+      !isDiscoverableArticle(ARTICLES.find((article) => article.id === (ARTICLE_ALIASES[id] || id)))
+    )
+      return false;
     if (content) return renderArticle(id, options);
     const ownRevision = ++revision;
     view = 'article';
@@ -303,7 +313,7 @@ export function mountKnowledge(
     const article = content.getArticle(id);
     cancelMotion(detail);
     status.hidden = true;
-    if (!article) {
+    if (!article || !isDiscoverableArticle(article)) {
       clearDetail('未找到这篇科普内容，可返回科普目录重新选择');
       view = 'article';
       layout();
@@ -556,6 +566,7 @@ export function mountKnowledge(
     if (destroyed) return;
     cancel();
     destroyed = true;
+    unsubscribeRegistry();
     query.removeEventListener('input', filter);
     returnList.removeEventListener('click', backToList);
     articleButtons.clear();
@@ -563,6 +574,12 @@ export function mountKnowledge(
     releaseDisconnect();
   };
   const releaseDisconnect = onDisconnect(panel, destroy);
+  const unsubscribeRegistry = subscribeRegistry(() => {
+    if (selected && !isDiscoverableArticle(ARTICLES.find((article) => article.id === selected)))
+      activateArticle();
+    else if (view === 'catalogue') renderList();
+  });
+  onDisconnect(panel, unsubscribeRegistry);
   renderCategories();
   renderTopics();
   renderList();

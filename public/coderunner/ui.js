@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   element as uiElement,
   FilePicker,
@@ -356,7 +357,9 @@ export function initCodeRunner() {
     finished = false;
     try {
       const remote = LANGUAGES[lang].runtime === 'server';
-      worker = remote ? serverRunner() : new Worker(new URL('./worker.js', import.meta.url));
+      worker = remote
+        ? serverRunner()
+        : takeWorker(new URL('./worker.js', import.meta.url), undefined, lang);
       clock(
         remote ? 125000 : 60000,
         remote ? '服务器编译或运行超时，已停止。' : '运行环境加载超时，请检查连接后重试。',

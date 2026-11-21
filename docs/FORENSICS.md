@@ -1,5 +1,19 @@
 # 独立文件分析工具
 
+## 图片隐写综合分析（本地开发）
+
+每项完成即显示结果卡片。图层可直接对照，文字、诊断、提取文件都在卡片正文，原始报告和日志可展开下载。“进入具体功能”沿用当前图片及该项分析参数，继续上传处理由玩家在单项工具中触发。位平面和重映射进入本地图层工具，StegoVeritas 进入所选子模式。页面使用工具箱原有卡片、按钮、状态标签及路由（本站基线 `7657f180fb7156c8c074ad3ee54c26dd09ff66e7`，`public/ui/layout.js:7`、`public/capabilities/routes.js:2`）。
+
+多媒体工具的图片分类新增“图片隐写综合分析”。同一图片只需提交一次，按文件头选择 PNG、JPEG、BMP、GIF、WebP 或经典 TIFF 对应的分析器。常规检查包括类型、元数据、通道属性、字符串、位平面、八种随机颜色重映射、签名扫描及适用的格式检查和提取。深入检查增加文件雕刻、Binwalk 提取、格式适用时的 PNG 修复、OutGuess、全部 zsteg 组合、StegoVeritas 图像增强、尾随字节及候选位扫描；GIF 和索引色 PNG 另有调色板索引检查。需要指定通道、位序或载荷的操作仍可从单项页使用。隐写密码只传给需要它的提取器。
+
+复用现有 `POST /api/forensics/run`，请求的 `engine` 为 `image-survey`，`options.depth` 为 `standard` 或 `deep`。校验失败仍返回原 JSON 错误；校验通过后逐行返回 NDJSON 的计划、进度、单项结果和结束统计。同一时间只运行一个隔离容器。上传最多 20 MiB、单引擎文件最多 64 MiB，整批最多 4 分钟，已交付的单项结果 JSON 总量最多 88 MiB（含 Base64）。单项超限会显示原因，其他已返回项可继续下载。断开连接终止当前任务，取消后可查看已经返回的分项。深度、格式和完成状态均体现在本次分析页面。
+
+参考固定源码 Zeecka/AperiSolve `feec31092f0e548513d76545293caa41eb4f1ad8`：`aperisolve/filetype.py:38`（按实际类型分派）、`aperisolve/analyzers/decomposer.py:23`（生成通道图）、`aperisolve/analyzers/color_remapping.py:67`（八种重映射）及 `aperisolve/analyzers/base_analyzer.py:246`（真实状态与诊断）。综合入口直接调用镜像中的分析器；独立位平面工具仍在浏览器内运行。上线需同时更新静态资源与沙箱网关，深入检查需要带 StegoVeritas 的现有镜像。
+
+2026-11-17 新增开发范围：StegoVeritas 分项能力、Steghide 密码列表、元数据二进制标签和原始 XMP；完整去重矩阵、限制及隔离验收见 [StegoVeritas 接入](STEGOVERITAS.md)。新增范围尚未发布正式网站。下方 19 项是原 AperiSolve 固定版本范围。
+
+
+
 2026-11-04：已随 V2.0 启用正式服务，并将上传文件上限统一为 20 MB；固定镜像及线上验证见 [V2.0 发布记录](releases/V2.0-发布记录.md)。
 
 用户于 2026-11-03 授权补齐 AperiSolve 分析能力，不启用整套自动分析。按固定版本的 19 个分析模块验收，不把底层程序的其他产品功能（例如隐写写入、密码穷举）冒充本轮分析器范围。
@@ -46,7 +60,7 @@ Windows 本机没有 Docker 时，开发服务可通过已有 SSH 别名调用�
 ```powershell
 $env:FORENSICS_ENABLED='1'
 $env:FORENSICS_TRANSPORT='ssh'
-$env:FORENSICS_SSH_HOST='mist-server'
+$env:FORENSICS_SSH_HOST='your-sandbox-host'
 node scripts/server.mjs --port 16334
 ```
 

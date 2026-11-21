@@ -34,6 +34,7 @@ import { initPaper } from './round3/paper.js';
 import { mountChefTools } from './chef-tools/index.js';
 import { initRoundTwo } from './round-two.js';
 import { initRoundOne } from './round-one.js';
+import { preparePage } from './page-preparation.js';
 import { mountShell, decorateHeading, mountFooter } from './site-shell.js';
 import { mountWorkspaceGuides } from './workspace.js';
 import { initHuntTools } from './hunt-tools.js';
@@ -57,7 +58,7 @@ import {
 import { createPreferenceTargets } from './capabilities/preference-targets.js';
 import { mountSitePages } from './site-pages.js';
 import { toolPages, sitePages, notebookViewForRoute } from './navigation.js';
-import { loadRegistry, resolveCapability } from './capabilities/registry.js';
+import { loadRegistry, resolveCapability, subscribeRegistry } from './capabilities/registry.js';
 import { mountCapabilityWorkspace } from './capabilities/workspace.js';
 import { capabilityRoute } from './capabilities/routes.js';
 import { selectPanelTask } from './capabilities/task-selection.js';
@@ -76,6 +77,7 @@ import { mountCharacterTables } from './character-tables/page.js';
 import { mountTimezones } from './timezones/index.js';
 import { mountOnlineQuery } from './online-query/index.js';
 import { appendToolHelpContent } from './tool-help.js';
+import { mountAnalysisUnlock } from './capabilities/analysis-unlock.js';
 
 initPreferences();
 configureMediaPlayback(registerPlayback);
@@ -84,6 +86,7 @@ initToolPreferences();
 mountInitialLayout();
 
 const $ = (id) => document.getElementById(id);
+mountAnalysisUnlock($('main'), { navigate: panel });
 const state = { panel: 'crypto' };
 let hexEditor, knowledge;
 const huntUI = initHuntTools();
@@ -103,7 +106,23 @@ mountUnits($('main'));
 mountPractical($('main'));
 mountFileWorkbench($('main'));
 mountFunTools($('main'));
-mountForensics($('main'));
+mountForensics($('main'), {
+  async openTool(id, direction, fromSurvey) {
+    const {
+      entry,
+      op,
+      direction: selected,
+    } = resolveCapability(await loadRegistry(), id, undefined, direction);
+    if (!fromSurvey()) return;
+    if (!entry) throw Error('没有找到对应工具。');
+    const visit = routingRevision + 1;
+    await panel(capabilityRoute(entry, op, selected));
+    const active = () =>
+      routingRevision === visit && currentCapability?.open.panel === entry.open.panel;
+    if (active()) return active;
+  },
+  loadImage: (file, active) => imageTools.load(file, { isCurrent: active }),
+});
 initGo();
 initTuring();
 const itReference = mountITReference($('main'), {
@@ -348,6 +367,7 @@ async function panel(route) {
   if (!entry || currentCapability?.id !== entry.id) capabilityWorkspace?.restore();
   nativeWorkspaces?.restore();
   currentCapability = null;
+  preparePage(name, entry, group);
   if (name === 'cyberchef') chef.load();
   for (const section of document.querySelectorAll('.panel'))
     section.hidden =
@@ -561,4 +581,8 @@ if (launch.searchParams.has('editor')) {
 export const startupReady = loadRegistry().then((registry) => {
   configurePreferenceTargets(createPreferenceTargets(registry));
   return panel(location.hash.slice(1) || initialRoute());
+});
+subscribeRegistry((registry) => {
+  configurePreferenceTargets(createPreferenceTargets(registry));
+  if (currentCapability && registry.byId.get(currentCapability.id)?.listed === false) panel('home');
 });

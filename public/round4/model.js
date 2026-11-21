@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import { render as uiRender, onDisconnect } from '../ui/index.js';
 import * as T from '../vendor/round4/model.js';
 import {
@@ -171,7 +172,7 @@ export function init(root) {
   }
   function readCrystal(cif, repeat) {
     return new Promise((resolve, reject) => {
-      const worker = new Worker(new URL('./cif-worker.js', import.meta.url), { type: 'module' });
+      const worker = takeWorker(new URL('./cif-worker.js', import.meta.url), { type: 'module' });
       cifWorker = worker;
       rejectCIF = reject;
       const finish = () => {

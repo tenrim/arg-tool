@@ -84,12 +84,33 @@ const service = (options) =>
     fetchImpl: async () => new Response('{"complete":{"all":[1,null,"text"]}}'),
     ...options,
   });
-test('exactly eight registered providers extend the existing API with independent contracts', () => {
+test('exactly six registered providers extend the existing API with independent contracts', () => {
   assert.deepEqual(
     new Set(QUERY_PROVIDERS.map((p) => p.id)),
-    new Set(['simbad', 'vizier', 'cod', 'pubchem', 'zdic', 'cnkgraph', 'pokewiki', 'placenames']),
+    new Set(['cod', 'pubchem', 'zdic', 'cnkgraph', 'pokewiki', 'placenames']),
   );
-  assert.equal(new Set(QUERY_PROVIDERS.map((p) => p.id)).size, 8);
+  assert.equal(new Set(QUERY_PROVIDERS.map((p) => p.id)).size, 6);
+});
+
+test('retired SIMBAD and VizieR endpoints are not registered and never send requests', async () => {
+  let outbound = 0;
+  const s = service({
+    providers: QUERY_PROVIDERS,
+    fetchImpl: async () => {
+      outbound++;
+      return new Response('{}');
+    },
+  });
+  try {
+    for (const id of ['simbad', 'vizier']) {
+      const response = await request(s, { path: '/api/query/' + id }).done;
+      assert.equal(response.status, 404);
+      assert.equal(response.body.code, 'NOT_FOUND');
+    }
+    assert.equal(outbound, 0);
+  } finally {
+    s.close();
+  }
 });
 test('server preserves submitted parameters and full records, strips all browser credentials and refuses redirects', async () => {
   let outbound;

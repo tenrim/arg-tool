@@ -108,18 +108,18 @@ try {
   await go(page, 'analysis');
   assert.equal(await page.locator('#analysis-chef').count(), 0);
   await fill('analysis-input', 'LXFOPVEFRNHR');
+  await page.locator('#analysis-statistics > summary').click();
   await fill('analysis-key', 'LEMON');
   await click('analysis-vig');
   assert.equal(await val('analysis-output'), 'ATTACKATDAWN');
   await click('analysis-run');
+  await status('analysis-status', /统计完成/);
   assert.equal(await page.locator('#analysis-frequency meter').count(), 26);
   await fill('analysis-input', 'SGVsbG8sIHdvcmxkIQ==');
   await click('analysis-magic');
-  await status('analysis-status', /候选已生成/, 60000);
-  assert.match(
-    await page.locator('#panel-analysis').getByLabel('原始 JSON 数据').inputValue(),
-    /Hello/,
-  );
+  await status('analysis-status', /得到 .*候选/, 60000);
+  await page.locator('[data-clue-candidate]').filter({ hasText: 'Hello, world!' }).first().click();
+  assert.equal(await val('analysis-output'), 'Hello, world!');
   await click('analysis-sub');
   await page.waitForSelector('#panel-substitution:not([hidden])');
   assert.equal(await val('sub-input'), 'SGVsbG8sIHdvcmxkIQ==');
@@ -257,6 +257,9 @@ try {
     () =>
       !Array.from(document.querySelectorAll('button')).find((n) => n.textContent === '采用修复矩阵')
         .disabled,
+  );
+  await page.evaluate(async () =>
+    (await import('./preferences.js')).setPreferences({ showAdvancedParameters: true }),
   );
   await page.locator('#qr-codeword-details>summary').click();
   const words = page.getByRole('textbox', { name: '完整数据码字', exact: true });

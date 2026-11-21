@@ -150,7 +150,12 @@ export function activateToolPreferences(panel, entry, operation) {
   };
   presets ||= presetControls({ snapshot: parameterSnapshot, apply: applyParameters });
   const area = panel.querySelector(PARAMETER_AREA);
-  if (area) presets.activate(area, active.key);
+  if (area)
+    presets.activate(
+      area,
+      active.key,
+      area.closest('.ui-conversion')?.querySelector('.ui-conversion-options') || area,
+    );
   else presets.hide();
   if (!getPreferences().rememberParameters || restored.has(active.key)) return;
   const values = read(TOOL_PARAMETERS_KEY)[active.key];

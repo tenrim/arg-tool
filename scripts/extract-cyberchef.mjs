@@ -2,6 +2,7 @@ import { createRequire } from 'node:module';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 // Maintenance-only extraction from the pinned, checksum-verified official bundle.
 const root = resolve('public');
 const dest = resolve(root, 'vendor/cyberchef');
@@ -78,6 +79,7 @@ try {
     throw Error('ChefWorker capture failed');
   await writeFile(resolve(dest, 'ChefWorker.js'), worker);
   await writeFile(resolve(dest, 'catalogue.json'), meta + '\n');
+  await writeFile(resolve(dest, 'catalogue.json.gz'), gzipSync(meta + '\n', { level: 9 }));
   await writeFile(
     resolve(dest, 'ENGINE.json'),
     JSON.stringify(

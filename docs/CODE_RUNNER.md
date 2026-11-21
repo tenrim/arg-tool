@@ -1,5 +1,7 @@
 # 代码运行语言扩展
 
+构建使用清华 Ubuntu 镜像站，保持 Ubuntu 签名校验；当前实际运行时版本以 `RUNTIME.json` 和 `PACKAGES.txt` 为准。
+
 2026-11-04：已随 V2.0 启用正式服务，固定镜像、线上检查及回滚方式见 [V2.0 发布记录](releases/V2.0-发布记录.md)。下述 2026-11-03 内容保留为开发与隔离验证记录。
 
 2026-11-03 开发记录。这里只定义构建、使用和验收方式，不代表已经部署线上。
@@ -47,7 +49,7 @@ docker run --rm --network=none --entrypoint=cat mist-code-runner:20261103 /opt/m
 | `CODE_RUNNER_IMAGE` | 已验证的本地镜像名称／摘要；执行时不自动拉取 |
 | `CODE_RUNNER_ORIGINS` | 允许的完整站点 Origin，逗号分隔 |
 | `CODE_RUNNER_TRANSPORT=ssh` | 开发时通过已有 SSH 主机别名连接测试 Docker |
-| `CODE_RUNNER_SSH_HOST` | 默认 mist-server；保持严格主机密钥校验 |
+| `CODE_RUNNER_SSH_HOST` | SSH 模式下填写部署者的主机别名；保持严格主机密钥校验 |
 | `CODE_RUNNER_HOST`、`CODE_RUNNER_PORT` | 独立服务监听，默认回环 3215 |
 
 ## 验证与接入完成条件

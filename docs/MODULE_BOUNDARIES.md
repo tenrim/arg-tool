@@ -42,6 +42,8 @@
 
 ## 跨模块交接
 
+机器人计算适配由 `services/bot-tools/` 独立拥有 HTTP 认证、支持名单、限制和隔离进程；直接读取原目录／参数模块，浏览器调用原 CyberChef 与 Qalculate 客户端及 Worker。它不复制算法、不接管网页状态、不成为静态站点启动前提；Koishi 插件仅负责网络调用。接口与本地启动见 [机器人 API](BOT_TOOLS_API.md)。
+
 一般使用单向、具名、参数明确的接口。特殊跨域导入在 `scripts/architecture-policy.mjs` 中逐条说明目的与直接回归，不增加“允许任意跨域”的白名单。
 
 笔记事务队列拥有选择和存储，图稿控制器拥有场景。调用图稿或导航前先离开笔记事务队列，不能互相等待。导出和备份弹窗只拥有自己的表单状态；拆分后仍传入原队列，不能为了文件独立而复制当前笔记。
@@ -96,3 +98,11 @@
 ## 首页组成（2026-11-04）
 
 `public/home-page.js` 只组合首页介绍、从统一登记抽取的工具推荐、固定 Base64 示例和帮助；推荐排除科普和上一批工具，均衡类别，经 registry 解析真实成员与方向，示例复用 engine.js 的 Base64 字节函数，不读取或覆盖工具草稿。`site-pages.js` 继续拥有收藏／最近使用与网站页装配；`capabilities/browser.js` 的 overview 模式从统一分类登记投影首页概览，完整组与搜索仍由原浏览器负责。样式由 `ui/styles/home.css` 与 `discovery.css` 生成，不改品牌令牌与动效所有者。
+
+## 跨工具线索分析底层（2026-11-10）
+
+`public/clue-analysis/` 是可选的无 UI 分析会话，不注册第二套导航，也不读取原页面、笔记或其他工具的私有输入。`data.js` 只管理有界的类型化快照和身份；`registry.js` 管理引用原能力 ID 的执行适配器；`session.js` 拥有当前分析的取消、预算、候选图和完整结果。各适配器复用原引擎，必须响应 AbortSignal 真正终止任务；本轮未接通的能力不自动冒充可执行。`chef-tools/parameter-model.js` 从原 schema 提取默认参数语义，schema 保留兼容导出与原表单。完整接口、范围、来源和验证见 [线索分析底层](CLUE_ANALYSIS.md)。现由 `round1/analysis.js` 的文本页面显式传入快照，拥有输入、候选选择和原笔记租约；改输入、改层数、离页时取消。`analysis-statistics.js` 只展示原统计和手动密钥试解，`clue-analysis/presentation.js` 只投影完整执行图。产品仅接受文本；底层 bytes 仅用于编码／压缩的中间状态，不接收图片／文件。不得恢复已删除的全站泛化传送按钮。
+
+解谜分析的固定检测策略由 `clue-analysis/puzzle-profiles.js` 所有，`puzzle-adapters.js` 与 `catalog-adapters.js` 仅调度原引擎；`puzzle-worker.js`、`hanzi-worker.js` 为可终止隔离执行入口。`round1/analysis-conditions.js` 复用原 CyberChef 参数表单，参数变化交回原分析页面取消会话。`hunt-extract.js` 和 `round1/hanzi-components.js` 分别是原页面与分析共用的答案提取、汉字部件匹配所有者，不复制规则或数据。完整来源集中在 `clue-analysis/sources.js`。
+
+视频工作台由 `public/video/index.js` 拥有唯一表单、素材与原笔记租约；`commands.js` 与 `editing.js` 只编排固定核心命令、参数校验与检测日志模型，`editing-ui.js` 组成七项编辑参数与可见性，`runtime.js` 拥有可终止 FFmpeg Worker、探测与完整输出。`hunt-media.js` 仅装配，原 GIF/APNG 的 `animation/index.js` 保留独立分析所有权并共享原文件输入。详见 [视频工作台](VIDEO_WORKSPACE.md)。

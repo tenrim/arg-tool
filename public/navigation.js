@@ -84,7 +84,7 @@ const definitions = {
       taskLinks(['signatures', 'credentials', 'derivation', 'certificates']),
     ),
     section('cipher-analysis', '密文识别与分析', '自动识别、统计与单表替换求解', [
-      ['analysis', '密文分析与自动解码'],
+      ['analysis', '文本线索分析'],
       ['substitution', '单表替换求解'],
       ...taskLinks(['statistics']),
     ]),
@@ -118,8 +118,6 @@ const definitions = {
     section('sky', '天体目录与观测', '深空天体、太阳系与升落', [
       ['sky', '深空天体目录'],
       ['astronomy', '天文线索'],
-      ['simbad', 'SIMBAD 天体在线查询'],
-      ['vizier', 'VizieR 星表在线查询'],
     ]),
     section('matter', '元素、物质与生命', '元素、分子与生物资料', [
       ['chemistry', '元素与化学线索'],

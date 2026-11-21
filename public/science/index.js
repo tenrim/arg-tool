@@ -1,3 +1,4 @@
+import { lookupWorker, releaseLookup } from '../idle-worker.js';
 import {
   element as uiElement,
   render as uiRender,
@@ -273,18 +274,20 @@ export function initScience() {
         buttons();
       };
       try {
-        worker = new Worker(new URL('./worker.js', import.meta.url));
+        worker = lookupWorker(new URL('./worker.js', import.meta.url), { group: id });
         buttons(true);
         timer = setTimeout(() => {
           if (current === revision) invalidate('计算超过 30 秒，已停止。请缩短输入或调整条件。');
         }, 30000);
         worker.onmessage = ({ data }) => {
           if (current !== revision) return;
-          if (data.error) fail(data.error);
-          else {
-            stop();
-            render(data.result);
+          if (!data.error || data.inputRejected) {
+            releaseLookup(worker);
+            worker = null;
+            clearTimeout(timer);
           }
+          if (data.error) fail(data.error);
+          else render(data.result);
         };
         worker.onerror = (e) => {
           e.preventDefault();

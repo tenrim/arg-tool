@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Button,
@@ -43,6 +44,7 @@ export function attachQRAdvanced({
       Toolbar({ children: [inspect, recover, padding, stop, apply] }),
       Disclosure({
         id: 'qr-codeword-details',
+        preference: 'advancedParameters',
         children: [
           Box({ tag: 'summary', text: '码字编辑与分块诊断（进阶）' }),
           words,
@@ -72,7 +74,7 @@ export function attachQRAdvanced({
     invalidate();
     clear();
     const revision = generation;
-    worker = new Worker(new URL('./qr-worker.js', import.meta.url));
+    worker = takeWorker(new URL('./qr-worker.js', import.meta.url));
     stop.disabled = false;
     updateStatus(status, '正在处理…');
     timer = setTimeout(() => {

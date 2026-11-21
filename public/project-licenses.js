@@ -330,31 +330,6 @@ export const PROJECT_LICENSES = [
     role: '固定 e7abcf317df79ab57e6053f48c8b1fec01920836 的完整选定中文 HTTP 标头、常见 MIME 列表及 CSP 词条，按精确标识为 103 个本地 HTTP 字段、75 个 MIME 类型补充可检索中文说明；其余 IANA 登记仍显示原文。',
   },
   {
-    name: 'CDS/SIMBAD online object data',
-    url: 'https://simbad.cds.unistra.fr/simbad/',
-    linkLabel: '官方数据服务',
-    license: '数据按各原始来源许可使用；保留 CDS/SIMBAD、原作者、论文与 DOI，不统一宣称 CC0',
-    notices: [
-      'licenses/CDS-ONLINE-TERMS.txt',
-      'licenses/SIMBAD-ONLINE-NOTICE.txt',
-      'licenses/ONLINE-READING-NOTICE.txt',
-    ],
-    role: '按名称、ICRS 天区和真实对象编号主动查询天体基本资料、别名、测光与文献；完整字段、单位与来源保留。本站原创固定接口适配，不打包本地恒星样本或 SIMBAD 软件。 按坐标、对象类型、别名、波段测光和文献分节展示中文字段，保留实际参考系和单位。',
-  },
-  {
-    name: 'CDS/VizieR online catalogue data',
-    url: 'https://vizier.cds.unistra.fr/',
-    linkLabel: '官方数据服务',
-    license:
-      '各目录独立许可，遵从返回的 rights_uri 和数据集条款；保留 CDS/VizieR、原作者与论文/DOI',
-    notices: [
-      'licenses/CDS-ONLINE-TERMS.txt',
-      'licenses/VIZIER-ONLINE-NOTICE.txt',
-      'licenses/ONLINE-READING-NOTICE.txt',
-    ],
-    role: '主动读取真实星表目录、全部返回字段模式及有界条件/天区记录；保留完整原始 TSV、单位、元数据及目录权利，不打包精选星表。 按目录说明、列定义、单位和查询记录生成可读资料表，原文及未知列保留。',
-  },
-  {
     name: 'Crystallography Open Database (COD) online data',
     url: 'https://www.crystallography.net/cod/',
     linkLabel: '官方数据服务',

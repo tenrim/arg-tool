@@ -1,14 +1,24 @@
 import createEngine from '../vendor/round3/grid-engine.js';
 import { encodedBoard } from './board-model.js';
+let loading;
+const load = () =>
+  (loading ??= createEngine({
+    locateFile: () => new URL('../vendor/round3/grid-engine.wasm', import.meta.url).href,
+    print: () => {},
+    printErr: () => {},
+  }).catch((error) => {
+    loading = undefined;
+    throw error;
+  }));
 self.onmessage = async ({ data }) => {
+  if (data.prepare) {
+    await load().catch(() => {});
+    return;
+  }
   try {
     const input = encodedBoard(data.board);
     self.postMessage({ progress: '正在载入本地求解引擎…' });
-    const engine = await createEngine({
-      locateFile: () => new URL('../vendor/round3/grid-engine.wasm', import.meta.url).href,
-      print: () => {},
-      printErr: () => {},
-    });
+    const engine = await load();
     const pointer = engine._malloc(input.byteLength);
     if (!pointer) throw Error('求解内存不足，请缩小棋盘。');
     try {

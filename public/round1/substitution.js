@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import { element as uiElement, setState } from '../ui/index.js';
 import {
   $,
@@ -177,7 +178,7 @@ export function initSubstitution() {
     if (text.length > 20000) throw Error('最多输入 20,000 个字符。');
     cancel();
     const gen = generation;
-    worker = new Worker(new URL('./substitution-worker.js', import.meta.url), { type: 'module' });
+    worker = takeWorker(new URL('./substitution-worker.js', import.meta.url), { type: 'module' });
     const w = worker;
     $('sub-solve').disabled = true;
     setState($('sub-solve'), { busy: true });

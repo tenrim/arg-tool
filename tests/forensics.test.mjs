@@ -2,7 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { validateJob, createForensicsService } from '../services/forensics/index.mjs';
-import { containerCommand } from '../services/forensics/process.mjs';
+import { containerCommand, runContainer } from '../services/forensics/process.mjs';
+import { EventEmitter } from 'node:events';
+import { PassThrough } from 'node:stream';
+import { runCode } from '../services/code-runner/process.mjs';
+import { createCodeRunnerService } from '../services/code-runner/index.mjs';
 import { FORENSICS_TASKS } from '../public/forensics/catalog.js';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -12,6 +16,71 @@ const job = () => ({
   password: '',
   data: Buffer.from('proof').toString('base64'),
   options: {},
+});
+
+test('分析及代码服务的镜像缺失返回 503；恢复后下一次任务正常执行', async (t) => {
+  for (const [name, create, run, input, result] of [
+    ['forensics', createForensicsService, runContainer, job(), { complete: true, files: [] }],
+    [
+      'code',
+      createCodeRunnerService,
+      runCode,
+      { language: 'bash', code: 'echo ok', input: '' },
+      { status: 'ok', run: { stdout: 'ok\n' } },
+    ],
+  ]) {
+    await t.test(name, async () => {
+      let missing = true;
+      const spawnImpl = (_command, args) => {
+        assert.ok(args.includes('--pull=never'), '任务不得自动下载替代镜像');
+        const child = new EventEmitter();
+        child.stdout = new PassThrough();
+        child.stderr = new PassThrough();
+        child.stdin = new PassThrough();
+        child.stdin.on('finish', () =>
+          queueMicrotask(() => {
+            if (missing)
+              child.stderr.write(
+                'docker: Error response from daemon: No such image: sha256:private-id',
+              );
+            else child.stdout.write(JSON.stringify(result));
+            child.emit('close', missing ? 125 : 0);
+          }),
+        );
+        return child;
+      };
+      const service = create({
+        env: { FORENSICS_ENABLED: '1', CODE_RUNNER_ENABLED: '1' },
+        execute: (value, options) => run(value, { ...options, spawnImpl }),
+      });
+      const server = createServer(service.handle);
+      await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+      const origin = `http://127.0.0.1:${server.address().port}`;
+      const request = () =>
+        fetch(origin, {
+          method: 'POST',
+          headers: { Origin: origin, 'Content-Type': 'application/json' },
+          body: JSON.stringify(input),
+        });
+      try {
+        const failure = await request();
+        assert.equal(failure.status, 503);
+        const body = await failure.json();
+        assert.equal(body.code, 'ENGINE_UNAVAILABLE');
+        assert.match(body.error, /环境缺失/);
+        assert.doesNotMatch(body.error, /sha256|private-id|docker/);
+        missing = false;
+        await new Promise((resolve) => setTimeout(resolve, 2050));
+        const recovered = await request();
+        assert.equal(recovered.status, 200);
+        assert.deepEqual(await recovered.json(), result);
+      } finally {
+        service.close();
+        server.closeAllConnections();
+        await new Promise((resolve) => server.close(resolve));
+      }
+    });
+  }
 });
 
 test('固定上游原始文件和 OpenStego 发行包保持摘要一致', async () => {
@@ -32,8 +101,11 @@ test('固定上游原始文件和 OpenStego 发行包保持摘要一致', async 
     openstego.sha256,
   );
 });
-test('17 个服务端分析器与两个已有本地视觉模块覆盖 19 项；不接受命令和路径参数', () => {
-  assert.equal(new Set(FORENSICS_TASKS.map((t) => t.engine)).size, 17);
+test('原 17 个服务端分析器和 StegoVeritas 入口；不接受命令和路径参数', () => {
+  assert.equal(
+    new Set(FORENSICS_TASKS.filter((t) => t.engine !== 'image-survey').map((t) => t.engine)).size,
+    18,
+  );
   for (const engine of FORENSICS_TASKS.map((t) => t.engine))
     assert.equal(validateJob({ ...job(), engine }).engine, engine);
   for (const bad of [

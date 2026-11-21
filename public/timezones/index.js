@@ -1,3 +1,4 @@
+import { lookupWorker, releaseLookup } from '../idle-worker.js';
 import {
   Box,
   Button,
@@ -166,11 +167,12 @@ export function mountTimezones(main) {
     copy.disabled = save.disabled = !lease;
     records.setEnabled(!!lease);
   }
-  function kill(kind) {
+  function kill(kind, completed = false) {
     const job = kind === 'search' ? searchJob : queryJob;
     if (job) {
       clearTimeout(job.timer);
-      job.worker.terminate();
+      if (completed) releaseLookup(job.worker);
+      else job.worker.terminate();
     }
     if (kind === 'search') searchJob = null;
     else queryJob = null;
@@ -189,7 +191,7 @@ export function mountTimezones(main) {
     kill(type === 'search' ? 'search' : 'query');
     let worker;
     try {
-      worker = new Worker(new URL('./worker.js', import.meta.url));
+      worker = lookupWorker(new URL('./worker.js', import.meta.url));
     } catch {
       fail('本地时区组件无法启动，请确认浏览器支持后台运算后重试。');
       controls();
@@ -219,7 +221,7 @@ export function mountTimezones(main) {
     worker.onmessageerror = () => error('无法读取时区查询结果。');
     worker.onmessage = ({ data }) => {
       if (!valid() || data.id !== version) return;
-      kill(owner);
+      kill(owner, !data.error);
       if (data.error) fail(data.error);
       else done(data.result);
       controls();

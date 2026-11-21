@@ -1170,30 +1170,6 @@
       "adaptation": "Explicit user query through fixed server endpoint; all returned record fields and attribution retained. No offline OEIS database or OEIS software is bundled."
     },
     {
-      "name": "CDS/SIMBAD online object data",
-      "repository": "https://simbad.cds.unistra.fr/simbad/",
-      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
-      "license": "Dataset-specific rights, CDS/SIMBAD acknowledgement and original scientific references",
-      "license_source_url": "https://cds.unistra.fr/legals/",
-      "license_path": "public/licenses/CDS-ONLINE-TERMS.txt",
-      "license_sha256": "6ccdc6f98f70d25a86f2709148900a22e7c1d62f1edd37ce5628f8c59c10a28f",
-      "local_directory": "upstream/online-services",
-      "file_manifest": "upstream/online-services/UPSTREAM.json",
-      "adaptation": "Original explicit-submit fixed-endpoint simbad adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
-    },
-    {
-      "name": "CDS/VizieR online catalogue data",
-      "repository": "https://vizier.cds.unistra.fr/",
-      "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
-      "license": "Dataset-specific licences/rights_uri and original authors, CDS/VizieR acknowledgement",
-      "license_source_url": "https://cds.unistra.fr/legals/",
-      "license_path": "public/licenses/CDS-ONLINE-TERMS.txt",
-      "license_sha256": "6ccdc6f98f70d25a86f2709148900a22e7c1d62f1edd37ce5628f8c59c10a28f",
-      "local_directory": "upstream/online-services",
-      "file_manifest": "upstream/online-services/UPSTREAM.json",
-      "adaptation": "Original explicit-submit fixed-endpoint vizier adapter; complete actual returned records, attribution and units retained. No offline sample database, external service software, login or media mirroring."
-    },
-    {
       "name": "COD online crystal data",
       "repository": "https://www.crystallography.net/cod/",
       "version": "Interactive read-only online service; official evidence retrieved 2026-10-17",
@@ -1684,6 +1660,18 @@
       "local_directory": "public/vendor/hanzi-full",
       "file_manifest": "public/vendor/hanzi-full/UPSTREAM.json",
       "license": "Arphic Public License; dictionary separately LGPL-3.0-or-later"
+    },
+    {
+      "name": "StegoVeritas",
+      "repository": "https://github.com/bannsec/stegoVeritas",
+      "version": "1.11",
+      "source_url": "https://files.pythonhosted.org/packages/b4/eb/388f8fc5779841f1a6ac8800fe1018862ce662604d9f6d98fe70b77269c5/stegoveritas-1.11.tar.gz",
+      "archive_sha256": "a5836a0350b116342bef13edec020806c1c9ea33c95cad2ac52db6c7b59c9ac5",
+      "license": "GPL-2.0 as LICENSE.md; setup.py declares MIT inconsistently; retain full GPL text",
+      "license_path": "public/licenses/forensics/stegoveritas.txt",
+      "source_directory": "upstream/stegoveritas",
+      "file_manifest": "upstream/stegoveritas/SOURCE.json",
+      "adaptation": "Original algorithms through isolated typed adapter; reused functions and complete coverage mapping in docs/STEGOVERITAS.md. Upstream bytes unchanged."
     }
   ],
   "retired_components": [

@@ -1,3 +1,4 @@
+import { lookupWorker, releaseLookup } from '../idle-worker.js';
 // Named adapter to the existing complete TZif worker; one cancellable owner per form.
 export function timeClient() {
   let worker = null,
@@ -21,18 +22,20 @@ export function timeClient() {
       const id = serial;
       return new Promise((resolve, reject) => {
         pending = { resolve, reject };
-        worker = new Worker(new URL('../timezones/worker.js', import.meta.url));
+        worker = lookupWorker(new URL('../timezones/worker.js', import.meta.url));
         const end = (error, value) => {
           if (id !== serial) return;
           clearTimeout(timer);
           pending = null;
-          worker?.terminate();
+          if (error) worker.terminate();
+          else releaseLookup(worker);
           worker = null;
           error ? reject(error) : resolve(value);
         };
         worker.onmessage = ({ data }) => {
           if (data.id === id) end(data.error ? Error(data.error) : null, data.result);
         };
+        worker.onmessageerror = () => end(Error('无法读取时区查询结果。'));
         worker.onerror = () => end(Error('时区资料载入失败，请重试。'));
         timer = setTimeout(() => end(Error('时区计算超时，请重试。')), 30000);
         worker.postMessage({

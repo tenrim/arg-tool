@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
 import * as fs from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -178,10 +179,25 @@ export function createDevServer({
           headers['Content-Encoding'] = 'gzip';
         }
       }
-      const body = request.method === 'HEAD' ? undefined : await fileSystem.readFile(servedFile);
+      const body =
+        compressed || request.method === 'GET' ? await fileSystem.readFile(servedFile) : undefined;
       if (response.destroyed || response.writableEnded) return;
+      if (compressed) {
+        // Validate the selected representation so independent workers can reuse
+        // the browser's cached dictionary even when the URL is not versioned.
+        headers.ETag = '"' + createHash('sha256').update(body).digest('hex') + '"';
+        const validators = String(request.headers['if-none-match'] || '')
+          .split(',')
+          .map((value) => value.trim().replace(/^W\//, ''));
+        if (validators.includes('*') || validators.includes(headers.ETag)) {
+          response.writeHead(304, headers);
+          response.end();
+          return;
+        }
+        headers['Content-Length'] = body.length;
+      }
       response.writeHead(200, headers);
-      response.end(body);
+      response.end(request.method === 'HEAD' ? undefined : body);
     } catch {
       if (response.destroyed || response.writableEnded) return;
       if (response.headersSent) {
@@ -251,7 +267,8 @@ export function closeDevServer(server, { timeoutMS = 1500 } = {}) {
   }));
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+const entry = process.argv[1] && (await fs.realpath(process.argv[1]).catch(() => null));
+if (entry && import.meta.url === pathToFileURL(entry).href) {
   const args = process.argv.slice(2),
     portArg = args.indexOf('--port'),
     port = Number(portArg >= 0 ? args[portArg + 1] : process.env.PORT || 3000);

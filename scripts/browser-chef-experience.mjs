@@ -177,20 +177,17 @@ try {
   await chooseNativeTask(page, 'native:cipher-detect');
   await page.locator('#analysis-input').fill('SGVsbG8gd29ybGQ=');
   await page.locator('#analysis-magic').click();
-  const nativeMagic = page.locator('#panel-analysis [data-chef-result=magic]');
-  await nativeMagic.waitFor();
-  assert.equal(await page.locator('#analysis-output').isVisible(), false);
-  let nativeChoice;
-  for (const card of await nativeMagic.locator('[data-ui=card]').all())
-    if ((await card.getByLabel('候选结果片段').inputValue()) === 'Hello world') {
-      nativeChoice = card;
-      break;
-    }
-  assert.ok(nativeChoice);
-  await nativeChoice.getByRole('button', { name: '采用此候选配方' }).click();
-  await page.waitForFunction(
-    () => document.getElementById('analysis-output').value === 'Hello world',
-  );
+  await page.waitForFunction(() => !document.getElementById('analysis-magic').disabled, null, {
+    timeout: 45000,
+  });
+  const nativeChoice = page
+    .locator('[data-clue-candidate]')
+    .filter({ hasText: 'Hello world' })
+    .first();
+  await nativeChoice.click();
+  assert.equal(await page.locator('#analysis-output').isVisible(), true);
+  assert.equal(await page.locator('#analysis-output').inputValue(), 'Hello world');
+  assert.match(await page.locator('#analysis-trace').textContent(), /Base64/);
   assert.equal(await page.evaluate(() => window.chefWorkers.length), Math.max(1, initialWorkers));
   await page.locator('#analysis-input').fill('new');
   assert.equal(await page.locator('#analysis-output').inputValue(), '');

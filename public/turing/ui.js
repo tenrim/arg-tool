@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Card,
@@ -521,7 +522,7 @@ export function initTuring() {
     try {
       if (!/^-?\d+$/.test(head.value) || Math.abs(Number(head.value)) > 65535)
         throw Error('读写头位置须为 -65535 至 65535 的整数。');
-      worker = new Worker(new URL('./worker.js', import.meta.url));
+      worker = takeWorker(new URL('./worker.js', import.meta.url));
       worker.onerror = (event) => {
         event.preventDefault();
         if (version === revision) fail('图灵机运算线程出错，请重新载入规则。');

@@ -21,7 +21,9 @@ COPY --from=build /build/jphs /opt/sources/jphs
 COPY --from=build /build/jsteg /opt/sources/jsteg
 COPY upstream/aperisolve-single /opt/upstream
 COPY upstream/aperisolve-single/docker/pdfid.py /usr/local/bin/pdfid
-COPY services/forensics/runner.py /opt/runner.py
+RUN apt-get update && apt-get install -y --no-install-recommends python3-prettytable python3-magic python3-distro && rm -rf /var/lib/apt/lists/*
+COPY upstream/stegoveritas /opt/stegoveritas
+COPY services/forensics/runner.py services/forensics/stegoveritas_adapter.py services/forensics/trailing_data.py services/forensics/steghide_wordlist.py /opt/
 COPY services/forensics/fixtures.py /opt/fixtures.py
 COPY services/forensics/notices.py /opt/notices.py
 RUN chmod +x /usr/local/bin/pdfid && python3 /opt/runner.py --prepare

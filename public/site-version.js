@@ -1,2 +1,2 @@
 // Product identity only. Views and diagnostics share this pure metadata.
-export const APP_VERSION = 'V2.0';
+export const APP_VERSION = 'V2.3.5';

@@ -68,7 +68,7 @@ export function inputGuidance(op, source) {
   if (source === 'base64' || source === 'hex')
     return `当前输入会先进行${source === 'base64' ? ' Base64' : '十六进制'}解码，再执行“${op}”。如果只是解码一层，请选择“直接粘贴文字（UTF-8）”。`;
   if (/^From Base/.test(op))
-    return '直接粘贴编码串即可。输入方式保持“直接粘贴文字（UTF-8）”，当前操作负责解码；自定义字符表和严格模式在高级参数中。';
+    return '直接粘贴编码串即可。输入方式保持“直接粘贴文字（UTF-8）”，当前操作负责解码；需要自定义字符表或严格校验时，可在设置中开启“显示高级参数”。';
   if (op === 'Magic')
     return '粘贴未知编码或选择文件，点击转换查看候选。候选是统计推测，可复制片段或打开配方取得完整结果。';
   if (/^AES /.test(op))

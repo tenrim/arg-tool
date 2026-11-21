@@ -202,6 +202,8 @@ test('knowledge: exact function search and immutable content exclude removed gro
     'function-native:crystals',
     'function-native:it-rfc',
     'function-native:it-instructions',
+    'function-native:simbad',
+    'function-native:vizier',
     ...[
       'gaussian',
       'quadratic',

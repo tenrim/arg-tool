@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Button,
@@ -537,7 +538,7 @@ function mountSequenceReference(main, go) {
       retry.hidden = false;
     };
     try {
-      worker = new Worker(new URL('../science/worker.js', import.meta.url));
+      worker = takeWorker(new URL('../science/worker.js', import.meta.url));
       timer = setTimeout(() => fail('密码子表载入超时，请重试。'), 30000);
       worker.onerror = (event) => {
         event.preventDefault();

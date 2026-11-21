@@ -1,4 +1,4 @@
-import { element as uiElement } from './ui/index.js';
+import { element as uiElement, ImageInputPreview, onDisconnect } from './ui/index.js';
 import { $, button, field, setStatus } from './round1/common.js';
 import { absorb, tabs, surface } from './round2/common.js';
 import { initMusic, initMidi } from './round2/music.js';
@@ -70,6 +70,24 @@ export function initRoundTwo({ getAudio, getImage, getFile }) {
       ['compare', '比较与取色', comparison],
       ['repair', '二维码修复', repair],
     ]);
+  const sharedPreview = ImageInputPreview();
+  base.append(sharedPreview.node);
+  const refreshOriginal = () =>
+    sharedPreview.show(
+      ['analysis', 'edit'].includes(selectImage.active()) ? null : getImage()?.file,
+    );
+  const clearOriginal = () => sharedPreview.show(null);
+  const switchImagePane = ({ detail }) => {
+    if (detail.panel === 'image') refreshOriginal();
+  };
+  document.addEventListener('arg:imagechange', clearOriginal);
+  document.addEventListener('arg:imageready', refreshOriginal);
+  document.addEventListener('arg:subpanelchange', switchImagePane);
+  onDisconnect(sharedPreview.node, () => {
+    document.removeEventListener('arg:imagechange', clearOriginal);
+    document.removeEventListener('arg:imageready', refreshOriginal);
+    document.removeEventListener('arg:subpanelchange', switchImagePane);
+  });
   comparison.children[0].dataset.nativeSection = 'compare';
   comparison.children[1].dataset.nativeSection = 'color';
   initArchive($('panel-file'), getFile);

@@ -9,6 +9,7 @@ export function ConversionLayout({
   parameters,
   actions = [],
   status,
+  inputSupport,
   input,
   result,
   details,
@@ -30,6 +31,8 @@ export function ConversionLayout({
     children: [Toolbar({ className: 'ui-conversion-run', children: [...actions, jump] }), status],
   });
   const controls = Box({ className: 'ui-conversion-controls', children: [settings, execution] });
+  const options = Box({ className: 'ui-conversion-options' });
+  const support = Box({ className: 'ui-conversion-support', children: inputSupport });
   const inputCard = Card({ title: '输入', className: 'ui-conversion-input', children: input });
   const resultCard = Card({ title: '结果', className: 'ui-conversion-result', children: result });
   const panes = SplitView({
@@ -37,12 +40,17 @@ export function ConversionLayout({
     minPaneWidth: '360px',
     children: [inputCard, resultCard],
   });
-  const root = Card({ className: 'surface ui-conversion', children: [controls, panes, details] });
+  const root = Card({
+    className: 'surface ui-conversion',
+    children: [controls, options, support, panes, details],
+  });
   resultCard.tabIndex = -1;
   if (actions[0]) bindRunShortcut(root, actions[0]);
   return {
     root,
     controls,
+    options,
+    support,
     inputCard,
     resultCard,
     panes,
@@ -67,7 +75,7 @@ export function ConversionWorkbench({
   const output = Textarea({
     id: id + '-output',
     autoSize: true,
-    minRows: 2,
+    minRows: 4,
     maxRows: 12,
     placeholder: '运行后在这里查看结果',
     attrs: { readonly: true, spellcheck: 'false' },

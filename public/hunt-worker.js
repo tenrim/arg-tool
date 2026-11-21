@@ -5,10 +5,21 @@ const finalizeRows = (rows) => {
     throw Error('完整结果超过32MB，请缩小条件；没有返回截断结果。');
   postMessage({ rows, total: rows.length });
 };
+let cachedDataset, cachedRecords, patternFilter;
+let idioms;
+let defaultRecords;
 self.window = self;
 self.windows = self;
 self.onmessage = async ({ data }) => {
   try {
+    if (data.prepare) {
+      if (data.task === 'words-chinese') await import('./vendor/expansion/hunt/chinese-search.js');
+      else {
+        defaultRecords = loadEnglishRecords('standard');
+        await defaultRecords;
+      }
+      return;
+    }
     const {
       task,
       query = '',
@@ -26,11 +37,14 @@ self.onmessage = async ({ data }) => {
       const { searchChinese } = await import('./vendor/expansion/hunt/chinese-search.js');
       let corpus;
       if (data.chineseDataset === 'idioms') {
-        const r = await fetch(
-          new URL('./vendor/expansion/hunt/chinese-idioms.json', import.meta.url),
-        );
-        if (!r.ok) throw Error('完整成语库载入失败，请重试。');
-        corpus = await r.json();
+        if (!idioms) {
+          const r = await fetch(
+            new URL('./vendor/expansion/hunt/chinese-idioms.json', import.meta.url),
+          );
+          if (!r.ok) throw Error('完整成语库载入失败，请重试。');
+          idioms = await r.json();
+        }
+        corpus = idioms;
       }
       const rows = searchChinese(query, corpus);
       finalizeRows(rows);
@@ -38,18 +52,29 @@ self.onmessage = async ({ data }) => {
     }
     if (custom.length > 8 * 1024 * 1024) throw Error('自定义词表最多8MB。');
     const records = custom.trim()
-      ? custom
-          .toLowerCase()
+      ? (mode === 'regex' ? custom : custom.toLowerCase())
           .split(/[\s,，;；]+/u)
           .filter(Boolean)
           .map((word) => ({ word, flags: 31 }))
-      : await loadEnglishRecords(dataset);
-    self.words = dictionaryByPattern(records, { filter: Number(filter) });
-    self.Trie = null;
+      : cachedDataset === dataset
+        ? cachedRecords
+        : await (dataset === 'standard' && defaultRecords
+            ? defaultRecords
+            : loadEnglishRecords(dataset));
+    if (custom.trim() || cachedDataset !== dataset || patternFilter !== Number(filter)) {
+      self.words = dictionaryByPattern(records, { filter: Number(filter) });
+      self.Trie = null;
+      cachedDataset = custom.trim() ? null : dataset;
+      cachedRecords = custom.trim() ? null : records;
+      patternFilter = Number(filter);
+    }
     if (task === 'wordsearch') {
       const { Trie } = await import('./vendor/hunt/cipher-machine/common/Trie.js');
-      self.Trie = new Trie();
-      for (const list of Object.values(self.words)) for (const word of list) self.Trie.insert(word);
+      if (!self.Trie) {
+        self.Trie = new Trie();
+        for (const list of Object.values(self.words))
+          for (const word of list) self.Trie.insert(word);
+      }
       const matrix = grid
         .trim()
         .toLowerCase()
@@ -86,7 +111,7 @@ self.onmessage = async ({ data }) => {
         rows = engine.permutation(q.replace(/\s/g, ''));
         break;
       case 'regex':
-        rows = await engine.findByRegularExpression(q);
+        rows = await engine.findByRegularExpression(query);
         break;
       case 'fuzzy':
         rows = await engine.findSimilarity(q, distance);
@@ -107,6 +132,10 @@ self.onmessage = async ({ data }) => {
     }
     finalizeRows([...new Set(rows)]);
   } catch (e) {
+    if (data.prepare) {
+      defaultRecords = undefined;
+      return;
+    }
     postMessage({ error: e.message || String(e) });
   }
 };

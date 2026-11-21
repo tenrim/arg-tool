@@ -1,6 +1,23 @@
+import { IMAGE_SURVEY, STEGOVERITAS_OPTIONS, STEGOVERITAS_SOURCE } from './stegoveritas-catalog.js';
 export const SERVER_FILE_LIMIT_BYTES = 20 * 1024 * 1024;
 
 const definitions = [
+  [
+    IMAGE_SURVEY,
+    '图片隐写综合分析',
+    'image',
+    '上传一张图片，按格式检查元数据、字符串、嵌入文件和隐写线索，并浏览位平面与颜色重映射。',
+    'https://github.com/Zeecka/AperiSolve',
+    'MIT',
+  ],
+  [
+    'stegoveritas',
+    'StegoVeritas 图片隐写分析',
+    'image',
+    '图像增强、调色板索引、RGBA 位交织提取、LSB 候选扫描、尾随数据和含 Alpha 的数据嵌入；重复能力复用现有工具。',
+    STEGOVERITAS_SOURCE,
+    'GPL-2.0（随包许可；包元数据的 MIT 标注与之不一致）',
+  ],
   [
     'exiftool',
     '完整文件元数据',
@@ -69,7 +86,7 @@ const definitions = [
     'steghide',
     'Steghide 隐写提取',
     'files',
-    '从 JPEG、BMP、WAV、AU 中提取 Steghide 数据，支持密码和原文件名。',
+    '从 JPEG、BMP、WAV、AU 中提取 Steghide 数据，支持密码、原文件名及用户提供的 UTF-8 密码列表。',
     'https://steghide.sourceforge.net/',
     'GPL-2.0-or-later',
   ],
@@ -147,11 +164,45 @@ export const FORENSICS_TASKS = Object.freeze(
     description,
     url,
     license,
-    aliases: [engine, 'AperiSolve', 'Aperi’Solve', description],
-    password: ['steghide', 'outguess', 'jpseek', 'openstego', 'pdfinfo'].includes(engine),
+    aliases: [
+      engine,
+      'AperiSolve',
+      'Aperi’Solve',
+      ...(engine === IMAGE_SURVEY
+        ? ["Aperi'Solve", '图片自动分析', '图片线索分析', '图片隐写一键分析']
+        : []),
+      description,
+      ...(engine === 'stegoveritas'
+        ? STEGOVERITAS_OPTIONS[0].choices.map(([, label]) => label)
+        : []),
+    ],
+    ...(engine === 'stegoveritas'
+      ? {
+          directions: STEGOVERITAS_OPTIONS[0].choices.map(([id, label]) => ({
+            id,
+            label,
+            aliases: [`StegoVeritas ${label}`],
+            controls: [{ selector: '#forensics-stegoveritas-mode', value: id, event: 'change' }],
+          })),
+        }
+      : {}),
+    password: [IMAGE_SURVEY, 'steghide', 'outguess', 'jpseek', 'openstego', 'pdfinfo'].includes(
+      engine,
+    ),
   })),
 );
 export const FORENSICS_OPTIONS = Object.freeze({
+  [IMAGE_SURVEY]: [
+    {
+      key: 'depth',
+      label: '分析范围',
+      choices: [
+        ['standard', '常规检查'],
+        ['deep', '深入检查（含文件雕刻和图像增强）'],
+      ],
+    },
+  ],
+  stegoveritas: STEGOVERITAS_OPTIONS,
   binwalk: [
     {
       key: 'mode',
@@ -219,6 +270,8 @@ export const FORENSICS_OPTIONS = Object.freeze({
       choices: [
         ['text', '完整分组文本'],
         ['json', 'JSON（含重复和未知标签）'],
+        ['binary', '完整 JSON（含二进制标签的 Base64）'],
+        ['xmp', '原始 XMP 数据包'],
       ],
     },
   ],
@@ -226,15 +279,27 @@ export const FORENSICS_OPTIONS = Object.freeze({
 export const FORENSICS_HELP = Object.fromEntries(
   FORENSICS_TASKS.map((t) => [
     t.id,
-    {
-      steps: [
-        '选择需要处理的原始文件，设置当前工具参数。',
-        '点击“上传并处理”，只运行当前选择的引擎。',
-        '查看完整诊断，下载单个文件或全部结果；修改输入或离页会停止当前任务。',
-      ],
-      tip:
-        t.description +
-        ' 文件会上传到本站独立处理容器，不会提交给 AperiSolve 官网。单文件最多 20 MB，完整结果最多 64 MB，单次最多 240 秒；超过限额明确失败。临时文件随任务容器删除。密码不保存到预设、网址或日志。频谱图沿用上游最多 6 声道、8192 时间列的边界，超出时由结果说明。',
-    },
+    t.engine === IMAGE_SURVEY
+      ? {
+          steps: [
+            '选择一张 PNG、JPEG、BMP、GIF、WebP 或经典 TIFF 图片。',
+            '选择检查范围，若已知隐写密码可一并填写，然后上传并分析。',
+            '直接查看诊断与图层，或点击“进入具体功能”，带上原图继续检查。',
+          ],
+          tip: '最多上传 20 MB，总分析时间最多 4 分钟。单项执行完毕只代表已完成检查，候选内容需要结合题目判断。',
+        }
+      : {
+          steps: [
+            '选择需要处理的原始文件，设置当前工具参数。',
+            '点击“上传并处理”，只运行当前选择的引擎。',
+            '查看完整诊断，下载单个文件或全部结果；修改输入或离页会停止当前任务。',
+          ],
+          tip:
+            t.description +
+            ' 文件会上传到本站独立处理容器，不会提交给第三方网站。上传文件合计最多 20 MB，完整结果最多 64 MB，单次最多 240 秒；超过限额明确失败。临时文件随任务容器删除。密码不保存到预设、网址或日志。' +
+            (t.engine === 'spectrogram'
+              ? '频谱图沿用上游最多 6 声道、8192 时间列的边界，超出时由结果说明。'
+              : ''),
+        },
   ]),
 );

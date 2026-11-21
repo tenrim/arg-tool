@@ -19,6 +19,8 @@ export function createPreferenceTargets(registry) {
   };
   function resolve(value) {
     if (typeof value !== 'string' || value.length > 2048) return null;
+    if (value === 'analysis' && registry.byId.get('native:cipher-detect')?.listed === false)
+      return null;
     if (legacy.has(value))
       return (
         target(selectPanelTask(registry, value)) || {

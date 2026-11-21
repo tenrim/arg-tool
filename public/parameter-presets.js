@@ -48,6 +48,7 @@ export function presetControls({ snapshot, apply }) {
   const choice = Select({ attrs: { 'aria-label': '已保存的参数预设' } });
   const status = Status();
   const root = Disclosure({
+    preference: 'parameterPresets',
     attrs: { 'data-parameter-presets': '' },
     hidden: true,
     children: [Box({ tag: 'summary', text: '参数预设' })],
@@ -147,13 +148,13 @@ export function presetControls({ snapshot, apply }) {
   );
   return {
     root,
-    activate(panel, namespace) {
+    activate(panel, namespace, host = panel) {
       key = namespace;
       name.value = '';
       updateStatus(status, '');
       root.open = false;
       root.hidden = false;
-      panel.append(root);
+      host.append(root);
       perform(() => refresh(''));
     },
     hide() {

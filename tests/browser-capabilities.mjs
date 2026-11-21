@@ -327,8 +327,6 @@ try {
         'oeis',
         'zdic',
         'cnkgraph',
-        'simbad',
-        'vizier',
         'cod',
         'pubchem',
         'placenames',
@@ -395,6 +393,46 @@ try {
         ),
         ['To Base64', 'From Base64'],
       );
+    },
+  );
+
+  await scenario(
+    'retired SIMBAD and VizieR entries disappear and legacy routes return to browse without opening another tool',
+    async () => {
+      for (const id of ['simbad', 'vizier']) {
+        assert.equal(resolveCapability(registry, 'native:' + id).entry, undefined);
+        assert.equal(
+          toolPages.some((page) => page.route === id),
+          false,
+        );
+        assert.equal(
+          registry.entries.some((entry) => entry.open?.articleId === 'function-native:' + id),
+          false,
+        );
+      }
+      for (const id of ['sky', 'astronomy', 'cod', 'pubchem']) capability('native:' + id);
+      const { context, page } = await newPage();
+      try {
+        for (const id of ['simbad', 'vizier']) {
+          for (const route of [id, id + '?task=native%3A' + id]) {
+            await page.evaluate((route) => {
+              location.hash = route;
+            }, route);
+            await page.waitForFunction(
+              () => location.hash === '#browse' && !document.querySelector('#panel-browse').hidden,
+            );
+            assert.deepEqual(
+              await page
+                .locator('.panel:not([hidden])')
+                .evaluateAll((nodes) => nodes.map((node) => node.id)),
+              ['panel-browse'],
+            );
+          }
+        }
+        assert.equal(await page.locator('#panel-simbad, #panel-vizier').count(), 0);
+      } finally {
+        await context.close();
+      }
     },
   );
 

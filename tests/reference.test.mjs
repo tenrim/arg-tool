@@ -43,6 +43,47 @@ test('reference: Unicode astral characters, control aliases, spaces and invalid 
     /HANGUL SYLLABLE GA/,
   );
 });
+test('reference: international phone prefixes and pasted code-point lists preserve valid queries', async () => {
+  assert.ok(
+    queryRecords('countries', { query: '+86' }, countries).items.some((r) => r.id === 'CN'),
+  );
+  const d = await data('unicode');
+  assert.deepEqual(
+    queryRecords('unicode', { query: '  U+0041, 0x1f600  ' }, d).items.map((r) => r.id),
+    ['0041', '1F600'],
+  );
+  assert.equal(queryRecords('unicode', { query: ' ' }, d).items[0].id, '0020');
+  assert.throws(() => queryRecords('unicode', { query: ' U+ZZ ' }, d), /格式/);
+});
+test('reference: Unicode name search covers every ranged character without mislabelling Tangut', async () => {
+  const d = await data('unicode');
+  const hangul = queryRecords('unicode', { query: 'HANGUL SYLLABLE', mode: 'name' }, d);
+  assert.equal(hangul.total, 11172);
+  assert.equal(hangul.items[0].id, 'AC00');
+  assert.equal(
+    queryRecords('unicode', { query: 'HANGUL SYLLABLE HIH', mode: 'name' }, d).items[0].id,
+    'D7A3',
+  );
+  assert.ok(
+    queryRecords('unicode', { query: 'CJK UNIFIED IDEOGRAPH-4E2D', mode: 'name' }, d).items.some(
+      (r) => r.id === '4E2D',
+    ),
+  );
+  const tangut = queryRecords('unicode', { query: 'U+17000' }, d).items[0];
+  assert.equal(
+    tangut.fields.find(([label]) => label === '名称（Unicode 原文）')[1],
+    'TANGUT IDEOGRAPH-17000',
+  );
+  assert.equal(
+    queryRecords('unicode', { query: 'TANGUT IDEOGRAPH-17000', mode: 'name' }, d).items[0].id,
+    tangut.id,
+  );
+  assert.equal(
+    queryRecords('unicode', { query: 'private use', mode: 'name' }, d).total > 137468,
+    true,
+    'private-use ranges remain searchable together with explicit name and block matches',
+  );
+});
 test('reference: all hexagrams uniquely match bottom-to-top bits; all tarot names translated', async () => {
   const d = await data('iching');
   assert.equal(d.trigrams.length, 8);

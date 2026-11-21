@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import { captureFailure } from '../feedback/model.js';
 import { onDisconnect, setState, setTextareaValue, updateStatus } from '../ui/index.js';
 import { copy, download } from '../round1/common.js';
@@ -79,7 +80,7 @@ export function conversionSession(view, { id, options, draw }) {
       } else {
         response = await new Promise((resolve, reject) => {
           pending = { resolve, reject };
-          worker = new Worker(new URL('./worker.js', import.meta.url));
+          worker = takeWorker(new URL('./worker.js', import.meta.url));
           worker.onmessage = ({ data }) => {
             pending = null;
             data.error ? reject(Error(data.error)) : resolve(data.result);

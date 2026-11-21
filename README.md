@@ -1,6 +1,6 @@
 # 迷雾工具箱
 
-面向 ARG 与 Puzzlehunt 玩家的中文解谜工作台。当前同步版本为 **V2.0**，原创程序代码按 GPL-3.0-or-later 开源，第三方引擎、资料与素材保留各自许可证。
+面向 ARG 与 Puzzlehunt 玩家的中文解谜工作台。当前同步版本为 **V2.3.5**，原创程序代码按 GPL-3.0-or-later 开源，第三方引擎、资料与素材保留各自许可证。
 
 ## 本地部署
 
@@ -11,7 +11,7 @@ npm run setup
 npm start
 ```
 
-`setup` 自动下载约 634 MB 的固定依赖包，校验整包及全部文件后生成 `dist/`。首次安装需要访问 GitHub；完成后普通本地工具、启动和构建不需要联网。根目录不需要安装 npm 运行依赖。Python 仅用于源码版依赖准备及检查。
+`setup` 自动下载约 643 MB 的固定依赖包，校验整包及全部文件后生成 `dist/`。首次安装需要访问 GitHub；完成后普通本地工具、启动和构建不需要联网。根目录不需要安装 npm 运行依赖。Python 仅用于源码版依赖准备及检查。
 
 打开终端显示的本机 HTTP 地址。不要双击 HTML 文件。`npm run build` 可重新生成静态目录，支持放在站点根目录或子目录；代码及 WASM 必须通过 HTTP/HTTPS 使用。
 
@@ -50,11 +50,13 @@ npm run setup:code-runner
 
 OEIS 等在线查询仅在主动提交时请求指定来源，使用边界见对应工具。Desmos 函数绘图首次进入时联网加载官方 iframe；它不是离线绘图引擎。源码版“报告问题”默认只在本机生成报告，可复制或下载；部署者可显式配置自己的同源邮件服务。
 
+机器人计算接口可独立启动，配置方式见 [机器人计算服务](docs/BOT_TOOLS_API.md)。
+
 ## 开发与分支
 
 开发入口见 [开发指导](docs/DEVELOPMENT_GUIDE.md)。格式与浏览器工具是可选开发依赖，网页主构建仍离线。固定第三方文件不能直接修改；维护导入及对应源码随依赖包完整提供。
 
-服务器 `main` 使用 Gitee；此独立源码工作区的 `codex/open-source` 推送到 GitHub `main`。同步使用已提交快照和明确的发行适配，不合并服务器分支历史，不带入 SMTP、SSH 身份、Android 测试产物、玩家文件或本机研究输出。原创代码授权范围见 [OPEN_SOURCE.md](OPEN_SOURCE.md) 与 [LICENSE](LICENSE)。
+服务器 `main` 使用 Gitee；此独立源码工作区的 `codex/open-source` 推送到 GitHub `main`。常规同步使用已提交快照和明确的发行适配，不合并服务器分支历史，不带入 SMTP、SSH 身份、Android 测试产物、玩家文件或本机研究输出。原创代码授权范围见 [OPEN_SOURCE.md](OPEN_SOURCE.md) 与 [LICENSE](LICENSE)。
 
 ## 赞助
 

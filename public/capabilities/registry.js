@@ -18,6 +18,7 @@ import { UNIT_DISCIPLINES } from './unit-catalog.js';
 import { CAPABILITY_TOPICS } from './topics.js';
 import { CHAIN_ONLY_OPERATIONS } from './operation-policy.js';
 import { consolidateTopics } from './topic-model.js';
+import { analysisAccess, isAnalysisEntry } from './analysis-access.js';
 // This registry is the canonical discovery index. Original route and operation
 // IDs, argument schemas, engines and caller-owned input nodes stay unchanged.
 export { capabilityCategories };
@@ -133,26 +134,6 @@ const nativeDefinitions = [
       '切线',
       '定积分',
     ],
-  ],
-  [
-    'simbad',
-    'SIMBAD 天体在线查询',
-    'sky',
-    ['simbad'],
-    'generic',
-    '',
-    false,
-    ['SIMBAD', '天体别名', '恒星查询', 'ICRS', '坐标检索'],
-  ],
-  [
-    'vizier',
-    'VizieR 星表在线查询',
-    'sky',
-    ['vizier'],
-    'generic',
-    '',
-    false,
-    ['VizieR', '星表', 'Hipparcos', '天文目录', '字段单位'],
   ],
   [
     'cod',
@@ -426,13 +407,17 @@ const nativeDefinitions = [
   ],
   [
     'cipher-detect',
-    '密文智能识别',
+    '文本线索分析',
     'cipher-analysis',
     ['analysis'],
     'generic',
     '',
     false,
     [
+      '密文智能识别',
+      '密文分析',
+      '文本分析',
+      '跨工具分析',
       '不知道是什么密码',
       '不知道是什么编码',
       '未知编码',
@@ -1239,11 +1224,11 @@ const nativeDefinitions = [
     'generic',
     '',
     false,
-    ['视频转WAV', '提取声音', '音轨'],
+    ['视频转WAV', '视频转MP3', '完整音轨', '全部音轨', '提取声音', '音轨'],
   ],
   [
     'video-reverse',
-    '视频片段倒放',
+    '视频与音轨倒放',
     'video',
     ['video'],
     'generic',
@@ -1251,16 +1236,7 @@ const nativeDefinitions = [
     false,
     ['反向播放', 'reverse video'],
   ],
-  [
-    'video-gif',
-    '视频片段转 GIF',
-    'video',
-    ['video'],
-    'generic',
-    '',
-    false,
-    ['动画导出', '视频转GIF'],
-  ],
+  ['video-gif', '视频转 GIF', 'video', ['video'], 'generic', '', false, ['动画导出', '视频转GIF']],
   [
     'video-native',
     '媒体格式转换',
@@ -1410,7 +1386,7 @@ const representativePreferences = {
     'op:Heatmap%20chart',
   ],
   world: ['native:countries', 'native:currencies', 'native:airports', 'native:ports'],
-  sky: ['native:sky', 'native:astronomy', 'native:simbad', 'native:vizier'],
+  sky: ['native:sky', 'native:astronomy'],
   matter: ['native:chemistry', 'native:sequence', 'native:cod', 'native:pubchem'],
   'characters-reference': ['native:unicode', 'native:marine'],
   colors: ['native:colors'],
@@ -1488,7 +1464,7 @@ const nativeTargets = {
   ...Object.fromEntries(
     [...PRACTICAL_TASKS, ...FILE_TASKS, ...FORENSICS_TASKS, ...FUN_TASKS].map((t) => [
       t.id,
-      { route: t.id },
+      { route: t.id, ...(t.directions ? { nativeDirections: t.directions } : {}) },
     ]),
   ),
   ...Object.fromEntries(
@@ -1500,8 +1476,6 @@ const nativeTargets = {
   qalculate: { route: 'qalculate' },
   'function-plot': { route: 'function-plot' },
   oeis: { route: 'oeis' },
-  simbad: { route: 'simbad' },
-  vizier: { route: 'vizier' },
   cod: { route: 'cod' },
   pubchem: { route: 'pubchem' },
   placenames: { route: 'placenames' },
@@ -1725,7 +1699,56 @@ for (const mode of ['first', 'last', 'indices', 'transpose']) {
     controls: [control('#extract-mode', mode)],
   };
 }
-for (const mode of ['frames', 'audio', 'reverse', 'gif', 'animation']) {
+for (const [mode, title] of [
+  ['concat', '音视频拼接'],
+  ['replace-audio', '替换视频音轨'],
+  ['crop', '画面裁切'],
+  ['detect', '异常片段检测'],
+  ['segments', '多时间段导出'],
+  ['sync', '音画同步调整'],
+  ['channels', '声道拆分与重组'],
+  ['clip', '视频裁剪'],
+  ['mute', '移除视频音轨'],
+  ['resize', '视频缩放'],
+  ['rotate', '视频旋转与翻转'],
+  ['speed', '视频变速'],
+  ['subtitle', '提取文字字幕'],
+  ['inspect', '媒体信息与轨道'],
+  ['capabilities', 'FFmpeg 核心能力与帮助'],
+]) {
+  nativeDefinitions.push([
+    'video-' + mode,
+    title,
+    'video',
+    ['video'],
+    'generic',
+    '',
+    false,
+    [title, 'FFmpeg'],
+  ]);
+}
+for (const mode of [
+  'concat',
+  'replace-audio',
+  'crop',
+  'detect',
+  'segments',
+  'sync',
+  'channels',
+  'frames',
+  'audio',
+  'reverse',
+  'gif',
+  'animation',
+  'clip',
+  'mute',
+  'resize',
+  'rotate',
+  'speed',
+  'subtitle',
+  'inspect',
+  'capabilities',
+]) {
   nativeTargets['video-' + mode] = {
     route: 'video',
     controls: [control('#video-mode', mode, 'input')],
@@ -1822,7 +1845,7 @@ function pairedTitle(first, second) {
   return `${first.name} ⇄ ${second.name}`;
 }
 
-export function createRegistry(catalogue) {
+export function createRegistry(catalogue, { includeLocked = true } = {}) {
   catalogue = normalizeCatalogue(catalogue);
   const groupMap = new Map(groupDefinitions.map((group) => [group.id, group]));
   const toolMap = new Map(catalogue.tools.map((tool) => [tool.id, tool]));
@@ -2183,6 +2206,13 @@ export function createRegistry(catalogue) {
     if (related.some((id) => !id)) throw Error('科普关联工具未登记：' + article.id);
     lesson.relatedIds = [...new Set(related)];
   }
+  // Keep complete source inventory; only browser discovery is gated.
+  if (!includeLocked) {
+    const hiddenIds = new Set(
+      entries.filter(isAnalysisEntry).flatMap((entry) => [entry.id, ...entry.learningIds]),
+    );
+    for (const entry of entries) if (hiddenIds.has(entry.id)) entry.listed = false;
+  }
   const groups = groupDefinitions.map((definition) => {
     const sourceMembers = entries.filter((entry) => entry.group === definition.id);
     const members = sourceMembers.filter((entry) => entry.listed !== false);
@@ -2422,10 +2452,35 @@ export function searchEntries(registry, query, category = '', options = {}) {
   });
 }
 
-let registryPromise;
+let registryPromise, loadedCatalogue;
+const registryListeners = new Set();
+export function isDiscoverableArticle(article) {
+  return analysisAccess.unlocked() || !isAnalysisEntry(article);
+}
+export function subscribeRegistry(listener) {
+  registryListeners.add(listener);
+  return () => registryListeners.delete(listener);
+}
+analysisAccess.subscribe(() => {
+  registryPromise?.then(
+    (registry) => {
+      Object.assign(
+        registry,
+        createRegistry(loadedCatalogue, { includeLocked: analysisAccess.unlocked() }),
+      );
+      for (const listener of registryListeners) listener(registry);
+    },
+    () => {
+      /* Existing directory retry owns failed catalogue loading. */
+    },
+  );
+});
 export function loadRegistry() {
   return (registryPromise ??= getCatalogue()
-    .then(createRegistry)
+    .then((catalogue) => {
+      loadedCatalogue = catalogue;
+      return createRegistry(catalogue, { includeLocked: analysisAccess.unlocked() });
+    })
     .catch((error) => {
       registryPromise = null;
       throw error;

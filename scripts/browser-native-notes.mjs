@@ -250,7 +250,9 @@ try {
     await stale();
     await task('cipher-detect');
     await page.locator('#analysis-input').fill('HELLO HELLO');
+    await page.locator('#analysis-statistics > summary').click();
     await page.locator('#analysis-run').click();
+    await enabled('analysis-result');
     assert.equal(JSON.parse((await capture('analysis-result')).text).total, 11);
     await task('substitution');
     await stale();
@@ -381,6 +383,7 @@ try {
     if (width === 1440) {
       await task('video-frames');
       await page.locator('#video-file').setInputFiles(resolve('tests/fixtures/hunt-video.mp4'));
+      await page.locator('#video-range').selectOption('clip');
       await page.locator('#video-duration').fill('2');
       await page.locator('#video-run').click();
       const frames = await capture('video-result');

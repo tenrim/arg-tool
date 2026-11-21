@@ -3,18 +3,24 @@ importScripts(
   '../vendor/completion/liblouis/build-no-tables-utf32.js',
   '../vendor/completion/liblouis/easy-api.js',
 );
+let tables;
 self.onmessage = async ({ data: { input, options } }) => {
   try {
-    const tables = await (await fetch('../vendor/completion/liblouis/tables.json')).json();
+    if (!tables) {
+      const response = await fetch('../vendor/completion/liblouis/tables.json');
+      if (!response.ok) throw Error('盲文规则目录加载失败，请重试。');
+      tables = await response.json();
+      liblouis.enableOnDemandTableLoading(
+        new URL('../vendor/completion/liblouis/tables/', self.location.href).href,
+      );
+    }
     if (
       !tables.some((t) => t.file === options.table) ||
       typeof input !== 'string' ||
       input.length > 100000
     )
       throw Error('无效规则表或输入超过 10 万字符。');
-    liblouis.enableOnDemandTableLoading(
-      new URL('../vendor/completion/liblouis/tables/', self.location.href).href,
-    );
+
     const c = liblouis.capi,
       chars = [...input].map((v) => v.codePointAt(0)),
       allocations = [];

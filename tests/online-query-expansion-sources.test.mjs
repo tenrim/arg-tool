@@ -10,8 +10,6 @@ import { guides } from '../public/tool-help.js';
 const root = new URL('../', import.meta.url),
   read = (path) => readFile(new URL(path, root));
 const expected = {
-  simbad: ['sky', 'https://simbad.cds.unistra.fr/simbad/'],
-  vizier: ['sky', 'https://vizier.cds.unistra.fr/'],
   cod: ['matter', 'https://www.crystallography.net/cod/'],
   pubchem: ['matter', 'https://pubchem.ncbi.nlm.nih.gov/'],
   placenames: ['world', 'https://dmfw.mca.gov.cn/'],
@@ -40,8 +38,16 @@ test('each new online source has one precise capability, native route, lesson an
   }
   assert.equal(registry.coverage.operationCount, 505);
   assert.equal(registry.coverage.coveredOperationCount, 505);
-  for (const retired of ['integerseq', 'crystals'])
+  for (const retired of ['integerseq', 'crystals', 'simbad', 'vizier'])
     assert.equal(registry.byId.get('native:' + retired), undefined);
+  for (const retired of ['simbad', 'vizier']) {
+    assert.equal(guides[retired], undefined);
+    assert.equal(TASK_PROJECT_SOURCES['native:' + retired], undefined);
+    assert.equal(
+      ARTICLES.some((article) => article.capabilityIds.includes('native:' + retired)),
+      false,
+    );
+  }
 });
 test('every new task owns its real online-data project and all bundled notices', async () => {
   for (const [id, [, url]] of Object.entries(expected)) {
@@ -60,11 +66,12 @@ test('every new task owns its real online-data project and all bundled notices',
   assert.match(projectLicense(expected.cnkgraph[1]).license, /非商业/);
   assert.match(projectLicense(expected.pokewiki[1]).license, /CC-BY-NC-SA-3\.0/);
   assert.match(projectLicense(expected.placenames[1]).role, /CGCS2000/);
-  assert.match(projectLicense(expected.vizier[1]).license, /rights_uri/);
 });
 test('all fixed official evidence and notices have exact bytes and SHA-256; inaccessible sources are explicit', async () => {
   const manifest = JSON.parse(await read('upstream/online-services/UPSTREAM.json'));
-  assert.deepEqual(manifest.providers, Object.keys(expected));
+  // The immutable evidence archive records the original integration scope.
+  // Retirement removes runtime owners, not the archived source bytes.
+  assert.deepEqual(manifest.providers, ['simbad', 'vizier', ...Object.keys(expected)]);
   for (const file of [...manifest.files, ...manifest.publicNotices]) {
     assert.ok(!file.path.includes('..'));
     assert.match(file.path, /^(upstream\/online-services\/|public\/licenses\/)/);
@@ -89,8 +96,6 @@ test('all fixed official evidence and notices have exact bytes and SHA-256; inac
 test('online lessons state real scope, units, licence differences and complete reproducible examples', () => {
   const body = (id) => JSON.stringify(getArticle('function-native:' + id).sections);
   for (const [id, terms] of Object.entries({
-    simbad: ['ICRS', '36 角秒', '250'],
-    vizier: ['I/239/hip_main', 'HIP', '250', 'rights_uri'],
     cod: ['分数坐标', '2,0,0', 'CC0'],
     pubchem: ['2244', 'C9H8O4', '21', '提供方'],
     placenames: ['CGCS2000', 'maxLevel', '同音', '七'],

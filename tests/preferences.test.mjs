@@ -25,6 +25,58 @@ test('search knowledge defaults off, accepts only booleans and restores old back
     assert.equal(parsePreferencesBackup(JSON.stringify(backup)).preferences.searchKnowledge, true);
   }
 });
+test('advanced parameters and presets default off and old backups retain the simpler interface', () => {
+  for (const key of ['showAdvancedParameters', 'showParameterPresets']) {
+    assert.equal(DEFAULT_PREFERENCES[key], false);
+    assert.equal(validatePreferences({})[key], false);
+    assert.equal(validatePreferences({ [key]: true }, { strict: true })[key], true);
+    for (const value of ['true', 'false', 0, 1, null]) {
+      assert.throws(() => validatePreferences({ [key]: value }, { strict: true }));
+      assert.equal(validatePreferences({ [key]: value })[key], false);
+    }
+    for (const version of [1, 2]) {
+      const backup = { format: 'arg-tool-preferences', version, preferences: {}, favorites: [] };
+      assert.equal(parsePreferencesBackup(JSON.stringify(backup)).preferences[key], false);
+      backup.preferences[key] = true;
+      assert.equal(parsePreferencesBackup(JSON.stringify(backup)).preferences[key], true);
+    }
+  }
+});
+test('display options apply immediately and survive export, import and reset', async () => {
+  const original = { document: globalThis.document, localStorage: globalThis.localStorage },
+    storage = new Map(),
+    events = [];
+  globalThis.document = {
+    documentElement: { dataset: {} },
+    dispatchEvent: (event) => events.push(event.type),
+  };
+  globalThis.localStorage = {
+    getItem: (key) => storage.get(key) ?? null,
+    setItem: (key, value) => storage.set(key, value),
+  };
+  try {
+    const preferences = await import('../public/preferences.js?display-options');
+    assert.equal(
+      preferences.setPreferences({ showAdvancedParameters: true, showParameterPresets: true }),
+      true,
+    );
+    assert.equal(document.documentElement.dataset.uiAdvancedParameters, 'true');
+    assert.equal(document.documentElement.dataset.uiParameterPresets, 'true');
+    assert.equal(events.filter((name) => name === 'arg:preferenceschange').length, 1);
+    const backup = preferences.exportPreferences();
+    preferences.resetPreferences();
+    assert.equal(document.documentElement.dataset.uiAdvancedParameters, 'false');
+    assert.equal(document.documentElement.dataset.uiParameterPresets, 'false');
+    preferences.importPreferences(backup);
+    assert.equal(preferences.getPreferences().showAdvancedParameters, true);
+    assert.equal(preferences.getPreferences().showParameterPresets, true);
+    const saved = JSON.parse(storage.get(preferences.PREFERENCES_KEY));
+    assert.equal(saved.showAdvancedParameters, true);
+    assert.equal(saved.showParameterPresets, true);
+  } finally {
+    Object.assign(globalThis, original);
+  }
+});
 test('session recents replace the latest member of one workspace without merging other tools on the same panel', () => {
   const oldDocument = globalThis.document;
   globalThis.document = { dispatchEvent() {} };

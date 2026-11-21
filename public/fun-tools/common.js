@@ -12,6 +12,7 @@ import {
   Option,
   Textarea,
   FilePicker,
+  ImageInputPreview,
   Status,
   EmptyState,
   ConversionLayout,
@@ -107,25 +108,34 @@ export async function readImage(file, limit = 16_000_000) {
     bitmap.close();
   }
 }
-export function fileInput(ui, label, accept = '', onChange = () => {}) {
+export function fileInput(ui, label, accept = '', onChange = () => {}, previewWhen = () => true) {
   let file;
+  const original = ImageInputPreview();
+  const refreshPreview = () => original.show(previewWhen() ? file : null);
   const input = Input({ type: 'file', attrs: { accept, 'aria-label': label } });
   const info = Status({ text: '尚未选择文件' });
   function set(value) {
-    if (!value) return;
     ui.invalidate();
     file = value;
-    updateStatus(info, `${value.name} · ${value.size.toLocaleString()} 字节`);
+    refreshPreview();
+    updateStatus(
+      info,
+      value ? `${value.name} · ${value.size.toLocaleString()} 字节` : '尚未选择文件',
+    );
     onChange(value);
   }
   input.onchange = () => set(input.files[0]);
   const box = Box({
-    children: [FilePicker({ input, triggerLabel: label, showFilename: false }), info],
+    children: [
+      FilePicker({ input, triggerLabel: label, showFilename: false }),
+      info,
+      original.node,
+    ],
   });
   box.ondragover = (e) => e.preventDefault();
   box.ondrop = (e) => {
     e.preventDefault();
-    set(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files.length) set(e.dataTransfer.files[0]);
   };
   box.onpaste = (e) => {
     const item = [...(e.clipboardData?.items || [])].find((i) => i.kind === 'file');
@@ -136,6 +146,7 @@ export function fileInput(ui, label, accept = '', onChange = () => {}) {
   };
   function restore(value) {
     file = value;
+    refreshPreview();
     input.value = '';
     updateStatus(
       info,
@@ -147,6 +158,7 @@ export function fileInput(ui, label, accept = '', onChange = () => {}) {
     input,
     set,
     restore,
+    refreshPreview,
     get file() {
       return file;
     },
@@ -217,7 +229,9 @@ export function workspace(host, meta) {
     cleanup.clear();
     state(false);
     recording.clear();
-    output.replaceChildren(EmptyState({ text: '运行后在这里查看结果' }));
+    output.replaceChildren(
+      EmptyState({ className: 'ui-result-placeholder', text: '运行后在这里查看结果' }),
+    );
     updateStatus(status, '');
   }
   async function execute(work, render) {

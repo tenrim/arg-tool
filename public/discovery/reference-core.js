@@ -49,6 +49,8 @@ export function queryCurrencies(p, data, countries) {
   const query = fold(String(p.query || '').trim()),
     groups = new Map();
   if (query.length > 10000) throw Error('查询内容过长。');
+  if (p.filter === 'historic' && String(p.region || '').trim())
+    throw Error('历史货币不支持按现代国家代码筛选。请清除国家条件，按资料原文的使用实体名称检索。');
   const country = countries.find((c) => c.id.toLowerCase() === fold(p.region || ''));
   if (p.region && !country) throw Error('请输入有效的两字母国家／地区代码。');
   const queryCountries = query

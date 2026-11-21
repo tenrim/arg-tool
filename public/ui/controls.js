@@ -85,6 +85,7 @@ export function Field(options = {}) {
   const node = create('field', options.tag || 'label', options);
   if (!options.className) node.classList.add('ui-field');
   if (options.span) node.dataset.span = options.span;
+  if (options.labelVisibility) setFieldLabelVisibility(node, options.labelVisibility);
   if (options.label != null) node.append(create('field-label', 'span', { text: options.label }));
   if (options.control) {
     const control = options.control;
@@ -102,6 +103,10 @@ export function Field(options = {}) {
     }
   }
   return node;
+}
+export function setFieldLabelVisibility(field, visibility) {
+  if (visibility === 'screen-reader') field.dataset.labelVisibility = visibility;
+  else delete field.dataset.labelVisibility;
 }
 // Search is one control surface. Its nested input must not draw a second frame.
 export function SearchField(options = {}) {

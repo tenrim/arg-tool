@@ -1,13 +1,19 @@
+const resources = new Map();
 export async function discoveryQuery(kind, params, base) {
   const read = async (path) => {
+    const url = new URL(path, base).href;
+    if (resources.has(url)) return resources.get(url);
     let response;
     try {
-      response = await fetch(new URL(path, base));
+      response = await fetch(url);
     } catch {
       throw Error('本地资料载入失败，请重试。');
     }
     if (!response.ok) throw Error('本地资料载入失败，请重试。');
-    return response.json();
+    const rows = await response.json();
+    if (resources.size >= 8) resources.delete(resources.keys().next().value);
+    resources.set(url, rows);
+    return rows;
   };
   const core = await import(new URL('discovery/reference-core.js', base));
   if (kind === 'currencies') {

@@ -63,29 +63,6 @@ const cases = [
     fixture: await fixture('cnk-writing'),
     checks: ['作品资料', '司馬光', '北宋', '正文', '古廟崩榱在'],
   },
-  {
-    id: 'simbad',
-    parameters: { mode: 'name', query: 'M31', after: 0 },
-    fixture: await fixture('science/simbad-name'),
-    checks: ['天体身份', 'M  31', '位置与运动', '赤经', '10.684708333333333 deg', 'ICRS', 'J2000'],
-  },
-  {
-    id: 'vizier',
-    parameters: {
-      mode: 'records',
-      table: 'I/239/hip_main',
-      conditions: [{ column: 'HIP', operator: '=', value: '1' }],
-      offset: 0,
-    },
-    fixture: await fixture('science/vizier-records'),
-    checks: ['天体数据', '赤经', 'RAICRS', '000.00091185', 'deg'],
-  },
-  {
-    id: 'vizier',
-    parameters: { mode: 'catalogs', query: 'Hipparcos' },
-    fixture: await fixture('science/vizier-catalogs'),
-    checks: ['可查询的资料', '赤经'],
-  },
   // A complete real archived CIF tests parser/display fidelity. This is not
   // evidence that the currently timing-out COD website is reachable.
   {
@@ -146,11 +123,11 @@ const cases = [
     ],
   },
 ];
-assert.equal(cases.length, 10);
+assert.equal(cases.length, 7);
 assert.equal(
   new Set(cases.map((item) => item.id)).size,
-  9,
-  'all nine services, including both VizieR catalogue and record presentations',
+  7,
+  'all seven active services have real record presentation coverage',
 );
 
 function response(item, submitted) {
@@ -405,7 +382,7 @@ async function verifyRecord(scope, item, width) {
       );
     }
   }
-  if (['pokewiki', 'pubchem', 'zdic', 'cnkgraph', 'vizier'].includes(item.id)) {
+  if (['pokewiki', 'pubchem', 'zdic', 'cnkgraph'].includes(item.id)) {
     await page.evaluate(async () => {
       await Promise.all(
         document
@@ -416,10 +393,7 @@ async function verifyRecord(scope, item, width) {
       scrollTo({ top: 0, behavior: 'instant' });
     });
     await page.screenshot({
-      path: resolve(
-        artifacts,
-        item.id + (item.id === 'vizier' ? '-' + item.parameters.mode : '') + '-' + width + '.png',
-      ),
+      path: resolve(artifacts, item.id + '-' + width + '.png'),
       fullPage: true,
       animations: 'disabled',
     });
@@ -523,18 +497,6 @@ async function verifyRecord(scope, item, width) {
     assert.ok(Math.abs(paneSize[0].y - paneSize[1].y) < 2);
   } else
     assert.ok(paneSize[1].y > paneSize[0].y, item.id + ' narrow view stacks detail below list');
-  if (item.id === 'vizier' && item.parameters.mode === 'catalogs') {
-    assert.match(await detail.locator('h3').innerText(), /Hipparcos/);
-    assert.equal(
-      await reading.locator('table').count(),
-      0,
-      'catalogues show a contents preview, not a wall of schema',
-    );
-    assert.doesNotMatch(
-      await reading.innerText(),
-      /目录与范围|目录表标识|本次返回字段数|字段与单位/,
-    );
-  }
   if (width >= 1440 && item.id !== 'oeis') {
     const alignment = await form
       .locator('.online-query-parameters')
@@ -588,7 +550,7 @@ try {
     }
   }
   console.log(
-    'PASS: all nine online reference services show useful readable fields and original links; complete notebook and export data remain intact; no automatic queries, template execution or media requests; keyboard disclosure/table scrolling and PC/phone/subdirectory normal/reduced-motion widths. COD uses an explicitly archived real CIF, not a claim of current upstream reachability.',
+    'PASS: all seven active online reference services show useful readable fields and original links; complete notebook and export data remain intact; no automatic queries, template execution or media requests; keyboard disclosure/table scrolling and PC/phone/subdirectory normal/reduced-motion widths. COD uses an explicitly archived real CIF, not a claim of current upstream reachability.',
   );
 } finally {
   await browser.close();

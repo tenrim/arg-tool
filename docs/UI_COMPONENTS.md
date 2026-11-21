@@ -4,6 +4,7 @@
 
 开发前必须阅读 [UI 开发强制规则](UI_DEVELOPMENT_RULES.md)；本文说明接口。
 
+
 本目录约定适用于网站页面、能力总览和全部任务，包括原工具兼容入口、按需加载的第四轮工具、图灵机、科普阅读与动态 CyberChef 参数。能力数量从统一登记生成，不把原工具页面总数作为任务数量。工具的计算引擎、文件和结果模型不归组件层管理；目录与工作区契约见 [能力架构](CAPABILITY_ARCHITECTURE.md)。
 
 ## 样式维护入口
@@ -219,7 +220,7 @@ Base 家族、数字与字节、字符编码与码点、文字转义分别按真
 
 `ConversionLayout` 只组合方向／参数与操作卡片、响应式输入／结果卡片及状态；`ConversionWorkbench` 使用它提供原生转换控件，CyberChef 单项任务也使用同一布局。方向用原生 Select，执行及停止在上方，结果操作留在结果卡片。页面标题和说明由共享页头持有，不在任务内重复生成。移除反向快捷按钮后，先“作为输入”、再选方向仍通过原控制器采纳实际字节及已执行参数快照；纯方向切换不得采纳结果。
 
-两者均返回 `panes`、`inputCard` 和 `resultCard`。共享 SplitView 默认 `start`，输入／结果卡片各自按内容决定高度；确有等高需要的专用视图显式声明 `align: stretch`。切换文本、文件或媒体来源不再强制拉高短卡片；不复制输入节点或改变草稿归属。
+两者均返回 `panes`、`inputCard` 和 `resultCard`；`ConversionLayout` 还返回独立的 `options` 和 `support` 节点。输入说明、示例和可选文件导入使用 `inputSupport`／`support`，位于整对输入与结果之前，不能再夹在单侧标题与主要编辑器之间。工具来源模式决定说明均为空时同步隐藏 support，不保留空行。共享 SplitView 默认 `start`，输入／结果卡片各自按内容决定高度；确有等高需要的专用视图显式声明 `align: stretch`。切换文本、文件或媒体来源不再强制拉高短卡片；不复制输入节点或改变草稿归属。
 
 转换控件区让设置和执行共用可换行布局流：`FormGrid({layout:'flow'})` 在 `.ui-conversion-settings` 内保留现有方向和参数字段，`.ui-conversion-execution` 紧随参数排列执行／停止和真实状态，空间足够时按钮与字段底边同行。字段仍保留自己的标签、顺序与节点；短参数按内容所需宽度展示，`data-span="wide"` 的复合字段以 480px 为基准容纳预设与自定义控件，窄屏自然换行；`data-span="full"` 的长编辑器仍独占整行，隐藏分组和空状态不占位。嵌套参数分组应显式使用该布局，不能用 CSS 强制摊平任意内部表单。
 
@@ -227,7 +228,7 @@ Base 家族、数字与字节、字符编码与码点、文字转义分别按真
 
 有共享图片／音频／视频上传器的操作任务，由 `native-workspaces` 将原上传节点、文件信息与真实状态移动到任务输入卡片，离开时按原父节点和位置恢复；不复制上传控件，不重置素材模型，也不保留空的上传侧栏。CyberChef 输入来源的原 Field 与方向／参数一起位于顶部控件栏，上传器、文本编辑器和来源预览仍归输入卡片。输入与结果标题之下直接呈现内容，避免来源选择器把左侧编辑器单独下推；生成任务同步隐藏来源 Field，原来源选择、草稿、文件和显式结果采纳保持。
 
-自适应 Textarea 的 CSS 最小高度与 `minRows` 共用 `--ui-textarea-min-rows`，不以统一的 110px 覆盖两行声明。只读转换结果默认两行，长内容仍按实际内容增长至原上限并可滚动；程序写入继续使用 `setTextareaValue`。空 Status 和空来源预览不预留装饰位置。来源区使用同一响应式网格排列完整项目、用途、许可和原文折叠项；单个项目不被强行挤成窄列。
+自适应 Textarea 的 CSS 最小高度与 `minRows` 共用 `--ui-textarea-min-rows`。成对转换的主要输入、空结果及文字输出使用同一四行最小高度，随编辑字号变化，长内容仍按实际内容增长至原上限并可滚动；附加 JSON、候选片段及其他小编辑器保持各自的行数，不跟随主编辑器撑高。程序写入继续使用 `setTextareaValue`。空 Status 和空来源预览不预留装饰位置。来源区使用同一响应式网格排列完整项目、用途、许可和原文折叠项；单个项目不被强行挤成窄列。
 
 带直接 Field 子项的 Toolbar 统一按控件底边对齐，并由操作栏拥有行间距，Field 不再重复添加底部外边距。旧模板中的 `r1-controls`、`spectrogram-controls` 同样通过 Toolbar 工厂生成。
 
@@ -266,9 +267,12 @@ Base 家族、数字与字节、字符编码与码点、文字转义分别按真
 - 共享 UI 自动为可见的 Button／IconButton 同级操作组以及侧栏导航装配上游 TriggerHighlightScope，不按页面单独仿写 hover；Tabs 和 Select 保留自身同源高亮所有者，避免双重装配。
 - 图形控件可用 `Button({appearance:'custom',variant:...})` 保留自身有意义的不透明表面，不交给移动高亮层清空背景；按压动画、焦点和原生按钮语义仍保留。外观变体仍归共享组件样式所有，例如重叠在白键上方的 `piano-key` 黑键。
 - 高亮在操作组统一的独立绘制层中移动，该层始终位于全部原控件和文字下方；禁止每个条目单独 isolation，否则背景跨越其他条目时会盖住文字。没有额外条目包装，不改变控件布局或点击区域。
+- 高亮所有者必须拥有实际布局盒；`hoverOwner` 跳过 `display: contents` 的排版包装，继续查找可绘制宿主。结果操作中的笔记／图稿按钮与复制／下载归入同一个外层 Toolbar，复用相同的悬停与键盘焦点反馈，不给各页面另加背景补丁。
 - 绘制宿主位于共享控件组的 Shadow DOM 中，slot 透传原控件；不增减 light DOM 子节点、不改变列表编号或来源页脚的位置。动态替换标签／列表不直接删除 React 管理的高亮节点；隐藏、禁用、移除与减少动态偏好统一清理。悬停与焦点反馈使用同一实现，触屏不依赖 hover 才显示操作。
 
 - 普通悬停不重新扫描或布局测量已装配的按钮组；只有成员／禁用／可见状态改变才同步结构。显式交互刷新动态偏好，避免连续输入期间的临时抑制永久残留。
+
+参考 Animate UI `c28163655493f98bff9dc0362301a6242f74a1fd`，`apps/v2/components/ui/button.tsx:7–26` 的普通操作反馈，沿用本站已固定的 TriggerHighlightScope，不修改上游运行包。`scripts/browser-action-feedback.mjs` 在真实 Base64 结果及共享结果操作夹具中核对高亮位置、唯一绘制层、原按钮点击区域、禁用后恢复及动态移动，分别验证正常／减少动态效果；不能只检查按钮文字变色或自身背景计算值。
 
 ## 全站布局所有者修正（2026-10-26）
 
@@ -282,12 +286,26 @@ resultRecording 的笔记／图稿按钮归入传入锚点所属的 Toolbar，�
 
 `bindRunShortcut(root, button)` 统一 Ctrl／⌘+Enter，读取根节点 `data-ui-run-shortcut`，拒绝组合输入、重复按键、禁用／隐藏按钮与外部弹窗，直接点击原执行按钮。ConversionLayout 自动绑定首个执行动作，控制器不重复绑定。`configureMediaPlayback(register)` 由 app 注入播放注册器；共享 audio/video 工厂不导入应用服务，创建时即应用全站播放偏好。
 
-`resizableDock({narrow:true})` 在窄屏把同一个工作区节点移入原生 Dialog，沿用 dialogController 的焦点和虚拟键盘可视高度；普通调用仍按原 onNarrow 回退。移动过程中不重建编辑器。参数预设使用 Disclosure、Field、Select 和 Toolbar，只显示当前工作区的安全参数预设。
+`resizableDock({narrow:true})` 在窄屏把同一个工作区节点移入原生 Dialog，沿用 dialogController 的焦点和虚拟键盘可视高度；普通调用仍按原 onNarrow 回退。移动过程中不重建编辑器。参数预设使用 Disclosure、Field、Select 和 Toolbar，只显示当前工作区的安全参数预设；转换页通过 options 槽放在独立次级区域，不与执行按钮混排。
 
 ### 2026-11-03 输入与结果操作补充
 
 - `ConversionLayout.setResultReady(boolean)` 由原结果控制器调用，控制“查看结果”定位按钮；输入变更、取消与离页失效时同步关闭。不观察 DOM 猜测运算完成。Magic 候选可把 `panes.dataset.layout` 设置为 `stacked`，其他任务使用 `responsive`。
-- CyberChef 输入预处理与目标操作分开说明。Base 编码参数、Magic 分析参数和 AES 附加设置使用原控件的 Disclosure，不改引擎默认值、参数索引或草稿。折叠摘要显示默认／修改状态；关键输入要求保留在输入旁。
+- CyberChef 输入预处理与目标操作分开说明。Base 编码参数、Magic 分析参数和 AES 附加设置使用原控件的 Disclosure，不改引擎默认值、参数索引或草稿。摘要只在实际修改时显示调整数量；关键输入要求保留在共用说明区。
 - 共享输入节点（含分析文本）由 `native-workspaces` 搬入真实输入卡片并在离页恢复；输入控制器按来源选择显示当前唯一编辑入口，不复制文本状态。
+- 图片输入使用 `ImageInputPreview()`。文件控制器在选图、换图、恢复草稿和跨工具接收原图时调用 `show(file)`，清空时调用 `show(null)`。已有可见原图画布的页面直接复用画布。预览在本机生成，执行仍使用原始文件。参考本仓库 `7657f180fb7156c8c074ad3ee54c26dd09ff66e7` 的 `public/chef-tools/source-preview.js:6–31`，沿用对象 URL 与选择变更时释放的做法。
 - 文件状态只显示一次：页面已持有包含文件名／数量／大小的状态时，FilePicker 使用 `showFilename: false`。未持有状态的使用方保留组件默认文件提示。
 - 移动端为常驻浮动操作区保留底部空间与滚动避让；沿用原笔记入口及品牌样式。首页仅顶部提供常驻全站搜索，侧栏筛选折叠且明确只筛选目录。
+
+
+## 可选参数呈现（2026-11-09）
+
+“显示高级参数”（`showAdvancedParameters`）与“显示参数预设”（`showParameterPresets`）在设置中独立开启，默认均为 false。`Disclosure({preference:'advancedParameters' | 'parameterPresets'})` 显式标注可选区，公共 preferences 样式按根偏好隐藏整个入口，不留空行，也不覆盖控制器自己的 hidden 状态。开启后仍使用原 Disclosure 展开；关闭只影响呈现，不清空参数、草稿或已保存预设。密钥、IV、GCM Tag、操作方向和常用参数不能因为“进阶”分组而一概隐藏。
+
+现有进阶区包括 Base／Magic／AES 附加参数、PGP 可选密码、FFmpeg 命令、二维码码字诊断、条码附加参数、StegOnline 嵌入、折纸物理设置、SpectroTrace 声音参数和 Qalculate 附加内核设置。高级模式、算法和原参数协议保持；必要的错误与限制不受显示偏好影响。Qalculate 附加内核设置为逐行设置文本，不是 JSON。
+
+`Field({labelVisibility:'screen-reader'})` 和 `setFieldLabelVisibility(field, visibility)` 用于已有卡片标题准确表达同一输入、需要避免重复视觉标签的场景，保留真实标签与关联。临时移动共享输入时记录原 labelVisibility，并在离开时恢复。不能拿它隐藏不同语义的必要字段说明。
+
+参考：IT-Tools `d505845f918e946ec300af7b36efc107e2f66e9e`，`src/stores/style.store.ts:5–12`（持久化界面偏好）、`src/tools/base64-string-converter/base64-string-converter.vue:32–50`（成对文本编辑尺寸）；Animate UI `c28163655493f98bff9dc0362301a6242f74a1fd`，`apps/v2/components/ui/collapsible.tsx:7–32`（原可折叠内容与触发器分工）；CyberChef `11b86fecdb5d8f6244cf931e1f87cec887ec1f1f` 的 `src/core/operations/AESDecrypt.mjs:43,102,108`、`AESEncrypt.mjs:92,98`，并核对本站固定 catalogue 实际名称。只参考结构／职责，没有复制算法或升级运行依赖。
+
+回归：`scripts/browser-conversion-options.mjs` 直接测量编辑器和真实结果区域的 top 与最小高度，覆盖默认／开启、持久化、值保留、预设应用，以及相关桌面、窄屏和大字号；不能仅凭外层 Card 对齐宣称编辑器对齐。

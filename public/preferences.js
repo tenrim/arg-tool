@@ -16,6 +16,8 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   inputWrap: 'wrap',
   resultWrap: 'wrap',
   editorSize: 14,
+  showAdvancedParameters: false,
+  showParameterPresets: false,
   rememberParameters: false,
   recordRecent: true,
   recentLimit: 6,
@@ -123,6 +125,8 @@ function apply() {
   root.dataset.uiDensity = p.density;
   root.dataset.uiScanlines = String(p.scanlines);
   root.dataset.uiRunShortcut = String(p.runShortcut);
+  root.dataset.uiAdvancedParameters = String(p.showAdvancedParameters);
+  root.dataset.uiParameterPresets = String(p.showParameterPresets);
   root.dataset.inputWrap = p.inputWrap;
   root.dataset.resultWrap = p.resultWrap;
   root.style?.setProperty('--ui-editor-size', p.editorSize + 'px');

@@ -309,16 +309,25 @@ export function classifyCatalogue(catalogue) {
   }));
 }
 let pending;
-export function getCatalogue() {
-  return (pending ??= fetch(new URL('../vendor/cyberchef/catalogue.json', import.meta.url))
+export function getCatalogue(signal) {
+  if (signal?.aborted) return Promise.reject(signal.reason);
+  if (pending) return pending;
+  const request = fetch(new URL('../vendor/cyberchef/catalogue.json', import.meta.url), { signal })
     .then((r) => {
       if (!r.ok) throw Error('功能目录加载失败，请重试。');
       return r.json();
-    })
-    .catch((e) => {
-      pending = null;
-      throw e;
-    }));
+    });
+  // A task with its own cancellation signal must not own a shared in-flight request.
+  if (signal)
+    return request.then((catalogue) => {
+      pending ??= Promise.resolve(catalogue);
+      return catalogue;
+    });
+  pending = request.catch((error) => {
+    pending = null;
+    throw error;
+  });
+  return pending;
 }
 export const NETWORK_OPS = new Set(['HTTP request', 'DNS over HTTPS', 'Show on map']);
 export const IMAGE_INPUT = new Set(

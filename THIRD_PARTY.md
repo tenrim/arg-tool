@@ -21,9 +21,7 @@
 
 | 来源 | 真实范围 | 许可、署名与随包原文 |
 | --- | --- | --- |
-| [CDS/SIMBAD](https://simbad.cds.unistra.fr/simbad/) | 名称/ICRS 天区、基本资料、别名、测光、文献；原单位和完整字段 | 各原资料许可；署名 CDS/SIMBAD 与原作者、论文/DOI。`public/licenses/CDS-ONLINE-TERMS.txt`、`SIMBAD-ONLINE-NOTICE.txt`。 |
-| [CDS/VizieR](https://vizier.cds.unistra.fr/) | 真实目录检索、字段模式、完整原始 TSV 和有界条件/天区记录；不恢复精选 HYG | 具体星表的 `rights_uri` 和数据集许可，署名 CDS/VizieR、原作者与论文/DOI。`public/licenses/CDS-ONLINE-TERMS.txt`、`VIZIER-ONLINE-NOTICE.txt`。 |
-| [COD](https://www.crystallography.net/cod/) | 组成/元素/空间群/论文检索、详情、显式获取原 CIF；不恢复旧样本库 | 数据 CC0；保留结构原作者及文献引用。`public/licenses/ONLINE-CC0-1.0.txt`、`COD-ONLINE-NOTICE.txt`。本轮本机连接超时，适配器已实现但真实上游可用性须按部署网络验证，不用样例代替。 |
+| [COD](https://www.crystallography.net/cod/) | 组成/元素/空间群/论文检索、详情、显式获取原 CIF；不恢复旧样本库 | 数据 CC0；保留结构原作者及文献引用。`public/licenses/ONLINE-CC0-1.0.txt`、`COD-ONLINE-NOTICE.txt`。2026-11-10 取得真实 1011097 详情及官方 1000000 重复记录；精确编号保留原站标记，连接仍有间歇性失败，不宣称所有模式长期可用。 |
 | [PubChem](https://pubchem.ncbi.nlm.nih.gov/) | PUG REST 名称/CID/分子式/SMILES/InChI、完整结构/同义词；PUG View 注释与来源 | NIH/NCBI 及各提供方条款，不能统一宣称所有注释 CC0。`public/licenses/PUBCHEM-POLICIES.txt`、`PUBCHEM-ONLINE-NOTICE.txt`。 |
 | [国家地名信息库](https://dmfw.mca.gov.cn/) | 7 个官方公开 API：行政区、地名搜索/详情、同名同音按区划/类别统计；CGCS2000 原坐标 | 民政部官方公开查询，不冒称整库开放再分发、底图或图片许可。`public/licenses/PLACENAMES-API-TERMS.txt`、`PLACENAMES-ONLINE-NOTICE.txt`。 |
 | [汉典](https://www.zdic.net/) | 仅固定 `/hans/字词` 的全部公开原文分节；**非官方 API**，不接动态 `/api/`、全文/拼音/会员或媒体 | 官方条款对相关字词等内容声明 CC0；仍保留来源与书证。`public/licenses/ZDIC-TERMS.txt`、`ONLINE-CC0-1.0.txt`、`ZDIC-ONLINE-NOTICE.txt`。 |
@@ -49,6 +47,10 @@
 - 部署与数据边界：[结果联动与邮件反馈](docs/HANDOFF_FEEDBACK.md)。
 
 ## 随源码提供
+
+### 可选机器人服务的浏览器适配
+
+`services/bot-tools/` 使用 Playwright 1.62.1（https://github.com/microsoft/playwright，Apache-2.0），版本和包摘要固定在该目录的 package-lock.json；安装包携带原 LICENSE。依赖只用于可选服务进程，不进入静态网页或 Koishi 插件。浏览器复用本站既有 CyberChef／Qalculate 客户端与固定引擎资源，不重新实现算法、不自动升级引擎。API 范围与来源记录见 `docs/BOT_TOOLS_API.md`。
 
 ### CyberChef
 
@@ -517,3 +519,10 @@ cubing.js 实际用于全部固定形状的状态与观察，cubejs 仅为普通
 pic-scramble、StegCloak、郭飞 hidden_watermark/CryptTool、Takuron 佛又曰 V2、MIT beast-codec、SpectroTrace、Spectrum、HideInfo 化物为图及 ScreenDrop 已接入本地工作区。视觉密码按 Naor–Shamir 二取二规则独立实现，不将参考的 itmm 页面冒称运行依赖。重计算在 Worker 执行；输入不上传。
 
 固定原始源码与逐文件摘要位于 `upstream/fun-tools/*/SOURCE.json`。维护构建为 `scripts/build-fun-tools.mjs`；运行资源及 SHA-256 在 `public/vendor/fun-tools/`。Spectrum 为 GPL-3.0-only；AAC 解码进程独立按其 GPL-2.0 条款提供；其余项目和依赖按各自 MIT、Apache-2.0 等原许可保留。完整许可、固定源码、FAAD2/MoonBit 源码与构建说明随 `fun-tools-sources.zip` 分发，实际项目页脚提供下载。详情见 [趣味工具接入](docs/FUN_TOOLS.md) 与 [固定源码构建说明](upstream/fun-tools/README.md)。
+
+
+## StegoVeritas 分项能力（2026-11-17）
+
+固定 StegoVeritas 1.11 完整源代码发行包，原始文件和 SHA-256 见 `upstream/stegoveritas/SOURCE.json`。调用原图像滤镜、索引调色板、RGBA 位交织、40／48 组候选扫描及 LSB 嵌入原语；重复能力复用原图片、动画、Binwalk、Steghide 与 ExifTool 入口。覆盖矩阵及适配修改见 [接入说明](docs/STEGOVERITAS.md)。
+
+发行包 `setup.py` 的 MIT 声明与随包 `LICENSE.md`（GPL-2.0）不一致，本站保留完整 GPL 原文和该差异，不用包元数据覆盖原始许可。原文见 `public/licenses/forensics/stegoveritas.txt`。新增运行支持库 PrettyTable（BSD-3-Clause）、python-magic（MIT）、distro（Apache-2.0）及各自实际 Debian 版权声明在同目录；Pillow、NumPy、libmagic、Binwalk 沿用原完整声明。StegoVeritas 衍生适配内容随源代码提供并保留 GPL-2.0 条件，原上游字节未改。

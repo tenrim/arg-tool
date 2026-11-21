@@ -1,15 +1,34 @@
 import { FORENSICS_TASKS } from './catalog.js';
+import { IMAGE_SURVEY, imageSteps } from './image-plan.js';
 export const APERI_SOURCE = 'https://github.com/Zeecka/AperiSolve';
 const common = [APERI_SOURCE, 'https://github.com/101arrowz/fflate'];
 export function forensicSources(task) {
+  if (task.engine === IMAGE_SURVEY) {
+    const members = new Set(imageSteps.map((step) => step.engine));
+    return [
+      ...new Set([
+        ...common,
+        ...FORENSICS_TASKS.filter((t) => members.has(t.engine)).flatMap(forensicSources),
+      ]),
+    ];
+  }
   return [
     ...new Set([
-      ...common,
+      ...(task.engine === 'stegoveritas'
+        ? [
+            'https://github.com/101arrowz/fflate',
+            'https://github.com/ReFirmLabs/binwalk',
+            'https://www.darwinsys.com/file/',
+            'https://github.com/prettytable/prettytable',
+            'https://github.com/ahupp/python-magic',
+            'https://github.com/python-distro/distro',
+          ]
+        : common),
       task.url,
-      ...(['pcrt', 'spectrogram'].includes(task.engine)
+      ...(['pcrt', 'spectrogram', 'stegoveritas'].includes(task.engine)
         ? ['https://github.com/python-pillow/Pillow']
         : []),
-      ...(task.engine === 'spectrogram' ? ['https://numpy.org/'] : []),
+      ...(['spectrogram', 'stegoveritas'].includes(task.engine) ? ['https://numpy.org/'] : []),
       ...(task.engine === 'pcrt'
         ? [
             'https://github.com/pallets/flask',
@@ -37,6 +56,7 @@ export const FORENSICS_LICENSES = [
         jpseek: 'JPHide / JPSeek',
         foremost: 'Foremost',
         steghide: 'Steghide',
+        stegoveritas: 'StegoVeritas',
       }[t.engine] || t.engine,
     url: t.url,
     license: t.license,
@@ -59,11 +79,14 @@ export const FORENSICS_LICENSES = [
       'flask-sqlalchemy',
     ],
     ['SQLAlchemy', 'https://www.sqlalchemy.org/', 'MIT', 'sqlalchemy'],
+    ['PrettyTable', 'https://github.com/prettytable/prettytable', 'BSD-3-Clause', 'prettytable'],
+    ['python-magic', 'https://github.com/ahupp/python-magic', 'MIT', 'python-magic'],
+    ['distro', 'https://github.com/python-distro/distro', 'Apache-2.0', 'distro'],
   ].map(([name, url, license, id]) => ({
     name,
     url,
     license,
-    role: '独立分析容器中的图像运算或 PNG 尺寸恢复支持库。',
+    role: '独立分析容器中的图像运算、格式识别或运行支持库。',
     notices: ['licenses/forensics/' + id + '.txt', 'licenses/FORENSICS-NOTICE.txt'],
   })),
 ];

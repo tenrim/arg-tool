@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ConversionWorkbench,
+  Disclosure,
   Field,
   Input,
   Option,
@@ -318,7 +319,13 @@ export function mountCompletion(host) {
               })
             : Input({ id: task.id + '-' + name, value: values });
         controls[name] = control;
-        return Field({ label, control, span: name === 'options' ? 'full' : undefined });
+        const field = Field({ label, control, span: name === 'options' ? 'full' : undefined });
+        return name === 'options'
+          ? Disclosure({
+              preference: 'advancedParameters',
+              children: [Box({ tag: 'summary', text: '引擎附加参数' }), field],
+            })
+          : field;
       });
     const view = ConversionWorkbench({ id: task.id, settings });
     const panel = ToolPanel({

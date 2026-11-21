@@ -133,6 +133,9 @@ try {
   assert.match(await batch.innerText(), /成功 1 \/ 2/);
   await page.selectOption('#file-batch-operation', 'base64-encode');
   assert.equal(await batch.getByRole('button', { name: '下载', exact: true }).count(), 0);
+  await page.evaluate(async () =>
+    (await import('./preferences.js')).setPreferences({ showParameterPresets: true }),
+  );
   const presets = batch.locator('[data-parameter-presets]');
   await presets.locator('summary').click();
   await presets.getByLabel('预设名称', { exact: true }).fill('Base64 编码');

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+  Disclosure,
   EmptyState,
   Field,
   FormGrid,
@@ -241,14 +242,20 @@ export function mountQalculate(main) {
           Field({ label: '结果进制', control: base }),
         ],
       }),
-      Field({ label: '内核设置', control: options }),
-      Link({
-        text: '官方设置说明',
-        attrs: {
-          href: 'https://qalculate.github.io/reference/structPrintOptions.html',
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
+      Disclosure({
+        preference: 'advancedParameters',
+        children: [
+          Box({ tag: 'summary', text: '内核附加设置' }),
+          Field({ label: '内核设置', control: options }),
+          Link({
+            text: '官方设置说明',
+            attrs: {
+              href: 'https://qalculate.github.io/reference/structPrintOptions.html',
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            },
+          }),
+        ],
       }),
     ],
   });

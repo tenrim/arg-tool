@@ -9,6 +9,14 @@ const ready = () =>
   }));
 let queue = Promise.resolve();
 self.onmessage = ({ data }) => {
+  if (data.prepare === true) {
+    queue = queue
+      .then(() => ready())
+      .catch(() => {
+        engine = undefined;
+      });
+    return;
+  }
   queue = queue.then(async () => {
     try {
       self.postMessage({

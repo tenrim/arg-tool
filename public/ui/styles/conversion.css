@@ -162,9 +162,10 @@
   margin: 0;
 }
 .site-ui.workbench-app .ct-source-field {
-  --ui-field-min-width: 180px;
+  --ui-field-min-width: 280px;
 }
 .site-ui.workbench-app .ui-conversion {
+  --ui-conversion-editor-min-height: calc(4 * var(--ui-editor-size, 14px) * 1.75 + 24px);
   display: grid;
   gap: 16px;
   min-width: 0;
@@ -212,11 +213,36 @@
 .site-ui.workbench-app
   .ui-conversion-controls
   [data-ui='form-grid']
-  > [data-ui='field'][data-span='full'],
-.site-ui.workbench-app .ui-conversion-controls .ct-advanced {
+  > [data-ui='field'][data-span='full'] {
   flex: 1 1 100%;
   min-width: 0;
   margin: 0;
+}
+.site-ui.workbench-app .ui-conversion-controls .ct-advanced {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+}
+.site-ui.workbench-app .ui-conversion-controls .ct-advanced[open] {
+  flex-basis: 100%;
+}
+.site-ui.workbench-app .ui-conversion-options {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.site-ui.workbench-app .ui-conversion-options:empty,
+:root:not([data-ui-parameter-presets='true']) .site-ui.workbench-app .ui-conversion-options {
+  display: none;
+}
+.site-ui.workbench-app [data-parameter-presets] {
+  min-width: 0;
+  max-width: 100%;
+}
+.site-ui.workbench-app [data-parameter-presets] > [data-ui='toolbar'] {
+  margin-top: 8px;
+  gap: 8px;
+  align-items: end;
 }
 .site-ui.workbench-app
   .ui-conversion-controls
@@ -265,6 +291,16 @@
 .site-ui.workbench-app .ui-conversion [data-ui='textarea'] {
   margin: 0;
 }
+.site-ui.workbench-app .ui-conversion-panes .ui-conversion-editor,
+.site-ui.workbench-app .ui-conversion-panes > [data-ui='card'] > [data-ui='textarea'],
+.site-ui.workbench-app
+  .ui-conversion-panes
+  > [data-ui='card']
+  > [data-ui='field']
+  > [data-ui='textarea'],
+.site-ui.workbench-app .ui-conversion-panes > [data-ui='card'] > .ct-result > .ct-output {
+  min-block-size: var(--ui-conversion-editor-min-height);
+}
 .site-ui.workbench-app .ui-conversion [data-ui='card'] > p {
   margin-block: 0;
 }
@@ -295,7 +331,7 @@
 }
 .site-ui.workbench-app .ui-result-placeholder {
   width: 100%;
-  min-height: 64px;
+  min-height: var(--ui-conversion-editor-min-height, 7rem);
   margin: 0;
   padding: 16px 12px;
   background: var(--bg-deep);
@@ -439,7 +475,7 @@
   gap: 8px 16px;
 }
 .site-ui.workbench-app .ct-input-guidance > p {
-  flex: 1 1 260px;
+  flex: 1 1 320px;
   margin: 0;
 }
 .site-ui.workbench-app .ct-input-guidance > button {

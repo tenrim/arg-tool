@@ -160,6 +160,10 @@ export function dialogController(
 }
 export function Disclosure(options = {}) {
   const node = create('disclosure', 'details', options);
+  if (options.preference === 'advancedParameters')
+    node.dataset.optionalSetting = 'advanced-parameters';
+  else if (options.preference === 'parameterPresets')
+    node.dataset.optionalSetting = 'parameter-presets';
   node.addEventListener('toggle', () => emit(node, 'toggle', { open: node.open }));
   return node;
 }

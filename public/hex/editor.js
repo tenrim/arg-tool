@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Card,
@@ -487,7 +488,7 @@ export function mountHexEditor(parent, { onUseBytes } = {}) {
             ? selection.offset + 1
             : selection.offset - 1
           : selection.offset;
-      const currentWorker = new Worker(new URL('./search-worker.js', import.meta.url), {
+      const currentWorker = takeWorker(new URL('./search-worker.js', import.meta.url), {
         type: 'module',
       });
       worker = currentWorker;

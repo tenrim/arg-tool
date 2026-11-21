@@ -1,4 +1,12 @@
 /* Display preferences never rewrite editor bytes or export formats. */
+:root:not([data-ui-advanced-parameters='true'])
+  .site-ui.workbench-app
+  [data-optional-setting='advanced-parameters'],
+:root:not([data-ui-parameter-presets='true'])
+  .site-ui.workbench-app
+  [data-optional-setting='parameter-presets'] {
+  display: none !important;
+}
 .site-ui.workbench-app [data-ui='textarea'] {
   --ui-control-text-size: var(--ui-editor-size, 14px);
 }

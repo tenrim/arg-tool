@@ -273,6 +273,9 @@ try {
   assert.equal(await task.locator('[data-arg="2"] input').count(), 1, 'Name is a single line');
   assert.equal(await task.locator('[data-arg="3"] input').count(), 1, 'Email is a single line');
   assert.equal(await task.locator('.ct-advanced').getAttribute('open'), null);
+  await page.evaluate(async () =>
+    (await import('./preferences.js')).setPreferences({ showAdvancedParameters: true }),
+  );
   await task.locator('.ct-advanced summary').click();
   assert.equal(await task.locator('[data-arg="1"] input').getAttribute('type'), 'password');
   await task.locator('[data-arg="2"] input').fill('ARG');

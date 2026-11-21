@@ -14,6 +14,8 @@ export function containerCommand(env, args) {
         'StrictHostKeyChecking=yes',
         '-o',
         'BatchMode=yes',
+        '-o',
+        'IdentitiesOnly=yes',
         host,
         'sudo',
         '-n',
@@ -31,6 +33,7 @@ export function runContainer(input, { env = process.env, signal, spawnImpl = spa
   const args = [
     'run',
     '--rm',
+    '--pull=never',
     '-i',
     '--name',
     name,
@@ -90,6 +93,18 @@ export function runContainer(input, { env = process.env, signal, spawnImpl = spa
     child.stdin.on('error', () => {});
     child.once('close', (code) => {
       if (settled) return;
+      if (code === 255 && env.FORENSICS_TRANSPORT === 'ssh')
+        return finish(
+          Object.assign(Error('无法连接隔离分析环境，请稍后重试。'), {
+            code: 'ENGINE_UNAVAILABLE',
+          }),
+        );
+      if (code === 125 && /No such image/i.test(error))
+        return finish(
+          Object.assign(Error('服务器分析环境缺失，暂时无法处理文件，请联系维护者恢复服务。'), {
+            code: 'ENGINE_UNAVAILABLE',
+          }),
+        );
       if (code !== 0)
         return finish(Error(code === 124 ? '处理超时' : '分析引擎执行失败：' + error));
       try {

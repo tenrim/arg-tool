@@ -57,6 +57,12 @@ def prepare():
             raise RuntimeError("Missing engine: " + command)
     if len(ANALYZERS) != 19:
         raise RuntimeError("Expected exactly 19 upstream analyzers")
+    from stegoveritas_adapter import bootstrap
+
+    bootstrap()
+    import stegoveritas.modules.image.analysis.brute_lsb
+    import stegoveritas.stegoveritas
+
     print("All 19 analyzers and complete IHDR table ready")
 
 
@@ -117,8 +123,14 @@ class CompleteOutput:
             if self.password:
                 cmd += ["-upw", self.password]
             cmd.append(self.img)
-        if cmd[0] == "exiftool" and options.get("mode") == "json":
-            cmd.insert(1, "-j")
+        if cmd[0] == "exiftool":
+            mode = options.get("mode")
+            if mode in ("json", "binary"):
+                cmd.insert(1, "-j")
+                if mode == "binary":
+                    cmd.insert(1, "-b")
+            elif mode == "xmp":
+                cmd = ["exiftool", "-b", "-XMP", self.img]
         self.command_index += 1
         logs = self.output_dir / "logs"
         logs.mkdir(exist_ok=True)
@@ -145,6 +157,8 @@ class CompleteOutput:
             (self.output_dir / "jsteg-extracted.bin").write_bytes(stdout)
         if cmd[0] == "zsteg" and "-E" in cmd and result.returncode == 0:
             (self.output_dir / "zsteg-extracted.bin").write_bytes(stdout)
+        if cmd[0] == "exiftool" and "-XMP" in cmd and result.returncode == 0:
+            (self.output_dir / "metadata.xmp").write_bytes(stdout)
         return subprocess.CompletedProcess(
             cmd,
             result.returncode,
@@ -166,7 +180,7 @@ class CompleteOutput:
 
 def run(request):
     name = request["engine"]
-    if name not in ANALYZERS:
+    if name not in ANALYZERS and name != "stegoveritas":
         raise ValueError("未知分析引擎")
     raw = base64.b64decode(request["data"], validate=True)
     if not raw or len(raw) > 20 * 1024 * 1024:
@@ -179,15 +193,28 @@ def run(request):
     source.write_bytes(raw)
     output = work / "result"
     output.mkdir()
-    cls = type("Standalone", (CompleteOutput, ANALYZERS[name]), {"register": False})
-    analyzer = cls(source, output)
-    analyzer.options = request.get("options", {})
     password = request.get("password", "")
     if not isinstance(password, str) or len(password) > 1024 or "\x00" in password:
         raise ValueError("密码格式不正确")
-    analyzer.password = password
-    analyzer.analyze(password)
-    result = json.loads((output / "results.json").read_text(encoding="utf-8"))[name]
+    attached = request.get("attachment")
+    attachment = base64.b64decode(attached["data"], validate=True) if attached else None
+    if attachment is not None and len(raw) + len(attachment) > 20 * 1024 * 1024:
+        raise ValueError("本次上传文件合计不能超过 20 MB")
+    if name == "stegoveritas":
+        from stegoveritas_adapter import run as run_stegoveritas
+
+        result = run_stegoveritas(source, output, request.get("options", {}), attachment)
+    elif name == "steghide" and attachment is not None:
+        from steghide_wordlist import run as run_wordlist
+
+        result = run_wordlist(source, output, password, attachment)
+    else:
+        cls = type("Standalone", (CompleteOutput, ANALYZERS[name]), {"register": False})
+        analyzer = cls(source, output)
+        analyzer.options = request.get("options", {})
+        analyzer.password = password
+        analyzer.analyze(password)
+        result = json.loads((output / "results.json").read_text(encoding="utf-8"))[name]
     files = []
     total = 0
     for path in sorted(output.rglob("*")):
@@ -214,11 +241,19 @@ if __name__ == "__main__":
     if "--prepare" in sys.argv:
         prepare()
     elif "--health" in sys.argv:
-        print(json.dumps({"engines": sorted(ANALYZERS)}))
+        from stegoveritas_adapter import bootstrap
+
+        bootstrap()
+        import stegoveritas.modules.image.analysis.brute_lsb
+
+        print(json.dumps({"engines": sorted([*ANALYZERS, "stegoveritas"])}))
     else:
         try:
             request = json.loads(sys.stdin.buffer.read(28 * 1024 * 1024))
             response = run(request)
         except Exception as error:
-            response = {"error": str(error), "complete": False}
+            response = {
+                "error": str(error) or "分析未完成：" + type(error).__name__,
+                "complete": False,
+            }
         print(json.dumps(response, ensure_ascii=True))

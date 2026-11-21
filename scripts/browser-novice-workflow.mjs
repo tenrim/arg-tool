@@ -119,6 +119,9 @@ try {
         document.querySelector('#ct-encoding .ct-status').textContent.includes('忽略了'),
       );
       assert.match(await p.innerText(), /非 UTF-8|不可打印/);
+      await page.evaluate(async () =>
+        (await import('./preferences.js')).setPreferences({ showAdvancedParameters: true }),
+      );
       await p.locator('.ct-advanced summary').click();
       await p.locator('[data-arg="1"] input').uncheck();
       await p.locator('[data-arg="2"] input').check();

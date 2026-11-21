@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   Box,
   Button,
@@ -357,7 +358,7 @@ export function initGo() {
       syncBusy();
     };
     try {
-      worker = new Worker(new URL('./go-worker.js', import.meta.url));
+      worker = takeWorker(new URL('./go-worker.js', import.meta.url));
       syncBusy();
       timer = setTimeout(() => fail('棋谱解析超过 30 秒，已停止。'), 30000);
       worker.onerror = (e) => {

@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import { wavEncode, reverseChannels, morseAudio } from '../media.js';
 import { resultRecording, canvasRecord } from '../result-recording.js';
 import { $, MAX_FILE, setStatus, createActions, download, canvasDownload, bindDrop } from './io.js';
@@ -277,7 +278,7 @@ export function mountAudioWorkspace() {
     cancelAudioWork();
     const samples = Float32Array.from(currentChannel());
     if (state.reversed) samples.reverse();
-    const worker = new Worker(new URL('../audio-worker.js', import.meta.url), { type: 'module' });
+    const worker = takeWorker(new URL('../audio-worker.js', import.meta.url), { type: 'module' });
     state.worker = worker;
     return new Promise((resolve, reject) => {
       worker.reject = reject;

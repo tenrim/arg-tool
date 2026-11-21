@@ -151,7 +151,7 @@ export function mountAlpertron(host) {
       fileRevision = 0;
     const invalidate = () => {
       fileRevision++;
-      if (client.pending) client.cancel();
+      if (client.pending && (client.pending.kind !== 'ready' || client.latestRun)) client.cancel();
       continueButton.disabled = divisors.disabled = true;
       continueButton.hidden = true;
     };
@@ -361,6 +361,7 @@ export function mountAlpertron(host) {
     });
     const leave = ({ detail }) => {
       if (detail?.name !== id) client.cancel('已离开数论工作区');
+      else if (!navigator.connection?.saveData) client.ready(calculator.id).catch(() => {});
     };
     document.addEventListener('arg:panelchange', leave);
     onDisconnect(panel, () => {

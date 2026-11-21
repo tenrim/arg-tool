@@ -80,6 +80,17 @@ test('every expansion task declares actual sources or explicit original ownershi
     );
 });
 
+test('retired SIMBAD and VizieR queries have no current source registration', () => {
+  for (const [id, url] of [
+    ['simbad', 'https://simbad.cds.unistra.fr/simbad/'],
+    ['vizier', 'https://vizier.cds.unistra.fr/'],
+  ]) {
+    assert.equal(TASK_PROJECT_SOURCES['native:' + id], undefined);
+    assert.equal(projectLicense(url), undefined);
+  }
+  for (const id of ['cod', 'pubchem']) assert.ok(TASK_PROJECT_SOURCES['native:' + id]);
+});
+
 test('all declared projects have precise licenses and real bundled notices', async () => {
   assert.equal(NOTEBOOK_PROJECT_SOURCES.length, 13);
   const groups = [

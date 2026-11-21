@@ -20,6 +20,7 @@ export function mountCapabilitySidebar(
   { navigate, close, categoryPages = [], searchKnowledge = () => false },
 ) {
   let registry,
+    renderedGroups,
     currentRoute = '',
     currentId = null,
     query = '',
@@ -226,9 +227,26 @@ export function mountCapabilitySidebar(
   );
   return {
     setRegistry(value) {
-      if (registry === value) return;
+      if (registry === value && renderedGroups === value.groups) return;
+      const expanded = [...sections]
+        .filter(
+          ([, section]) =>
+            section.root.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
+        )
+        .map(([id]) => id);
+      for (const section of sections.values()) section.controller.destroy();
+      sections.clear();
+      for (const category of categories.values()) category.body.replaceChildren();
+      for (const page of categoryPages) {
+        const category = capabilityCategories.find((category) => category.id === page.category);
+        if (category)
+          categories.get(category.id).body.append(routeLink(page.route, page.title, category.icon));
+      }
       registry = value;
+      renderedGroups = value.groups;
       for (const group of registry.groups) if (group.count) addSection(group);
+      for (const id of expanded)
+        sections.get(id)?.reveal(registry.groups.find((group) => group.id === id)?.entryIds[0]);
       status.hidden = true;
       renderedQuery = null;
       this.filter(query);

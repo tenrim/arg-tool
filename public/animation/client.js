@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 // The worker owns all decoded pixels. Cancellation destroys its memory and
 // rejects every request, including one waiting for first-load module imports.
 export function animationClient() {
@@ -15,7 +16,7 @@ export function animationClient() {
   };
   function run(op, data = {}) {
     if (!worker) {
-      worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+      worker = takeWorker(new URL('./worker.js', import.meta.url), { type: 'module' });
       worker.onmessage = ({ data }) => {
         const entry = pending.get(data.id);
         if (!entry) return;

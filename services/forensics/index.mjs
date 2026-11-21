@@ -4,6 +4,8 @@ import {
   SERVER_FILE_LIMIT_BYTES,
 } from '../../public/forensics/catalog.js';
 import { runContainer } from './process.mjs';
+import { streamImageSurvey } from './image-survey.mjs';
+import { IMAGE_SURVEY } from '../../public/forensics/image-plan.js';
 const engines = new Set(FORENSICS_TASKS.map((t) => t.engine));
 // Base64 adds one third; reserve JSON overhead without increasing the file cap.
 const limit = 28 * 1024 * 1024;
@@ -28,7 +30,7 @@ export function validateJob(value) {
     value.options &&
     (typeof value.options !== 'object' ||
       Array.isArray(value.options) ||
-      JSON.stringify(value.options).length > 2048)
+      JSON.stringify(value.options).length > (value.engine === 'stegoveritas' ? 16000 : 2048))
   )
     throw Error('工具参数不正确');
   if (Buffer.from(value.data, 'base64').toString('base64') !== value.data)
@@ -38,6 +40,9 @@ export function validateJob(value) {
     const spec = specs.find((s) => s.key === key);
     if (
       !spec ||
+      (typeof item !== 'string' && typeof item !== 'number') ||
+      (spec.maxLength != null && (typeof item !== 'string' || item.length > spec.maxLength)) ||
+      (spec.pattern && !new RegExp(spec.pattern).test(item)) ||
       (spec.choices && !spec.choices.some(([v]) => v === item)) ||
       (spec.type === 'number' &&
         (!Number.isInteger(Number(item)) || Number(item) < spec.min || Number(item) > spec.max)) ||
@@ -46,12 +51,32 @@ export function validateJob(value) {
     )
       throw Error('工具参数无效：' + key);
   }
+  let attachment;
+  if (value.attachment != null) {
+    const file = value.attachment;
+    if (
+      !['steghide', 'stegoveritas'].includes(value.engine) ||
+      (value.engine === 'stegoveritas' && value.options?.mode !== 'hide') ||
+      !file ||
+      typeof file.data !== 'string' ||
+      !file.data ||
+      file.data.length > 4 * Math.ceil(SERVER_FILE_LIMIT_BYTES / 3) ||
+      typeof file.filename !== 'string' ||
+      file.filename.length > 255 ||
+      Buffer.from(file.data, 'base64').toString('base64') !== file.data ||
+      Buffer.from(file.data, 'base64').length + Buffer.from(value.data, 'base64').length >
+        SERVER_FILE_LIMIT_BYTES
+    )
+      throw Error('附加文件无效；本次上传文件合计最多 20 MB');
+    attachment = { filename: file.filename, data: file.data };
+  }
   return {
     engine: value.engine,
     data: value.data,
     filename: value.filename,
     password: value.password,
     options: value.options || {},
+    ...(attachment ? { attachment } : {}),
   };
 }
 export function createForensicsService({ env = process.env, execute = runContainer } = {}) {
@@ -70,7 +95,9 @@ export function createForensicsService({ env = process.env, execute = runContain
   return {
     async handle(req, res) {
       if (req.method !== 'POST') return reply(res, 405, { error: '仅支持 POST' });
-      const origins = (env.FORENSICS_ORIGINS || '').split(',');
+      const origins = (
+        env.FORENSICS_ORIGINS || ''
+      ).split(',');
       origins.push(
         `http://localhost:${req.socket.localPort}`,
         `http://127.0.0.1:${req.socket.localPort}`,
@@ -110,10 +137,22 @@ export function createForensicsService({ env = process.env, execute = runContain
         }
         clearTimeout(readTimer);
         const job = validateJob(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+        if (job.engine === IMAGE_SURVEY) {
+          await streamImageSurvey(job, { res, env, signal: controller.signal, execute });
+          return;
+        }
         const result = await execute(job, { env, signal: controller.signal });
         reply(res, result.error ? 422 : 200, result);
       } catch (error) {
-        reply(res, controller.signal.aborted ? 408 : 422, { error: error.message });
+        if (res.headersSent) {
+          res.destroy();
+          return;
+        }
+        const unavailable = error.code === 'ENGINE_UNAVAILABLE';
+        reply(res, controller.signal.aborted ? 408 : unavailable ? 503 : 422, {
+          error: error.message,
+          ...(unavailable ? { code: error.code } : {}),
+        });
       } finally {
         clearTimeout(readTimer);
         res.removeListener('close', abort);

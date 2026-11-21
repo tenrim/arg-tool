@@ -17,6 +17,7 @@ import {
   element,
   updateStatus,
 } from './common.js';
+import { ImageInputPreview } from '../ui/index.js';
 import { receiver } from './screen-model.js';
 import { createJob } from './client.js';
 export function mountScreen(host, meta) {
@@ -398,12 +399,15 @@ export function mountScreen(host, meta) {
       type: 'file',
       attrs: { accept: 'image/*', multiple: true, 'aria-label': '导入二维码图片' },
     });
+    const framePreview = ImageInputPreview();
     images.onchange = async () => {
+      framePreview.show(null);
       stopCamera();
       const revision = ++receiveRevision;
       for (const file of images.files) {
         if (!live() || finished || revision !== receiveRevision) break;
         try {
+          framePreview.show(file);
           const image = await readImage(file);
           if (!live() || revision !== receiveRevision) break;
           const raw = await scanJob.run({ kind: 'scan', image });
@@ -419,6 +423,7 @@ export function mountScreen(host, meta) {
       startCamera,
       Button({ text: '暂停摄像头（保留进度）', on: { click: stopCamera } }),
       Field({ label: '导入二维码图片（可多选补传）', control: images }),
+      framePreview.node,
       Button({
         text: '清空接收进度',
         on: {
@@ -428,6 +433,8 @@ export function mountScreen(host, meta) {
             state = receiver();
             finished = false;
             missing.value = '';
+            images.value = '';
+            framePreview.show(null);
             result.replaceChildren();
             info.textContent = '已清空，等待新的传输。';
             ui.recording.clear();

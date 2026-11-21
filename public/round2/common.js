@@ -1,3 +1,4 @@
+import { takeWorker } from '../prepared-worker.js';
 import {
   element as uiElement,
   render as uiRender,
@@ -36,7 +37,7 @@ export function workerJob(url, statusId) {
   function run(data) {
     cancel();
     return new Promise((resolve, reject) => {
-      const worker = new Worker(url, { type: 'module' }),
+      const worker = takeWorker(url, { type: 'module' }),
         timer = setTimeout(() => finish(Error('处理超过 30 秒，请缩小输入后重试。')), 30000);
       active = { worker, reject, timer };
       function finish(error, result) {

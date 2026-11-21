@@ -39,10 +39,10 @@ const sample = () => ({
   sourceURL: 'https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/2244/JSON',
   raw: { notification: { unabridged: true } },
 });
-test('all eight online forms expose actual provider modes and safe source boundaries', () => {
+test('all six online forms expose actual provider modes and safe source boundaries', () => {
   assert.deepEqual(
     QUERY_PAGES.map((p) => p.id),
-    ['zdic', 'cnkgraph', 'simbad', 'vizier', 'cod', 'pubchem', 'placenames', 'pokewiki'],
+    ['zdic', 'cnkgraph', 'cod', 'pubchem', 'placenames', 'pokewiki'],
   );
   for (const provider of QUERY_PAGES) {
     assert.ok(provider.modes.length);

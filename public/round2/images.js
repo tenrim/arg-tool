@@ -1,4 +1,4 @@
-import { element as uiElement } from '../ui/index.js';
+import { element as uiElement, Box } from '../ui/index.js';
 import { $, field, area, button, status, action, setStatus, download } from '../round1/common.js';
 import { surface, source, workerJob } from './common.js';
 import { colorValues } from './image-engine.js';
@@ -81,10 +81,14 @@ export function initComparisons(panel, getImage) {
   });
   for (const id of ['compare-source', 'compare-mode', 'compare-opacity', 'compare-threshold'])
     $(id).oninput = clear;
+  const secondPreview = Box({ hidden: true });
+  $('compare-info').after(secondPreview);
   $('compare-input').onchange = async () => {
     const gen = ++loading;
     clear();
     second = null;
+    secondPreview.hidden = true;
+    secondPreview.replaceChildren();
     $('compare-info').textContent = '尚未选择图片 B';
     try {
       const file = $('compare-input').files[0];
@@ -110,6 +114,10 @@ export function initComparisons(panel, getImage) {
         height: c.height,
       };
       $('compare-info').textContent = `${file.name} · ${c.width} × ${c.height}`;
+      c.classList.add('input-original-canvas');
+      c.setAttribute('aria-label', '所选图片 B：' + file.name);
+      secondPreview.replaceChildren(c);
+      secondPreview.hidden = false;
       setStatus('compare-status', '图片 B 已载入。');
     } catch (e) {
       if (gen === loading) setStatus('compare-status', e.message, true);

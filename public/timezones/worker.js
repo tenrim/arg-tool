@@ -1,6 +1,6 @@
 // Classic worker entry can run at its original URL, as a Blob, or below a
 // static-host subdirectory: every resource is rooted in the page-supplied base.
-let resourceBase, core, index, source;
+let resourceBase, core, index, source, indexRequest;
 const cache = new Map();
 async function get(url, json = true) {
   const response = await fetch(url);
@@ -21,7 +21,13 @@ onmessage = async ({ data }) => {
         throw Error('本地时区组件载入失败，请重试。');
       }
     }
-    index ??= await get(new URL('vendor/timezones/index.json', resourceBase));
+    index ??= await (indexRequest ??= get(
+      new URL('vendor/timezones/index.json', resourceBase),
+    ).catch((error) => {
+      indexRequest = undefined;
+      throw error;
+    }));
+    if (data.prepare) return;
     if (data.type === 'search') {
       postMessage({
         id: data.id,
@@ -114,6 +120,7 @@ onmessage = async ({ data }) => {
       },
     });
   } catch (error) {
+    if (data.prepare) return;
     postMessage({ id: data.id, error: error.message || '时区查询失败。' });
   }
 };

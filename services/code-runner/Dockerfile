@@ -2,6 +2,7 @@
 FROM dart:3.6.0 AS dart
 FROM swift:6.0.3-noble
 ENV DEBIAN_FRONTEND=noninteractive
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g; s|http://security.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 ca-certificates curl unzip build-essential default-jdk-headless \
     golang-go rustc php-cli ruby r-base-core perl bash nodejs npm dotnet-sdk-8.0 \

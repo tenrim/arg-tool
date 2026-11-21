@@ -29,6 +29,24 @@ const types = {
   balloonport: '气球场',
 };
 const unicodeIndexes = new WeakMap();
+const unicodeRangeIndexes = new WeakMap();
+function unicodeRange(ranges, cp) {
+  if (!unicodeRangeIndexes.has(ranges))
+    unicodeRangeIndexes.set(
+      ranges,
+      [...ranges].sort((a, b) => a[0] - b[0]),
+    );
+  const sorted = unicodeRangeIndexes.get(ranges);
+  let lo = 0,
+    hi = sorted.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1,
+      range = sorted[mid];
+    if (cp < range[0]) hi = mid - 1;
+    else if (cp > range[1]) lo = mid + 1;
+    else return range;
+  }
+}
 const category = {
   Lu: '大写字母',
   Ll: '小写字母',
@@ -61,15 +79,17 @@ const category = {
   Co: '私用字符',
   Cn: '未指派',
 };
-export function unicodePoint(cp, data) {
+function unicodeRecord(cp, data) {
   if (!unicodeIndexes.has(data)) unicodeIndexes.set(data, new Map(data.rows.map((r) => [r[0], r])));
   const explicit = unicodeIndexes.get(data).get(cp);
   let r = explicit;
   if (!r) {
     const range = data.ranges.find((r) => cp >= r[0] && cp <= r[1]);
     r = [cp, range ? range[2] : '未指派', range?.[3] || 'Cn', range?.[4] || '', '', '', '', ''];
-    if (range?.[2].includes('Ideograph'))
+    if (range?.[2].startsWith('CJK Ideograph'))
       r[1] = 'CJK UNIFIED IDEOGRAPH-' + cp.toString(16).toUpperCase();
+    if (range?.[2].startsWith('Tangut Ideograph'))
+      r[1] = 'TANGUT IDEOGRAPH-' + cp.toString(16).toUpperCase();
     if (cp >= 0xac00 && cp <= 0xd7a3) {
       const l = [
           'G',
@@ -150,10 +170,22 @@ export function unicodePoint(cp, data) {
         'HANGUL SYLLABLE ' + l[Math.floor(n / 588)] + v[Math.floor((n % 588) / 28)] + t[n % 28];
     }
   }
+  return r;
+}
+function unicodeRows(data) {
+  const records = [...data.rows];
+  // UCD First/Last ranges carry real characters, not representative samples.
+  // Resolve their names through the same owner used by direct code-point lookup.
+  for (const [start, end] of data.ranges)
+    for (let cp = start; cp <= end; cp++) records.push(unicodeRecord(cp, data));
+  return records.sort((a, b) => a[0] - b[0]);
+}
+export function unicodePoint(cp, data) {
+  const r = unicodeRecord(cp, data);
   const hex = cp.toString(16).toUpperCase().padStart(4, '0'),
     safe = !['Cc', 'Cf', 'Cs', 'Cn'].includes(r[2]),
     character = safe ? String.fromCodePoint(cp) : '（不可见或未指派）';
-  const rangeName = (list) => list.find((a) => cp >= a[0] && cp <= a[1])?.[2] || '未指定';
+  const rangeName = (list) => unicodeRange(list, cp)?.[2] || '未指定';
   const annotation = unicodeAnnotation(String.fromCodePoint(cp)),
     script = rangeName(data.scripts),
     block = rangeName(data.blocks),
@@ -264,6 +296,7 @@ export function queryRecords(kind, p, data, countries = [], chineseNames = {}) {
             ...(localized('capitals', r.id)?.names || []),
             ...r.currency,
             ...r.phone,
+            ...r.phone.map((phone) => '+' + phone),
           ]),
       ),
       (r) =>
@@ -390,11 +423,11 @@ export function queryRecords(kind, p, data, countries = [], chineseNames = {}) {
   else if (kind === 'unicode') {
     if (p.mode === 'name') {
       if (!q) throw Error('请输入中文注释、原文名称、文字系统、区块或类别代码。');
-      const cps = data.rows
+      const cps = unicodeRows(data)
         .filter((r) => {
           const annotation = unicodeAnnotation(String.fromCodePoint(r[0])),
-            block = data.blocks.find((b) => r[0] >= b[0] && r[0] <= b[1])?.[2],
-            script = data.scripts.find((b) => r[0] >= b[0] && r[0] <= b[1])?.[2];
+            block = unicodeRange(data.blocks, r[0])?.[2],
+            script = unicodeRange(data.scripts, r[0])?.[2];
           return matches(q, [
             r[1],
             r[2],
@@ -422,9 +455,10 @@ export function queryRecords(kind, p, data, countries = [], chineseNames = {}) {
     } else {
       const input = String(p.query || '');
       if (!input) throw Error('请输入字符或 U+XXXX 码位。');
+      const codeInput = input.trim();
       let cps;
-      if (/^(?:(?:U\+|0x)[0-9a-f]+[\s,，]*)+$/i.test(input))
-        cps = input
+      if (/^(?:(?:U\+|0x)[0-9a-f]+[\s,，]*)+$/i.test(codeInput))
+        cps = codeInput
           .match(/(?:U\+|0x)([0-9a-f]+)/gi)
           .map((t) => parseInt(t.replace(/^(U\+|0x)/i, ''), 16));
       else {

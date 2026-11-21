@@ -1,3 +1,5 @@
+import { lookupWorker, releaseLookup } from './idle-worker.js';
+import { extractAnswer } from './hunt-extract.js';
 import {
   element as uiElement,
   insert as uiInsert,
@@ -63,13 +65,18 @@ const area = (id, placeholder, rows = 6) =>
   `<textarea id="${id}" rows="${rows}" spellcheck="false" placeholder="${placeholder}"></textarea>`;
 const button = (id, title) => `<button id="${id}" class="primary-button">${title}</button>`;
 const status = (id) => `<p id="${id}" class="status" role="status" aria-live="polite"></p>`;
-let worker;
-function queryWorker(payload, statusId, result) {
+let worker, queryTimer;
+function stopQuery() {
+  clearTimeout(queryTimer);
   worker?.terminate();
-  worker = new Worker(new URL('./hunt-worker.js', import.meta.url), { type: 'module' });
+  worker = null;
+}
+function queryWorker(payload, statusId, result) {
+  stopQuery();
+  worker = lookupWorker(new URL('./hunt-worker.js', import.meta.url), { type: 'module' });
   const w = worker;
   $(statusId).textContent = '正在加载完整词库并检索…';
-  const timer = setTimeout(() => {
+  queryTimer = setTimeout(() => {
     w.terminate();
     if (worker === w) {
       worker = null;
@@ -77,9 +84,10 @@ function queryWorker(payload, statusId, result) {
     }
   }, 30000);
   w.onmessage = ({ data }) => {
-    clearTimeout(timer);
-    w.terminate();
     if (worker !== w) return;
+    clearTimeout(queryTimer);
+    if (data.error || payload.custom?.trim() || payload.mode === 'code') w.terminate();
+    else releaseLookup(w);
     worker = null;
     if (data.error) {
       $(statusId).textContent = data.error;
@@ -89,13 +97,13 @@ function queryWorker(payload, statusId, result) {
     result(data.rows);
   };
   w.onerror = () => {
-    clearTimeout(timer);
+    if (worker !== w) return;
+    clearTimeout(queryTimer);
     w.terminate();
-    if (worker === w) {
-      worker = null;
-      $(statusId).textContent = '检索失败，请检查输入后重试。';
-    }
+    worker = null;
+    $(statusId).textContent = '检索失败，请检查输入后重试。';
   };
+  w.onmessageerror = w.onerror;
   w.postMessage(payload);
 }
 function action(id, statusId, fn) {
@@ -205,8 +213,7 @@ export function initHuntTools() {
   $('word-mode').addEventListener('change', syncWordMode);
   syncWordMode();
   function clearWords() {
-    worker?.terminate();
-    worker = null;
+    stopQuery();
     resultLease = null;
     recording.setEnabled(false);
     $('word-output').value = '';
@@ -319,8 +326,7 @@ export function initHuntTools() {
     });
   });
   $('word-stop').onclick = () => {
-    worker?.terminate();
-    worker = null;
+    stopQuery();
     $('word-status').textContent = '已停止查询。';
   };
   $('word-download').onclick = () => download($('word-output').value, '查词结果.txt');
@@ -350,36 +356,11 @@ export function initHuntTools() {
     $(id).addEventListener('input', () => extractRecording.clear());
   action('extract-run', 'extract-status', () => {
     extractRecording.clear();
-    const rows = $('extract-input')
-      .value.split(/\r?\n/)
-      .filter((x) => x.trim())
-      .map((x) => [...x.replace(/\s/g, '')]);
-    if (!rows.length) throw Error('请先输入文本。');
-    const mode = $('extract-mode').value,
-      indices = $('extract-indices')
-        .value.trim()
-        .split(/[\s,，]+/)
-        .map(Number);
-    let result;
-    if (mode === 'transpose') {
-      if (rows.some((r) => r.length !== rows[0].length)) throw Error('转置要求每行长度相同。');
-      result = rows[0].map((_, i) => rows.map((r) => r[i]).join('')).join('\n');
-    } else
-      result = rows
-        .map((r, i) => {
-          const n =
-            mode === 'first'
-              ? 1
-              : mode === 'last'
-                ? r.length
-                : mode === 'index'
-                  ? indices[0]
-                  : indices[i];
-          if (!Number.isInteger(n) || n < 1 || n > r.length)
-            throw Error(`第 ${i + 1} 行的索引无效或超出长度。`);
-          return r[n - 1];
-        })
-        .join('');
+    const result = extractAnswer(
+      $('extract-input').value,
+      $('extract-mode').value,
+      $('extract-indices').value,
+    );
     $('extract-output').value = result;
     extractRecording.publish({ text: result, name: '提取结果.txt' });
     $('extract-status').textContent = '提取完成。';

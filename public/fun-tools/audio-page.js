@@ -55,7 +55,6 @@ export function mountAudio(host, meta) {
     invert = check('反转亮度');
   const traceParams = FormGrid({
     children: [
-      duration.field,
       min.field,
       max.field,
       traceRate.field,
@@ -113,13 +112,21 @@ export function mountAudio(host, meta) {
     'module',
   );
   const crop = traceCrop(ui);
-  const upload = fileInput(ui, '选择音频或图片', 'audio/*,image/*,.amr,.aac,.flac,.opus,.ogg', () =>
-    sync(),
+  const upload = fileInput(
+    ui,
+    '选择音频或图片',
+    'audio/*,image/*,.amr,.aac,.flac,.opus,.ogg',
+    () => sync(),
+    () => operation.control.value !== 'trace',
   );
+  const traceAdvanced = Disclosure({
+    preference: 'advancedParameters',
+    children: [Box({ tag: 'summary', text: '声音合成参数' }), basic.field, traceParams],
+  });
   ui.parameters.append(
     operation.field,
-    basic.field,
-    traceParams,
+    duration.field,
+    traceAdvanced,
     spectrumParams,
     rate.field,
     fine.field,
@@ -174,6 +181,8 @@ export function mountAudio(host, meta) {
   function sync() {
     const trace = operation.control.value === 'trace';
     implementation(ui, trace ? 'trace' : 'spectrum');
+    duration.field.hidden = !trace;
+    traceAdvanced.hidden = !trace;
     basic.field.hidden = !trace;
     traceParams.hidden = !trace || basic.control.value === 'basic';
     spectrumParams.hidden = operation.control.value !== 'encode';
@@ -181,6 +190,7 @@ export function mountAudio(host, meta) {
     fine.field.hidden = trace;
     bits.field.hidden = mode.control.value === 'exact';
     fmax.field.hidden = mode.control.value === 'exact';
+    upload.refreshPreview();
     void crop.load(trace ? upload.file : undefined);
     crop.root.hidden = !trace || !upload.file;
   }
@@ -480,7 +490,7 @@ export function mountAudio(host, meta) {
         const p =
           basic.control.value === 'basic'
             ? {
-                duration: 8,
+                duration: Number(duration.control.value),
                 minFreq: 50,
                 maxFreq: 16000,
                 sampleRate: 44100,

@@ -1,5 +1,8 @@
+import { takeWorker } from '../prepared-worker.js';
+import { lookupWorker, releaseLookup } from '../idle-worker.js';
+const builtin = new URL('./worker.js', import.meta.url);
 // Reference: CyberChef BackgroundWorkerWaiter.mjs:94–101; terminate cancels real work.
-export function createJob(url = new URL('./worker.js', import.meta.url), type = 'classic') {
+export function createJob(url = builtin, type = 'classic') {
   let active;
   function cancel() {
     if (!active) return;
@@ -12,14 +15,16 @@ export function createJob(url = new URL('./worker.js', import.meta.url), type = 
   function run(payload, progress = () => {}) {
     cancel();
     return new Promise((resolve, reject) => {
-      const worker = new Worker(url, { type });
+      const reusable = String(url) === builtin.href && ['qr', 'scan'].includes(payload.kind);
+      const worker = reusable ? lookupWorker(url, { type }) : takeWorker(url, { type });
       const job = { worker, reject };
       active = job;
       const finish = (error, value) => {
         if (active !== job) return;
         active = null;
         clearTimeout(job.timer);
-        worker.terminate();
+        if (!error && reusable) releaseLookup(worker);
+        else worker.terminate();
         error ? reject(Error(error)) : resolve(value);
       };
       worker.onerror = (e) => finish(e.message || '本地引擎加载失败，请重试。');
