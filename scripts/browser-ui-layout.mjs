@@ -200,6 +200,12 @@ try {
     assert.equal(await page.locator('#ct-crypto .ct-output').inputValue(), 'Nop456');
     await page.screenshot({ path: screenshots + '/crypto-mobile.png', fullPage: true });
     await go('encoding');
+    await page.evaluate(async () =>
+      (await import('/preferences.js')).setPreferences({ showAdvancedParameters: true }),
+    );
+    const advancedEncoding = page.locator('#ct-encoding .ct-advanced');
+    if ((await advancedEncoding.getAttribute('open')) === null)
+      await advancedEncoding.locator('summary').click();
     await page.waitForSelector('#ct-encoding .chef-composite');
     await page.locator('#ct-encoding .ct-input').fill('5Lit5paH');
     await page.locator('#ct-encoding .ct-run').click();
@@ -266,6 +272,7 @@ try {
     assert.equal(await page.locator('#braille-symbol').textContent(), '⠁');
     await page.screenshot({ path: screenshots + '/symbols-mobile.png' });
     await page.locator('.workbench-menu').click();
+    await page.locator('.workbench-drawer .rail-filter-disclosure > summary').click();
     await assertSearch('.rail-filter');
     await page.locator('.rail-directory-button').click();
     assert.equal(

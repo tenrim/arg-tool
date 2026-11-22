@@ -190,7 +190,10 @@ try {
   await page.evaluate(async () =>
     (await import('./preferences.js')).setPreferences({ searchKnowledge: true }),
   );
-  await page.locator('.rail-filter input').fill('纸笔');
+  const mobileFilter = page.locator('.workbench-drawer .rail-filter-disclosure');
+  if ((await mobileFilter.getAttribute('open')) === null)
+    await mobileFilter.locator('summary').click();
+  await mobileFilter.locator('input').fill('纸笔');
   assert.ok(
     await page.locator('.rail-groups [data-capability="topic:paper-puzzles"]:visible').count(),
   );

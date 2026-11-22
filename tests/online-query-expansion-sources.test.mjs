@@ -75,7 +75,28 @@ test('all fixed official evidence and notices have exact bytes and SHA-256; inac
   for (const file of [...manifest.files, ...manifest.publicNotices]) {
     assert.ok(!file.path.includes('..'));
     assert.match(file.path, /^(upstream\/online-services\/|public\/licenses\/)/);
-    const bytes = await read(file.path);
+    const bytes = await read(file.path).catch(async (error) => {
+      // The official examples are a test-only artifact outside the runtime bundle.
+      if (
+        error.code !== 'ENOENT' ||
+        file.path !== 'upstream/online-services/CNKGraph-postman.zip' ||
+        (process.env.GITHUB_ACTIONS !== 'true' && process.env.ARG_FETCH_TEST_EVIDENCE !== '1')
+      ) {
+        throw error;
+      }
+      const url = 'https://open.cnkgraph.com/Api/postman.zip';
+      assert.equal(file.url, url);
+      const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(20000) });
+      assert.ok(response.ok && response.body, '官方接口示例下载失败：HTTP ' + response.status);
+      const chunks = [];
+      let size = 0;
+      for await (const chunk of response.body) {
+        size += chunk.length;
+        assert.ok(size <= file.bytes, '官方接口示例超过固定大小');
+        chunks.push(chunk);
+      }
+      return Buffer.concat(chunks);
+    });
     assert.equal(bytes.length, file.bytes, file.path);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), file.sha256, file.path);
   }
