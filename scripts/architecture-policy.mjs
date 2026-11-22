@@ -771,6 +771,7 @@ const shared = new Set([
 const sharedRoot = new Set([
   'public/prepared-worker.js',
   'public/idle-worker.js',
+  'public/runtime-profile.js',
   'public/navigation.js',
   'public/tool-search.js',
   'public/cyberchef-i18n.js',

@@ -4,6 +4,7 @@ import { moduleGraph, closure, cyclesOf } from '../scripts/module-graph.mjs';
 import { boundaryViolations } from '../scripts/architecture-policy.mjs';
 import { capabilityRoute } from '../public/capabilities/routes.js';
 import { LANGUAGES } from '../public/coderunner/catalog.js';
+import { SERVER_LANGUAGES } from '../public/coderunner/server-catalog.js';
 import { LANGUAGES as legacyLanguages, ookToBrainfuck } from '../public/coderunner/model.js';
 import { TYPES } from '../public/round3/catalog.js';
 import { TYPES as legacyTypes, blankBoard } from '../public/round3/board-model.js';
@@ -126,7 +127,10 @@ test('route extraction preserves direction, original operation IDs and contains 
 test('metadata extraction retains legacy exports and actual model behavior', () => {
   assert.equal(LANGUAGES, legacyLanguages);
   assert.equal(TYPES, legacyTypes);
-  assert.equal(Object.keys(LANGUAGES).length, 10);
+  assert.equal(Object.keys(LANGUAGES).filter((id) => !Object.hasOwn(SERVER_LANGUAGES, id)).length, 10);
+  assert.equal(Object.keys(SERVER_LANGUAGES).length, 17);
+  for (const [id, profile] of Object.entries(SERVER_LANGUAGES))
+    assert.equal(LANGUAGES[id], profile);
   assert.equal(Object.keys(TYPES).length, 4);
   assert.equal(ookToBrainfuck('Ook. Ook. Ook! Ook.').code, '+.');
   assert.equal(blankBoard('sudoku', 4, 4).cells.length, 4);

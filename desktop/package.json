@@ -1,0 +1,18 @@
+{
+  "name": "mist-toolbox-offline",
+  "version": "0.0.0",
+  "private": true,
+  "description": "迷雾工具箱 Windows 离线测试版",
+  "author": "迷雾工具箱",
+  "main": "main.cjs",
+  "scripts": {
+    "dist": "node build.mjs"
+  },
+  "devDependencies": {
+    "electron": "45.4.1",
+    "electron-builder": "26.18.0"
+  },
+  "dependencies": {
+    "node-forge": "1.4.3"
+  }
+}

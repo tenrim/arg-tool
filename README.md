@@ -2,6 +2,17 @@
 
 面向 ARG 与 Puzzlehunt 玩家的中文解谜工作台。当前同步版本为 **V2.3.5**，原创程序代码按 GPL-3.0-or-later 开源，第三方引擎、资料与素材保留各自许可证。
 
+## 安卓版与 Windows 电脑版
+
+两个客户端共用迷雾工具箱的网页工具与固定资料。安装包都可在离线状态下安装、启动并使用随包的本地工具。在线查询、服务器算力和反馈发送需要联网；客户端会在主动操作时连接迷雾工具箱的在线服务。笔记和设置按设备保存，可通过完整备份迁移。
+
+| 平台 | 安装包 | 开源代码与构建 |
+| --- | --- | --- |
+| Android 9 及以上，需新版 Android System WebView | [下载 V2.3.5 APK](https://github.com/tenrim/arg-tool/releases/download/v2.3.5-clients/Mist-Toolbox-2.3.5-android.apk) | [Android 源码与构建说明](android-test/README.md) |
+| Windows x64 | [下载 V2.3.5 Windows 安装程序](https://github.com/tenrim/arg-tool/releases/download/v2.3.5-clients/Mist-Toolbox-2.3.5-offline.3-win-x64-setup.exe) | [Electron 源码与构建说明](desktop/README.md) |
+
+Windows 为离线测试版，安装程序未使用 Authenticode 签名。Android APK 使用项目原有发行证书，已有正式版可以覆盖安装。下载页提供 SHA-256 校验文件及该发行对应的源码。两个客户端的原创代码遵循 [GPL-3.0-or-later 授权说明](OPEN_SOURCE.md)，第三方组件保留各自许可。 [安装包发布页](https://github.com/tenrim/arg-tool/releases/tag/v2.3.5-clients)
+
 ## 本地部署
 
 准备 Node.js 24+ 和 Python 3.12+，下载或克隆本仓库后执行：

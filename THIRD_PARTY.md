@@ -526,3 +526,7 @@ pic-scramble、StegCloak、郭飞 hidden_watermark/CryptTool、Takuron 佛又曰
 固定 StegoVeritas 1.11 完整源代码发行包，原始文件和 SHA-256 见 `upstream/stegoveritas/SOURCE.json`。调用原图像滤镜、索引调色板、RGBA 位交织、40／48 组候选扫描及 LSB 嵌入原语；重复能力复用原图片、动画、Binwalk、Steghide 与 ExifTool 入口。覆盖矩阵及适配修改见 [接入说明](docs/STEGOVERITAS.md)。
 
 发行包 `setup.py` 的 MIT 声明与随包 `LICENSE.md`（GPL-2.0）不一致，本站保留完整 GPL 原文和该差异，不用包元数据覆盖原始许可。原文见 `public/licenses/forensics/stegoveritas.txt`。新增运行支持库 PrettyTable（BSD-3-Clause）、python-magic（MIT）、distro（Apache-2.0）及各自实际 Debian 版权声明在同目录；Pillow、NumPy、libmagic、Binwalk 沿用原完整声明。StegoVeritas 衍生适配内容随源代码提供并保留 GPL-2.0 条件，原上游字节未改。
+
+## Windows 安装程序
+
+Windows 运行时包含 Electron 45.4.1 及固有的 Chromium 和 Node.js，安装后保留 Electron 和 Chromium 的原始许可告知。node-forge 1.4.3 用于本地 HTTPS 证书，随 npm 包保留原许可。electron-builder 26.18.0 驱动构建，安装程序采用其固定的 NSIS 工具包。网页部分继续使用仓库的固定引擎、资料与相应的第三方源码。 [Electron 源码与发行](https://github.com/electron/electron/releases/tag/v45.4.1) · [node-forge 对应源码](https://github.com/digitalbazaar/forge/tree/v1.4.3) · [electron-builder 对应源码](https://github.com/electron-userland/electron-builder/tree/v26.18.0) · [NSIS 源码](https://sourceforge.net/projects/nsis/files/NSIS%203/)

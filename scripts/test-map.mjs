@@ -104,6 +104,9 @@ export const browserFile = (name) =>
 // First matching rule owns a file. Narrow rules precede folder defaults.
 // Unit test import dependencies are added automatically, including re-exports.
 export const rules = [
+  [/^desktop\//, [], ['desktop-assets', 'desktop-services']],
+  [/^android-test\//, [], ['android-clients']],
+  [/^public\/runtime-profile\.js$/, ['deployment', 'function-plot'], ['desktop-assets']],
   [
     /^public\/(?:page-preparation|prepared-worker)\.js$|^scripts\/browser-page-preparation\.mjs$/,
     ['page-preparation', 'worker-reuse'],

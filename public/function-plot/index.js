@@ -1,4 +1,5 @@
-import { Box, Link, ToolHeader, ToolPanel, Toolbar, onDisconnect } from '../ui/index.js';
+import { Box, Button, Link, ToolHeader, ToolPanel, Toolbar, onDisconnect } from '../ui/index.js';
+import { DESKTOP_APP } from '../runtime-profile.js';
 
 export const DESMOS_URL = 'https://www.desmos.com/calculator?lang=zh-CN';
 
@@ -20,13 +21,16 @@ export function mountFunctionPlot(main) {
               tag: 'p',
               text: '在线网页 · 由 Desmos 提供，需要联网。输入由 Desmos 页面处理。',
             }),
-            external('在新标签页打开 Desmos', DESMOS_URL),
+            external(DESKTOP_APP ? '在浏览器中打开 Desmos' : '在新标签页打开 Desmos', DESMOS_URL),
+            ...(DESKTOP_APP ? [Button({ text: '重新加载 Desmos', on: { click: reload } })] : []),
           ],
         }),
         host,
         Box({
           tag: 'p',
-          text: '网页无法加载或登录时，请在新标签页打开。切换工具会保留当前网页；刷新工具箱前，请通过 Desmos 保存或分享图表。新标签页不会自动带入这里的未保存内容。',
+          text: DESKTOP_APP
+            ? '恢复网络后可重新加载，或在浏览器中打开。切换工具会保留当前网页。重新加载前，请通过 Desmos 保存或分享图表。'
+            : '网页无法加载或登录时，请在新标签页打开。切换工具会保留当前网页；刷新工具箱前，请通过 Desmos 保存或分享图表。新标签页不会自动带入这里的未保存内容。',
         }),
         Box({
           tag: 'p',
@@ -45,6 +49,11 @@ export function mountFunctionPlot(main) {
   });
   main.append(panel);
   let frame = null;
+  function reload() {
+    frame?.remove();
+    frame = null;
+    activate();
+  }
   function activate() {
     if (panel.hidden || frame) return;
     // First entry loads the external site; re-entry preserves its browsing context.

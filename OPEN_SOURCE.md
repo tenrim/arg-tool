@@ -53,3 +53,7 @@ Copyright (C) 2026 musicraft and contributors.
 ## V2.3.5 同步（2026-11-22）
 
 本轮从 V2.1 已提交基线和明确审查的 V2.3.5 工作区文件整理独立发行版。新增引擎源码和压缩资源随固定依赖提供。快照摘要见 [同步记录](docs/SOURCE_SYNC_V2.3.5.json)。
+
+## Android 与 Windows 客户端
+
+Android WebView 容器、Android 网桥及 Windows Electron 容器的原创代码适用本页的 GPL-3.0-or-later 授权。构建说明分别见 [Android](android-test/README.md) 和 [Windows](desktop/README.md)。客户端使用同一网页工具与固定依赖清单。Electron、Chromium、Node.js、node-forge 及网页第三方组件保留各自许可和来源，见 [第三方说明](THIRD_PARTY.md)。Android 正式发行签名由维护者单独保管，自行构建可使用自己的密钥。

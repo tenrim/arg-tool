@@ -17,7 +17,7 @@ import { boundaryViolations } from '../scripts/architecture-policy.mjs';
 
 test('knowledge chapters: every remaining public article has its own authored and cited introduction', () => {
   const remaining = ARTICLES.filter((article) => article.capabilityIds[0] !== 'op:Enigma');
-  assert.equal(remaining.length, 288); // 已移除 SIMBAD 和 VizieR 两项在线查询。
+  assert.equal(remaining.length, 290); // 包含新增的图片综合分析及 StegoVeritas 科普。
   const introductions = new Set();
   for (const article of remaining) {
     assert.equal(article.preface[0].title, '介绍');
