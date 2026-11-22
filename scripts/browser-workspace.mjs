@@ -306,6 +306,7 @@ try {
   if (process.env.WORKSPACE_SCREENSHOTS)
     await mkdir(process.env.WORKSPACE_SCREENSHOTS, { recursive: true });
   for (const width of [320, 390, 768, 1080, 1440]) {
+    console.log('检查工作台全部入口 @' + width + 'px');
     await page.setViewportSize({ width, height: 950 });
     for (const route of routes) {
       await page.evaluate((route) => (location.hash = route), route);
@@ -376,8 +377,12 @@ try {
   assert.equal(await picker.locator('.ct-output').count(), 0);
   // The Base64 alphabet must render twelve separate glyphs; contextual font
   // substitutions used to join its trailing "/=" into a mathematical symbol.
-  await page.evaluate(() => document.fonts.ready);
+  const encodingParameters = picker.locator('.ct-advanced');
+  if ((await encodingParameters.getAttribute('open')) === null)
+    await encodingParameters.locator('summary').click();
   const alphabet = picker.locator('[data-arg="0"] input').first();
+  await alphabet.waitFor({ state: 'visible' });
+  await page.evaluate(() => document.fonts.ready);
   assert.equal(await alphabet.inputValue(), 'A-Za-z0-9+/=');
   const fontSession = await context.newCDPSession(page);
   await fontSession.send('DOM.enable');

@@ -64,6 +64,10 @@ if (!options.plan && !plan.unknown.length) {
   };
   for (const check of plan.checks) {
     const start = Date.now();
+    // Both of these regressions visit the complete tool catalogue at several viewport widths.
+    const timeoutMs = ['browser:workspace', 'browser:ui-layout'].includes(check.id)
+      ? 12 * 60_000
+      : 5 * 60_000;
     console.log('\nRUN ' + check.id);
     const code = await new Promise((done) => {
       const [command, ...args] = check.command,
@@ -74,8 +78,9 @@ if (!options.plan && !plan.unknown.length) {
       let timedOut = false;
       const timer = setTimeout(() => {
         timedOut = true;
+        console.error(check.id + ' exceeded ' + timeoutMs / 60_000 + ' minutes');
         child.kill('SIGTERM');
-      }, 300000);
+      }, timeoutMs);
       child.once('error', (error) => {
         clearTimeout(timer);
         console.error(error.message);
