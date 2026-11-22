@@ -8,10 +8,10 @@
 
 | 平台 | 安装包 | 开源代码与构建 |
 | --- | --- | --- |
-| Android 9 及以上，需新版 Android System WebView | [下载 V2.3.5 APK](https://github.com/tenrim/arg-tool/releases/download/v2.3.5-clients/Mist-Toolbox-2.3.5-android.apk) | [Android 源码与构建说明](android-test/README.md) |
+| Android 9 及以上，需新版 Android System WebView | [下载 V2.3.5 Android 修订 2](https://github.com/tenrim/arg-tool/releases/download/v2.3.5-android-r2/Mist-Toolbox-2.3.5-android-r2.apk) | [Android 源码与构建说明](android-test/README.md) |
 | Windows x64 | [下载 V2.3.5 Windows 安装程序](https://github.com/tenrim/arg-tool/releases/download/v2.3.5-clients/Mist-Toolbox-2.3.5-offline.3-win-x64-setup.exe) | [Electron 源码与构建说明](desktop/README.md) |
 
-Windows 为离线测试版，安装程序未使用 Authenticode 签名。Android APK 使用项目原有发行证书，已有正式版可以覆盖安装。下载页提供 SHA-256 校验文件及该发行对应的源码。两个客户端的原创代码遵循 [GPL-3.0-or-later 授权说明](OPEN_SOURCE.md)，第三方组件保留各自许可。 [安装包发布页](https://github.com/tenrim/arg-tool/releases/tag/v2.3.5-clients)
+Windows 为离线测试版，安装程序未使用 Authenticode 签名。Android APK 使用项目原有发行证书，已有正式版可以覆盖安装。下载页提供 SHA-256 校验文件及该发行对应的源码。两个客户端的原创代码遵循 [GPL-3.0-or-later 授权说明](OPEN_SOURCE.md)，第三方组件保留各自许可。 [Android 发布页](https://github.com/tenrim/arg-tool/releases/tag/v2.3.5-android-r2) · [Windows 发布页](https://github.com/tenrim/arg-tool/releases/tag/v2.3.5-clients)
 
 ## 本地部署
 

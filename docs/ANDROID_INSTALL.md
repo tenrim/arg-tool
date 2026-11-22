@@ -1,15 +1,15 @@
 # 迷雾工具箱 Android 安装与更新
 
-从 [客户端发布页](https://github.com/tenrim/arg-tool/releases/tag/v2.3.5-clients) 下载 APK。
+从 [Android 发布页](https://github.com/tenrim/arg-tool/releases/tag/v2.3.5-android-r2) 下载 APK。
 
 ## 首次安装
 
-1. 将`Mist-Toolbox-2.3.5-android.apk`传到手机，用“我的文件”打开。
+1. 将`Mist-Toolbox-2.3.5-android-r2.apk`传到手机，用“我的文件”打开。
 2. 如果系统提示安装来源权限，仅为当前使用的文件管理器按提示允许安装，再继续。
 3. 安装后打开“迷雾工具箱”。三星系统如果提示安装拦截，请根据该条提示处理；不需要开启 USB 调试。
 4. 本地工具和固定资料随包提供；在线查询与发送反馈需要联网。麦克风只在点击录音时申请，拒绝后仍可使用已有音频文件。
 
-最低可安装 Android 9，需使用新版 Android System WebView。V2.3.5 APK 约 308 MiB，安装需要额外空间。
+最低可安装 Android 9，需使用新版 Android System WebView。V2.3.5 Android 修订 2 的 APK 约 308 MiB，安装需要额外空间。
 
 ## 与测试版的区别
 

@@ -8,7 +8,7 @@ function harness({manualDeadline=false}={}){
  const requests=[],cancelled=[],events={},forwarded=[];
  let started;const start=new Promise(resolve=>started=resolve);
  let deadline,delay;
- const context=vm.createContext({Request,Response,URL,TextEncoder,TextDecoder,Uint8Array,atob,DOMException,crypto,setTimeout:manualDeadline?(fn,ms)=>{deadline=fn;delay=ms;return 1}:setTimeout,clearTimeout:manualDeadline?()=>{}:clearTimeout,location:{origin,href:origin+'/index.html'},fetch:async(...args)=>{forwarded.push(args);return new Response('local asset')},addEventListener:(key,fn)=>events[key]=fn,MistNetwork:{request:(...args)=>{requests.push(args);started(args)},cancel:id=>cancelled.push(id)}});
+ const context=vm.createContext({Request,Response,Headers,ReadableStream,URL,TextEncoder,TextDecoder,Uint8Array,atob,DOMException,crypto,setTimeout:manualDeadline?(fn,ms)=>{deadline=fn;delay=ms;return 1}:setTimeout,clearTimeout:manualDeadline?()=>{}:clearTimeout,location:{origin,href:origin+'/index.html'},fetch:async(...args)=>{forwarded.push(args);return new Response('local asset')},addEventListener:(key,fn)=>events[key]=fn,MistNetwork:{request:(...args)=>{requests.push(args);started(args)},cancel:id=>cancelled.push(id)}});
  context.window=context;vm.runInContext(source,context);
  return {context,requests,cancelled,events,forwarded,start,get delay(){return delay;},expire:()=>deadline(),fetch:(path,body,signal)=>context.fetch(origin+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal})};
 }
@@ -99,4 +99,65 @@ test('new endpoints retain strict method, path and JSON body limits',async()=>{
  assert.equal((await h.fetch('/api/code/run',{code:'x'.repeat(4*1024*1024)})).status,413);
  assert.equal((await h.fetch('/api/forensics/run',{data:'A'.repeat(28*1024*1024)})).status,413);
  assert.equal(h.requests.length,0);
+});
+
+test('image survey delivers readable NDJSON before the native request completes',async()=>{
+ const h=harness(),result=h.fetch('/api/forensics/run',{data:'AA=='}),[id]=await h.start;
+ h.context.__mistNetworkStart(id,200,{'Content-Type':'application/x-ndjson;charset=utf-8'});
+ const response=await result;
+ assert.match(response.headers.get('Content-Type'),/x-ndjson/);
+ const reader=response.body.pipeThrough(new TextDecoderStream()).getReader();
+ const first=JSON.stringify({type:'plan',labels:['中文检查']})+'\n';
+ h.context.__mistNetworkChunk(id,Buffer.from(first).toString('base64'));
+ assert.equal((await reader.read()).value,first,'first event is available while analysis is still running');
+ const last=JSON.stringify({type:'end',reason:'结束😀'})+'\n',bytes=Buffer.from(last),split=bytes.indexOf(Buffer.from('结束'))+1;
+ h.context.__mistNetworkChunk(id,bytes.subarray(0,split).toString('base64'));
+ h.context.__mistNetworkChunk(id,bytes.subarray(split).toString('base64'));
+ h.context.__mistNetworkComplete(id,200,{},null,null);
+ let text='';for(;;){const item=await reader.read();if(item.done)break;text+=item.value;}
+ assert.equal(text,last);
+});
+
+test('abort, native failure, deadline and page exit error an already opened survey stream',async()=>{
+ for(const mode of ['abort','failure','deadline','leave']){
+  const h=harness({manualDeadline:true}),controller=new AbortController(),result=h.fetch('/api/forensics/run',{data:'AA=='},controller.signal),[id]=await h.start;
+  h.context.__mistNetworkStart(id,200,{'Content-Type':'application/x-ndjson'});
+  const reader=(await result).body.getReader(),waiting=reader.read();
+  if(mode==='abort')controller.abort();
+  if(mode==='failure')h.context.__mistNetworkComplete(id,0,{},'','连接中断');
+  if(mode==='deadline')h.expire();
+  if(mode==='leave')h.events.pagehide();
+  await assert.rejects(waiting);
+  assert.ok(h.cancelled.includes(id));
+  h.context.__mistNetworkChunk(id,Buffer.from('{"type":"end"}\n').toString('base64'));
+  h.context.__mistNetworkComplete(id,200,{},null,null);
+  await assert.rejects(reader.read());
+ }
+});
+
+test('cancelling a response reader disconnects the native analysis job',async()=>{
+ const h=harness(),result=h.fetch('/api/forensics/run',{data:'AA=='}),[id]=await h.start;
+ h.context.__mistNetworkStart(id,200,{'Content-Type':'application/x-ndjson'});
+ const reader=(await result).body.getReader();await reader.cancel();
+ assert.deepEqual(h.cancelled,[id]);
+ h.context.__mistNetworkChunk(id,'AA==');h.context.__mistNetworkComplete(id,200,{},null,null);
+ assert.equal((await reader.read()).done,true);
+});
+
+test('streams remain restricted to successful first-party analysis NDJSON',async()=>{
+ for(const [path,status,type] of [['/api/code/run',200,'application/x-ndjson'],['/api/forensics/run',200,'text/html'],['/api/forensics/run',500,'application/x-ndjson'],['/api/forensics/run',204,'application/x-ndjson']]){
+  const h=harness(),result=h.fetch(path,{data:'AA=='}),[id]=await h.start;
+  h.context.__mistNetworkStart(id,status,{'Content-Type':type});
+  await assert.rejects(result,status===204?/Invalid response status code 204/:/流式响应格式无效/);assert.deepEqual(h.cancelled,[id]);
+ }
+});
+
+test('main and attached file share the 20 MiB upload boundary',async()=>{
+ const h=harness(),body={data:Buffer.alloc(19*1024*1024).toString('base64'),attachment:{filename:'附加.bin',data:Buffer.alloc(1024*1024).toString('base64')}};
+ const result=h.fetch('/api/forensics/run',body),[id,path,raw]=await h.start;
+ assert.equal(path,'/api/forensics/run');assert.equal(JSON.parse(raw).attachment.filename,'附加.bin');
+ h.context.__mistNetworkComplete(id,200,{},'{}',null);assert.equal((await result).status,200);
+ body.attachment.data=Buffer.alloc(1024*1024+1).toString('base64');
+ assert.equal((await h.fetch('/api/forensics/run',body)).status,413);assert.equal(h.requests.length,1);
+ body.attachment={filename:'bad.bin'};assert.equal((await h.fetch('/api/forensics/run',body)).status,400);
 });

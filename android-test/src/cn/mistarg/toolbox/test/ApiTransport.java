@@ -16,6 +16,7 @@ public final class ApiTransport implements AutoCloseable {
  private static int requestLimit(String path){return path.equals("/api/forensics/run")?28*1024*1024:path.equals("/api/code/run")?4*1024*1024:path.equals("/api/feedback")?6*1024*1024:8192;}
  private static int responseLimit(String path){return path.equals("/api/forensics/run")?92*1024*1024:path.equals("/api/feedback")?65536:8*1024*1024;}
  private static int readTimeout(String path){return path.equals("/api/forensics/run")?330000:path.equals("/api/code/run")?125000:35000;}
+ private static long fileSize(String data){if(data.isEmpty()||data.length()%4!=0)throw new IllegalArgumentException();return (long)data.length()/4*3-(data.endsWith("==")?2:data.endsWith("=")?1:0);}
  interface Callback {void complete(String script);}
  private final Callback callback;
  private final ExecutorService executor=Executors.newFixedThreadPool(4);
@@ -32,10 +33,9 @@ public final class ApiTransport implements AutoCloseable {
   try{
    JSONObject value=new JSONObject(body);
    if(path.equals("/api/forensics/run")){
-    String data=value.getString("data");
-    long size=(long)data.length()/4*3-(data.endsWith("==")?2:data.endsWith("=")?1:0);
-    if(data.isEmpty()||data.length()%4!=0)throw new IllegalArgumentException();
-    if(size>20*1024*1024){complete(id,413,"{}","{\"error\":\"单文件最多 20 MB。\"}",null);return;}
+    long size=fileSize(value.getString("data"));
+    if(value.has("attachment"))size+=fileSize(value.getJSONObject("attachment").getString("data"));
+    if(size>20*1024*1024){complete(id,413,"{}","{\"error\":\"本次上传文件合计最多 20 MB。\"}",null);return;}
    }
   }catch(Exception e){complete(id,400,"{}","{\"message\":\"请求不是有效 JSON 对象或文件编码无效。\",\"error\":\"请求格式无效。\"}",null);return;}
   if(jobs.size()>=4){complete(id,503,"{}","{\"message\":\"请求繁忙，请稍后重试。\"}",null);return;}
@@ -56,18 +56,21 @@ public final class ApiTransport implements AutoCloseable {
    try(OutputStream out=connection.getOutputStream()){if(job.cancelled)return;out.write(bytes);}
    int status=connection.getResponseCode();
    if(status<200||status>=600||status>=300&&status<400)throw new IOException("Unexpected status or redirect");
-   String type=connection.getContentType();
-   String mime=type==null?"":type.split(";",2)[0].trim().toLowerCase(Locale.ROOT);
-   if(!mime.equals("application/json")&&!(path.equals("/api/forensics/run")&&mime.equals("application/x-ndjson")))throw new IOException("Unexpected response type");
+   String type=connection.getContentType();if(type==null)throw new IOException("Missing response type");
+   String mediaType=type.split(";",2)[0].trim().toLowerCase(Locale.ROOT);
+   boolean streaming=path.equals("/api/forensics/run")&&status<300&&mediaType.equals("application/x-ndjson");
+   if(!mediaType.equals("application/json")&&!streaming)throw new IOException("Unexpected response type");
    int limit=responseLimit(path);
    if(connection.getContentLengthLong()>limit)throw new IOException("Response too large");
+   JSONObject headers=new JSONObject();headers.put("Content-Type",type);headers.put("Cache-Control","no-store");
+   String retry=connection.getHeaderField("Retry-After");if(retry!=null)headers.put("Retry-After",retry);
+   if(streaming&&!job.cancelled)callback.complete("window.__mistNetworkStart?.("+JSONObject.quote(id)+","+status+","+headers.toString()+")");
    int size=0;
    try(InputStream in=status>=400?connection.getErrorStream():connection.getInputStream()){
     if(in==null)throw new IOException("Empty response");byte[] buffer=new byte[49152];
     for(int n;(n=in.read(buffer))!=-1;){if(job.cancelled)return;size+=n;if(size>limit)throw new IOException("Response too large");String chunk=android.util.Base64.encodeToString(buffer,0,n,android.util.Base64.NO_WRAP);callback.complete("window.__mistNetworkChunk?.("+JSONObject.quote(id)+","+JSONObject.quote(chunk)+")");}
    }
-   JSONObject headers=new JSONObject();headers.put("Content-Type",type);headers.put("Cache-Control","no-store");headers.put("Content-Length",size);
-   String retry=connection.getHeaderField("Retry-After");if(retry!=null)headers.put("Retry-After",retry);
+   if(!streaming)headers.put("Content-Length",size);
    if(!job.cancelled)complete(id,status,headers.toString(),null,null);
   }catch(Exception e){if(!job.cancelled)complete(id,0,"{}","","无法连接迷雾工具箱服务器或响应不可读取；反馈发送结果可能尚未确认，请保留原报告后重试。");}
   finally{if(connection!=null)connection.disconnect();synchronized(this){if(jobs.get(id)==job)jobs.remove(id);}}
