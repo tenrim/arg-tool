@@ -5,6 +5,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _electron } from '../test-tools/node_modules/playwright/index.mjs';
 import { chooseNativeTask } from '../scripts/browser-navigation.mjs';
+import { APP_VERSION } from '../public/site-version.js';
 
 const [executable, testProfile, mode] = process.argv.slice(2);
 const blocked = process.argv.includes('--blocked');
@@ -75,7 +76,15 @@ try {
   assert.equal(await page.evaluate(() => location.origin), origin);
   assert.equal(await page.evaluate(() => typeof require), 'undefined');
   assert.equal(await app.evaluate(({ app }) => app.getPath('userData')), profile);
-  assert.match(await page.locator('.main-footer').innerText(), /Windows 测试版/);
+  assert.equal(await page.locator('.main-footer > span').innerText(), '迷雾工具箱');
+  const windowTitle = await app.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].getTitle(),
+  );
+  assert.match(windowTitle, /(?:^| · )迷雾工具箱$/u);
+  assert.doesNotMatch(windowTitle, /测试版/u);
+  if (mode !== 'dev') {
+    assert.equal(await app.evaluate(({ app }) => app.getVersion()), APP_VERSION.slice(1));
+  }
   if (mode !== 'dev') await page.screenshot({ path: join(dirname(profile), 'desktop-home.png') });
   passed('首启、导航、离线版标识和渲染进程隔离');
 

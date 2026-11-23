@@ -10,9 +10,14 @@ $taskInstaller = (Resolve-Path -LiteralPath $Installer).Path
 if (!(Split-Path -Parent $taskInstaller).Equals($taskBuild, [StringComparison]::OrdinalIgnoreCase)) {
   throw '验收对象必须位于 outputs/windows-offline。'
 }
-$taskExisting = Get-ChildItem 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall' |
-  Get-ItemProperty | Where-Object DisplayName -eq '迷雾工具箱（离线测试版）'
-if ($taskExisting) { throw '本用户已安装离线测试版。为保留已有安装，停止本次安装验收。' }
+$taskUninstallKeys = @(
+  'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall',
+  'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall',
+  'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
+)
+$taskExisting = Get-ChildItem $taskUninstallKeys -ErrorAction SilentlyContinue |
+  Get-ItemProperty | Where-Object { $_.DisplayName -in '迷雾工具箱', '迷雾工具箱（离线测试版）' }
+if ($taskExisting) { throw '本机已有迷雾工具箱安装。为保留已有安装，停止本次安装验收。' }
 
 $taskId = [Guid]::NewGuid().ToString('N')
 $taskOutput = Join-Path $taskBuild "verify-$taskId"

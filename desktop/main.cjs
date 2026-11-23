@@ -4,7 +4,7 @@ const { ORIGIN, createAssetHandler, isAppUrl } = require('./assets.cjs');
 const { createServiceHandler } = require('./services.cjs');
 const { HOST, setBrowserProxy, startLocalSite } = require('./local-site.cjs');
 
-const TITLE = '迷雾工具箱 · Windows 测试版';
+const TITLE = '迷雾工具箱';
 const resources = app.isPackaged ? process.resourcesPath : join(__dirname, '..');
 const assets = join(resources, app.isPackaged ? 'site' : 'public');
 

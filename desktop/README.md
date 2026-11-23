@@ -1,12 +1,14 @@
-# 迷雾工具箱 Windows 离线测试版
+# 迷雾工具箱 Windows 版
 
 安装包适用于 Windows x64。它随包提供 Electron、整站静态资源、计算引擎、词库、固定资料和相关许可。可断网安装和首次启动。
+
+启动安装包后，按向导选择安装范围和目录，再点击“安装”。选择上级目录时，向导会用 `mist-toolbox-offline` 作为程序子目录。完成页可勾选启动工具箱，安装后也可以通过桌面或开始菜单启动。
 
 编解码、图片和音视频处理、固定资料、笔记、脑图、白板以及现有的 10 种本地语言使用原网页实现。网页版笔记可先导出完整备份，再从桌面版的笔记本导入。服务器文件分析、服务器语言、在线查询、Desmos、网络配方操作和报告发送联网时使用原有服务，断网时仍可使用本地工具。
 
 ## 构建
 
-在项目根目录使用 Node.js 24 或更新版本执行。固定网页依赖通过 Python 3.12 或更新版本准备。
+在项目根目录准备 Node.js 24+ 和 Python 3.12+ 后执行：
 
 ```powershell
 npm.cmd run deps:install
@@ -14,7 +16,7 @@ npm.cmd ci --prefix desktop
 npm.cmd run dist --prefix desktop
 ```
 
-首次构建需要获取固定的 Electron 及 NSIS 打包工具。构建使用项目主构建产出的 `dist/`，安装包和 SHA-256 文件写入 `outputs/windows-offline/`。测试包按当前用户安装，版本来自 `public/site-version.js`，未使用发行证书签名。
+首次构建需要获取固定的 Electron 及 NSIS 打包工具。构建使用项目主构建产出的 `dist/`，安装包和 SHA-256 文件写入 `outputs/windows-offline/`。安装范围默认为当前用户，版本与 `public/site-version.js` 一致。安装包未使用发行证书签名。
 
 ## 验收
 
@@ -22,7 +24,7 @@ npm.cmd run dist --prefix desktop
 
 ```powershell
 npm.cmd ci --prefix test-tools --ignore-scripts
-./desktop/test-install.ps1 -Installer ./outputs/windows-offline/Mist-Toolbox-2.3.5-offline.3-win-x64-setup.exe -Online
+./desktop/test-install.ps1 -Installer ./outputs/windows-offline/Mist-Toolbox-2.3.5-win-x64-setup.exe -Online
 ```
 
 验证脚本为安装器、已安装程序和独立联通性探针临时添加 Windows 出站阻断规则，只保留回环连接用于本地资源和自动化。断网测试进程同时禁用代理，避免经由本地代理外联。脚本先确认阻断前后的连接差异，再在独立目录安装、运行功能回归、逐文件比较安装后的网页资源与构建产物。带 `-Online` 时恢复测试应用的出站连接，沿用同一配置抽查在线功能。完成后卸载本轮测试实例并移除本轮防火墙规则。
@@ -34,3 +36,4 @@ npm.cmd ci --prefix test-tools --ignore-scripts
 - 静态路径和类型处理参考本站基线 `7657f180fb7156c8c074ad3ee54c26dd09ff66e7` 的 `scripts/server.mjs:46`、`scripts/server.mjs:153`。桌面进程只复用静态服务的边界和资源格式，未引入网站服务端。
 - 保留本站固定 FFmpeg WASM 加载，见 `public/video/runtime.js:5`。对照 Omni Tools `60bc64f5a6974f3c802c5ec06cb3cf7f824485e1` 的 `src/lib/ffmpeg.ts:1`、`src/lib/ffmpeg.ts:15`，其 CDN 取资源方式未采用。
 - 运行时固定为 Electron 45.4.1，证书使用 node-forge 1.4.3。打包工具 electron-builder 26.18.0 仅用于开发构建。 [Electron 固定版本](https://github.com/electron/electron/releases/tag/v45.4.1) · [Electron 会话接口](https://www.electronjs.org/docs/latest/api/session) · [node-forge 固定版本及许可](https://github.com/digitalbazaar/forge/tree/v1.4.3) · [NSIS 打包配置](https://www.electron.build/docs/nsis/)
+- 安装向导沿用 electron-builder 固定版本的原生目录、安装进度和完成页。欢迎页通过其 `customWelcomePage` 扩展点启用。 [固定版本向导模板](https://github.com/electron-userland/electron-builder/blob/e2a8604535bdc626bd068ddf5b6afb67bed45725/packages/app-builder-lib/templates/nsis/assistedInstaller.nsh#L9-L64)

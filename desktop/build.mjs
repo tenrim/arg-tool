@@ -23,7 +23,7 @@ function run(args, env = process.env) {
 run(['desktop/node_modules/electron/install.js'], { ...process.env, ELECTRON_INSTALL_ARCH: 'x64' });
 run(['scripts/build.mjs']);
 
-const version = APP_VERSION.slice(1) + '-offline.3';
+const version = APP_VERSION.slice(1);
 const installerName = 'Mist-Toolbox-' + version + '-win-x64-setup.exe';
 await build({
   win: ['nsis'],
@@ -51,12 +51,14 @@ await build({
     },
     nsis: {
       artifactName: installerName,
-      oneClick: true,
+      oneClick: false,
       perMachine: false,
+      allowToChangeInstallationDirectory: true,
+      include: localPath('./installer.nsh'),
       installerLanguages: ['zh_CN'],
-      shortcutName: '迷雾工具箱（离线测试版）',
-      uninstallDisplayName: '迷雾工具箱（离线测试版）',
-      runAfterFinish: false,
+      shortcutName: '迷雾工具箱',
+      uninstallDisplayName: '迷雾工具箱',
+      createDesktopShortcut: 'always',
       deleteAppDataOnUninstall: false,
     },
   },

@@ -59,7 +59,7 @@ export function mountFooter(main, { navigate } = {}) {
   uiRender(
     footer,
     DESKTOP_APP
-      ? '<span>迷雾工具箱 <span class="footer-divider">/</span> Windows 测试版</span><div class="footer-privacy"><span>本地工具和笔记可离线使用，在线功能按需联网。</span><details><summary>本地与联网说明</summary><p>应用与本地工具资源随包提供。在线资料查询、服务器文件分析、服务器代码运行及问题反馈只发送你主动提交的内容。Desmos 由原站加载，CyberChef 联网操作按配方联网。网页版笔记可通过完整备份导入桌面版。</p></details></div>'
+      ? '<span>迷雾工具箱</span><div class="footer-privacy"><span>本地工具和笔记可离线使用，在线功能按需联网。</span><details><summary>本地与联网说明</summary><p>应用与本地工具资源随包提供。在线资料查询、服务器文件分析、服务器代码运行及问题反馈只发送你主动提交的内容。Desmos 由原站加载，CyberChef 联网操作按配方联网。网页版笔记可通过完整备份导入桌面版。</p></details></div>'
       : '<span>迷雾工具箱 <span class="footer-divider">/</span> 解谜工具集</span><div class="footer-privacy"><span>常规本地工具在浏览器内处理输入与文件。服务器文件分析与代码运行、在线查询和问题反馈会发送你主动提交的信息。</span><details><summary>本地与联网说明</summary><p>网页和工具组件需要从服务器加载；本地工具计算在你的浏览器内完成。标注“服务器处理”的分析工具只有点击“上传并处理”才发送当前文件与所填密码，在本站独立容器处理，临时文件随任务结束删除，不发送到 AperiSolve 官网，也不建立公开分析历史。标注“服务器”的代码语言只有点击“发送并运行”才提交代码和标准输入，在不联网的临时容器中执行，任务结束后删除临时文件。标注“在线查询”的功能只有在你点击查询后，才将本次查询经本站服务器发给页面注明的外站；本站不持久保存查询和返回结果。' + (ANDROID_APP ? '报告问题会发送你确认的报告与自选附件。' : '独立网页版默认在本机生成问题报告。') + '主动执行 HTTP、DNS 等联网操作时，也会向指定服务发送请求。外部服务遵循对方政策，托管平台可能记录访问日志。你保存的配方、笔记和图稿仅存于本机浏览器。</p></details></div>',
   );
   main.append(footer);
