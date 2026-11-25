@@ -201,7 +201,16 @@ try {
       assert.equal(await page.locator('#notebook-title').inputValue(), '部署测试笔记');
     }
     await go('about');
-    assert.ok(await page.locator('#about-source').isVisible());
+    const source = page.locator('#about-source');
+    assert.ok(await source.isVisible());
+    assert.equal(
+      await source.getByRole('link', { name: '源码与部署说明' }).getAttribute('href'),
+      'https://github.com/tenrim/arg-tool',
+    );
+    assert.equal(
+      await page.locator('#about-author').getByRole('link', { name: '在爱发电支持作者' }).getAttribute('href'),
+      'https://afdian.com/a/musicraft',
+    );
     if (!(await page.locator('#report-problem').isVisible()))
       await page.getByRole('button', { name: '切换工具侧栏', exact: true }).click();
     await page.locator('#report-problem').click();
