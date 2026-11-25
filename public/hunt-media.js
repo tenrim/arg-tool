@@ -54,21 +54,16 @@ export function initHuntMedia(ui, getImage, getAudio, { beginBarcode } = {}) {
         lease.isCurrent();
     try {
       $('image-status').textContent = '正在载入条码引擎…';
-      barcode ||= import('./vendor/hunt/zxing/index.js');
-      const z = await barcode;
+      barcode ||= import('./barcode-reader.js');
+      const { scanBarcodes } = await barcode;
       if (!current()) return;
-      z.prepareZXingModule({
-        overrides: {
-          locateFile: (path) => new URL('./vendor/hunt/zxing/' + path, import.meta.url).href,
-        },
-      });
       const input =
         $('image-analysis-source').value === 'view'
           ? $('image-canvas')
               .getContext('2d')
               .getImageData(0, 0, $('image-canvas').width, $('image-canvas').height)
           : new ImageData(new Uint8ClampedArray(image.pixels), image.width, image.height);
-      const rows = await z.readBarcodes(input, { tryHarder: true });
+      const rows = await scanBarcodes(input);
       if (!current()) return;
       if (
         lease.publish(

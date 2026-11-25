@@ -1,13 +1,14 @@
 import Invisibles from '../vendor/basics/invisibles.js';
 import { completionJob } from '../completion/job.js';
 import { NATO } from '../completion/codes.js';
+import { parseWords, squareModel } from '../basics/model.js';
 import { fail } from './data.js';
 import { workerJob } from './worker-job.js';
 
 const parserEvidence = { kind: 'parsed', message: '原工具已完成转换；仍需结合题意判断。' };
 const worker = new URL('./worker.js', import.meta.url);
 const utf8 = (bytes) => new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
-export function localAdapters() {
+export function localAdapters({ key = '' } = {}) {
   return [
     ...['tapcode', 'baudot', 'invisible'].map((id) => ({
       id,
@@ -19,7 +20,10 @@ export function localAdapters() {
       suggest(input) {
         const text = input.text.trim();
         if (!input.text || new TextEncoder().encode(input.text).length > 65536) return [];
-        const proposal = (params, message) => ({ params, evidence: { kind: 'format', message } });
+        const proposal = (params, message) => ({
+          params,
+          evidence: { kind: 'format', message, ...(params.keyword && { providedKey: true }) },
+        });
         if (id === 'tapcode') {
           if (
             /^[.·\s/]+$/.test(text) &&
@@ -45,24 +49,43 @@ export function localAdapters() {
               return digits.length >= 2 && digits.length % 2 === 0;
             })
           )
-            return (text.includes('6') ? ['6'] : ['5', '6']).map((size) =>
-              proposal(
-                { direction: 'decode', mode: 'polybius', size, keyword: '' },
-                `坐标成对；尝试无关键词的 ${size}×${size} 方阵，行在前、列在后。`,
-              ),
+            return (key.trim() ? [key, ''] : ['']).flatMap((keyword) =>
+              (text.includes('6') ? ['6'] : ['5', '6']).flatMap((size) => {
+                try {
+                  squareModel({ size, keyword });
+                } catch {
+                  return [];
+                }
+                return [
+                  proposal(
+                    { direction: 'decode', mode: 'polybius', size, keyword },
+                    `坐标成对；尝试${keyword ? '已知关键词' : '无关键词'}的 ${size}×${size} 方阵，行在前、列在后。`,
+                  ),
+                ];
+              }),
             );
         }
-        if (
-          id === 'baudot' &&
-          /^[01]{5}(?:[\s,;]+[01]{5})+$/.test(text) &&
-          text.split(/[\s,;]+/).length <= 4096
-        )
-          return ['ITA2', 'ITA1', 'US_TTY'].map((alphabet) =>
-            proposal(
-              { direction: 'decode', alphabet, format: 'binary' },
-              `五位分组符合波多码；尝试 ${alphabet} 字母表，不颠倒位序。`,
-            ),
-          );
+        if (id === 'baudot' && /^[\da-fx\s,;]+$/i.test(text)) {
+          const seen = new Set();
+          return ['binary', 'decimal', 'hex'].flatMap((format) => {
+            let words;
+            try {
+              words = parseWords(text, format);
+            } catch {
+              return [];
+            }
+            const signature = words.join(',');
+            if (seen.has(signature)) return [];
+            seen.add(signature);
+            const notation = { binary: '二进制', decimal: '十进制', hex: '十六进制' }[format];
+            return ['ITA2', 'ITA1', 'US_TTY'].map((alphabet) =>
+              proposal(
+                { direction: 'decode', alphabet, format },
+                `码组可按${notation}读取；尝试 ${alphabet} 波多码字母表。`,
+              ),
+            );
+          });
+        }
         if (
           id === 'invisible' &&
           [...input.text].some((char) => Invisibles.classify(char.codePointAt(0)))

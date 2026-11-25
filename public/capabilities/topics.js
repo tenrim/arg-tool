@@ -3,20 +3,22 @@
 // Keep official operation IDs and existing native task IDs intact. The registry
 // owns active-scope filtering, aliases, routing and unique source coverage.
 import { LANGUAGES } from '../coderunner/catalog.js';
-const chef = (id, title, group, operations) =>
+const chef = (id, title, group, operations, coreNames = []) =>
   Object.freeze({
     id,
     title,
     group,
+    coreNames: Object.freeze(coreNames),
     operations: Object.freeze(operations),
     nativeIds: Object.freeze([]),
   });
-const native = (id, title, group, nativeIds) =>
+const native = (id, title, group, nativeIds, aliases = []) =>
   Object.freeze({
     id,
     title,
     group,
     operations: Object.freeze([]),
+    aliases: Object.freeze(aliases),
     nativeIds: Object.freeze(nativeIds),
   });
 
@@ -25,7 +27,7 @@ export const CAPABILITY_TOPICS = Object.freeze([
     'native:forensics-exiftool',
     'native:image-exif',
   ]),
-  native('png-inspection', 'PNG 检查与修复', 'image', [
+  native('png-inspection', 'PNG 检查与修复', 'image-stego', [
     'native:forensics-pngcheck',
     'native:forensics-pcrt',
     'native:image-png',
@@ -183,7 +185,7 @@ export const CAPABILITY_TOPICS = Object.freeze([
   ]),
   // Different algorithms are choices for the same digest task; identification
   // and batch calculation remain available alongside individual algorithms.
-  chef('hash-digests', '哈希计算与识别', 'files', [
+  chef('hash-digests', '哈希计算与识别', 'file-compression', [
     'SHA2',
     'SHA3',
     'SHA1',
@@ -211,7 +213,7 @@ export const CAPABILITY_TOPICS = Object.freeze([
     'Analyse hash',
     'Generate all hashes',
   ]),
-  chef('checksums', '校验和计算', 'files', [
+  chef('checksums', '校验和计算', 'file-compression', [
     'CRC Checksum',
     'Adler-32 Checksum',
     'Fletcher-8 Checksum',
@@ -224,7 +226,7 @@ export const CAPABILITY_TOPICS = Object.freeze([
     'XOR Checksum',
     'Generate all checksums',
   ]),
-  chef('fuzzy-hashes', '文件相似哈希', 'files', [
+  chef('fuzzy-hashes', '文件相似哈希', 'file-compression', [
     'SSDEEP',
     'Compare SSDEEP hashes',
     'CTPH',
@@ -233,28 +235,34 @@ export const CAPABILITY_TOPICS = Object.freeze([
   // ZIP extraction retains its own directory/entry model (the Unzip task).
   // Other codecs share the byte input/result contract and stay lossless where
   // the actual upstream algorithm supports that, without a blanket promise.
-  chef('compression', '压缩与解压', 'files', [
-    'Gzip',
-    'Gunzip',
-    'Bzip2 Compress',
-    'Bzip2 Decompress',
-    'LZMA Compress',
-    'LZMA Decompress',
-    'LZ4 Compress',
-    'LZ4 Decompress',
-    'LZString Compress',
-    'LZString Decompress',
-    'Raw Deflate',
-    'Raw Inflate',
-    'Zlib Deflate',
-    'Zlib Inflate',
-    'Tar',
-    'Untar',
-    'Zip',
-    'LZNT1 Decompress',
-    'XPRESS Decompress',
-    'XPRESS LZ77+Huffman Decompress',
-  ]),
+  chef(
+    'compression',
+    '压缩与解压',
+    'file-compression',
+    [
+      'Gzip',
+      'Gunzip',
+      'Bzip2 Compress',
+      'Bzip2 Decompress',
+      'LZMA Compress',
+      'LZMA Decompress',
+      'LZ4 Compress',
+      'LZ4 Decompress',
+      'LZString Compress',
+      'LZString Decompress',
+      'Raw Deflate',
+      'Raw Inflate',
+      'Zlib Deflate',
+      'Zlib Inflate',
+      'Tar',
+      'Untar',
+      'Zip',
+      'LZNT1 Decompress',
+      'XPRESS Decompress',
+      'XPRESS LZ77+Huffman Decompress',
+    ],
+    ['解压'],
+  ),
   Object.freeze({
     id: 'embedded-files',
     title: '嵌入文件检查与提取',
@@ -374,13 +382,13 @@ export const CAPABILITY_TOPICS = Object.freeze([
   ]),
   // ROT and XOR are concrete cipher families. Do not group all classical or
   // modern encryption algorithms into one unspecified chooser.
-  chef('rot', 'ROT 字符移位', 'classical', [
-    'ROT13',
-    'ROT13 Brute Force',
-    'ROT47',
-    'ROT47 Brute Force',
-    'ROT8000',
-  ]),
+  chef(
+    'rot',
+    'ROT 字符移位',
+    'classical',
+    ['ROT13', 'ROT13 Brute Force', 'ROT47', 'ROT47 Brute Force', 'ROT8000'],
+    ['凯撒', '凯撒密码', 'Caesar', 'Caesar Cipher'],
+  ),
   chef('xor', 'XOR 异或密码', 'modern', ['XOR', 'XOR Brute Force']),
   chef('rc4', 'RC4 流密码', 'modern', ['RC4', 'RC4 Drop']),
   chef('salsa20', 'Salsa20 流密码', 'modern', ['Salsa20', 'XSalsa20']),
@@ -405,7 +413,7 @@ export const CAPABILITY_TOPICS = Object.freeze([
     'Dither Image',
     'Randomize Colour Palette',
   ]),
-  chef('image-pixels', '图片通道与位平面', 'image', [
+  chef('image-pixels', '图片通道与位平面', 'image-stego', [
     'Split Colour Channels',
     'View Bit Plane',
     'Extract RGBA',
@@ -552,12 +560,13 @@ export const CAPABILITY_TOPICS = Object.freeze([
       .sort((a, b) => Number(!!LANGUAGES[a].step) - Number(!!LANGUAGES[b].step))
       .map((id) => (id === 'brainfuck' ? 'native:code' : 'native:code-' + id)),
   ),
-  native('paper-puzzles', '纸笔解题', 'logic', [
-    'native:paper',
-    'native:paper-slitherlink',
-    'native:paper-nurikabe',
-    'native:paper-akari',
-  ]),
+  native(
+    'paper-puzzles',
+    '纸笔解题',
+    'logic',
+    ['native:paper', 'native:paper-slitherlink', 'native:paper-nurikabe', 'native:paper-akari'],
+    ['逻辑谜题', '纸笔谜题', '网格谜题', 'Slitherlink', 'Nurikabe', 'Akari'],
+  ),
   native('rule-constraints', '中文规则约束求解', 'logic', [
     'native:hunt-constraints-custom',
     'native:hunt-constraints-sudoku',

@@ -1,11 +1,12 @@
-import { IMAGE_SURVEY, STEGOVERITAS_OPTIONS, STEGOVERITAS_SOURCE } from './stegoveritas-catalog.js';
+import { STEGOVERITAS_OPTIONS, STEGOVERITAS_SOURCE } from './stegoveritas-catalog.js';
+export const IMAGE_SURVEY = 'image-survey';
 export const SERVER_FILE_LIMIT_BYTES = 20 * 1024 * 1024;
 
 const definitions = [
   [
     IMAGE_SURVEY,
     '图片隐写综合分析',
-    'image',
+    'image-stego',
     '上传一张图片，按格式检查元数据、字符串、嵌入文件和隐写线索，并浏览位平面与颜色重映射。',
     'https://github.com/Zeecka/AperiSolve',
     'MIT',
@@ -13,7 +14,7 @@ const definitions = [
   [
     'stegoveritas',
     'StegoVeritas 图片隐写分析',
-    'image',
+    'image-stego',
     '图像增强、调色板索引、RGBA 位交织提取、LSB 候选扫描、尾随数据和含 Alpha 的数据嵌入；重复能力复用现有工具。',
     STEGOVERITAS_SOURCE,
     'GPL-2.0（随包许可；包元数据的 MIT 标注与之不一致）',
@@ -37,7 +38,7 @@ const definitions = [
   [
     'identify',
     '图片详细属性与通道统计',
-    'image',
+    'image-stego',
     '读取图像格式、尺寸、颜色空间、通道统计及详细属性。',
     'http://www.graphicsmagick.org/',
     'MIT；依赖按各自许可',
@@ -61,7 +62,7 @@ const definitions = [
   [
     'pngcheck',
     'PNG 完整性检查',
-    'image',
+    'image-stego',
     '检查 PNG、JNG、MNG 的数据块、CRC 与压缩数据并保留完整诊断。',
     'http://www.libpng.org/pub/png/apps/pngcheck.html',
     '自定义 MIT-like；附加 gpl 工具为 GPL-2.0-or-later',
@@ -69,7 +70,7 @@ const definitions = [
   [
     'pcrt',
     'PNG 损坏修复',
-    'image',
+    'image-stego',
     '修复 PNG 签名、IHDR 尺寸、数据块及部分换行损坏，提取 IEND 后附加数据。',
     'https://github.com/Zeecka/AperiSolve',
     'MIT',
@@ -77,7 +78,7 @@ const definitions = [
   [
     'zsteg',
     'PNG／BMP 隐写检测与提取',
-    'image',
+    'image-stego',
     '检测多种位序、通道和像素顺序的隐写数据，并按检测参数提取原始字节。',
     'https://github.com/zed-0xff/zsteg',
     'MIT',
@@ -93,7 +94,7 @@ const definitions = [
   [
     'outguess',
     'OutGuess 隐写提取',
-    'image',
+    'image-stego',
     '提取 OutGuess 隐写内容，支持用户提供的密钥。',
     'https://github.com/resurrecting-open-source-projects/outguess',
     'BSD-4-Clause、BSD-3-Clause；JPEG 等部分另有许可',
@@ -101,7 +102,7 @@ const definitions = [
   [
     'jsteg',
     'JSteg 隐写提取',
-    'image',
+    'image-stego',
     '从 JPEG 提取 JSteg 隐写的原始二进制内容。',
     'https://github.com/lukechampine/jsteg',
     'MIT',
@@ -109,7 +110,7 @@ const definitions = [
   [
     'jpseek',
     'JPHide／JPSeek 隐写提取',
-    'image',
+    'image-stego',
     '使用 JPSeek 提取 JPHide 写入 JPEG 的内容，支持密码。',
     'https://github.com/h3xx/jphs',
     'GNU GPL（随包 COPYING 为第 3 版）；JPEG 库按 IJG 许可',
@@ -117,7 +118,7 @@ const definitions = [
   [
     'openstego',
     'OpenStego 隐写提取',
-    'image',
+    'image-stego',
     '提取 RandomLSB 数据，保留 AES128、AES256 两种密码尝试及提取文件。',
     'https://github.com/syvaidya/openstego',
     'GPL-2.0-only',
@@ -169,7 +170,21 @@ export const FORENSICS_TASKS = Object.freeze(
       'AperiSolve',
       'Aperi’Solve',
       ...(engine === IMAGE_SURVEY
-        ? ["Aperi'Solve", '图片自动分析', '图片线索分析', '图片隐写一键分析']
+        ? [
+            "Aperi'Solve",
+            '图片自动分析',
+            '图片线索分析',
+            '图片隐写一键分析',
+            '隐写',
+            '图片隐写',
+            '隐写综合',
+            'LSB',
+            '位平面',
+            '拆帧',
+            'GIF拆帧',
+            '动图拆帧',
+            'APNG拆帧',
+          ]
         : []),
       description,
       ...(engine === 'stegoveritas'

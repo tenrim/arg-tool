@@ -19,7 +19,10 @@ export function puzzleAdapters({ key = '' } = {}) {
       priority: Boolean(profile.needsKey && key),
       terminal: Boolean(profile.terminal),
       observation: Boolean(profile.terminal),
-      matches: (input) => Boolean(input.text && profile.matches(input.text.trim())),
+      matches: (input) =>
+        Boolean(
+          input.text && profile.matches(profile.exactText ? input.text : input.text.trim(), key),
+        ),
       condition:
         profile.manual ||
         (profile.needsKey && !key
@@ -34,6 +37,7 @@ export function puzzleAdapters({ key = '' } = {}) {
             params: { key },
             evidence: {
               kind: profile.exploratory ? 'hypothesis' : 'format',
+              ...(profile.needsKey && key && { providedKey: true }),
               message: `${profile.title}：按原工具规则尝试${profile.needsKey ? '提供的密钥' : '默认约定'}。能转换不代表题目采用此规则。`,
             },
           },
@@ -91,6 +95,20 @@ export function puzzleAdapters({ key = '' } = {}) {
             },
             eligible: rows.length > 0,
           };
+        } else if (profile.engine === 'elements') {
+          const value = await workerJob(
+            new URL('../expansion/worker.js', import.meta.url),
+            {
+              task: 'elements',
+              input: input.text,
+              options,
+            },
+            context,
+          );
+          const text = value.rows
+            .map((row) => row.symbols.join(' · ') + '\n原子序数 ' + row.numbers.join(' '))
+            .join('\n');
+          result = { artifact: { type: 'text', text }, eligible: value.rows.length > 0 };
         } else if (profile.engine === 'dictionary-substitution') {
           const value = await workerJob(
             new URL('../expansion/worker.js', import.meta.url),
@@ -127,7 +145,9 @@ export function puzzleAdapters({ key = '' } = {}) {
           const value = await completionJob(
             { task: options.task, input: input.text, options },
             context,
-          );
+          ).catch((error) => {
+            throw parserError(error);
+          });
           result = {
             artifact: { type: 'text', text: value.output },
             eligible: Boolean(value.output && value.output !== input.text),

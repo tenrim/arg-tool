@@ -198,7 +198,12 @@ test('character table has its real capability, help, authored knowledge and actu
   const registry = createRegistry(catalogue);
   assert(registry.entries.some((e) => e.id === 'native:character-tables'));
   const article = ARTICLES.find((a) => a.id === 'function-native:character-tables');
-  assert(article.preface.length);
+  assert(article);
+  assert.equal(article.preface, undefined);
+  assert.equal(article.sections[0].title, '介绍');
+  assert(article.sections.flatMap((section) => section.examples).length >= 3);
+  for (const id of ['script', 'cldr', 'ucd', 'norm'])
+    assert(article.sources.some((source) => source.id === id));
   assert.equal(article.capabilityIds[0], 'native:character-tables');
   assert(guides['character-tables'].steps.length);
   assert(

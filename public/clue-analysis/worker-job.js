@@ -63,7 +63,7 @@ export function workerJob(
       worker.onmessageerror = () =>
         finish(new AnalysisError('EXECUTION_FAILED', '无法读取分析结果。'));
       worker.onmessage = ({ data }) => {
-        if (data.kind === 'progress' || data.done === false) return;
+        if (['progress', 'loading', 'running'].includes(data.kind) || data.done === false) return;
         if (data.error)
           finish(
             new AnalysisError(

@@ -318,10 +318,15 @@ try {
         capabilityCategories.map((category) => [category.id, category.title]),
       );
       assert.equal(registry.categories.length, 5);
-      assert.equal(registry.groups.length, 42);
+      assert.equal(registry.groups.length, 34);
       assert.ok(
-        registry.groups.some((group) => group.id === 'sequences' && group.category === 'reference'),
-        'OEIS online queries have their own reference group',
+        registry.groups.some(
+          (group) =>
+            group.id === 'technical' &&
+            group.category === 'reference' &&
+            group.entryIds.includes('native:oeis'),
+        ),
+        'OEIS remains discoverable under technical references',
       );
       for (const id of [
         'oeis',

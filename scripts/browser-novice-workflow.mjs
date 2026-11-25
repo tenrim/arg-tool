@@ -39,7 +39,6 @@ try {
     assert.equal(await page.locator('.home-shortcut').count(), 8);
     assert.equal(await page.locator('#home-search').count(), 0);
     assert.equal(await page.locator('.home-collection:visible').count(), 0);
-    assert.equal(await page.locator('.rail-filter input').isVisible(), false);
     await page.getByRole('link', { name: '打开 Base64 解码 →', exact: true }).click();
     await page.waitForFunction(
       () => !!document.querySelector('.ct-tool[data-operation="From Base64"]'),
@@ -62,7 +61,7 @@ try {
       'URL Decode',
     );
     const selected = await page
-      .locator('#panel-basics select')
+      .locator('#basics-format, #basics-direction')
       .evaluateAll((ns) => ns.map((n) => [n.id, n.value]));
     assert.ok(selected.some(([, v]) => v === 'url'));
     assert.ok(selected.some(([, v]) => v === 'decode'));
@@ -71,7 +70,7 @@ try {
     await page.locator('#panel-basics:not([hidden])').waitFor();
     assert.deepEqual(
       await page
-        .locator('#panel-basics select')
+        .locator('#basics-format, #basics-direction')
         .evaluateAll((ns) => ns.map((n) => [n.id, n.value])),
       selected,
     );
@@ -80,25 +79,23 @@ try {
     await page.waitForURL(target);
     assert.deepEqual(
       await page
-        .locator('#panel-basics select')
+        .locator('#basics-format, #basics-direction')
         .evaluateAll((ns) => ns.map((n) => [n.id, n.value])),
       selected,
     );
   });
 
-  await check('sidebar and full-directory search preserve the same URL destination', async () => {
-    await page.locator('.rail-filter-disclosure summary').click();
-    await page.locator('.rail-filter input').fill('URL解码');
-    const result = page.locator('.rail-search-results [data-capability="topic:text-escapes"]');
-    await result.waitFor();
-    assert.match(await result.getAttribute('href'), /view=native%3Aescape-url/);
+  await check('header and full-directory search preserve the same URL destination', async () => {
+    await search('URL解码');
+    const result = page.locator(
+      '#workspace-search-results [data-capability="topic:text-escapes"][data-op="URL Decode"]',
+    );
     await result.click();
     await page.waitForFunction(
       () =>
         document.querySelector('#basics-format')?.value === 'url' &&
         document.querySelector('#basics-direction')?.value === 'decode',
     );
-    await page.locator('.rail-filter input').fill('');
     await page.locator('#panel-basics [data-task-navigation=directory]').click();
     await page.locator('.directory-search input').fill('URL解码');
     await page.locator('.directory-grid [data-capability="topic:text-escapes"]').click();

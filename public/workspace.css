@@ -916,7 +916,6 @@ body.site-ui {
   text-align: left;
 }
 .rail-directory-button svg,
-.rail-filter svg,
 .rail-group > summary svg,
 .rail-tool svg {
   width: 18px;
@@ -934,16 +933,6 @@ body.site-ui {
   color: var(--muted);
   padding: 2px 5px;
   border-radius: 3px;
-  background: var(--bg);
-}
-.rail-filter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 14px 0 12px;
-  padding: 0 10px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
   background: var(--bg);
 }
 .rail-scroll {
@@ -1075,9 +1064,6 @@ body.site-ui {
 }
 .workbench-drawer .rail-close {
   display: inline-flex;
-}
-.workbench-drawer .rail-filter input {
-  font-size: 16px;
 }
 
 /* Searchable, categorized cards are an overlay so current work is preserved. */

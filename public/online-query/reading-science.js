@@ -99,7 +99,7 @@ function codReading(record, result) {
         'CIF 结构摘要',
         [
           ['COD 编号', id],
-          ['原始 CIF 链接', record.sourceURL],
+          ['原始 CIF 链接', record.retrievalURL ?? record.sourceURL],
           ...CIF_FIELDS.map(([key, label]) => [label, scalars[key.toLowerCase()]]),
         ],
         [],
@@ -126,7 +126,10 @@ function codReading(record, result) {
         ['原始论文入口', present(f.doi) ? `https://doi.org/${f.doi}` : null],
         [
           '原始 CIF 链接',
-          /^\d{7}$/.test(String(id)) ? `https://www.crystallography.net/cod/${id}.cif` : null,
+          /^\d{7}$/.test(String(id))
+            ? new URL(id + '.cif', record.retrievalURL ?? 'https://www.crystallography.net/cod/')
+                .href
+            : null,
         ],
       ]),
     );

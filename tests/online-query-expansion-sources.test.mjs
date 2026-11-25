@@ -7,6 +7,7 @@ import { getArticle, ARTICLES } from '../public/knowledge/content.js';
 import { projectLicense } from '../public/project-licenses.js';
 import { TASK_PROJECT_SOURCES } from '../public/project-source-contracts.js';
 import { guides } from '../public/tool-help.js';
+import { QUERY_PAGES } from '../public/online-query/catalog.js';
 const root = new URL('../', import.meta.url),
   read = (path) => readFile(new URL(path, root));
 const expected = {
@@ -15,7 +16,7 @@ const expected = {
   placenames: ['world', 'https://dmfw.mca.gov.cn/'],
   zdic: ['language-reference', 'https://www.zdic.net/'],
   cnkgraph: ['language-reference', 'https://cnkgraph.com/'],
-  pokewiki: ['culture-reference', 'https://wiki.52poke.com/'],
+  pokewiki: ['language-reference', 'https://wiki.52poke.com/'],
 };
 const registry = createRegistry(JSON.parse(await read('public/vendor/cyberchef/catalogue.json')));
 test('each new online source has one precise capability, native route, lesson and complete help', () => {
@@ -62,6 +63,18 @@ test('every new task owns its real online-data project and all bundled notices',
     for (const path of project.notices)
       assert.ok((await read('public/' + path)).length > 500, path);
   }
+  assert.match(projectLicense(expected.cod[1]).license, /CC0-1.0/);
+  assert.match(projectLicense(expected.pubchem[1]).license, /各提供方/);
+  const places = QUERY_PAGES.find((page) => page.id === 'placenames');
+  assert.equal(places.modes.length, 7);
+  assert.deepEqual(
+    places.modes
+      .find((m) => m.id === 'divisions')
+      .fields.find((f) => f.name === 'maxLevel')
+      .options.map(([value]) => value),
+    ['0', '1', '2'],
+  );
+  assert.match(QUERY_PAGES.find((p) => p.id === 'pokewiki').notice, /500 秒/);
   assert.match(projectLicense(expected.zdic[1]).role, /非官方|公开/);
   assert.match(projectLicense(expected.cnkgraph[1]).license, /非商业/);
   assert.match(projectLicense(expected.pokewiki[1]).license, /CC-BY-NC-SA-3\.0/);
@@ -114,15 +127,29 @@ test('all fixed official evidence and notices have exact bytes and SHA-256; inac
     /Crawl-delay:\s*500/i,
   );
 });
-test('online lessons state real scope, units, licence differences and complete reproducible examples', () => {
+test('online lessons state real scope, units, licence differences and complete reproducible examples', async () => {
   const body = (id) => JSON.stringify(getArticle('function-native:' + id).sections);
+  const fixture = async (name) =>
+    JSON.parse(await read('tests/fixtures/online-reading/' + name + '.json'));
+  const cod = (await fixture('science/cod-detail-duplicate')).record.fields;
+  const compound = (await fixture('science/pubchem-detail')).record.fields.Record;
+  const mass = compound.Section.find((s) => s.TOCHeading === 'Exact Mass').Information[0].Value;
+  const place = await fixture('reference/places-detail');
+  const revision = new URL(
+    (await fixture('pokewiki-pikachu')).fixture.revisionURL,
+  ).searchParams.get('oldid');
   for (const [id, terms] of Object.entries({
-    cod: ['分数坐标', '2,0,0', 'CC0'],
-    pubchem: ['2244', 'C9H8O4', '21', '提供方'],
-    placenames: ['CGCS2000', 'maxLevel', '同音', '七'],
+    cod: ['分数坐标', '4.123(4)', '0.004 Å', cod.duplicateof, cod.doi],
+    pubchem: [
+      String(compound.RecordNumber),
+      'C9H8O4',
+      mass.StringWithMarkup[0].String + ' ' + mass.Unit,
+      '提供者',
+    ],
+    placenames: ['CGCS2000', place.place_code, place.standard_name, '同音'],
     zdic: ['非官方 API', '/hans/', 'CC0', '不言而喻'],
     cnkgraph: ['非商业', '词谱', 'Formats', '韵书', 'zh-hant'],
-    pokewiki: ['500 秒', 'CC BY-NC-SA 3.0', '版本', '模板'],
+    pokewiki: ['oldid=' + revision, 'CC BY-NC-SA 3.0', '版本', '模板'],
   }))
     for (const term of terms) assert.ok(body(id).includes(term), id + ':' + term);
 });

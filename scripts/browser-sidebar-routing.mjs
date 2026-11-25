@@ -65,17 +65,23 @@ try {
           await page.locator('.workbench-menu').click();
       };
       await openRail();
-      // A one-tool group must go straight to that real tool, never via browse.
-      const colors = page.locator('.rail-groups [data-capability="native:colors"]');
-      assert.equal(
-        await colors.count(),
-        1,
-        'a concrete color tool is directly available in the sidebar',
-      );
-      await colors.click();
-      await page.locator('#panel-colors:not([hidden])').waitFor();
+      // A one-tool group is a direct link even when its parent category is folded.
+      const pipeline = page.locator('.rail-groups [data-capability="native:cyberchef"]');
+      assert.equal(await pipeline.count(), 1);
+      const showCategory = async (category) => {
+        const toggle = page.locator(
+          '.rail-group[data-group="' + category + '"] .rail-category-toggle',
+        );
+        if ((await toggle.getAttribute('aria-expanded')) !== 'true') await toggle.click();
+      };
+      await showCategory('other');
+      await pipeline.click();
+      await page.locator('#panel-cyberchef:not([hidden])').waitFor();
       assert.equal(await page.locator('#panel-browse').isVisible(), false);
-      assert.equal(new URLSearchParams(page.url().split('?')[1]).get('task'), 'native:colors');
+      assert.equal(
+        new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('task'),
+        'native:cyberchef',
+      );
       await openRail();
       await page.locator('.rail-groups [data-route="browse/reference"]').click();
       await page.locator('#panel-browse:not([hidden])').waitFor();
@@ -86,6 +92,7 @@ try {
       );
       await openRail();
       const encoding = page.locator('[data-rail-expand="encoding"]');
+      await showCategory('codec');
       await encoding.focus();
       await page.keyboard.press('Enter');
       assert.equal(await encoding.getAttribute('aria-expanded'), 'true');
@@ -120,12 +127,10 @@ try {
           .getAttribute('aria-current'),
         'page',
       );
-      await page.locator('.rail-filter input').fill('From Base64');
-      const inverse = page.locator('.rail-groups [data-capability="topic:base-family"]:visible');
-      assert.equal(
-        new URLSearchParams((await inverse.getAttribute('href')).split('?')[1]).get('op'),
-        'From Base64',
-      );
+      await page.locator('.rail-directory-button').click();
+      await page.locator('.directory-search input').fill('From Base64');
+      const inverse = page.locator('.directory-grid [data-capability="topic:base-family"]:visible');
+      await inverse.waitFor();
       await inverse.click();
       await page.waitForFunction(
         () => document.querySelector('#ct-encoding')?.dataset.operation === 'From Base64',
@@ -147,9 +152,10 @@ try {
         const { setPreferences } = await import('./preferences.js');
         setPreferences({ searchKnowledge: true });
       });
-      await page.locator('.rail-filter input').fill('SM4');
+      await page.locator('.rail-directory-button').click();
+      await page.locator('.directory-search input').fill('SM4');
       await page
-        .locator('.rail-groups [data-capability="learn:function-pair:SM4%20Encrypt"]:visible')
+        .locator('.directory-grid [data-capability="learn:function-pair:SM4%20Encrypt"]:visible')
         .click();
       await page
         .locator('#knowledge-detail [data-knowledge-detail="function-pair:SM4%20Encrypt"]')
@@ -157,10 +163,9 @@ try {
       assert.equal(
         await page.locator('#panel-browse').isVisible(),
         false,
-        'knowledge sidebar entries open the actual article',
+        'knowledge directory entries open the actual article',
       );
       await openRail();
-      await page.locator('.rail-filter input').fill('');
       assert.equal(
         await page.locator('[data-rail-expand="encoding"]').getAttribute('aria-expanded'),
         'true',

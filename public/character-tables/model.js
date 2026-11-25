@@ -137,7 +137,7 @@ export function characterModel(data) {
     const terms = value.toLocaleLowerCase().split(/\s+/);
     return rows.filter((r) => terms.every((t) => r.search.includes(t)));
   }
-  return { entries, search, record };
+  return { entries, search, record, hasCodePoint: (point) => byPoint.has(point) };
 }
 export function exportCharacters(rows, { language, view, query }) {
   return {

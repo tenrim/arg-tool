@@ -1,51 +1,24 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Icon,
-  Link,
-  Status,
-  SearchHighlight,
-  SearchMatchDetails,
-  disclosureController,
-  onDisconnect,
-} from '../ui/index.js';
-import { capabilityCategories, searchEntries, literalSearchEvidence } from './registry.js';
+import { Box, Button, IconButton, Icon, Link, Status, disclosureController } from '../ui/index.js';
+import { capabilityCategories } from './registry.js';
 import { capabilityRoute } from './routes.js';
 
 // The registry owns every task and its direction. The rail only controls how
 // much of that inventory is visible; expanding it never changes the workspace.
-export function mountCapabilitySidebar(
-  host,
-  { navigate, close, categoryPages = [], searchKnowledge = () => false },
-) {
+export function mountCapabilitySidebar(host, { navigate, close, categoryPages = [] }) {
   let registry,
     renderedGroups,
     currentRoute = '',
-    currentId = null,
-    query = '',
-    renderedQuery = null,
-    searchLimit = 60;
+    currentId = null;
   const categories = new Map(),
     sections = new Map();
-  const tree = Box({ className: 'rail-category-tree' }),
-    results = Box({ className: 'rail-search-results', hidden: true });
+  const tree = Box({ className: 'rail-category-tree' });
   const status = Status({ text: '正在载入功能目录…', className: 'rail-empty' });
-  host.append(tree, results, status);
-  function routeLink(route, title, icon, attrs = {}, match) {
+  host.append(tree, status);
+  function routeLink(route, title, icon, attrs = {}) {
     return Link({
       className: 'rail-tool',
       attrs: { href: '#' + route, 'data-route': route, 'data-sidebar': 'menu-button', ...attrs },
-      children: [
-        Icon(icon),
-        Box({
-          tag: 'span',
-          children: [
-            SearchHighlight({ text: title, ranges: match?.title }),
-            ...(match?.snippets.length ? [SearchMatchDetails({ match })] : []),
-          ],
-        }),
-      ],
+      children: [Icon(icon), Box({ tag: 'span', text: title })],
       on: {
         click: (event) => {
           if (event.button || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
@@ -57,29 +30,14 @@ export function mountCapabilitySidebar(
       },
     });
   }
-  function taskLink(entry, location = false) {
+  function taskLink(entry) {
     const group = registry.groups.find((group) => group.id === entry.group);
-    const link = routeLink(
+    return routeLink(
       capabilityRoute(entry, entry.preferredOperation, entry.preferredDirection),
       entry.title,
       group.icon,
       { 'data-capability': entry.id, 'data-category': entry.category },
-      entry.searchMatch,
     );
-    if (location) {
-      const text = link.querySelector('span');
-      text.append(
-        Box({
-          tag: 'small',
-          className: 'rail-match-location',
-          text:
-            capabilityCategories.find((category) => category.id === entry.category).title +
-            ' / ' +
-            group.title,
-        }),
-      );
-    }
-    return link;
   }
   for (const category of capabilityCategories) {
     const root = Box({ className: 'rail-group', attrs: { 'data-group': category.id } });
@@ -176,55 +134,6 @@ export function mountCapabilitySidebar(
     categories.get(entry.category).controller.toggle(true);
     sections.get(entry.group)?.reveal(entry.id);
   }
-  function renderSearch() {
-    results.replaceChildren();
-    if (!registry) {
-      status.hidden = false;
-      return;
-    }
-    const matches = searchEntries(registry, query, '', { includeKnowledge: searchKnowledge() });
-    const pages = categoryPages.filter((page) =>
-      [page.title, ...(page.aliases || [])].some((text) =>
-        text.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
-      ),
-    );
-    for (const page of pages)
-      results.append(
-        routeLink(
-          page.route,
-          page.title,
-          capabilityCategories.find((category) => category.id === page.category).icon,
-          {},
-          literalSearchEvidence(page, query),
-        ),
-      );
-    for (const entry of matches.slice(0, searchLimit)) results.append(taskLink(entry, true));
-    if (matches.length > searchLimit)
-      results.append(
-        Button({
-          className: 'rail-more',
-          text: `继续显示（${searchLimit} / ${matches.length}）`,
-          variant: 'quiet',
-          on: {
-            click: () => {
-              searchLimit += 60;
-              renderSearch();
-            },
-          },
-        }),
-      );
-    status.textContent = '没有匹配的工具';
-    status.hidden = matches.length > 0 || pages.length > 0;
-    markCurrent();
-  }
-  const preferencesChanged = () => {
-    renderedQuery = null;
-    if (query) renderSearch();
-  };
-  document.addEventListener('arg:preferenceschange', preferencesChanged);
-  onDisconnect(tree, () =>
-    document.removeEventListener('arg:preferenceschange', preferencesChanged),
-  );
   return {
     setRegistry(value) {
       if (registry === value && renderedGroups === value.groups) return;
@@ -248,24 +157,8 @@ export function mountCapabilitySidebar(
       for (const id of expanded)
         sections.get(id)?.reveal(registry.groups.find((group) => group.id === id)?.entryIds[0]);
       status.hidden = true;
-      renderedQuery = null;
-      this.filter(query);
       revealCurrent();
       markCurrent();
-    },
-    filter(value) {
-      query = value.trim();
-      tree.hidden = !!query;
-      results.hidden = !query;
-      if (renderedQuery === query) return;
-      renderedQuery = query;
-      searchLimit = 60;
-      if (query) renderSearch();
-      else {
-        results.replaceChildren();
-        status.hidden = !!registry;
-        markCurrent();
-      }
     },
     setActive(route, id = null) {
       currentRoute = route;

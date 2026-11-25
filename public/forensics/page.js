@@ -26,6 +26,7 @@ import { resultRecording } from '../result-recording.js';
 import { STEGOVERITAS_TIPS, STEGOVERITAS_REUSED } from './stegoveritas-catalog.js';
 import { IMAGE_SURVEY, surveyPlan, surveyOptions } from './image-plan.js';
 import { zstegDisplayText } from './zsteg-output.js';
+import { localImagePlan } from './local-image-plan.js';
 
 function bytes(value) {
   if (typeof Uint8Array.fromBase64 === 'function') return Uint8Array.fromBase64(value);
@@ -41,17 +42,42 @@ function encoded(buffer) {
     value += String.fromCharCode(...data.subarray(i, i + 16384));
   return btoa(value);
 }
-export function mountForensics(host, { openTool, loadImage }) {
+async function readForensicsJson(response) {
+  const raw = await response.text();
+  if (raw) {
+    try {
+      return JSON.parse(raw);
+    } catch {
+      // Non-JSON proxy or static host error page; fall through to status message.
+    }
+  }
+  if (response.status === 413) throw Error('上传内容超出服务器限制，请确认文件合计不超过 20 MB。');
+  if (response.status === 404 || response.status === 405)
+    throw Error('当前站点尚未启用服务器文件分析服务。');
+  if ([502, 503, 504].includes(response.status))
+    throw Error('服务器处理服务暂不可用或已超时，请稍后重试。');
+  if (!response.ok) throw Error(`处理服务返回异常状态（HTTP ${response.status}）。`);
+  throw Error('服务器未返回有效的分析结果，当前环境可能尚未启用文件分析服务。');
+}
+export function mountForensics(host, { openTool, loadImage, receiveFileImage }) {
   const receivers = new Map();
   async function openStep(step, original, depth, current) {
     const visual = ['decomposer', 'color_remapping'].includes(step.engine);
     const active = await openTool(
-      visual ? 'native:image-planes' : 'native:forensics-' + step.engine,
+      step.target || (visual ? 'native:image-planes' : 'native:forensics-' + step.engine),
       step.engine === 'stegoveritas' ? step.options.mode : undefined,
       current,
     );
     if (!active) return;
-    if (visual) {
+    if (step.engine === 'barcode') await loadImage(original, active);
+    else if (step.engine === 'hideinfo') receiveFileImage(original);
+    else if (step.engine === 'animation') {
+      const picker = document.getElementById('video-file');
+      const transfer = new DataTransfer();
+      transfer.items.add(original);
+      picker.files = transfer.files;
+      picker.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (visual) {
       if ((await loadImage(original, active)) && active())
         document
           .getElementById(step.engine === 'decomposer' ? 'image-overview' : 'image-remap')
@@ -168,13 +194,30 @@ function mount(host, task, openStep) {
   }
   const attachment = Input({ type: 'file', on: { change: invalidate } });
   const extraPreview = ImageInputPreview();
-  attachment.addEventListener('change', () => extraPreview.show(attachment.files[0]));
+  const clearAttachment = Button({
+    text: '清除附加文件',
+    disabled: true,
+    on: {
+      click: () => {
+        if (!attachment.value && !attachment.files?.length) return;
+        attachment.value = '';
+        attachment.dispatchEvent(new Event('change'));
+      },
+    },
+  });
+  attachment.addEventListener('change', () => {
+    const extraFile = attachment.files?.[0] || null;
+    clearAttachment.disabled = !extraFile;
+    extraPreview.show(extraFile);
+  });
   const attachmentField = Field({
     label:
       task.engine === 'steghide'
         ? '密码列表（可选，UTF-8 文本，每行一个）'
         : '载荷文件（可选，优先于嵌入文字）',
-    control: FilePicker({ input: attachment, triggerLabel: '选择附加文件' }),
+    control: Toolbar({
+      children: [FilePicker({ input: attachment, triggerLabel: '选择附加文件' }), clearAttachment],
+    }),
   });
   attachmentField.append(extraPreview.node);
   if (['stegoveritas', 'steghide'].includes(task.engine)) form.append(attachmentField);
@@ -205,7 +248,7 @@ function mount(host, task, openStep) {
     modeTip,
     Status({
       text: survey
-        ? '图片最多 20 MB。上传后由本站隔离处理，逐项返回结果，最长 4 分钟。'
+        ? '图片最多 20 MB。条码、动图帧与化物为图在本地检查，同时上传至本站进行隔离分析。服务端最长 4 分钟。'
         : '服务器处理：点击后上传到本站，不发送到第三方网站；临时文件随任务结束删除。',
     }),
     Toolbar({ children: [run, stop] }),
@@ -252,42 +295,57 @@ function mount(host, task, openStep) {
         : null;
       if (rev !== revision) return;
       updateStatus(status, survey ? '正在上传并识别图片…' : '正在上传并运行 ' + task.engine + '…');
-      const response = await fetch('/api/forensics/run', {
-        method: 'POST',
-        signal,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          engine: task.engine,
-          filename: original.name,
-          data,
-          password: password.value,
-          options: Object.fromEntries(
-            [...options]
-              .filter(([key]) => !fields.get(key).hidden)
-              .map(([key, control]) => [key, control.value]),
-          ),
-          ...(attached ? { attachment: attached } : {}),
-        }),
-      });
-      if (survey && response.ok) {
-        if (!response.headers.get('Content-Type')?.includes('application/x-ndjson'))
-          throw Error('服务器尚未提供图片综合分析服务。');
+      const request = () =>
+        fetch('/api/forensics/run', {
+          method: 'POST',
+          signal,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            engine: task.engine,
+            filename: original.name,
+            data,
+            password: password.value,
+            options: Object.fromEntries(
+              [...options]
+                .filter(([key]) => !fields.get(key).hidden)
+                .map(([key, control]) => [key, control.value]),
+            ),
+            ...(attached ? { attachment: attached } : {}),
+          }),
+        });
+      if (survey) {
         const { showImageSurvey } = await import('./image-results.js');
         if (rev !== revision || signal.aborted) return;
-        await showImageSurvey(response, {
-          result,
-          link,
-          bytes,
-          recording,
-          signal,
-          steps: plan.steps,
-          openStep: (step) => openStep(step, original, depth, () => rev === revision),
-          current: () => rev === revision,
-          status: (message, type) => updateStatus(status, message, type),
-        });
+        await showImageSurvey(
+          async () => {
+            const response = await request();
+            if (!response.ok) {
+              const value = await readForensicsJson(response);
+              throw Error(value.error || '处理服务返回错误');
+            }
+            if (!response.headers.get('Content-Type')?.includes('application/x-ndjson'))
+              throw Error('服务器尚未提供图片综合分析服务。');
+            return response;
+          },
+          {
+            result,
+            link,
+            bytes,
+            recording,
+            signal,
+            plan,
+            localSteps: localImagePlan(plan.format, new Uint8Array(buffer)),
+            original,
+            buffer,
+            openStep: (step) => openStep(step, original, depth, () => rev === revision),
+            current: () => rev === revision,
+            status: (message, type) => updateStatus(status, message, type),
+          },
+        );
         return;
       }
-      const value = await response.json();
+      const response = await request();
+      const value = await readForensicsJson(response);
       if (rev !== revision) return;
       if (!response.ok || value.error) throw Error(value.error || '处理服务返回错误');
       if (!value.complete || !Array.isArray(value.files)) throw Error('结果不完整');
@@ -398,7 +456,7 @@ function mount(host, task, openStep) {
     invalidate();
     input.value = '';
     attachment.value = '';
-    extraPreview.show(null);
+    attachment.dispatchEvent(new Event('change'));
     password.value = '';
     selectOriginal(original);
     for (const [key, value] of Object.entries(settings)) options.get(key).value = String(value);

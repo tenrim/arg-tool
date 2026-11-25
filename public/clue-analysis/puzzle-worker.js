@@ -11,6 +11,34 @@ import { extractAnswer } from '../hunt-extract.js';
 
 const readable = (text) =>
   text.length > 0 && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\ufffd]/u.test(text);
+let table;
+async function describeCharacters(text) {
+  if (!table) {
+    const { characterModel } = await import('../character-tables/model.js');
+    const response = await fetch(
+      new URL('../vendor/character-tables/characters.json', import.meta.url),
+    );
+    if (!response.ok) fail('ENGINE_UNAVAILABLE', '字符表载入失败。');
+    table = characterModel(await response.json());
+  }
+  const lines = [];
+  for (const char of new Set(text)) {
+    if (char.codePointAt(0) < 128 || !table.hasCodePoint(char.codePointAt(0))) continue;
+    const row = table.record(char);
+    lines.push(
+      [
+        row.codes,
+        row.display,
+        row.points[0][3],
+        row.name,
+        row.numericValues[0] == null ? '' : '数值 ' + row.numericValues[0],
+      ]
+        .filter(Boolean)
+        .join(' · '),
+    );
+  }
+  return lines.join('\n');
+}
 async function run(profile, text, options) {
   let output;
   if (profile.engine === 'bytes') {
@@ -31,7 +59,13 @@ async function run(profile, text, options) {
     output = await transform(options.id, text, 'decode', options);
   else if (profile.engine === 'extract')
     output = extractAnswer(text, options.mode, options.indices || '1');
-  else if (profile.engine === 'hanzi') {
+  else if (profile.engine === 'character-table') output = await describeCharacters(text);
+  else if (profile.engine === 'marine') {
+    const { flagGroups } = await import('../completion/marine.js');
+    output = flagGroups(text, options)
+      .map((group) => group.text)
+      .join('\n');
+  } else if (profile.engine === 'hanzi') {
     if (options.mode === 'telegraph') {
       const response = await fetch(
         new URL('../vendor/round1/telegraph/data/' + options.table + '.json', import.meta.url),

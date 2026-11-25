@@ -24,7 +24,7 @@ export const ATLAS_TOOLS = Object.freeze([
   {
     id: 'classical-music',
     title: '古典音乐资料',
-    group: 'music-reference',
+    group: 'language-reference',
     placeholder: '中文作曲家名、作品原名、编号或体裁',
     aliases: ['Open Opus', '古典音乐作品', '作曲家', 'BWV', 'Opus', '交响曲'],
   },
@@ -32,6 +32,6 @@ export const ATLAS_TOOLS = Object.freeze([
 export const TIMEZONE_TOOL = Object.freeze({
   id: 'timezones',
   title: '历史时区资料',
-  group: 'calendar',
+  group: 'world',
   aliases: ['IANA', 'TZDB', '时区', '夏令时', 'DST', '历史时差', '重复时间'],
 });

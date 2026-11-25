@@ -4,6 +4,50 @@ import { createServer } from 'node:http';
 import { createForensicsService } from '../services/forensics/index.mjs';
 import { imageFormat, surveyPlan } from '../public/forensics/image-plan.js';
 import { zstegDisplayText } from '../public/forensics/zsteg-output.js';
+import { inspectHideInfo } from '../public/forensics/hideinfo.js';
+import { fileToPixels } from '../public/fun-tools/image-engine.js';
+import { localImagePlan } from '../public/forensics/local-image-plan.js';
+import { runLocalImageCheck, FRAME_EXPORT_LIMIT } from '../public/forensics/local-image-checks.js';
+import { png, chunk } from './fixtures/animation.mjs';
+
+test('两种深度共用本地计划，只有 GIF 或 acTL 结构触发动图检查', () => {
+  const ordinary = png(),
+    animated = png({ frames: [{}] });
+  const misleading = Buffer.concat([
+    ordinary.subarray(0, 33),
+    chunk('tEXt', Buffer.from('key\0acTL')),
+    ordinary.subarray(33),
+  ]);
+  const engines = (type, data) => localImagePlan(type, data).map((step) => step.engine);
+  for (const sample of [ordinary, misleading, animated.subarray(0, 44)])
+    assert.deepEqual(engines('png', sample), ['barcode', 'hideinfo']);
+  assert.deepEqual(engines('png', animated), ['barcode', 'animation', 'hideinfo']);
+  assert.deepEqual(engines('gif'), ['barcode', 'animation']);
+  assert.deepEqual(engines('bmp'), ['barcode', 'hideinfo']);
+  for (const type of ['jpeg', 'webp', 'tiff']) assert.deepEqual(engines(type), ['barcode']);
+});
+
+test('HideInfo 原引擎往返及四道结构检查，包括恰好占满和最后一个填充字节', () => {
+  for (const length of [1, 8, 9, 23, 24, 255, 256]) {
+    const bytes = Uint8Array.from({ length }, (_, i) => (i * 7 + 42) % 256);
+    assert.deepEqual(inspectHideInfo(fileToPixels(bytes)), bytes);
+  }
+  const original = () => fileToPixels(Uint8Array.of(1, 2, 3));
+  for (const mutate of [
+    (image) => image.height--,
+    (image) => (image.data[image.data.length - 1] = 254),
+    (image) => (image.data[4] = 0),
+    (image) => (image.data[0] = 255),
+    (image) => (image.data[image.data.length - 2] = 1),
+  ]) {
+    const sample = original();
+    mutate(sample);
+    assert.equal(inspectHideInfo(sample), null);
+  }
+  const enlarged = fileToPixels(new Uint8Array(9));
+  enlarged.data[4] = 1;
+  assert.equal(inspectHideInfo(enlarged), null);
+});
 
 test('zsteg 的终端回车逐项换行，保留未命中的组合和载荷内的字面转义', () => {
   const records = [
@@ -16,6 +60,42 @@ test('zsteg 的终端回车逐项换行，保留未命中的组合和载荷内�
   assert.equal(zstegDisplayText(records), display);
   assert.equal(zstegDisplayText(records.join('\n')), display);
   assert.equal(zstegDisplayText('a\r\nb\nc'), 'a\nb\nc');
+});
+
+test('帧导出可恰好达到汇总上限，超限仍保留全部延迟及已导出的帧', async (t) => {
+  const calls = [];
+  let terminated = false;
+  class FrameBudgetWorker {
+    postMessage({ id, op, index }) {
+      calls.push(op);
+      const result =
+        op === 'decode'
+          ? { width: 2, height: 2, frames: [{ delayMs: 10 }, { delayMs: 20 }, { delayMs: 10 }] }
+          : { png: { byteLength: index === 0 ? FRAME_EXPORT_LIMIT : 1 } };
+      queueMicrotask(() => this.onmessage({ data: { id, result } }));
+    }
+    terminate() {
+      terminated = true;
+    }
+  }
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'Worker');
+  Object.defineProperty(globalThis, 'Worker', { value: FrameBudgetWorker, configurable: true });
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, 'Worker', previous);
+    else delete globalThis.Worker;
+  });
+  const { report, items } = await runLocalImageCheck(
+    { engine: 'animation' },
+    null,
+    new ArrayBuffer(0),
+    new AbortController().signal,
+  );
+  assert.deepEqual(calls, ['decode', 'frame', 'frame']);
+  assert.equal(terminated, true);
+  assert.equal(report['每帧延迟（毫秒）'], '10、20、10');
+  assert.equal(report['延迟分布'], '10 ms × 2，20 ms × 1');
+  assert.equal(items.length, 1);
+  assert.match(report.note, /上限/);
 });
 
 async function requestSurvey(bytes, execute, options = {}) {

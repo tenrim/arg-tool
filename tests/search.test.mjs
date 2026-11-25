@@ -254,3 +254,25 @@ test('bare algorithm searches prefer executable tools and their matching topic o
     registry.coverage.visibleToolCount + registry.coverage.knowledgeCount,
   );
 });
+
+test('匹配层级先于代表位，专题成员的附带别名不会按操作名称提权', () => {
+  const rows = [
+    { id: 'alias-part', title: '泛用工具', variants: [{ title: '选项', aliases: ['参考标记表'] }] },
+    { id: 'op-part', title: '操作集合', sourceOperationIds: ['查看标记值'] },
+    { id: 'title-part', title: '提取标记' },
+    { id: 'alias', title: '别称', aliases: ['标记'] },
+    { id: 'prefix', title: '标记查看器', representativeRank: 2 },
+    {
+      id: 'algorithm',
+      title: '原算法',
+      aliases: ['标记'],
+      coreNames: ['标记'],
+      representativeRank: 0,
+    },
+    { id: 'exact', title: '标记' },
+  ];
+  assert.deepEqual(
+    rankCapabilities(rows, '标记').map((e) => e.id),
+    ['exact', 'algorithm', 'prefix', 'alias', 'title-part', 'op-part', 'alias-part'],
+  );
+});

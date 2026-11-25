@@ -321,29 +321,33 @@ export function createAnalysisSession({
               limited('depth');
               continue;
             }
+            const firstRound = [];
             for (const adapter of registry.automatic()) {
               check();
               if (!adapter.accepts.includes(current.artifact.type)) continue;
               if (
                 adapter.exploratory &&
                 current.hypothesis &&
-                !expandHypotheses &&
+                (!expandHypotheses || adapter.directTrials) &&
                 !adapter.condition
               ) {
                 report.checks.push({
                   nodeId: current.id,
                   adapter: adapter.id,
                   status: 'not-expanded',
-                  message: '同一分支只作一层泛用试解；可选中候选作为输入继续。',
+                  message: '此分支暂不叠加泛用试解；可选中候选作为输入继续。',
                 });
                 continue;
               }
               const work = await explore(current, adapter);
-              if (work) pending.push(work);
+              if (work) firstRound.push(work);
             }
+            // Give this input's matches one actual trial before discovery on the
+            // next sibling can exhaust the attempt budget. Extra trials still rotate.
+            for (const work of firstRound) await runProposal(work);
           }
-          while (pending.length) {
-            const work = pending.shift();
+          while (pending.length) await runProposal(pending.shift());
+          async function runProposal(work) {
             const proposal = work.proposals[work.index++];
             work.record.status = 'attempted';
             try {

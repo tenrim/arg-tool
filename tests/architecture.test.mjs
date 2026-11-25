@@ -14,6 +14,11 @@ test('discovery dependencies remain data-only; real application imports have no 
   assert.deepEqual(cyclesOf(graph), []);
   assert.deepEqual(boundaryViolations(graph, closure), []);
   const dependencies = closure(graph, 'public/capabilities/registry.js');
+  assert(
+    !dependencies.has('public/forensics/image-plan.js'),
+    '目录读取图片分析标识时不加载执行计划',
+  );
+  assert(!dependencies.has('public/forensics/image-format.js'), '目录不需要文件头识别逻辑');
   assert(dependencies.has('public/knowledge/catalogue.js'));
   assert(
     ![...dependencies].some(
@@ -127,10 +132,24 @@ test('route extraction preserves direction, original operation IDs and contains 
 test('metadata extraction retains legacy exports and actual model behavior', () => {
   assert.equal(LANGUAGES, legacyLanguages);
   assert.equal(TYPES, legacyTypes);
-  assert.equal(Object.keys(LANGUAGES).filter((id) => !Object.hasOwn(SERVER_LANGUAGES, id)).length, 10);
-  assert.equal(Object.keys(SERVER_LANGUAGES).length, 17);
-  for (const [id, profile] of Object.entries(SERVER_LANGUAGES))
-    assert.equal(LANGUAGES[id], profile);
+  const localLanguages = [
+    'brainfuck',
+    'ook',
+    'befunge',
+    'deadfish',
+    'whitespace',
+    'malbolge',
+    'python',
+    'javascript',
+    'lua',
+    'sql',
+  ];
+  assert.deepEqual(
+    new Set(Object.keys(LANGUAGES)),
+    new Set([...localLanguages, ...Object.keys(SERVER_LANGUAGES)]),
+  );
+  for (const [id, language] of Object.entries(SERVER_LANGUAGES))
+    assert.equal(LANGUAGES[id], language);
   assert.equal(Object.keys(TYPES).length, 4);
   assert.equal(ookToBrainfuck('Ook. Ook. Ook! Ook.').code, '+.');
   assert.equal(blankBoard('sudoku', 4, 4).cells.length, 4);

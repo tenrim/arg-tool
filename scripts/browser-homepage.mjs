@@ -92,7 +92,47 @@ try {
     }
     await home.locator('button[data-category=""]').click();
   }
-  console.log('PASS homepage shortcuts and all category contents use the canonical registry');
+  const overviewIds = (category) =>
+    home
+      .locator('[data-overview-category="' + category + '"] [data-capability]')
+      .evaluateAll((nodes) => nodes.map((node) => node.dataset.capability));
+  assert.deepEqual(await overviewIds('media'), [
+    'native:forensics-image-survey',
+    'topic:qr',
+    'topic:embedded-files',
+    'topic:audio-spectrogram',
+  ]);
+  assert.deepEqual(await overviewIds('other'), [
+    'native:cyberchef',
+    'topic:code-runner',
+    'topic:paper-puzzles',
+    'native:coordinates',
+  ]);
+  const codecTail = ['topic:byte-numerals', 'topic:base-family', 'topic:rot'];
+  assert.deepEqual(await overviewIds('codec'), ['native:substitution', ...codecTail]);
+  await page.evaluate(async () => {
+    const { analysisAccess } = await import('./capabilities/analysis-access.js');
+    analysisAccess.submit('拨开迷雾');
+  });
+  await home
+    .locator('[data-overview-category=codec] [data-capability="native:cipher-detect"]')
+    .waitFor();
+  assert.deepEqual(await overviewIds('codec'), ['native:cipher-detect', ...codecTail]);
+  for (const [oldPath, id] of [
+    ['media/fragments', 'image'],
+    ['media/models', 'video'],
+    ['reference/calendar', 'world'],
+    ['other/sequence-processing', 'maths'],
+  ]) {
+    await go(page, 'browse/' + oldPath);
+    await page
+      .locator('#panel-browse [data-expand-group="' + id + '"][aria-expanded="true"]')
+      .waitFor();
+  }
+  await go(page, 'home');
+  console.log(
+    'PASS homepage representatives, locked and unlocked discovery, old group bookmarks and all category contents',
+  );
   await page.keyboard.press('Control+k');
   await page.locator('#workspace-search-input').fill('URL解码');
   await page.locator('#workspace-search-results [data-op="URL Decode"]').first().waitFor();

@@ -62,12 +62,19 @@ async function productionContext({ prefix = '/', motion = 'reduce', width = 1440
         this.__knowledgeTracked = /\/cyberchef-worker\.js$/.test(
           new URL(url, location.href).pathname,
         );
-        this.__knowledgeStalled = this.__knowledgeTracked && window.__knowledgeStallWorker;
-        if (this.__knowledgeStalled) window.__knowledgeStallWorker = false;
         if (this.__knowledgeTracked) window.__knowledgeLiveWorkers.add(this);
       }
       postMessage(...args) {
-        if (!this.__knowledgeStalled) super.postMessage(...args);
+        if (
+          this.__knowledgeTracked &&
+          window.__knowledgeStallWorker &&
+          args[0]?.action === 'bake'
+        ) {
+          window.__knowledgeStallWorker = false;
+          window.__knowledgeStalledBake = this;
+          return;
+        }
+        super.postMessage(...args);
       }
       terminate() {
         super.terminate();
@@ -139,6 +146,8 @@ async function enginePairs(page) {
     const { taskView } = await import(new URL('./chef-tools/task-view.js', location.href));
     const { loadRegistry } = await import(new URL('./capabilities/registry.js', location.href));
     const { getCatalogue } = await import(new URL('./chef-tools/catalog.js', location.href));
+    const { setPreferences } = await import(new URL('./preferences.js', location.href));
+    setPreferences({ showAdvancedParameters: true });
     const registry = await loadRegistry(),
       catalogue = await getCatalogue();
     const task = taskView({
@@ -259,6 +268,7 @@ async function enginePairs(page) {
     Buffer.from(raw),
     'decode exports exact original UTF-8 bytes and CRLF',
   );
+  await probe.locator('.ct-advanced > summary').click();
   await probe.locator('[data-arg="2"] input[type=checkbox]').check();
   await direction('To Base64');
   await direction('From Base64');
@@ -400,11 +410,13 @@ async function enginePairs(page) {
   await probe.locator('.ct-input').fill('pending');
   await page.evaluate(() => (window.__knowledgeStallWorker = true));
   await probe.locator('.ct-run').click();
-  await page.waitForFunction(() => window.__knowledgeLiveWorkers.size === 1);
+  await page.waitForFunction(() =>
+    window.__knowledgeLiveWorkers.has(window.__knowledgeStalledBake),
+  );
   await direction('From Base64');
   assert.equal(
-    await page.evaluate(() => window.__knowledgeLiveWorkers.size),
-    0,
+    await page.evaluate(() => window.__knowledgeLiveWorkers.has(window.__knowledgeStalledBake)),
+    false,
     'a direction choice terminates in-flight work immediately',
   );
   assert.equal(
@@ -527,10 +539,10 @@ async function discoveryAndAliases({ page, go }, registry) {
       'home derives all ' + category.title + ' groups from the registry',
     );
   }
-  await page.locator('#home-search').fill('From Base64');
+  await page.locator('#workspace-search-input').fill('From Base64');
   assert.equal(
     await page
-      .locator('#panel-home [data-capability]')
+      .locator('#workspace-search-results [data-capability]')
       .evaluateAll(
         (nodes, id) => nodes.filter((node) => node.dataset.capability === id).length,
         family.id,
@@ -538,10 +550,10 @@ async function discoveryAndAliases({ page, go }, registry) {
     1,
     'global discovery shows one family for the decoding name',
   );
-  await page.locator('#home-search').fill('To Base64');
+  await page.locator('#workspace-search-input').fill('To Base64');
   assert.equal(
     await page
-      .locator('#panel-home [data-capability]')
+      .locator('#workspace-search-results [data-capability]')
       .evaluateAll(
         (nodes, id) => nodes.filter((node) => node.dataset.capability === id).length,
         family.id,
@@ -551,11 +563,8 @@ async function discoveryAndAliases({ page, go }, registry) {
   );
   for (const query of ['From Base64', 'Base64解码']) {
     await go('home');
-    await page.locator('#home-search').fill(query);
-    const button = page
-      .locator('#panel-home [data-capability]')
-      .filter({ has: page.locator('.capability-label') });
-    const target = button.filter({ hasText: family.title });
+    await page.locator('#workspace-search-input').fill(query);
+    const target = page.locator('#workspace-search-results [data-capability="' + family.id + '"]');
     assert.equal(await target.count(), 1);
     await target.click();
     await page.waitForFunction(
@@ -576,10 +585,10 @@ async function discoveryAndAliases({ page, go }, registry) {
     );
   }
   await go('home');
-  await page.locator('.workspace-search-trigger').click();
-  await page.locator('.workspace-search input').fill('From Base64');
+  await page.keyboard.press('Control+k');
+  await page.locator('#workspace-search-input').fill('From Base64');
   await page
-    .locator('.workspace-search [data-capability]')
+    .locator('#workspace-search-results [data-capability]')
     .filter({ hasText: family.title })
     .click();
   await page.waitForFunction(
@@ -591,9 +600,12 @@ async function discoveryAndAliases({ page, go }, registry) {
     'command search keeps the requested raw direction in its canonical route',
   );
   await go('home');
-  await page.locator('#home-search').fill('电报码反查汉字');
+  await page.locator('#workspace-search-input').fill('电报码反查汉字');
   const telegraph = registry.entries.find((entry) => entry.id === 'native:hanzi-telegraph');
-  await page.locator('#panel-home [data-capability]').filter({ hasText: telegraph.title }).click();
+  await page
+    .locator('#workspace-search-results [data-capability]')
+    .filter({ hasText: telegraph.title })
+    .click();
   await page.waitForFunction(() => document.querySelector('#hanzi-mode')?.value === 'tele-decode');
   assert.equal(
     new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('dir'),
@@ -889,21 +901,21 @@ async function discoveryAndAliases({ page, go }, registry) {
     const { setPreferences } = await import('./preferences.js');
     setPreferences({ searchKnowledge: true });
   });
-  await page.locator('#home-search').fill(article.title);
+  await page.locator('#workspace-search-input').fill(article.title);
   assert.equal(
     await page
-      .locator('#panel-home [data-capability]')
+      .locator('#workspace-search-results [data-capability]')
       .evaluateAll(
         (nodes, id) => nodes.filter((node) => node.dataset.capability === id).length,
         article.id,
       ),
     1,
   );
-  await page.locator('.workspace-search-trigger').click();
-  await page.locator('.workspace-search input').fill(article.title);
+  await page.keyboard.press('Control+k');
+  await page.locator('#workspace-search-input').fill(article.title);
   assert.equal(
     await page
-      .locator('.workspace-search [data-capability]')
+      .locator('#workspace-search-results [data-capability]')
       .evaluateAll(
         (nodes, id) => nodes.filter((node) => node.dataset.capability === id).length,
         article.id,
@@ -955,8 +967,9 @@ async function discoveryAndAliases({ page, go }, registry) {
     await page.locator('.workbench-menu').click();
   const rail = page.locator('.rail-groups [data-route="browse/knowledge"]');
   assert.equal(await rail.count(), 1, 'the original sidebar includes the fifth category');
-  await page.locator('.rail-filter input').fill(article.title);
-  await page.locator('.rail-groups [data-capability="' + article.id + '"]:visible').click();
+  await page.locator('.rail-directory-button').click();
+  await page.locator('.directory-search input').fill(article.title);
+  await page.locator('.directory-grid [data-capability="' + article.id + '"]:visible').click();
   await page
     .locator('#knowledge-detail [data-knowledge-detail="' + article.open.articleId + '"]')
     .waitFor();
@@ -966,10 +979,6 @@ async function discoveryAndAliases({ page, go }, registry) {
     '保留这条线索',
     'navigation to knowledge never discards the original clue input',
   );
-  await page.locator('.rail-filter input').evaluate((node) => {
-    node.value = '';
-    node.dispatchEvent(new Event('input', { bubbles: true }));
-  });
   await page.evaluate(() =>
     localStorage.setItem('arg.ui.favorites.v1', JSON.stringify(['encoding', 'hanzi', 'knowledge'])),
   );
@@ -1215,7 +1224,15 @@ async function knowledgeLayout({ page, go }, registry) {
   );
 }
 
-async function knowledgeReader({ page, go }, registry, { allArticles = false } = {}) {
+async function knowledgeReader({ page, go, snapshot }, registry, { allArticles = false } = {}) {
+  const gatedLesson = registry.entries.find(
+    (entry) => entry.id === 'learn:function-native:cipher-detect',
+  );
+  assert.equal(gatedLesson?.listed, false, 'the locked lesson stays out of discovery');
+  // Exercise the full reading inventory after the same unlock state the site persists.
+  await page.evaluate(() => localStorage.setItem('arg.discovery.text-analysis.v1', 'solved-v1'));
+  await page.reload();
+  registry = await snapshot();
   const articles = await page.evaluate(async () => {
     const { ARTICLES } = await import(new URL('./knowledge/content.js', location.href));
     return ARTICLES;

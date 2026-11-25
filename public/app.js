@@ -57,7 +57,7 @@ import {
 } from './tool-preferences.js';
 import { createPreferenceTargets } from './capabilities/preference-targets.js';
 import { mountSitePages } from './site-pages.js';
-import { toolPages, sitePages, notebookViewForRoute } from './navigation.js';
+import { toolPages, sitePages, notebookViewForRoute, resolveBrowseGroup } from './navigation.js';
 import { loadRegistry, resolveCapability, subscribeRegistry } from './capabilities/registry.js';
 import { mountCapabilityWorkspace } from './capabilities/workspace.js';
 import { capabilityRoute } from './capabilities/routes.js';
@@ -105,8 +105,9 @@ mountFunctionPlot($('main'));
 mountUnits($('main'));
 mountPractical($('main'));
 mountFileWorkbench($('main'));
-mountFunTools($('main'));
+const receiveFileImage = mountFunTools($('main'));
 mountForensics($('main'), {
+  receiveFileImage,
   async openTool(id, direction, fromSurvey) {
     const {
       entry,
@@ -276,6 +277,7 @@ async function panel(route) {
   const params = new URLSearchParams(query),
     taskId = params.get('task');
   let [name, group, subgroup] = path.split('/');
+  if (name === 'browse') subgroup = resolveBrowseGroup(group, subgroup);
   const notebookView = notebookViewForRoute(path);
   if (notebookView) {
     name = 'notebook';

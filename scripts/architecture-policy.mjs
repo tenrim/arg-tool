@@ -2,6 +2,36 @@
 // and matching behavior coverage, not a blanket feature-to-feature exemption.
 export const bridges = [
   [
+    'public/clue-analysis/local-adapters.js',
+    'public/basics/model.js',
+    '波多码识别复用原码组解析器以核对数值范围、进制与分隔符。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/completion/marine.js',
+    '海事旗组的文字解读直接调用 flagGroups，保留代用旗的分组规则。',
+  ],
+  [
+    'public/clue-analysis/puzzle-worker.js',
+    'public/character-tables/model.js',
+    '字符观察读取原字符表模型的固定码位、文字系统和数值属性。',
+  ],
+  [
+    'public/forensics/local-image-checks.js',
+    'public/animation/client.js',
+    '综合分析复用可取消的完整动画解码与合成帧导出；图片综合分析浏览器回归。',
+  ],
+  [
+    'public/forensics/hideinfo.js',
+    'public/fun-tools/image-engine.js',
+    '严格确认载体结构后使用原 pixelsToFile 恢复字节；HideInfo 正反例回归。',
+  ],
+  [
+    'public/forensics/local-image-worker.js',
+    'public/barcode-reader.js',
+    '综合分析与原条码工作台使用同一固定 ZXing 读取入口；真实条码图片回归。',
+  ],
+  [
     'public/clue-analysis/chef-adapter.js',
     'public/chef-tools/catalog.js',
     '线索分析读取固定操作名称和参数，使用原有引擎执行。',

@@ -1,6 +1,7 @@
 // Existing fixed implementations reused by the text analysis page; no new upstream bytes.
 export const ANALYSIS_SOURCES = Object.freeze([
   'https://github.com/gchq/CyberChef',
+  'https://github.com/pyodide/pyodide',
   'https://github.com/dkin-om/romanice',
   'https://github.com/cryptii/cryptii',
   'https://github.com/zenoamaro/baudot.js',
@@ -12,6 +13,9 @@ export const ANALYSIS_SOURCES = Object.freeze([
   'https://github.com/blaiprat/grunt-jjencode',
   'https://github.com/justjake/quickjs-emscripten',
   'https://github.com/GCWizard/GCWizard',
+  'https://msi.nga.mil/Publications/ICOS',
+  'https://github.com/unicode-org/unicodetools',
+  'https://github.com/Bowserinator/Periodic-Table-JSON',
   'https://github.com/philippica/cipher_machine',
   'https://github.com/philippica/ChinesePuzzleTool',
   'https://github.com/KuroLabs/stegcloak',

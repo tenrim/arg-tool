@@ -47,8 +47,9 @@ function preview(text) {
 export function imageResultCard({
   engine,
   label,
-  state,
   report,
+  ok = report?.status === 'ok',
+  state,
   items,
   raw,
   link,
@@ -74,7 +75,14 @@ export function imageResultCard({
     },
   });
   card.append(
-    Toolbar({ className: 'image-survey-heading', children: [title, Badge({ text: state }), open] }),
+    Toolbar({
+      className: 'image-survey-heading',
+      children: [
+        title,
+        Badge({ text: state, attrs: { 'data-state': ok ? 'success' : 'error' } }),
+        open,
+      ],
+    }),
   );
   const gallery = Box({ className: 'image-survey-gallery' });
   const downloads = [];
@@ -110,10 +118,18 @@ export function imageResultCard({
     .filter(Boolean)
     .join('\n');
   if (text)
-    card.append(Result({ tag: 'pre', className: 'image-survey-text', text: preview(text) }));
+    card.append(
+      Result({
+        tag: 'pre',
+        className: 'image-survey-text',
+        text: engine === 'barcode' ? text : preview(text),
+      }),
+    );
   // Some adapters return named fields (e.g. byte counts and stream offsets) directly.
   const internal = [
     'status',
+    ...(engine === 'animation' ? ['metadata'] : []),
+    ...(engine === 'barcode' ? ['symbols'] : []),
     'output',
     'error',
     'note',
@@ -125,7 +141,14 @@ export function imageResultCard({
   ];
   const fields = Object.entries(report).filter(([key]) => !internal.includes(key));
   if (fields.length)
-    card.append(DataList({ items: fields.map(([key, value]) => [key, preview(readable(value))]) }));
+    card.append(
+      DataList({
+        items: fields.map(([key, value]) => [
+          key,
+          engine === 'animation' ? readable(value) : preview(readable(value)),
+        ]),
+      }),
+    );
   if (gallery.childElementCount) card.append(gallery);
   if (downloads.length) card.append(Toolbar({ children: downloads }));
   if (!text && !fields.length && !gallery.childElementCount && !downloads.length)

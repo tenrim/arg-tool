@@ -89,7 +89,13 @@ try {
     assert.doesNotMatch((await input.getAttribute('placeholder')) || '', /隐藏线索/);
     await dialog.getByRole('button', { name: '留在当前页面' }).click();
     assert.equal(await input.inputValue(), '拨开迷雾');
-    await page.locator('#workspace-search-input').fill('文本线索分析');
+    await page.locator('#workspace-search-input').fill('未知密文');
+    assert.deepEqual(
+      await page
+        .locator('#workspace-search-results [data-capability]')
+        .evaluateAll((nodes) => nodes.slice(0, 2).map((node) => node.dataset.capability)),
+      ['native:cipher-detect', 'op:Magic'],
+    );
     const result = page.locator(
       '#workspace-search-results [data-capability="native:cipher-detect"]',
     );
@@ -174,7 +180,7 @@ try {
     await context.close();
   }
   if (!process.argv.includes('--storage-only')) {
-    for (const surface of ['sidebar', 'directory', 'category']) {
+    for (const surface of ['directory', 'category']) {
       const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
       const page = await context.newPage();
       const errors = [];
@@ -187,12 +193,9 @@ try {
       if (surface === 'directory') {
         await page.locator('.rail-directory-button').click();
         search = page.locator('.directory-search input');
-      } else if (surface === 'category') {
+      } else {
         await go(page, 'browse');
         search = page.locator('#overview-search');
-      } else {
-        await page.locator('.rail-filter-disclosure > summary').click();
-        search = page.locator('.rail-filter input');
       }
       await search.fill('拨开迷雾');
       const dialog = page.getByRole('dialog', { name: '迷雾已拨开' });

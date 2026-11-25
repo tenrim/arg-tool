@@ -63,6 +63,7 @@ export function parseExternalResult(text, provider, expected) {
   )
     throw Error('查询资料缺少参数、来源或许可信息。');
   sourceURL(result.sourceURL, provider);
+  if (result.retrievalURL !== undefined) sourceURL(result.retrievalURL, provider);
   if (result.total !== null && (!Number.isSafeInteger(result.total) || result.total < 0))
     throw Error('查询总数无效。');
   if (result.next !== null && !object(result.next)) throw Error('查询翻页信息无效。');
@@ -79,6 +80,7 @@ export function parseExternalResult(text, provider, expected) {
       throw Error('查询记录格式无效或重复。');
     ids.add(record.id);
     sourceURL(record.sourceURL, provider);
+    if (record.retrievalURL !== undefined) sourceURL(record.retrievalURL, provider);
     if (
       record.actions !== undefined &&
       (!Array.isArray(record.actions) ||

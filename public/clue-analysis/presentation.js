@@ -40,6 +40,10 @@ export function textCandidates(report) {
       id: node.id,
       type: node.artifact.type,
       observation: Boolean(node.observation),
+      providedKey:
+        incoming
+          .get(node.id)
+          ?.some((edge) => edge.from === 0 && edge.evidence?.providedKey === true) ?? false,
       hypothesis: Boolean(node.hypothesis),
       text:
         node.artifact.type === 'text'
@@ -78,6 +82,7 @@ export function textCandidates(report) {
   return results.sort(
     (a, b) =>
       Number(a.observation) - Number(b.observation) ||
+      Number(b.providedKey) - Number(a.providedKey) ||
       Number(a.hypothesis) - Number(b.hypothesis) ||
       b.rank - a.rank ||
       a.id - b.id,

@@ -440,27 +440,19 @@ try {
         }
         await input.press('Escape');
         await closed();
-        // The same evidence reaches the real home, rail and complete directory.
+        // Compare the active category search and the complete directory.
         await page.setViewportSize({ width, height: 900 });
-        await page.evaluate(() => (location.hash = 'home'));
-        const homeSearch = page.locator('#panel-home .capability-search input');
-        await homeSearch.fill('ASCII');
-        const homeResult = page.locator('#panel-home [data-capability="topic:character-codes"]');
-        await homeResult.waitFor({ state: 'visible' });
-        assert.ok(await homeResult.locator('.search-match-details mark').count());
-        await homeSearch.fill('');
-        assert.equal(
-          await page.locator('#panel-home mark.search-match').count(),
-          0,
-          'clearing search removes transient marks',
+        await page.evaluate(() => (location.hash = 'browse'));
+        const categorySearch = page.locator('#overview-search');
+        await categorySearch.fill('ASCII');
+        const categoryResult = page.locator(
+          '#panel-browse .capability-search-list [data-capability="topic:character-codes"]',
         );
+        await categoryResult.waitFor();
+        assert.ok(await categoryResult.locator('.search-match-details mark').count());
+        await categorySearch.fill('');
+        assert.equal(await page.locator('#panel-browse mark.search-match').count(), 0);
         if (width < 1100) await page.locator('.workbench-menu').click();
-        await page.locator('.rail-filter input').fill('ASCII');
-        const railResult = page.locator(
-          '.rail-search-results [data-capability="topic:character-codes"]',
-        );
-        await railResult.waitFor({ state: 'visible' });
-        assert.ok(await railResult.locator('.search-match-details mark').count());
         await page.locator('.rail-directory-button').click();
         await page.locator('.directory-search input').fill('ASCII');
         const directoryResult = page.locator(

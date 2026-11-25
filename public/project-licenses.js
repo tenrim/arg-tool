@@ -1062,7 +1062,7 @@ export const PROJECT_LICENSES = [
     url: 'https://github.com/zh-lx/pinyin-pro',
     license: 'MIT',
     notices: ['vendor/round1/pinyin-pro/LICENSE'],
-    role: '',
+    role: '为汉字线索查询带声调的拼音。',
   },
   {
     name: 'OpenCC-JS',
@@ -1115,7 +1115,7 @@ export const PROJECT_LICENSES = [
     url: 'https://github.com/cateyelow/substitution-cipher-solver',
     license: 'MIT',
     notices: ['vendor/round1/substitution/LICENSE'],
-    role: '',
+    role: '为单表替换密文搜索候选明文和替换表。',
   },
   {
     name: 'qrazybox',
@@ -1129,7 +1129,7 @@ export const PROJECT_LICENSES = [
     url: 'https://github.com/kirklin/chinese-telegraph-code',
     license: '代码：MIT；数据：Unicode 数据许可',
     notices: ['vendor/round1/telegraph/LICENSE', 'vendor/round1/telegraph/DATA_LICENSE.md'],
-    role: '',
+    role: '用随包电码表查询中文电报码与对应汉字。',
   },
   {
     name: 'Make Me a Hanzi',

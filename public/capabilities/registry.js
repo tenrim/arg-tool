@@ -53,8 +53,8 @@ const operationGroups = {
   imageColour: 'image',
   imageInspect: 'image',
   imageMake: 'image',
-  hashes: 'files',
-  compression: 'files',
+  hashes: 'file-compression',
+  compression: 'file-compression',
   inspect: 'files',
   audio: 'audio',
   media: 'video',
@@ -188,7 +188,7 @@ const nativeDefinitions = [
   [
     'pokewiki',
     '神奇宝贝百科在线查询',
-    'culture-reference',
+    'language-reference',
     ['pokewiki'],
     'generic',
     '',
@@ -198,7 +198,7 @@ const nativeDefinitions = [
   [
     'oeis',
     'OEIS 数列在线查询',
-    'sequences',
+    'technical',
     ['oeis'],
     'generic',
     '',
@@ -421,6 +421,10 @@ const nativeDefinitions = [
       '不知道是什么密码',
       '不知道是什么编码',
       '未知编码',
+      '自动识别',
+      '一串乱码',
+      '密码识别',
+      '线索分析',
       '未知密码',
       '分析一段文字',
       '自动分析',
@@ -581,7 +585,7 @@ const nativeDefinitions = [
   [
     'colors',
     '自由色盘与颜色名称',
-    'colors',
+    'characters-reference',
     ['colors'],
     'generic',
     '',
@@ -591,7 +595,7 @@ const nativeDefinitions = [
   [
     'calendar',
     '传统历法查询',
-    'calendar',
+    'world',
     ['calendar'],
     'generic',
     '',
@@ -601,7 +605,7 @@ const nativeDefinitions = [
   [
     'geology',
     '地质年代时间带',
-    'geology',
+    'sky',
     ['geology'],
     'generic',
     '',
@@ -611,7 +615,7 @@ const nativeDefinitions = [
   [
     'iching',
     '八卦与六十四卦',
-    'traditions',
+    'language-reference',
     ['iching'],
     'generic',
     '',
@@ -621,7 +625,7 @@ const nativeDefinitions = [
   [
     'tarot',
     '塔罗牌组与牌面',
-    'traditions',
+    'language-reference',
     ['tarot'],
     'generic',
     '',
@@ -641,7 +645,7 @@ const nativeDefinitions = [
   [
     'image-steg',
     '图片隐写提取',
-    'image',
+    'image-stego',
     ['image'],
     'image',
     '',
@@ -692,7 +696,7 @@ const nativeDefinitions = [
   [
     'fragments',
     '碎片拼接台',
-    'fragments',
+    'image',
     ['fragments'],
     'generic',
     '',
@@ -707,7 +711,7 @@ const nativeDefinitions = [
     'generic',
     '',
     false,
-    ['文件头', '十六进制编辑', '压缩包目录', 'hex viewer', 'ZIP'],
+    ['文件头', '十六进制编辑', '压缩包目录', 'hex viewer', 'ZIP结构'],
   ],
   [
     'audio-spectrum',
@@ -717,7 +721,7 @@ const nativeDefinitions = [
     'generic',
     '',
     false,
-    ['声谱图', 'spectrogram', 'DTMF', 'SSTV', '频谱'],
+    ['声谱图', 'spectrogram', 'DTMF', '频谱'],
   ],
   [
     'audio-music',
@@ -742,7 +746,7 @@ const nativeDefinitions = [
   [
     'model',
     '三维模型观察',
-    'models',
+    'video',
     ['model'],
     'generic',
     '',
@@ -822,7 +826,7 @@ const nativeDefinitions = [
   [
     'sequence-processing',
     '蛋白质与核酸序列转换',
-    'sequence-processing',
+    'maths',
     ['sequence'],
     'generic',
     '',
@@ -1129,7 +1133,7 @@ const nativeDefinitions = [
   [
     'image-planes',
     '位平面与图层浏览',
-    'image',
+    'image-stego',
     ['image'],
     'image',
     '',
@@ -1159,7 +1163,7 @@ const nativeDefinitions = [
   [
     'image-png',
     'PNG 数据块检查',
-    'image',
+    'image-stego',
     ['image'],
     'image',
     '',
@@ -1204,7 +1208,19 @@ const nativeDefinitions = [
     'generic',
     '',
     false,
-    ['精灵图', 'sprite sheet', 'GIF帧', 'APNG', '动画逐帧', '动画切片'],
+    [
+      '精灵图',
+      'sprite sheet',
+      '拆帧',
+      '每一帧',
+      'GIF拆帧',
+      '动图拆帧',
+      'APNG拆帧',
+      'GIF帧',
+      'APNG',
+      '动画逐帧',
+      '动画切片',
+    ],
   ],
   [
     'video-frames',
@@ -1335,117 +1351,172 @@ for (const [id, puzzle] of Object.entries(TYPES)) {
     ]);
 }
 
-const representativePreferences = {
-  sequences: ['native:oeis'],
-  'language-reference': ['native:zdic', 'native:cnkgraph'],
-  'culture-reference': ['native:pokewiki'],
-  characters: ['native:ascii', 'native:utf8', 'native:radix', 'native:a1z26', 'native:invisible'],
-  encoding: ['pair:To%20Base64', 'native:escape-url', 'native:escape-html', 'pair:To%20COBS'],
-  communication: [
-    'native:morse',
-    'native:braille',
-    'native:semaphore',
-    'native:tapcode',
-    'native:baudot',
+export const representativePreferences = {
+  'cipher-analysis': [
+    'native:cipher-detect',
+    'native:substitution',
+    'topic:text-statistics',
+    'native:dictionary-substitution',
+    'op:Magic',
+  ],
+  characters: [
+    'topic:byte-numerals',
+    'topic:character-codes',
+    'native:radix',
+    'native:a1z26',
+    'topic:invisible-characters',
+  ],
+  encoding: [
+    'topic:base-family',
+    'topic:text-escapes',
+    'native:text-steganography',
+    'native:beast-codec',
+    'native:buddha-codec',
   ],
   classical: [
-    'op:ROT13',
+    'topic:rot',
     'pair:Vigen%C3%A8re%20Encode',
     'pair:Rail%20Fence%20Cipher%20Encode',
     'op:Enigma',
   ],
-  modern: [
-    'pair:AES%20Encrypt',
-    'pair:RSA%20Encrypt',
-    'op:ChaCha',
-    'op:Generate%20RSA%20Key%20Pair',
+  communication: [
+    'native:morse',
+    'topic:braille',
+    'topic:semaphore',
+    'native:tapcode',
+    'native:baudot',
   ],
+  modern: ['pair:AES%20Encrypt', 'topic:rsa', 'op:ChaCha', 'topic:pgp'],
   authentication: [
-    'op:RSA%20Sign',
-    'op:JWT%20Decode',
-    'op:Derive%20PBKDF2%20key',
-    'op:Parse%20X.509%20certificate',
-  ],
-  'cipher-analysis': [
-    'native:cipher-detect',
-    'native:substitution',
-    'op:Frequency%20distribution',
-    'op:Index%20of%20Coincidence',
+    'topic:jwt',
+    'topic:key-derivation',
+    'topic:certificate-inspection',
+    'topic:one-time-password',
+    'topic:key-format',
   ],
   'text-language': [
-    'native:extract-position',
-    'native:hanzi',
-    'native:hanzi-code',
-    'native:words',
-    'op:Diff',
+    'topic:answer-extraction',
+    'topic:hanzi-properties',
+    'topic:hanzi-lookup',
+    'topic:english-words',
+    'topic:text-comparison',
   ],
-  formats: [
-    'pair:CSV%20to%20JSON',
-    'op:JSON%20Beautify',
-    'op:XPath%20expression',
-    'op:Heatmap%20chart',
+  formats: ['topic:table-data', 'topic:json', 'topic:xml', 'topic:charts'],
+  world: [
+    'native:countries',
+    'native:currencies',
+    'native:airports',
+    'native:calendar',
+    'native:timezones',
   ],
-  world: ['native:countries', 'native:currencies', 'native:airports', 'native:ports'],
-  sky: ['native:sky', 'native:astronomy'],
-  matter: ['native:chemistry', 'native:sequence', 'native:cod', 'native:pubchem'],
-  'characters-reference': ['native:unicode', 'native:marine'],
-  colors: ['native:colors'],
-  calendar: ['native:calendar'],
-  geology: ['native:geology'],
-  traditions: ['native:iching', 'native:tarot'],
-  technical: ['native:it-ports', 'native:it-http', 'native:it-formats', 'native:it-domains'],
-  image: [
-    'native:image',
+  'characters-reference': [
+    'native:unicode',
+    'native:character-tables',
+    'topic:marine',
+    'native:colors',
+  ],
+  technical: [
+    'native:it-ports',
+    'native:it-http',
+    'native:it-formats',
+    'native:it-domains',
+    'native:oeis',
+  ],
+  matter: [
+    'native:chemistry',
+    'native:sequence',
+    'native:chemistry-formula',
+    'native:pubchem',
+    'topic:element-spelling',
+  ],
+  sky: [
+    'native:sky',
+    'native:astronomy',
+    'native:constellations',
+    'native:eclipses',
+    'native:geology',
+  ],
+  'language-reference': [
+    'native:zdic',
+    'native:cnkgraph',
+    'native:iching',
+    'native:tarot',
+    'native:classical-music',
+  ],
+  'image-stego': [
+    'native:forensics-image-survey',
     'native:image-steg',
-    'native:image-qr',
+    'native:forensics-zsteg',
+    'native:image-planes',
+    'topic:png-inspection',
+  ],
+  image: [
+    'topic:qr',
+    'native:image',
     'native:image-compare',
-    'op:Extract%20EXIF',
+    'topic:image-metadata',
+    'native:fragments',
   ],
-  fragments: ['native:fragments'],
-  files: ['native:hex-editor', 'op:Detect%20File%20Type', 'op:Unzip', 'op:SHA2', 'op:MD5'],
+  files: [
+    'topic:embedded-files',
+    'native:hex-editor',
+    'topic:file-metadata',
+    'topic:file-identification',
+    'topic:binary-strings',
+  ],
   audio: [
-    'native:audio-spectrum',
+    'topic:audio-spectrogram',
     'native:audio-sstv',
+    'native:morse-audio',
     'native:audio-music',
-    'native:audio-play',
-    'op:Extract%20Audio%20Metadata',
+    'topic:audio-metadata',
   ],
-  video: ['native:video', 'op:Play%20Media'],
-  models: ['native:model'],
-  boards: ['native:go', 'native:chess'],
-  logic: [
-    'native:paper',
-    'native:paper-slitherlink',
-    'native:paper-nurikabe',
-    'native:paper-akari',
+  'file-compression': [
+    'topic:compression',
+    'topic:hash-digests',
+    'op:Unzip',
+    'topic:checksums',
+    'topic:fuzzy-hashes',
   ],
-  simulation: ['native:life', 'native:cube'],
-  programming: [
-    'native:code',
-    'native:code-python',
-    'native:code-whitespace',
-    'native:code-sql',
-    'native:turing',
-  ],
-  maths: [
-    'op:Modular%20Inverse',
-    'op:Set%20Intersection',
-    'op:Convert%20distance',
-    'op:Pseudo-Random%20Integer%20Generator',
-  ],
-  'sequence-processing': ['native:sequence-processing'],
+  video: ['topic:video', 'native:model', 'op:Play%20Media'],
+  pipeline: ['native:cyberchef'],
+  programming: ['topic:code-runner', 'native:turing'],
+  logic: ['topic:paper-puzzles', 'topic:rule-constraints'],
   'coordinates-time': [
     'native:coordinates',
-    'pair:To%20UNIX%20Timestamp',
-    'op:Haversine%20distance',
+    'topic:datetime',
+    'topic:coordinate-format',
+    'native:geo-distance',
+    'native:meeting',
   ],
-  network: ['op:Parse%20URI', 'op:Change%20IP%20format', 'op:Parse%20TCP', 'op:JA3%20Fingerprint'],
-  pipeline: ['native:cyberchef'],
+  network: [
+    'op:Parse%20URI',
+    'topic:ip-addresses',
+    'op:Parse%20User%20Agent',
+    'op:DNS%20over%20HTTPS',
+    'op:HTTP%20request',
+  ],
+  maths: [
+    'native:qalculate',
+    'native:number-integer',
+    'native:geometry',
+    'native:function-plot',
+    'native:sequence-processing',
+  ],
+  'unit-conversion': [
+    'native:units-everyday',
+    'native:units-information',
+    'native:units-mechanics',
+    'native:units-electromagnetic',
+    'native:units-currency',
+  ],
+  simulation: ['native:life', 'native:cube', 'native:origami'],
+  boards: ['native:go', 'native:chess'],
 };
 
 const playerAliases = {
   characters: ['数字转字母', '文字变数字', '字符编码'],
-  encoding: ['解码', '编码', '一串乱码'],
+  encoding: ['解码', '编码'],
   communication: ['符号转字母', '点划线索', '图形密码'],
   classical: ['字母密码', '古典加密'],
   modern: ['加密文件', '解密', '密钥'],
@@ -1453,8 +1524,10 @@ const playerAliases = {
   'cipher-analysis': ['不知道是什么密码', '识别密文', '自动破解'],
   'text-language': ['整理文字', '查字', '提取答案'],
   formats: ['转换格式', '整理数据'],
-  image: ['处理图片', '看隐藏内容'],
-  files: ['分析文件', '解压文件', '校验文件'],
+  image: ['处理图片', '识别图片'],
+  'image-stego': ['图片取证', '看隐藏内容'],
+  files: ['分析文件', '提取嵌入文件'],
+  'file-compression': ['解压文件', '校验文件'],
   network: ['分析网址', '网络包'],
   'coordinates-time': ['日期转换', '位置转换'],
 };
@@ -2117,19 +2190,16 @@ export function createRegistry(catalogue, { includeLocked = true } = {}) {
     });
   }
   const groupOrder = new Map(groupDefinitions.map((group, index) => [group.id, index]));
-  const representativeRank = (item) => {
+  for (const item of entries) {
     const preferred = representativePreferences[item.group] || [];
-    const ranks = [item.id, ...(item.memberIds || [])]
-      .map((id) => preferred.indexOf(id))
-      .filter((index) => index >= 0);
-    const index = ranks.length ? Math.min(...ranks) : -1;
-    return index < 0 ? Number.MAX_SAFE_INTEGER : index;
-  };
+    const index = preferred.indexOf(item.id);
+    item.representativeRank = index < 0 ? Number.MAX_SAFE_INTEGER : index;
+  }
   const labelOrder = new Intl.Collator('zh-Hans', { numeric: true, sensitivity: 'base' });
   entries.sort(
     (first, second) =>
       groupOrder.get(first.group) - groupOrder.get(second.group) ||
-      representativeRank(first) - representativeRank(second) ||
+      first.representativeRank - second.representativeRank ||
       Number(!first.id.startsWith('native:')) - Number(!second.id.startsWith('native:')) ||
       labelOrder.compare(first.title, second.title) ||
       first.id.localeCompare(second.id, 'en'),
@@ -2216,11 +2286,9 @@ export function createRegistry(catalogue, { includeLocked = true } = {}) {
   const groups = groupDefinitions.map((definition) => {
     const sourceMembers = entries.filter((entry) => entry.group === definition.id);
     const members = sourceMembers.filter((entry) => entry.listed !== false);
-    const preferred = (representativePreferences[definition.id] || [])
-      .map((id) => (entryMap.has(id) ? id : aliases.get(id)?.id))
-      .filter(
-        (id) => entryMap.get(id)?.group === definition.id && entryMap.get(id).listed !== false,
-      );
+    const preferred = (representativePreferences[definition.id] || []).filter(
+      (id) => entryMap.get(id)?.group === definition.id && entryMap.get(id).listed !== false,
+    );
     const representatives = [...new Set([...preferred, ...members.map((entry) => entry.id)])].slice(
       0,
       Math.min(5, Math.max(preferred.length, Math.min(3, members.length))),
@@ -2367,9 +2435,6 @@ export function resolveCapability(registry, id, op, direction, variant) {
 export function searchEntries(registry, query, category = '', options = {}) {
   const entries = rankCapabilities(registry.entries, query, category, options);
   if (!String(query).trim()) return entries;
-  // Vocabulary expands discovery, but broad group aliases must not bury an
-  // exact name below a bounded search surface. Rank only the existing matches;
-  // empty-query navigation and equal-score inventory order remain unchanged.
   // A search result is still one family. Its transient direction preference
   // follows only an unambiguous direction-specific name, never shared page
   // vocabulary, and never mutates the registry's default or another search.

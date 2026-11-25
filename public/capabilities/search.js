@@ -136,13 +136,9 @@ const operationNames = (entry) =>
     ...(entry.actions || entry.directions || []).flatMap((item) => [item.op, item.label]),
     ...(entry.variants || []).flatMap((item) => [
       item.title,
-      ...(item.aliases || []),
       ...(item.directions || []).flatMap((direction) => [direction.op, direction.label]),
     ]),
-    ...(entry.open?.nativeDirections || []).flatMap((item) => [
-      item.label,
-      ...(item.aliases || []),
-    ]),
+    ...(entry.open?.nativeDirections || []).map((item) => item.label),
   ].filter(Boolean);
 function indexFor(entries, includeKnowledge) {
   if (!indexes.has(entries)) indexes.set(entries, new Map());
@@ -156,7 +152,15 @@ function indexFor(entries, includeKnowledge) {
         const fields = {
           title: [searchable(entry.title)],
           names: operationNames(entry).map(searchable),
-          aliases: (entry.aliases || []).map(searchable),
+          aliases: [
+            ...new Set([
+              ...(entry.aliases || []),
+              ...(entry.variants || []).flatMap((variant) => variant.aliases || []),
+              ...(entry.open?.nativeDirections || []).flatMap(
+                (direction) => direction.aliases || [],
+              ),
+            ]),
+          ].map(searchable),
         };
         return {
           entry,
@@ -165,6 +169,15 @@ function indexFor(entries, includeKnowledge) {
           title: fields.title[0].normalized,
           memberTitles: (entry.variants || []).map((item) => searchText(item.title)),
           names: fields.names.map((field) => field.normalized),
+          coreNames: [
+            ...(entry.coreNames || []).map(searchText),
+            ...(entry.sourceOperationIds || []).map(algorithmName),
+            ...(entry.actions || entry.directions || []).map((action) => searchText(action.label)),
+          ],
+          haystack: Object.values(fields)
+            .flat()
+            .map((field) => field.normalized)
+            .join(' '),
           aliases: fields.aliases.map((field) => field.normalized),
         };
       });
@@ -185,6 +198,25 @@ function indexFor(entries, includeKnowledge) {
   }
   return scopes.get(includeKnowledge);
 }
+function literalPriority(row, term, normalized) {
+  if (row.title === normalized) return 5;
+  if (
+    row.title.startsWith(normalized) ||
+    row.coreNames.includes(normalized) ||
+    row.memberTitles.includes(normalized)
+  )
+    return 4;
+  if (
+    row.aliases.includes(normalized) ||
+    row.names.includes(normalized) ||
+    row.memberTitles.some((title) => title.startsWith(normalized))
+  )
+    return 3;
+  if (matchesSearch(row.title, term)) return 2;
+  if (row.names.some((name) => matchesSearch(name, term))) return 1;
+  return 0;
+}
+
 export function rankCapabilities(entries, query, category = '', { includeKnowledge = false } = {}) {
   const term = String(query).trim(),
     normalized = searchText(term);
@@ -193,31 +225,14 @@ export function rankCapabilities(entries, query, category = '', { includeKnowled
   const { rows, fuse } = indexFor(entries, includeKnowledge === true || category === 'knowledge');
   const candidates = rows.filter(({ entry }) => eligible(entry));
   const found = new Map();
-  for (const { entry, index, title, memberTitles, names, aliases, fields } of candidates) {
-    if (
-      !matchesSearch(
-        [entry.title, ...(entry.aliases || []), ...operationNames(entry)].join(' '),
-        term,
-      )
-    )
-      continue;
-    const priority =
-      title === normalized
-        ? 4
-        : [...names, ...aliases].includes(normalized) ||
-            operationNames(entry).some((name) => algorithmName(name) === normalized)
-          ? 3
-          : title.startsWith(normalized) || memberTitles.some((name) => name.startsWith(normalized))
-            ? 2.75
-            : matchesSearch(entry.title, term)
-              ? 2
-              : operationNames(entry).some((name) => matchesSearch(name, term))
-                ? 1
-                : 0;
-    // A short article title such as ASCII must not displace an exact tool
-    // alias. Lessons remain ahead of loose substring matches and discoverable.
+  for (const row of candidates) {
+    if (!matchesSearch(row.haystack, term)) continue;
+    const { entry, index, fields } = row;
+    const priority = literalPriority(row, term, normalized);
     const rank =
-      entry.category === 'knowledge' && category !== 'knowledge' && priority >= 3 ? 2.5 : priority;
+      entry.category === 'knowledge' && category !== 'knowledge'
+        ? Math.min(priority, 2.5)
+        : priority;
     found.set(entry.id, {
       entry,
       index,
@@ -226,19 +241,28 @@ export function rankCapabilities(entries, query, category = '', { includeKnowled
       searchMatch: evidence(fields, term),
     });
   }
-  for (const clue of clueSearchTerms(term)) {
-    for (const { entry, index, fields } of candidates) {
-      if (
-        found.has(entry.id) ||
-        !matchesSearch(
-          [entry.title, ...(entry.aliases || []), ...operationNames(entry)].join(' '),
-          clue,
-        )
-      )
-        continue;
-      const match = evidence(fields, clue);
-      for (const snippet of match.snippets) snippet.label = '按线索匹配';
-      found.set(entry.id, { entry, index, priority: 2.8, score: 0, searchMatch: match });
+  // A scene points only to its registered, visible owners. An unlocked-only
+  // capability is absent from the candidate set until discovery permits it.
+  for (const [clueRank, id] of clueSearchTerms(term).entries()) {
+    const row = candidates.find(({ entry }) => entry.id === id);
+    if (!row) continue;
+    const existing = found.get(id);
+    if (existing) {
+      existing.priority = Math.max(3, existing.priority);
+      existing.clueRank = clueRank;
+    } else {
+      found.set(id, {
+        entry: row.entry,
+        index: row.index,
+        priority: 3,
+        clueRank,
+        score: 0,
+        searchMatch: {
+          title: [],
+          snippets: [{ label: '按线索匹配', text: row.entry.title, ranges: [] }],
+          approximate: false,
+        },
+      });
     }
   }
   // A recognized short algorithm name (SM4, SHA1) must not acquire similar but
@@ -257,6 +281,14 @@ export function rankCapabilities(entries, query, category = '', { includeKnowled
     }
   }
   return [...found.values()]
-    .sort((a, b) => b.priority - a.priority || a.score - b.score || a.index - b.index)
+    .sort(
+      (a, b) =>
+        b.priority - a.priority ||
+        (a.clueRank ?? Number.MAX_SAFE_INTEGER) - (b.clueRank ?? Number.MAX_SAFE_INTEGER) ||
+        a.score - b.score ||
+        (a.entry.representativeRank ?? Number.MAX_SAFE_INTEGER) -
+          (b.entry.representativeRank ?? Number.MAX_SAFE_INTEGER) ||
+        a.index - b.index,
+    )
     .map((row) => ({ ...row.entry, searchMatch: row.searchMatch }));
 }

@@ -442,11 +442,6 @@
   flex: 1 1 220px;
   min-width: 0;
 }
-.site-ui.workbench-app .rail-filter-disclosure > summary {
-  padding: 12px;
-  cursor: pointer;
-  color: var(--muted);
-}
 @media (max-width: 600px) {
   /* Reserve an actual bottom lane for the persistent notebook launcher. */
   .site-ui.workbench-app:has([data-ui='floating-actions']) #main {

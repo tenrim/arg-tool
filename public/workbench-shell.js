@@ -6,7 +6,6 @@ import {
   SearchField,
   Input,
   ToolCard,
-  Disclosure,
 } from './ui/index.js';
 import { toolPages, sitePages } from './navigation.js';
 import {
@@ -78,17 +77,6 @@ export function mountWorkbenchShell(header, { navigate, search }) {
     node('span', '全部工具'),
     node('span', String(pages.length), 'rail-badge'),
   );
-  const filter = Input({
-      type: 'search',
-      placeholder: '只筛选左侧目录',
-      attrs: { 'data-tool-search': '' },
-    }),
-    filterLabel = SearchField({
-      className: 'rail-filter',
-      control: filter,
-      label: '筛选侧栏工具',
-      icon: uiIcon('search'),
-    });
   const scroll = node('div', undefined, 'rail-scroll'),
     favoriteSection = node('section', undefined, 'rail-collection'),
     recentSection = node('section', undefined, 'rail-collection');
@@ -100,7 +88,6 @@ export function mountWorkbenchShell(header, { navigate, search }) {
     navigate,
     close: closeDrawer,
     categoryPages: sitePages.filter((page) => page.category),
-    searchKnowledge: () => getPreferences().searchKnowledge,
   });
   scroll.append(favoriteSection, recentSection, groups);
   const railFoot = node('div', undefined, 'rail-footer');
@@ -128,11 +115,7 @@ export function mountWorkbenchShell(header, { navigate, search }) {
   ))
     siteLinks.append(pageLink(entry));
   railFoot.prepend(siteLinks);
-  const filterDisclosure = Disclosure({
-    className: 'rail-filter-disclosure',
-    children: [Box({ tag: 'summary', text: '筛选左侧目录' }), filterLabel],
-  });
-  rail.append(railHead, homeLink, all, filterDisclosure, scroll, railFoot);
+  rail.append(railHead, homeLink, all, scroll, railFoot);
   layout.prepend(rail);
   const menu = node('button', undefined, 'app-icon-button workbench-menu');
   menu.type = 'button';
@@ -303,7 +286,6 @@ export function mountWorkbenchShell(header, { navigate, search }) {
         refreshCollections();
         sidebar.setRegistry(value);
         all.querySelector('.rail-badge').textContent = String(registry.coverage.visibleToolCount);
-        filterRail();
         if (directory.open) renderDirectory();
       })
       .catch(() => {
@@ -320,7 +302,6 @@ export function mountWorkbenchShell(header, { navigate, search }) {
     sidebar.setRegistry(value);
     all.querySelector('.rail-badge').textContent = String(value.coverage.visibleToolCount);
     refreshCollections();
-    filterRail();
     if (directory.open) renderDirectory();
   });
   onDisconnect(groups, unsubscribeRegistry);
@@ -436,6 +417,7 @@ export function mountWorkbenchShell(header, { navigate, search }) {
     if (directory.open) renderDirectory();
   });
   function refreshCollections() {
+    const prefs = getPreferences();
     const anchor = scroll.contains(document.activeElement)
       ? document.activeElement.closest('a[data-route]')
       : null;
@@ -476,7 +458,8 @@ export function mountWorkbenchShell(header, { navigate, search }) {
           },
           { key: linkKey },
         );
-      section.hidden = !entries.length;
+      section.hidden =
+        !entries.length || !(section === favoriteSection ? prefs.showFavorites : prefs.showRecent);
     }
     for (const b of document.querySelectorAll('[data-favorite]')) {
       const panel = b.dataset.favoritePanel || b.dataset.favorite.split('?')[0];
@@ -495,7 +478,6 @@ export function mountWorkbenchShell(header, { navigate, search }) {
       b.title = selected ? '取消收藏' : '收藏工具';
     }
     markCurrent();
-    filterRail();
     // Updating recents above the clicked item must not move that item away from
     // the pointer. Preserve the real scroll position instead of scrolling a copy.
     if (anchor?.isConnected) scroll.scrollTop += anchor.getBoundingClientRect().top - anchorTop;
@@ -514,14 +496,6 @@ export function mountWorkbenchShell(header, { navigate, search }) {
       else a.removeAttribute('aria-current');
     }
   }
-  function filterRail() {
-    const term = filter.value.trim();
-    sidebar.filter(term);
-    const prefs = getPreferences();
-    favoriteSection.hidden = !!term || !favorites.size || !prefs.showFavorites;
-    recentSection.hidden = !!term || !recent.length || !prefs.showRecent;
-  }
-  filter.oninput = filterRail;
   function setActive(route) {
     const path = route.split('?')[0];
     const id = path.split('/')[0];

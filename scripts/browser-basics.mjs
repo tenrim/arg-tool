@@ -391,25 +391,16 @@ try {
         await page.setViewportSize({ width: 1440, height: 950 });
       }
     }
-    // Same vocabulary in all four search surfaces.
+    // The home header and complete directory use the same vocabulary.
     await go('home');
-    await page.locator('#home-search').fill('ＡＳＣＩＩ转换');
-    assert.ok(
-      await page
-        .locator('#panel-home [data-capability="topic:character-codes"]:visible')
-        .isVisible(),
-    );
-    await page.locator('.rail-filter input').fill('打孔纸带');
-    assert.equal(
-      await page.locator('.rail-groups [data-capability="native:baudot"]:visible').isVisible(),
-      true,
-    );
-    await page.locator('.rail-filter input').fill('');
-    await page.locator('.workspace-search-trigger').click();
-    await page.locator('.workspace-search input').fill('ＡＳＣＩＩ转换');
-    assert.ok(
-      await page.locator('.workspace-search [data-capability="topic:character-codes"]').isVisible(),
-    );
+    const header = page.locator('#workspace-search-input');
+    for (const [query, id] of [
+      ['ＡＳＣＩＩ转换', 'topic:character-codes'],
+      ['打孔纸带', 'native:baudot'],
+    ]) {
+      await header.fill(query);
+      await page.locator('#workspace-search-results [data-capability="' + id + '"]').waitFor();
+    }
     await page.keyboard.press('Escape');
     await page.locator('.rail-directory-button').click();
     await page.waitForSelector('.tool-directory[open]');

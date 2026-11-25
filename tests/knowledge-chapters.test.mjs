@@ -8,6 +8,7 @@ import {
 } from '../public/knowledge/content.js';
 import {
   addKnowledgeChapters,
+  COMPLETE_KNOWLEDGE_IDS,
   editKnowledgePresentation,
 } from '../public/knowledge/chapters/index.js';
 import { cipherExamples } from '../public/knowledge/articles/cipher-examples.js';
@@ -16,8 +17,12 @@ import { moduleGraph, closure, cyclesOf } from '../scripts/module-graph.mjs';
 import { boundaryViolations } from '../scripts/architecture-policy.mjs';
 
 test('knowledge chapters: every remaining public article has its own authored and cited introduction', () => {
-  const remaining = ARTICLES.filter((article) => article.capabilityIds[0] !== 'op:Enigma');
-  assert.equal(remaining.length, 290); // 包含新增的图片综合分析及 StegoVeritas 科普。
+  const remaining = ARTICLES.filter((article) => article.preface);
+  // A rewritten member inside a projected topic does not replace the topic's own preface.
+  const completePages = ARTICLES.filter((article) =>
+    COMPLETE_KNOWLEDGE_IDS.has(article.capabilityIds[0]),
+  );
+  assert.equal(remaining.length, ARTICLES.length - completePages.length);
   const introductions = new Set();
   for (const article of remaining) {
     assert.equal(article.preface[0].title, '介绍');
@@ -44,11 +49,70 @@ test('knowledge chapters: every remaining public article has its own authored an
   );
 });
 
+test('all complete lessons publish searchable, cited sections without a site-settings chapter', () => {
+  for (const id of [
+    'op:Enigma',
+    'pair:Vigen%C3%A8re%20Encode',
+    'pair:Rail%20Fence%20Cipher%20Encode',
+    'op:Atbash%20Cipher',
+    'pair:Affine%20Cipher%20Encode',
+    'pair:Bacon%20Cipher%20Encode',
+    'pair:Bifid%20Cipher%20Encode',
+  ]) {
+    assert.ok(COMPLETE_KNOWLEDGE_IDS.has(id), id);
+    assert.ok(
+      ARTICLES.some((article) => article.capabilityIds[0] === id),
+      id,
+    );
+  }
+  const pagesByCapability = new Map(
+    ARTICLES.flatMap((page) =>
+      (page.members?.map((member) => member.capabilityId) || page.capabilityIds).map((id) => [
+        id,
+        page,
+      ]),
+    ),
+  );
+  for (const article of RAW_ARTICLES) {
+    const [id] = article.capabilityIds;
+    if (!COMPLETE_KNOWLEDGE_IDS.has(id)) continue;
+    const page = pagesByCapability.get(id);
+    assert.ok(page, id);
+    if (!page.members) assert.equal(page.preface, undefined);
+    assert.equal(article.sections[0].title, '介绍');
+    assert.ok(
+      article.sections.length >= 5 &&
+        article.sources.length >= (article.topicGroup === 'classical' ? 5 : 2) &&
+        article.misconceptions.length >= 3,
+      id,
+    );
+    assert.ok(article.sections.flatMap((section) => section.examples).length >= 3);
+    for (const section of article.sections) {
+      assert.doesNotMatch(section.title, /[？?]|是什么|怎样|怎么|为什么|你会/);
+      assert.doesNotMatch(section.title, /本站实现|^参数(?:与设置)?$/u);
+      for (const text of [
+        section.title,
+        ...section.paragraphs,
+        ...section.examples.flatMap(Object.values),
+      ]) {
+        assert.ok(searchArticles(text).includes(page), id + ': ' + text);
+      }
+    }
+    for (const text of article.misconceptions) assert.ok(searchArticles(text).includes(page));
+  }
+});
+
 test('knowledge chapters: missing or retired mappings fail rather than silently falling back to a generic article', () => {
   const items = structuredClone(ARTICLES);
   items[0].capabilityIds = ['native:unwritten-chapter'];
   assert.throws(() => addKnowledgeChapters(items), /Missing authored/);
-  assert.throws(() => addKnowledgeChapters(ARTICLES.slice(1)), /Unregistered knowledge chapters/);
+  const legacy = ARTICLES.find((article) => article.preface);
+  if (legacy) {
+    assert.throws(
+      () => addKnowledgeChapters(ARTICLES.filter((article) => article !== legacy)),
+      /Unregistered knowledge chapters/,
+    );
+  }
 });
 
 test('knowledge chapters: prefaces have their own citation validation and cannot satisfy member requirements', () => {
@@ -117,6 +181,7 @@ test('knowledge chapters: removing an empty editorial example wrapper preserves 
 test('knowledge chapters: complete cipher examples are attached to their exact raw member before topic projection', () => {
   assert.equal(cipherExamples.length, 17);
   for (const example of cipherExamples) {
+    if (COMPLETE_KNOWLEDGE_IDS.has(example.capabilityId)) continue;
     const article = RAW_ARTICLES.find(
       (article) => article.capabilityIds[0] === example.capabilityId,
     );

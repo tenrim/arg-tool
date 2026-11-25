@@ -17,7 +17,16 @@ export function analysisConditions({ invalidate, run, showError }) {
       ...CONDITIONAL_OPERATIONS.map((op) => Option(operationName(op), op)),
     ],
   });
-  const binaryOps = ['AMF Decode', 'CBOR Decode', 'From MessagePack', 'Protobuf Decode'];
+  const binaryOps = [
+    'AMF Decode',
+    'CBOR Decode',
+    'BSON deserialise',
+    'Avro to JSON',
+    'Parse TLV',
+    'From MessagePack',
+    'Protobuf Decode',
+    'XOR Brute Force',
+  ];
   const inputFormat = Select({
     id: 'analysis-conditional-format',
     children: [
@@ -26,7 +35,7 @@ export function analysisConditions({ invalidate, run, showError }) {
       Option('原文本 UTF-8 字节', 'utf8'),
     ],
   });
-  const sourceField = Field({ label: '二进制记录的文本表示', control: inputFormat });
+  const sourceField = Field({ label: '输入字节的表示方式', control: inputFormat });
   sourceField.hidden = true;
   inputFormat.addEventListener('change', invalidate);
   const fields = FormGrid({ layout: 'flow' });
@@ -37,7 +46,9 @@ export function analysisConditions({ invalidate, run, showError }) {
       click: () => {
         const selectedStep = step.adapter
           ? step
-          : { adapter: 'cyberchef', params: { recipe: [step] } };
+          : step.op === 'XOR Brute Force'
+            ? { adapter: 'xor-key-report', params: { args: step.args } }
+            : { adapter: 'cyberchef', params: { recipe: [step] } };
         const prefix =
           binaryOps.includes(select.value) && inputFormat.value !== 'utf8'
             ? [
@@ -50,7 +61,22 @@ export function analysisConditions({ invalidate, run, showError }) {
                 selectedStep,
               ]
             : [selectedStep];
-        run(structuredClone(prefix));
+        if (['BSON deserialise', 'Avro to JSON', 'Parse TLV'].includes(select.value)) {
+          run([
+            {
+              adapter: 'binary-record/' + select.value,
+              params: { recipe: structuredClone(prefix.flatMap((item) => item.params.recipe)) },
+            },
+          ]);
+        } else if (
+          ['P-list Viewer', 'Parse ASN.1 hex string', 'Hex to Object Identifier'].includes(
+            select.value,
+          )
+        ) {
+          run([
+            { adapter: 'chef-puzzle/' + select.value, params: { recipe: [structuredClone(step)] } },
+          ]);
+        } else run(structuredClone(prefix));
       },
     },
   });
@@ -69,6 +95,8 @@ export function analysisConditions({ invalidate, run, showError }) {
   async function refresh() {
     invalidate();
     execute.disabled = true;
+    execute.textContent =
+      select.value === 'XOR Brute Force' ? '按条件列出试解结果' : '按这些条件解密并继续分析';
     sourceField.hidden = !binaryOps.includes(select.value);
     try {
       if (select.value.startsWith('native:')) {
@@ -115,6 +143,12 @@ export function analysisConditions({ invalidate, run, showError }) {
       if (!definition) throw Error('原引擎未登记此操作。');
       step = { op: select.value, args: defaults(definition) };
       renderParameters(fields, definition, step, invalidate);
+      if (select.value === 'XOR Brute Force')
+        fields.append(
+          element('p', {
+            text: '可用已知明文片段筛选 1–2 字节密钥。结果按所选样本长度和偏移列出，作为观察记录保留。',
+          }),
+        );
       execute.disabled = false;
     } catch (error) {
       if (!disposed) showError(error.message);

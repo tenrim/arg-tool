@@ -59,8 +59,7 @@ export function element(tag, options = {}, className = '') {
   if (tag === 'a') return Link(config);
   if (tag === 'label') {
     if (/\bupload-zone\b/.test(cls)) return FilePicker(config);
-    if (/(?:^|\s)(?:search-field|directory-search|rail-filter)(?:\s|$)/.test(cls))
-      return SearchField(config);
+    if (/(?:^|\s)(?:search-field|directory-search)(?:\s|$)/.test(cls)) return SearchField(config);
     return Field(config);
   }
   if (/(?:^|\s)(?:chef-args|science-fields|ref-fields|hunt-fields|r4-fields)(?:\s|$)/.test(cls))

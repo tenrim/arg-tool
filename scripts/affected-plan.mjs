@@ -80,12 +80,12 @@ export async function planChecks(files, { unitOnly = false, staticOnly = false }
       if (/\.js$/.test(file)) architecture(file);
       if (/\.(?:js|css|html)$/.test(file)) ui(file);
     }
-    if (
-      /^public\/knowledge\//.test(file) ||
-      /^scripts\/(?:build-knowledge-catalogue|knowledge-catalogue-source|audit-knowledge-catalogue)\.mjs$/.test(
+    const knowledgeSource =
+      /^content\/knowledge\/.*\.md$/.test(file) ||
+      /^scripts\/(?:build-knowledge-catalogue|knowledge-catalogue-source|audit-knowledge-catalogue|knowledge-markdown)\.mjs$/.test(
         file,
-      )
-    )
+      );
+    if (knowledgeSource || file.startsWith('public/knowledge/'))
       add('knowledge-catalogue', ['node', 'scripts/audit-knowledge-catalogue.mjs'], file);
     if (/^public\/.*\.js$/.test(file) && !file.startsWith('public/vendor/'))
       add('events', ['node', 'scripts/audit-events.mjs'], file);
@@ -93,12 +93,10 @@ export async function planChecks(files, { unitOnly = false, staticOnly = false }
       add('events', ['node', 'scripts/audit-events.mjs'], file);
       continue;
     }
-    if (
-      /^scripts\/(?:build-knowledge-catalogue|knowledge-catalogue-source|audit-knowledge-catalogue)\.mjs$/.test(
-        file,
-      )
-    ) {
+    if (knowledgeSource) {
       addUnit('knowledge', file);
+      addUnit('knowledge-markdown', file);
+      addUnit('knowledge-chapters', file);
       addBrowser('knowledge-loading', file);
       continue;
     }

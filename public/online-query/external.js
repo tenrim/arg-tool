@@ -316,7 +316,7 @@ function mountProvider(main, spec) {
           Link({
             text: portal ? '前往原站查阅完整资料' : '查看原文与完整资料',
             attrs: {
-              href: sourceURL(portal ? spec.home : record.sourceURL, spec),
+              href: sourceURL(portal ? spec.home : (record.retrievalURL ?? record.sourceURL), spec),
               target: '_blank',
               rel: 'noopener noreferrer',
             },

@@ -1,4 +1,4 @@
-// One vocabulary used by home, rail, directory and command palette.
+// One vocabulary used by home, directory and global search.
 export const TOOL_KEYWORDS = {
   knowledge: '科普 知识 学习 原理 入门 概念 密码 编码 文件格式 音频 图片 分析 为什么 怎么识别',
   file: '文件头 文件分析 十六进制编辑器 字节编辑 hex editor 二进制 ASCII 撤销 字节搜索 偏移',
@@ -19,6 +19,7 @@ export const TOOL_KEYWORDS = {
     'ASCII 文字转数字 数字转文字 字符码 字节 进制转换 转义 HTML实体 A1Z26 字母转数字 数字转字母',
 };
 export const OPERATION_KEYWORDS = {
+  Unzip: 'ZIP',
   Magic: '未知编码 不知道是什么编码 自动解码 识别编码',
   'Hex Density chart': '六边形分箱 密度图 hexagonal binning 旧译十六进制密度图',
   'HTML To Text': 'HTML源码文本 保留标签 输出类型 旧名HTML转文本',
@@ -72,12 +73,20 @@ export function matchesTool(entry, term) {
 // Bounded, explainable clue vocabulary shared by all discovery surfaces.
 // These identify material + intent, not a specific query sentence or UI route.
 export function clueSearchTerms(query) {
-  const text = searchText(query),
-    terms = [];
-  if (/(图片|照片|图像|png|jpe?g)/i.test(text) && /(藏|隐藏|隐写)/.test(text))
-    terms.push('图片隐写');
-  if (/(未知|不知道|看不懂|不认识)/.test(text) && /(编码|密文|乱码|字符串|文字|文本)/.test(text))
-    terms.push('Magic');
-  if (/(音频|声音|录音)/.test(text) && /(嘀|滴|摩斯|长短音)/.test(text)) terms.push('音频摩斯');
-  return terms;
+  const text = searchText(query);
+  if (
+    (/(未知|不知道|看不懂|不认识)/.test(text) && /(编码|密文|乱码|字符串|文字|文本)/.test(text)) ||
+    text.includes('一串乱码')
+  )
+    return ['native:cipher-detect', 'op:Magic'];
+  if (/(文件|档案).*(藏|隐藏|夹带|嵌入).*文件|(?:分离|夹带)文件/.test(text))
+    return ['topic:embedded-files'];
+  if (/(音频|声音|录音).*(?:藏.*图|看图)/.test(text)) return ['topic:audio-spectrogram'];
+  if (/(?:动图|gif|apng).*帧|^动图$|^拆帧$|每一帧/.test(text))
+    return ['topic:video', 'native:forensics-image-survey'];
+  if (/(图片|照片|图像|png|jpe?g)/.test(text) && /(藏|隐藏|隐写)/.test(text))
+    return ['native:forensics-image-survey', 'native:image-steg'];
+  if (/(音频|声音|录音)/.test(text) && /(嘀|滴|摩斯|长短音)/.test(text))
+    return ['native:morse-audio'];
+  return [];
 }

@@ -203,9 +203,8 @@ try {
     await page.evaluate(async () =>
       (await import('/preferences.js')).setPreferences({ showAdvancedParameters: true }),
     );
-    const advancedEncoding = page.locator('#ct-encoding .ct-advanced');
-    if ((await advancedEncoding.getAttribute('open')) === null)
-      await advancedEncoding.locator('summary').click();
+    const advanced = page.locator('#ct-encoding .ct-advanced:not([open]) > summary');
+    if (await advanced.isVisible()) await advanced.click();
     await page.waitForSelector('#ct-encoding .chef-composite');
     await page.locator('#ct-encoding .ct-input').fill('5Lit5paH');
     await page.locator('#ct-encoding .ct-run').click();
@@ -272,8 +271,6 @@ try {
     assert.equal(await page.locator('#braille-symbol').textContent(), '⠁');
     await page.screenshot({ path: screenshots + '/symbols-mobile.png' });
     await page.locator('.workbench-menu').click();
-    await page.locator('.workbench-drawer .rail-filter-disclosure > summary').click();
-    await assertSearch('.rail-filter');
     await page.locator('.rail-directory-button').click();
     assert.equal(
       await page

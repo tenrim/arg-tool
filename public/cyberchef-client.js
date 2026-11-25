@@ -8,7 +8,8 @@ let preparingClient = null;
 // Only the visible analysis page requests a speculative, input-free bootstrap.
 // A real task can take it mid-download; only an unclaimed bootstrap is cancelled on leave.
 export function prepareCyberChef() {
-  if ((idleClient && !idleClient.closed) || preparingClient || navigator.connection?.saveData) return;
+  if ((idleClient && !idleClient.closed) || preparingClient || navigator.connection?.saveData)
+    return;
   if (typeof Worker === 'undefined') return;
   const client = new CyberChefClient();
   preparingClient = client;

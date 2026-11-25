@@ -58,6 +58,7 @@ try {
     }
   });
   const page = await context.newPage();
+  page.setDefaultTimeout(20000);
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('https://arg.test/#crypto');
   await page.waitForSelector('#ct-crypto[data-operation]');
@@ -190,25 +191,23 @@ try {
   await page.evaluate(async () =>
     (await import('./preferences.js')).setPreferences({ searchKnowledge: true }),
   );
-  const mobileFilter = page.locator('.workbench-drawer .rail-filter-disclosure');
-  if ((await mobileFilter.getAttribute('open')) === null)
-    await mobileFilter.locator('summary').click();
-  await mobileFilter.locator('input').fill('纸笔');
+  await page.locator('.rail-directory-button').click();
+  await page.locator('.directory-search input').fill('纸笔');
   assert.ok(
-    await page.locator('.rail-groups [data-capability="topic:paper-puzzles"]:visible').count(),
+    await page.locator('.directory-grid [data-capability="topic:paper-puzzles"]:visible').count(),
   );
   assert.ok(
     await page
-      .locator('.rail-groups [data-capability="learn:function-topic:paper-puzzles"]:visible')
+      .locator('.directory-grid [data-capability="learn:function-topic:paper-puzzles"]:visible')
       .count(),
     'Search exposes the unified paper workspace and its precise per-rule lesson',
   );
   assert.equal(
-    await page.locator('.rail-groups [data-capability="native:paper"]:visible').count(),
+    await page.locator('.directory-grid [data-capability="native:paper"]:visible').count(),
     0,
     'the old default rule is not a second navigation tool',
   );
-  await page.locator('.rail-groups [data-capability="topic:paper-puzzles"]:visible').click();
+  await page.locator('.directory-grid [data-capability="topic:paper-puzzles"]:visible').click();
   assert.equal(await page.locator('.workbench-drawer').getAttribute('open'), null);
   await page.waitForSelector('#panel-paper:not([hidden])');
   assert.equal(
@@ -217,10 +216,6 @@ try {
   );
   await page.evaluate(() => (location.hash = 'crypto'));
   assert.equal(await task.locator('.ct-input').inputValue(), '保留我的输入');
-  await page.locator('.rail-filter input').evaluate((n) => {
-    n.value = '';
-    n.dispatchEvent(new Event('input', { bubbles: true }));
-  });
   await page.setViewportSize({ width: 1440, height: 950 });
   await page.waitForFunction(() =>
     document.querySelector('#panel-crypto:not([hidden]) .capability-workspace-context'),
@@ -306,7 +301,6 @@ try {
   if (process.env.WORKSPACE_SCREENSHOTS)
     await mkdir(process.env.WORKSPACE_SCREENSHOTS, { recursive: true });
   for (const width of [320, 390, 768, 1080, 1440]) {
-    console.log('检查工作台全部入口 @' + width + 'px');
     await page.setViewportSize({ width, height: 950 });
     for (const route of routes) {
       await page.evaluate((route) => (location.hash = route), route);
@@ -377,12 +371,14 @@ try {
   assert.equal(await picker.locator('.ct-output').count(), 0);
   // The Base64 alphabet must render twelve separate glyphs; contextual font
   // substitutions used to join its trailing "/=" into a mathematical symbol.
-  const encodingParameters = picker.locator('.ct-advanced');
-  if ((await encodingParameters.getAttribute('open')) === null)
-    await encodingParameters.locator('summary').click();
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(async () =>
+    (await import('./preferences.js')).setPreferences({ showAdvancedParameters: true }),
+  );
+  const advanced = picker.locator('.ct-advanced:not([open]) > summary');
+  if (await advanced.isVisible()) await advanced.click();
   const alphabet = picker.locator('[data-arg="0"] input').first();
   await alphabet.waitFor({ state: 'visible' });
-  await page.evaluate(() => document.fonts.ready);
   assert.equal(await alphabet.inputValue(), 'A-Za-z0-9+/=');
   const fontSession = await context.newCDPSession(page);
   await fontSession.send('DOM.enable');

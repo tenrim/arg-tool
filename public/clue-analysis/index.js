@@ -5,6 +5,7 @@ import { fail } from './data.js';
 import { puzzleAdapters } from './puzzle-adapters.js';
 import { chefPuzzleAdapters } from './chef-puzzle-adapters.js';
 import { catalogAdapters } from './catalog-adapters.js';
+import { formatProfiles, structuredRecords } from './format-profiles.js';
 
 // Optional foundation entry. No registration, engine startup or UI side effects on import.
 export function createClueAnalysis({
@@ -14,13 +15,27 @@ export function createClueAnalysis({
   key = '',
   expandHypotheses = false,
 } = {}) {
-  const chef = cyberChefAdapter({ textOnly });
+  const chef = cyberChefAdapter({
+    textOnly,
+    ownedSuggestions: puzzle
+      ? [
+          ...formatProfiles.map((p) => p.op),
+          ...structuredRecords.map(([op]) => op),
+          'Bacon Cipher Decode',
+          'From Float',
+        ]
+      : [],
+  });
   const session = createAnalysisSession({
     adapters: [
-      ...localAdapters(),
+      ...localAdapters({ key }),
       chef,
       ...(puzzle
-        ? [...puzzleAdapters({ key }), ...chefPuzzleAdapters(chef, { key }), ...catalogAdapters()]
+        ? [
+            ...puzzleAdapters({ key }),
+            ...chefPuzzleAdapters(chef, { key, expanded: expandHypotheses }),
+            ...catalogAdapters(),
+          ]
         : []),
     ],
     limits,

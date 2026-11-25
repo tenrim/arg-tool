@@ -64,9 +64,11 @@ try {
   for (const width of [390, 1440]) {
     for (const status of [404, 503]) {
       const { context, page } = await contextFor(width);
-      let failures = 0;
-      await context.route('**/vendor/cyberchef/catalogue.json', async (route) => {
-        if (!failures++) {
+      let failures = 0,
+        unavailable = true;
+      await context.route(/\/vendor\/cyberchef\/catalogue\.json(?:\?.*)?$/, async (route) => {
+        if (unavailable) {
+          failures++;
           await route.fulfill({ status, body: 'Controlled catalogue transport failure' });
           return;
         }
@@ -76,7 +78,8 @@ try {
       const query = new URLSearchParams({ task: 'pair:To%20Base64', op: 'From Base64' });
       await page.goto('https://arg.test/#encoding/base?' + query);
       await page.locator('#app-startup[data-state=error]').waitFor();
-      assert.equal(failures, 1, 'one initial real resource failure was injected');
+      assert.ok(failures >= 1, 'catalogue requests failed until manual retry');
+      unavailable = false;
       assert.equal(await page.locator('.layout').evaluate((n) => n.inert), true);
       await page.locator('#startup-retry').click();
       await page.waitForFunction(() => document.documentElement.dataset.startupState === 'ready');
@@ -121,7 +124,7 @@ try {
       let release, entered;
       const gate = new Promise((resolveGate) => (release = resolveGate)),
         requested = new Promise((resolveRequest) => (entered = resolveRequest));
-      await context.route('**/vendor/cyberchef/catalogue.json', async (route) => {
+      await context.route(/\/vendor\/cyberchef\/catalogue\.json(?:\?.*)?$/, async (route) => {
         entered();
         await gate;
         await route.fulfill({
@@ -140,13 +143,17 @@ try {
         release();
         await page.waitForFunction(() => document.documentElement.dataset.startupState === 'ready');
         await page.evaluate(async () =>
-          (await import('./preferences.js')).setPreferences({ searchKnowledge: true }),
+          (await import('./preferences.js')).setPreferences({
+            searchKnowledge: true,
+            showAdvancedParameters: true,
+          }),
         );
         if (width < 1100) {
           await page.locator('.workbench-menu').click();
           await page.locator('.workbench-drawer[open]').waitFor();
         }
-        await page.locator('.rail-filter input').fill('SM4');
+        await page.locator('.rail-directory-button').click();
+        await page.locator('.directory-search input').fill('SM4');
         release();
         const listed = await page.evaluate(async () => {
           const { loadRegistry } = await import('./capabilities/registry.js');
@@ -157,9 +164,9 @@ try {
           (count) => document.querySelector('.rail-badge')?.textContent === String(count),
           listed,
         );
-        assert.equal(await page.locator('.rail-filter input').inputValue(), 'SM4');
+        assert.equal(await page.locator('.directory-search input').inputValue(), 'SM4');
         const tasks = await page
-          .locator('.rail-groups a:visible')
+          .locator('.directory-grid [data-capability]:visible')
           .evaluateAll((nodes) => nodes.map((n) => n.dataset.capability));
         assert.deepEqual(
           tasks,
@@ -167,7 +174,7 @@ try {
           'deferred search exposes the actual cipher first and its precise lesson without fuzzy algorithm substitutions',
         );
         await page
-          .locator('.rail-groups [data-capability="learn:function-pair:SM4%20Encrypt"]:visible')
+          .locator('.directory-grid [data-capability="learn:function-pair:SM4%20Encrypt"]:visible')
           .click();
         await page
           .locator('#knowledge-detail [data-knowledge-detail="function-pair:SM4%20Encrypt"]')
@@ -185,7 +192,11 @@ try {
           await page.locator('.workbench-menu').click();
           await page.locator('.workbench-drawer[open]').waitFor();
         }
-        await page.locator('.rail-groups [data-capability="pair:SM4%20Encrypt"]:visible').click();
+        await page.locator('.rail-directory-button').click();
+        await page.locator('.directory-search input').fill('SM4');
+        await page
+          .locator('.directory-grid [data-capability="pair:SM4%20Encrypt"]:visible')
+          .click();
         await page.waitForFunction(
           () => document.querySelector('#ct-crypto')?.dataset.operation === 'SM4 Encrypt',
         );
@@ -197,6 +208,8 @@ try {
         // by another implementation of the algorithm inside this test.
         const cipher = page.locator('#ct-crypto'),
           block = '0123456789abcdeffedcba9876543210';
+        const advanced = cipher.locator('details.ct-advanced:not([open]) > summary');
+        if (await advanced.isVisible()) await advanced.click();
         await cipher.locator('[data-arg="0"] input').fill(block);
         await cipher.locator('[data-arg="2"] select').selectOption('ECB/NoPadding');
         await cipher.locator('[data-arg="3"] select').selectOption('Hex');
@@ -232,7 +245,7 @@ try {
       console.log(
         'PASS ' +
           width +
-          ': delayed startup gate, restored SM4 sidebar search, actual tool/knowledge groups, cited SM4 lesson and real known-answer encryption',
+          ': delayed startup gate, SM4 directory search, actual tool/knowledge groups, cited SM4 lesson and real known-answer encryption',
       );
     }
     {

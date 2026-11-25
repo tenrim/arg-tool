@@ -1,31 +1,12 @@
 import { capabilityGroupDefinitions } from '../navigation.js';
-import { articles as encodings } from './articles/encodings.js';
+import { markdownArticles } from './articles/markdown-overrides.js';
 import { articles as crypto } from './articles/crypto.js';
 import { articles as textFormats } from './articles/text-formats.js';
-import { articles as fileWorkbench } from './articles/file-workbench.js';
-import { articles as funTools } from './articles/fun-tools.js';
-import { articles as forensics } from './articles/forensics.js';
 import { articles as files } from './articles/files.js';
 import { articles as mediaTechnical } from './articles/media-technical.js';
-import { articles as referenceSim } from './articles/reference-sim.js';
-import { articles as codeRunner } from './articles/code-runner.js';
 import { articles as expansion } from './articles/expansion.js';
-import { articles as atlasCelestial } from './articles/atlas-celestial.js';
-import { articles as atlasLifeCulture } from './articles/atlas-life-culture.js';
-import { articles as characterTables } from './articles/character-tables.js';
-import { articles as timezones } from './articles/timezones.js';
-import { articles as onlineQuery } from './articles/online-query.js';
 import { articles as onlineServices } from './articles/online-services.js';
-import { articles as animation } from './articles/animation.js';
-import { articles as practical } from './articles/practical.js';
-import { articles as everyday } from './articles/everyday.js';
-import { articles as travelFinance } from './articles/travel-finance.js';
-import { articles as qalculate } from './articles/qalculate.js';
-import { articles as functionPlot } from './articles/function-plot.js';
-import {
-  articles as upstreamCompletion,
-  extendExistingArticles,
-} from './articles/upstream-completion.js';
+import { extendExistingArticles } from './articles/upstream-completion.js';
 import { articles as completion } from './articles/completion.js';
 import { projectKnowledgeTopics } from './topics.js';
 import { addKnowledgeChapters, editKnowledgePresentation } from './chapters/index.js';
@@ -221,36 +202,30 @@ function freeze(value) {
   }
   return value;
 }
+export function applyMarkdownOverrides(baseArticles, overrides) {
+  const replacements = new Map(overrides.map((article) => [article.capabilityIds[0], article]));
+  const baseIds = new Set(baseArticles.map((article) => article.capabilityIds[0]));
+  return [
+    ...baseArticles.map((article) => replacements.get(article.capabilityIds[0]) ?? article),
+    ...overrides.filter((article) => !baseIds.has(article.capabilityIds[0])),
+  ];
+}
 export const RAW_ARTICLES = freeze(
   validateKnowledgeArticles(
     editKnowledgePresentation(
-      extendExistingArticles([
-        ...encodings,
-        ...crypto,
-        ...textFormats,
-        ...files,
-        ...fileWorkbench,
-        ...funTools,
-        ...forensics,
-        ...mediaTechnical,
-        ...referenceSim,
-        ...codeRunner,
-        ...expansion,
-        ...atlasCelestial,
-        ...atlasLifeCulture,
-        ...timezones,
-        ...characterTables,
-        ...onlineQuery,
-        ...onlineServices,
-        ...completion,
-        ...animation,
-        ...qalculate,
-        ...functionPlot,
-        ...practical,
-        ...everyday,
-        ...travelFinance,
-        ...upstreamCompletion,
-      ]),
+      applyMarkdownOverrides(
+        extendExistingArticles([
+          ...crypto,
+          ...textFormats,
+          ...files,
+
+          ...mediaTechnical,
+          ...expansion,
+          ...onlineServices,
+          ...completion,
+        ]),
+        markdownArticles,
+      ),
     ),
   ),
 );

@@ -1,11 +1,14 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { chooseNativeTask } from './browser-navigation.mjs';
 import { chromium } from '../test-tools/node_modules/playwright/index.mjs';
 import { startBrowserTestSite } from './browser-test-site.mjs';
 
 const cases = [
+  'puzzle-formats',
+  'text-coverage',
   'first-open',
   'runtime-reuse',
   'depth-controls',
@@ -48,6 +51,7 @@ let browser;
 try {
   browser = await chromium.launch({
     headless: true,
+    downloadsPath: resolve('.tmp-expansion-tests/clue-analysis'),
     executablePath: process.env.CHROMIUM_PATH || undefined,
   });
   const context = await browser.newContext();
@@ -90,6 +94,283 @@ try {
   await initialize();
   assert.equal(page.workers().length, 0, 'import must not start engines');
   for (const name of selected) {
+    if (page.url() !== site.base + '/__clue-test') {
+      await page.goto(site.base + '/__clue-test');
+      await initialize();
+    }
+    if (name === 'puzzle-formats') {
+      const results = await page.evaluate(async () => {
+        const { cyberChefAdapter } = await import('/clue-analysis/chef-adapter.js');
+        const { chefPuzzleAdapters } = await import('/clue-analysis/chef-puzzle-adapters.js');
+        const { createAnalysisSession } = await import('/clue-analysis/session.js');
+        const { puzzleAdapters } = await import('/clue-analysis/puzzle-adapters.js');
+        const { localAdapters } = await import('/clue-analysis/local-adapters.js');
+        const { encode } = await import('/vendor/fun-tools/beast.js');
+        const chef = cyberChefAdapter({ textOnly: true });
+        const buffer = (s) => Array.from(new TextEncoder().encode(s));
+        const sync = Array(16).fill(77);
+        const avro = [
+          79,
+          98,
+          106,
+          1,
+          2,
+          22,
+          ...buffer('avro.schema'),
+          16,
+          ...buffer('"string"'),
+          0,
+          ...sync,
+          2,
+          10,
+          8,
+          ...buffer('MIST'),
+          ...sync,
+        ]
+          .map((n) => n.toString(16).padStart(2, '0'))
+          .join('');
+        const binaryPlist =
+          '62706c6973743030d101025161544d495354080b0d0000000000000101000000000000000300000000000000000000000000000012';
+        const fixtures = [
+          ['search/Caesar Box Cipher', 'ADGBEHCFI', 'ABCDEFGHI'],
+          ['search/Bacon Cipher Decode', 'tHe NIgHt wiNds aRE caLm.', 'MIST'],
+          ['search/Bacon Cipher Decode', 'ABABB ABAAA BAAAB BAABA', 'MIST'],
+          ['search/Bacon Cipher Decode', 'ant north ant noon north', 'M'],
+          ['tapcode', '11 12 13 14', 'MIST', 'MIST'],
+          ...['嗷呜啊~', '😀😁😂😃'].flatMap((alphabet, i) =>
+            [false, true].map((framed) => [
+              i ? 'puzzle/beast-keyed' : 'puzzle/beast',
+              encode('迷雾', { alphabet, framed }),
+              '迷雾',
+              i ? alphabet : '',
+            ]),
+          ),
+          ['chef-puzzle/PHP Deserialize', 'a:1:{s:1:"k";i:42;}', '{"k": 42}'],
+          ['chef-puzzle/PHP Deserialize', 's:3:"雾";', '"雾"'],
+          [
+            'chef-puzzle/P-list Viewer',
+            '<plist><dict><key>My Key</key><string>MIST &amp; FOG</string></dict></plist>',
+            'My Key => "MIST & FOG"',
+            '',
+            true,
+          ],
+          [
+            'chef-puzzle/Analyse UUID',
+            '550e8400-e29b-41d4-a716-446655440000',
+            'Version:\n4',
+            '',
+            true,
+          ],
+          ['chef-puzzle/Bcrypt parse', '$2y$10$' + 'a'.repeat(53), 'Rounds: 10', '', true],
+          ['chef-puzzle/Parse ASN.1 hex string', '3003020105', 'INTEGER 05', '', true],
+          ['chef-puzzle/Hex to Object Identifier', '2a864886f70d', '1.2.840.113549', '', true],
+          ['chef-puzzle/Remove Diacritics', 'Café', 'Cafe'],
+          ['chef-puzzle/HTML To Text', '<p>MIST</p>', 'MIST'],
+          ['chef-puzzle/Text-Integer Conversion', '4276803', 'ABC'],
+          ['chef-puzzle/Text-Integer Conversion', '0xe99bbe', '雾'],
+          [
+            'chef-puzzle/P-list Viewer',
+            '<plist version="1.0"><dict><key>x</key><string>MIST</string></dict></plist>',
+            'x => "MIST"',
+            '',
+            true,
+          ],
+          ['binary-record/BSON deserialise', '0c0000001078000100000000', '"x": 1', '', true],
+          ['binary-record/Avro to JSON', avro, '"MIST"', '', true],
+          ['binary-record/Parse TLV', '0103414243', '"length":3', '', true],
+          ['binary-record/P-list Viewer', binaryPlist, '"MIST"', '', true],
+        ];
+        const results = [];
+        for (const [id, s, expected, key = '', observation = false] of fixtures) {
+          const adapter = [
+            ...chefPuzzleAdapters(chef),
+            ...localAdapters({ key }),
+            ...puzzleAdapters({ key }),
+          ].find((a) => a.id === id);
+          const session = createAnalysisSession({
+            adapters: [{ ...chef, suggest: undefined }, adapter],
+            limits: { depth: 2, taskMs: 30000 },
+          });
+          try {
+            const report = await session.analyze(
+              { type: 'text', text: s },
+              id.startsWith('binary-record/')
+                ? { prefix: [{ adapter: 'cyberchef', params: { recipe: [{ op: 'From Hex' }] } }] }
+                : {},
+            );
+            const found = report.edges.some((edge) => {
+              const node = report.nodes.find((n) => n.id === edge.to);
+              if (
+                edge.adapter !== id ||
+                edge.status !== 'completed' ||
+                node?.observation !== observation
+              )
+                return false;
+              const value = node.artifact.text ?? JSON.stringify(node.artifact.value);
+              return observation ? value.includes(expected) : value === expected;
+            });
+            results.push({
+              id,
+              expected,
+              found,
+              ...(!found && {
+                errors: report.errors,
+                outputs: report.nodes.slice(1, 8).map((n) => n.artifact.text ?? n.artifact.value),
+              }),
+            });
+          } finally {
+            session.dispose();
+          }
+        }
+        const ctx = { signal: new AbortController().signal };
+        for (const [s, op, code] of [
+          ['s:1:"ab";', 'PHP Deserialize', 'INPUT_INVALID'],
+          ['O:1:"X":0:{}', 'PHP Deserialize', 'UNSUPPORTED'],
+          ['wrong', 'Avro to JSON', 'INPUT_INVALID'],
+        ]) {
+          try {
+            await chef.run({ type: 'text', text: s }, { recipe: [{ op }] }, ctx);
+            results.push({ op, found: false });
+          } catch (error) {
+            results.push({ op, found: error.code === code, code: error.code });
+          }
+        }
+        for (const [op, hex] of [
+          ['Parse TLV', '01034142'],
+          ['Avro to JSON', '4f626a01'],
+          ['BSON deserialise', '0800000042000000'],
+          ['P-list Viewer', '62706c6973743030'],
+        ]) {
+          try {
+            await chef.run(
+              { type: 'text', text: hex },
+              { recipe: [{ op: 'From Hex' }, { op }] },
+              ctx,
+            );
+            results.push({ op, found: false });
+          } catch (error) {
+            results.push({ op, found: error.code === 'INPUT_INVALID', code: error.code });
+          }
+        }
+        const floating = await chef.run(
+          { type: 'text', text: '0.5' },
+          { recipe: [{ op: 'From Float', args: ['Big Endian', 'Float (4 bytes)', 'Space'] }] },
+          ctx,
+        );
+        results.push({ op: 'From Float', found: String(floating.artifact.bytes) === '63,0,0,0' });
+        const integer = chefPuzzleAdapters(chef).find(
+          (a) => a.id === 'chef-puzzle/Text-Integer Conversion',
+        );
+        for (const s of ['0xffffff', '0x410042']) {
+          const input = { type: 'text', text: s };
+          const { eligible } = await integer.run(input, integer.suggest(input)[0].params, ctx);
+          results.push({ s, found: eligible === false });
+        }
+        return results;
+      });
+      assert.deepEqual(
+        results.filter((r) => !r.found),
+        [],
+      );
+      console.log('PASS puzzle-formats', results.length);
+    }
+    if (name === 'text-coverage') {
+      const results = await page.evaluate(async () => {
+        const { textCandidates } = await import('/clue-analysis/presentation.js');
+        const fixtures = [
+          ['8q', 'chef-puzzle/From Base92', 'A'],
+          ['8y;K', 'chef-puzzle/From Base92', 'ABC'],
+          ['xn--bcher-kva.de', 'chef-puzzle/From Punycode', 'bücher.de'],
+          ['mnchen-3ya', 'chef-puzzle/From Punycode/raw', 'münchen'],
+          ['00011', 'baudot', 'A'],
+          ['0x03', 'baudot', 'A'],
+          ['3', 'baudot', 'A'],
+          ['a1a5', 'puzzle/prussian', '5.100: EMPFANGSZEICHEN'],
+          ['5.100', 'puzzle/prussian-code', '5.100: EMPFANGSZEICHEN'],
+          ['h3ll0', 'chef-puzzle/Convert Leet Speak', 'hello'],
+          ['A B R1', 'puzzle/marine', 'ABA'],
+          ['BaCoN', 'puzzle/elements', 'Ba · Co · N\n原子序数 56 27 7', true],
+          ['Ω', 'puzzle/character-table', 'Greek', true],
+          ['TBAGOLOROX', 'search/Rail Fence Cipher Decode', 'ARGTOOLBOX'],
+          ['OBKKH', 'search/XOR', 'HELLO', false, true],
+          ['GDKKN', 'search/ROT47', 'HELLO', false, true],
+        ];
+        const results = [];
+        for (const [text, adapter, expected, observation = false, expanded = false] of fixtures) {
+          const session = foundation.createClueAnalysis({
+            puzzle: true,
+            textOnly: true,
+            expandHypotheses: expanded,
+            limits: {
+              depth: 1,
+              proposals: null,
+              attempts: 8192,
+              nodes: 4096,
+              totalMs: 60000,
+              taskMs: 30000,
+            },
+          });
+          try {
+            const report = await session.analyze({ type: 'text', text });
+            const match = textCandidates(report).find(
+              (row) =>
+                (adapter === 'puzzle/character-table'
+                  ? row.text.includes(expected) && row.text.includes('U+03A9')
+                  : row.text === expected) &&
+                row.observation === observation &&
+                row.incoming.some((edge) => edge.adapter === adapter),
+            );
+            results.push({
+              text,
+              adapter,
+              found: Boolean(match),
+              ...(!match && {
+                edges: report.edges.filter((e) => e.adapter === adapter).slice(0, 2),
+              }),
+            });
+          } finally {
+            session.dispose();
+          }
+        }
+        const keyed = foundation.createClueAnalysis({
+          textOnly: true,
+          puzzle: true,
+          limits: { depth: 3 },
+        });
+        try {
+          const report = await keyed.analyze(
+            { type: 'text', text: '53 76 51' },
+            {
+              prefix: [
+                { adapter: 'cyberchef', params: { recipe: [{ op: 'From Hex' }] } },
+                {
+                  adapter: 'xor-key-report',
+                  params: { args: [2, 3, 0, 'Standard', false, true, false, 'ABC'] },
+                },
+              ],
+            },
+          );
+          const item = textCandidates(report).find((row) => row.id === report.resultId);
+          results.push({
+            text: '53 76 51',
+            adapter: 'xor-key-report',
+            found: Boolean(
+              item?.observation &&
+              /Key = 1234: ABC/i.test(item.text) &&
+              !report.checks.some((check) => check.nodeId === item.id),
+            ),
+          });
+        } finally {
+          keyed.dispose();
+        }
+        return results;
+      });
+      assert.deepEqual(
+        results.filter((r) => !r.found),
+        [],
+      );
+      console.log('PASS text-coverage', results.length);
+    }
     if (name === 'first-open') {
       const tab = await context.newPage();
       const engines = [];
@@ -542,16 +823,59 @@ try {
         timeout: 30000,
       });
       assert.match(await page.locator('#analysis-output').inputValue(), /hello/);
-      await page.locator('#analysis-input').fill('KHOOR 123 '.repeat(50));
-      await page.locator('#analysis-magic').click();
+      await page.locator('#analysis-conditional-operation').selectOption('BSON deserialise');
+      await page.locator('#analysis-conditional-format').selectOption('base64');
+      await page
+        .locator('#analysis-input')
+        .fill(Buffer.from('0c0000001078000100000000', 'hex').toString('base64'));
+      await known.getByRole('button', { name: '按这些条件解密并继续分析' }).click();
       await page.waitForFunction(() =>
-        /第 [1-9]/.test(document.getElementById('analysis-status')?.textContent || ''),
+        document.getElementById('analysis-output').value.includes('"x": 1'),
       );
-      await page.waitForTimeout(1500);
-      await page.locator('#analysis-stop').click();
+      await page.locator('#analysis-conditional-format').selectOption('hex');
+      await page.locator('#analysis-conditional-operation').selectOption('Bacon Cipher Decode');
+      const baconFields = known.locator('select');
+      assert(
+        await baconFields
+          .filter({ has: page.locator('option[value="A-M/N-Z first letter"]') })
+          .count(),
+      );
+      assert(await page.locator('#analysis-conditional-format').isHidden());
+      await page.locator('#analysis-conditional-operation').selectOption('XOR Brute Force');
+      await page.locator('#analysis-input').fill('53 76 51');
+      await known.getByRole('button', { name: '按条件列出试解结果' }).click();
+      await page.waitForFunction(() =>
+        document.getElementById('analysis-output').value.includes('Key = 01'),
+      );
+      await page.locator('#analysis-input').fill('KHOOR 123 '.repeat(50));
+      assert.ok(
+        await page.evaluate(
+          () =>
+            new Promise((resolve) => {
+              const status = document.getElementById('analysis-status');
+              const start = document.getElementById('analysis-magic');
+              const stop = document.getElementById('analysis-stop');
+              const observer = new MutationObserver(() => {
+                if (!stop.disabled && /第 [1-9]/.test(status.textContent)) {
+                  observer.disconnect();
+                  stop.click();
+                  resolve(true);
+                } else if (stop.disabled && !start.disabled) {
+                  observer.disconnect();
+                  resolve(false);
+                }
+              });
+              observer.observe(status, { childList: true, subtree: true, characterData: true });
+              observer.observe(start, { attributes: true, attributeFilter: ['disabled'] });
+              start.click();
+            }),
+        ),
+        'stop the real analysis while it is still running',
+      );
       await page.waitForFunction(() => !document.getElementById('analysis-magic').disabled, null, {
         timeout: 15000,
       });
+      assert.match(await page.locator('#analysis-status').textContent(), /已停止，保留/);
       assert.equal(
         await page.locator('#analysis-export').isDisabled(),
         false,

@@ -15,6 +15,9 @@ import { cyberChefAdapter, LOCAL_CHEF_OPERATIONS } from '../public/clue-analysis
 import { textCandidates, reportMessage } from '../public/clue-analysis/presentation.js';
 import { createClueAnalysis } from '../public/clue-analysis/index.js';
 import { parserError } from '../public/clue-analysis/expected-errors.js';
+import { chefPuzzleAdapters } from '../public/clue-analysis/chef-puzzle-adapters.js';
+import { localAdapters } from '../public/clue-analysis/local-adapters.js';
+import { CONDITIONAL_OPERATIONS } from '../public/clue-analysis/conditional-operations.js';
 import { puzzleAdapters } from '../public/clue-analysis/puzzle-adapters.js';
 const text = (value) => ({ type: 'text', text: value });
 const adapter = (id, run, suggest) => ({
@@ -25,6 +28,128 @@ const adapter = (id, run, suggest) => ({
   run,
   suggest,
 });
+test('Caesar Box and Bacon trials obey shape, limits, alphabets and rejection rules', async () => {
+  const chef = { run: async () => ({ artifact: text('M?ST') }) };
+  const select = (name, expanded = false) =>
+    chefPuzzleAdapters(chef, { expanded }).find((a) => a.id === 'search/' + name);
+  const box = select('Caesar Box Cipher');
+  assert(box.directTrials && box.exploratory);
+  for (const [s, accepted] of [
+    ['abc', false],
+    ['abcd', true],
+    ['A'.repeat(512), true],
+    ['A'.repeat(513), false],
+    ['A\nBC', false],
+  ])
+    assert.equal(box.matches(text(s)), accepted);
+  for (const [n, expanded, last] of [
+    [4, false, 3],
+    [64, false, 12],
+    [64, true, 32],
+  ])
+    assert.deepEqual(
+      select('Caesar Box Cipher', expanded)
+        .suggest(text('A'.repeat(n)))
+        .map((p) => p.params.recipe[0].args[0]),
+      Array.from({ length: last - 1 }, (_, i) => i + 2),
+    );
+  const bacon = select('Bacon Cipher Decode');
+  for (const [s, mode, count] of [
+    ['ABABA', 'A/B', 3],
+    ['01010', '0/1', 3],
+    ['tHe NIgHt wiNds aRE caLm.', 'Case', 4],
+    ['a b n m z', 'A-M/N-Z first letter', 4],
+  ]) {
+    const proposals = bacon.suggest(text(s)).filter((p) => p.params.recipe[0].args[1] === mode);
+    assert.equal(proposals.length, count);
+    assert.equal((await bacon.run(text(s), proposals[0].params, {})).eligible, false);
+  }
+  for (const s of ['0101', 'abcdeFGHi', 'a b n 3 z']) assert(!bacon.matches(text(s)));
+});
+test('keyed coordinates precede unkeyed proposals and beast framing counts Unicode scalars', () => {
+  const coords = (key) =>
+    localAdapters({ key })
+      .find((a) => a.id === 'tapcode')
+      .suggest(text('11 12'))
+      .map((p) => [p.params.size, p.params.keyword]);
+  assert.deepEqual(coords('MIST'), [
+    ['5', 'MIST'],
+    ['6', 'MIST'],
+    ['5', ''],
+    ['6', ''],
+  ]);
+  assert.deepEqual(coords('K9'), [
+    ['6', 'K9'],
+    ['5', ''],
+    ['6', ''],
+  ]);
+  assert.deepEqual(coords('雾'), [
+    ['5', ''],
+    ['6', ''],
+  ]);
+  const beast = (key) => puzzleAdapters({ key }).find((a) => a.id === 'puzzle/beast-keyed');
+  assert(beast('😀😁😂😃').matches(text('😃😁😀' + '😀'.repeat(8) + '😂')));
+  for (const key of ['😀😁😂', 'ABC A', 'AABC']) assert(!beast(key).matches(text('AAAAAAAA')));
+  assert(!beast('ABCD').matches(text('A'.repeat(12))));
+});
+test('format gates keep reports terminal and exclude malformed or ambiguous probes', () => {
+  const adapters = chefPuzzleAdapters(cyberChefAdapter());
+  for (const [op, valid, invalid] of [
+    ['Analyse UUID', '550e8400-e29b-41d4-a716-446655440000', '550e8400'],
+    ['Bcrypt parse', '$2b$10$' + 'a'.repeat(53), '$2b$32$' + 'a'.repeat(53)],
+    ['Parse ASN.1 hex string', '3003020105', '3004020105'],
+    ['Hex to Object Identifier', '2a864886f70d', '2a8680'],
+    ['P-list Viewer', '<plist><true/></plist>', 'hello plist'],
+  ]) {
+    const a = adapters.find((a) => a.id === 'chef-puzzle/' + op);
+    assert(a.observation && a.terminal && a.matches(text(valid)) && !a.matches(text(invalid)), op);
+  }
+  for (const [op, valid, invalid] of [
+    ['Text-Integer Conversion', '4276803', '123.45'],
+    ['Remove Diacritics', 'é', '迷雾 ABC'],
+    ['HTML To Text', '<p>MIST</p>', 'x < y'],
+    ['PHP Deserialize', 'b:1;', 'b:20;'],
+  ]) {
+    const a = adapters.find((a) => a.id === 'chef-puzzle/' + op);
+    assert(a.matches(text(valid)) && !a.matches(text(invalid)), op);
+  }
+  for (const [op, valid, invalid] of [
+    [
+      'Avro to JSON',
+      [
+        79,
+        98,
+        106,
+        1,
+        2,
+        22,
+        ...Buffer.from('avro.schema'),
+        12,
+        ...Buffer.from('"null"'),
+        0,
+        ...Array(16).fill(0),
+      ],
+      [79, 98, 106, 1],
+    ],
+    ['BSON deserialise', [5, 0, 0, 0, 0], [6, 0, 0, 0, 0]],
+    ['Parse TLV', [1, 2, 65, 66], [1, 3, 65, 66]],
+  ]) {
+    const a = adapters.find((a) => a.id === 'binary-record/' + op);
+    assert(a.observation && a.terminal);
+    assert(a.matches({ type: 'bytes', bytes: Uint8Array.from(valid) }));
+    assert(!a.matches({ type: 'bytes', bytes: Uint8Array.from(invalid) }));
+    assert(!a.matches(text('ordinary')));
+  }
+  assert(CONDITIONAL_OPERATIONS.includes('From Float'));
+  assert(!adapters.some((a) => a.id === 'chef-puzzle/From Float'));
+  for (const code of ['TIMEOUT', 'ENGINE_UNAVAILABLE']) {
+    const err = Object.assign(Error('Error parsing Avro file.'), { code });
+    assert.equal(parserError(err, 'Avro to JSON'), err);
+  }
+  const fault = new TypeError('Unexpected input found');
+  assert.equal(parserError(fault, 'Analyse UUID'), fault);
+});
+
 const append = adapter('append', async (input, params) => ({
   artifact: text(input.text + params.suffix),
 }));
@@ -507,6 +632,33 @@ test('fair breadth scheduling gives each root adapter a turn before descendants 
     ['root', 'large', 1],
   ]);
   assert.equal(report.status, 'limited');
+});
+
+test('sibling discovery cannot consume the budget reserved by an already matched input', async () => {
+  const seed = {
+    ...adapter(
+      'seed',
+      async (_, { value }) => ({ artifact: text(value) }),
+      () => ['first', 'second', 'third'].map((value) => ({ params: { value } })),
+    ),
+    matches: (input) => input.text === 'root',
+  };
+  const decode = adapter(
+    'decode',
+    async () => ({ artifact: text('answer') }),
+    (input) => (input.text === 'first' ? [{ params: {} }] : []),
+  );
+  const session = createAnalysisSession({
+    adapters: [seed, decode],
+    limits: { depth: 2, attempts: 6 },
+  });
+  try {
+    const report = await session.analyze(text('root'));
+    assert(report.nodes.some((n) => n.artifact.text === 'answer'));
+    assert.equal(report.status, 'limited');
+  } finally {
+    session.dispose();
+  }
 });
 
 test('continuous mode accepts no count/time budget; finish aborts actual work while retaining completed results', async () => {

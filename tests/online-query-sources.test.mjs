@@ -17,7 +17,7 @@ test('online OEIS is one real reference capability with one precise lesson, neve
   const entry = registry.byId.get('native:oeis');
   assert.ok(entry);
   assert.equal(entry.category, 'reference');
-  assert.equal(entry.group, 'sequences');
+  assert.equal(entry.group, 'technical');
   assert.equal(entry.open.route, 'oeis');
   assert.equal(entry.open.panel, 'oeis');
   assert.equal(registry.entries.filter((item) => item.id === 'native:oeis').length, 1);
@@ -25,7 +25,7 @@ test('online OEIS is one real reference capability with one precise lesson, neve
   assert.deepEqual(entry.learningIds, ['learn:function-native:oeis']);
   assert.equal(ARTICLES.filter((article) => article.capabilityIds.includes(entry.id)).length, 1);
   const article = getArticle('function-native:oeis');
-  assert.equal(article.topicGroup, 'sequences');
+  assert.equal(article.topicGroup, 'technical');
   for (const query of ['OEIS', '整数序列', 'A编号'])
     assert.ok(
       searchEntries(registry, query).some((item) => item.id === entry.id),

@@ -3,7 +3,7 @@ export const FUN_TASKS = [
   ['visual-crypto', '视觉密码', 'image', ['叠图显字', '视觉秘密分享', '透明分片']],
   ['text-steganography', '文本隐写', 'encoding', ['StegCloak', '文本隐水印', '郭飞', '零宽隐写']],
   ['beast-codec', '兽音译者', 'encoding', ['兽语', '嗷呜啊', 'beast']],
-  ['buddha-codec', '佛又曰', 'encoding', ['与佛论禅', 'Takuron', '佛语']],
+  ['buddha-codec', '佛又曰', 'encoding', ['佛曰', '新佛曰', '与佛论禅', 'Takuron', '佛语']],
   [
     'spectral-images',
     '图片与声音互转',

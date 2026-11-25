@@ -8,6 +8,13 @@ export function forensicSources(task) {
     return [
       ...new Set([
         ...common,
+        'https://github.com/guofei9987/HideInfo',
+        'https://github.com/Sec-ant/zxing-wasm',
+        'https://github.com/zxing-cpp/zxing-cpp',
+        'https://github.com/matt-way/gifuct-js',
+        'https://github.com/matt-way/jsBinarySchemaParser',
+        'https://github.com/photopea/UPNG.js',
+        'https://github.com/nodeca/pako',
         ...FORENSICS_TASKS.filter((t) => members.has(t.engine)).flatMap(forensicSources),
       ]),
     ];

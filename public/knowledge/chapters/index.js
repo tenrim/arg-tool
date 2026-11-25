@@ -4,18 +4,17 @@ import { chapters as modern } from './modern.js';
 import { chapters as authentication } from './authentication.js';
 import { chapters as language } from './language.js';
 import { chapters as formats } from './formats.js';
+import { chapters as forensics } from './forensics.js';
 import { chapters as media } from './media.js';
 import { chapters as files } from './files.js';
-import { chapters as funTools } from './fun-tools.js';
-import { chapters as forensics } from './forensics.js';
 import { chapters as reference } from './reference.js';
 import { chapters as practical } from './practical.js';
-import { chapters as everyday } from './everyday.js';
-import { chapters as travelFinance } from './travel-finance.js';
 import { chapters as systems } from './systems.js';
-import { chapters as functionPlot } from './function-plot.js';
 import { cipherExamples } from '../articles/cipher-examples.js';
+import { markdownCompleteIds } from '../articles/markdown-overrides.js';
 import { headings } from './headings.js';
+
+export const COMPLETE_KNOWLEDGE_IDS = new Set(markdownCompleteIds);
 
 // Handwritten subject matter only. This map is not a discovery catalogue and
 // cannot create a capability, change a route, or replace a topic member.
@@ -26,16 +25,13 @@ const chapters = [
   ...authentication,
   ...language,
   ...formats,
+  ...forensics,
   ...media,
   ...files,
-  ...funTools,
-  ...forensics,
+
   ...reference,
   ...practical,
-  ...everyday,
-  ...travelFinance,
   ...systems,
-  ...functionPlot,
 ];
 const byCapability = new Map();
 for (const [id, introduction, ...sections] of chapters) {
@@ -54,8 +50,10 @@ export function addKnowledgeChapters(articles) {
   const unused = new Set(byCapability.keys());
   const expanded = articles.map((article) => {
     const id = article.capabilityIds[0];
-    // Enigma is the separately authored, complete sample approved by the user.
-    if (id === 'op:Enigma') return article;
+    if (COMPLETE_KNOWLEDGE_IDS.has(id)) {
+      unused.delete(id);
+      return article;
+    }
     const chapter = byCapability.get(id);
     if (!chapter) throw Error('Missing authored knowledge chapter: ' + id);
     unused.delete(id);
@@ -88,7 +86,7 @@ export function editKnowledgePresentation(articles) {
   const examples = new Map(cipherExamples.map((example) => [example.capabilityId, example]));
   return articles.map((originalArticle) => {
     let article = originalArticle;
-    if (article.capabilityIds[0] === 'op:Enigma') return article;
+    if (COMPLETE_KNOWLEDGE_IDS.has(article.capabilityIds[0])) return article;
     const example = examples.get(article.capabilityIds[0]);
     if (example) {
       const sourceIds = example.reference ? [example.reference.id] : article.sections[0].sourceIds;

@@ -103,7 +103,12 @@ export const QUERY_PAGES = Object.freeze([
     id: 'cod',
     title: 'COD 晶体在线查询',
     home: 'https://www.crystallography.net/cod/',
-    sourceHosts: ['www.crystallography.net', 'crystallography.net', 'wiki.crystallography.net'],
+    sourceHosts: [
+      'www.crystallography.net',
+      'crystallography.net',
+      'wiki.crystallography.net',
+      'qiserver.ugr.es',
+    ],
     notice:
       '检索真实晶体记录，保留结构原作者和原始论文。检索超过 250 条时须缩小条件；CIF 仅在明确查询或下载时获取。',
     modes: [

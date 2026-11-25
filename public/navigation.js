@@ -49,8 +49,29 @@ import { GUIDE_PAGES } from './external-guide/catalog.js';
 const taskLinks = (keys) =>
   keys.map((key) => [GROUPS[key].panel + '/' + key, GROUPS[key].title, GROUPS[key].hint]);
 const section = (id, name, hint, items) => ({ id, name, hint, items });
+// Old directory bookmarks should expand the surviving group in the same category.
+const formerBrowseGroups = new Map([
+  ['media/fragments', 'image'],
+  ['media/models', 'video'],
+  ['other/sequence-processing', 'maths'],
+  ['reference/sequences', 'technical'],
+  ['reference/colors', 'characters-reference'],
+  ['reference/calendar', 'world'],
+  ['reference/geology', 'sky'],
+  ['reference/traditions', 'language-reference'],
+  ['reference/culture-reference', 'language-reference'],
+  ['reference/music-reference', 'language-reference'],
+]);
+export function resolveBrowseGroup(category, group) {
+  return formerBrowseGroups.get(category + '/' + group) ?? group;
+}
 const definitions = {
   codec: [
+    section('cipher-analysis', '密文识别与分析', '自动识别、统计与单表替换求解', [
+      ['analysis', '文本线索分析'],
+      ['substitution', '单表替换求解'],
+      ...taskLinks(['statistics']),
+    ]),
     section('characters', '字符与数字', 'ASCII、UTF-8、数字进制与字母编号', [
       ['basics', '基础转换'],
       ['basics/ascii', 'ASCII 转换'],
@@ -66,15 +87,15 @@ const definitions = {
       ['basics/escapes', '转义与实体'],
       ...taskLinks(['base', 'webencoding', 'binaryencoding']),
     ]),
+    section('classical', '古典密码与密码机', '移位、替换、换位与转子密码', [
+      ['crypto', '加解密'],
+      ...taskLinks(['classical', 'machines']),
+    ]),
     section('communication', '符号与通信编码', '摩斯、盲文、敲击码与打孔纸带', [
       ['symbols', '交互符号'],
       ['tapcode', '敲击码与坐标方阵'],
       ['baudot', '波多码与打孔纸带'],
       ...taskLinks(['symbolic']),
-    ]),
-    section('classical', '古典密码与密码机', '移位、替换、换位与转子密码', [
-      ['crypto', '加解密'],
-      ...taskLinks(['classical', 'machines']),
     ]),
     section('modern', '现代加密', '对称、公钥加密与密钥对', taskLinks(['symmetric', 'publickey'])),
     section(
@@ -83,11 +104,6 @@ const definitions = {
       '签名、令牌、派生与证书',
       taskLinks(['signatures', 'credentials', 'derivation', 'certificates']),
     ),
-    section('cipher-analysis', '密文识别与分析', '自动识别、统计与单表替换求解', [
-      ['analysis', '文本线索分析'],
-      ['substitution', '单表替换求解'],
-      ...taskLinks(['statistics']),
-    ]),
     section('text-language', '文字、语言与提取', '整理、比较、汉字、查词与答案提取', [
       ['textlab', '文字整理与提取'],
       ['language', '语言与文字变体'],
@@ -102,59 +118,58 @@ const definitions = {
     ]),
   ],
   reference: [
-    section('sequences', '数列与数学资料', '按整数连续项或 A 编号主动联网查询 OEIS', [
-      ['oeis', 'OEIS 数列在线查询'],
-    ]),
-    section('technical', 'IT 固定资料', '端口、HTTP、文件格式与域名', [
-      ['it-reference', 'IT 固定资料'],
-    ]),
-    section('world', '国家、货币与交通', '地区地图、国旗、货币、机场与港口', [
+    section('world', '国家、历法与交通', '国旗、货币、机场、港口、历法与时区', [
       ['countries', '国家地区与国旗'],
       ['currencies', '货币代码资料'],
       ['airports', '机场代码'],
       ['ports', '港口与运输地点代码'],
       ['placenames', '国家地名在线查询'],
+      ['calendar', '传统历法'],
     ]),
-    section('sky', '天体目录与观测', '深空天体、太阳系与升落', [
-      ['sky', '深空天体目录'],
-      ['astronomy', '天文线索'],
+    section('characters-reference', '字符、信号与颜色', 'Unicode、语言文字、海事信号旗与色名', [
+      ['character-tables', '语言文字字符表'],
+      ['unicode', 'Unicode 字符查询'],
+      ['marine', '海事信号旗'],
+      ['colors', '颜色名称查询'],
+    ]),
+    section('technical', 'IT 与数列资料', '端口、HTTP、文件格式、域名与 OEIS 数列', [
+      ['it-reference', 'IT 固定资料'],
+      ['oeis', 'OEIS 数列在线查询'],
     ]),
     section('matter', '元素、物质与生命', '元素、分子与生物资料', [
       ['chemistry', '元素与化学线索'],
       ['cod', 'COD 晶体在线查询'],
       ['pubchem', 'PubChem 物质在线查询'],
     ]),
-    section('language-reference', '字词与诗文资料', '公开字词原文、诗文作品、作者与韵部检索', [
-      ['zdic', '汉典字词原文查询'],
-      ['cnkgraph', '搜韵诗文与词谱在线查询'],
+    section('sky', '天文与地质', '天体目录、天象观测与地质年代', [
+      ['sky', '深空天体目录'],
+      ['astronomy', '天文线索'],
+      ['geology', '地质年代查询'],
     ]),
-    section('culture-reference', '作品与专题百科', '带版本与来源的专题百科文字检索', [
-      ['pokewiki', '神奇宝贝百科在线查询'],
-    ]),
-    section('characters-reference', '字符与信号对照', 'Unicode 字符表与海事信号旗', [
-      ['character-tables', '语言文字字符表'],
-      ['unicode', 'Unicode 字符查询'],
-      ['marine', '海事信号旗'],
-    ]),
-    section('colors', '颜色与色名', '连续色盘、颜色代码与名称', [['colors', '颜色名称查询']]),
-    section('calendar', '日期与传统历法', '农历、干支、生肖与节气', [['calendar', '传统历法']]),
-    section('music-reference', '音乐作品资料', '作曲家、作品与体裁', []),
-    section('geology', '地质年代', '年代时间带与 Ma 定位', [['geology', '地质年代查询']]),
-    section('traditions', '八卦与塔罗', '卦象、卦辞、牌组与牌面资料', [
-      ['iching', '八卦与六十四卦'],
-      ['tarot', '塔罗牌查询'],
-    ]),
+    section(
+      'language-reference',
+      '字词、典籍与文化百科',
+      '字词、诗文、八卦、塔罗、音乐与作品百科',
+      [
+        ['zdic', '汉典字词原文查询'],
+        ['cnkgraph', '搜韵诗文与词谱在线查询'],
+        ['iching', '八卦与六十四卦'],
+        ['tarot', '塔罗牌查询'],
+        ['pokewiki', '神奇宝贝百科在线查询'],
+      ],
+    ),
   ],
   media: [
-    section('image', '图像编辑与分析', '调整、隐写、元数据、二维码与图片比较', [
+    section('image-stego', '图片隐写与取证', '位平面、隐写提取、PNG 检查与综合分析', []),
+    section('image', '图像编辑、识别与处理', '编辑、二维码与条码、元数据、图片比较与拼接', [
       ['image', '图片处理与隐写'],
       ...taskLinks(['imageEdit', 'imageColour', 'imageInspect', 'imageMake']),
+      ['fragments', '碎片拼接台'],
     ]),
-    section('fragments', '碎片拼接', '拼接、旋转、对齐与导出', [['fragments', '碎片拼接台']]),
-    section('files', '文件、字节与压缩', '识别、字节、压缩与哈希校验', [
+    section('files', '文件取证、嵌入与元数据', '识别、字节编辑、元数据与嵌入文件提取', [
       ['file', '文件与压缩包'],
       ['file/hex', '十六进制编辑器'],
-      ...taskLinks(['inspect', 'compression', 'hashes']),
+      ...taskLinks(['inspect']),
     ]),
     section('audio', '声音与音乐', '频谱、音高、乐器、MIDI 与标签', [
       ['audio', '音频与音乐'],
@@ -163,38 +178,27 @@ const definitions = {
       ['audio/play', '乐器模拟'],
       ...taskLinks(['audio']),
     ]),
-    section('video', '视频与动画', '帧、音轨、片段与 GIF', [
+    section(
+      'file-compression',
+      '压缩、校验与哈希',
+      '压缩包、摘要、校验和与相似哈希',
+      taskLinks(['compression', 'hashes']),
+    ),
+    section('video', '视频、动画与三维模型', '视频与音轨处理、动图拆帧与三维模型观察', [
       ['video', '视频处理'],
       ...taskLinks(['media']),
+      ['model', '三维模型观察'],
     ]),
-    section('models', '三维模型观察', '模型导入、线框与截面', [['model', '三维模型观察']]),
   ],
   other: [
-    section('boards', '棋谱复盘', '围棋、国际象棋与棋谱分支', [
-      ['go', '围棋棋谱复盘'],
-      ['chess', '国际象棋复盘'],
-    ]),
-    section('logic', '纸笔逻辑', '网格题型、约束与答案提取', [['paper', '纸笔解题']]),
-    section('simulation', '交互模拟', '生命游戏、魔方与状态演示', [
-      ['life', '生命游戏'],
-      ['cube', '魔方模拟'],
+    section('pipeline', 'CyberChef 完整处理链', '配方、分支、循环与保留操作', [
+      ['cyberchef', 'CyberChef 完整处理链'],
     ]),
     section('programming', '代码与计算模型', '代码运行、图灵机与单步执行', [
       ['code', '代码运行'],
       ['turing', '图灵机'],
     ]),
-    section('maths', '数学计算', '综合计算、整数因数与气象、热量、用电、稀释计算', [
-      ['qalculate', '综合计算器'],
-      ['function-plot', 'Desmos 函数绘图（在线）'],
-      ['mathlab', '数值工具'],
-      ...taskLinks(['maths', 'units']),
-    ]),
-    section('unit-conversion', '单位换算', '按学科选择物理量、原单位与目标单位', [
-      ['unitconvert', '单位换算', UNIT_DISCIPLINES.map((d) => d.title).join('、')],
-    ]),
-    section('sequence-processing', '生物序列处理', '蛋白质表示、互补链与转写', [
-      ['sequence', '蛋白质与核酸序列'],
-    ]),
+    section('logic', '纸笔逻辑', '网格题型、约束与答案提取', [['paper', '纸笔解题']]),
     section('coordinates-time', '坐标与时间换算', '坐标、距离、时间戳与时区', [
       ['coordinates', '坐标与时间'],
       ...taskLinks(['time']),
@@ -203,8 +207,23 @@ const definitions = {
       ['networklab', '网络数据'],
       ...taskLinks(['network']),
     ]),
-    section('pipeline', 'CyberChef 完整处理链', '配方、分支、循环与保留操作', [
-      ['cyberchef', 'CyberChef 完整处理链'],
+    section('maths', '数学与科学计算', '综合计算、函数绘图、生活计算与生物序列处理', [
+      ['qalculate', '综合计算器'],
+      ['function-plot', 'Desmos 函数绘图（在线）'],
+      ['mathlab', '数值工具'],
+      ...taskLinks(['maths', 'units']),
+      ['sequence', '蛋白质与核酸序列'],
+    ]),
+    section('unit-conversion', '单位换算', '按学科选择物理量、原单位与目标单位', [
+      ['unitconvert', '单位换算', UNIT_DISCIPLINES.map((d) => d.title).join('、')],
+    ]),
+    section('simulation', '交互模拟', '生命游戏、魔方与状态演示', [
+      ['life', '生命游戏'],
+      ['cube', '魔方模拟'],
+    ]),
+    section('boards', '棋谱复盘', '围棋、国际象棋与棋谱分支', [
+      ['go', '围棋棋谱复盘'],
+      ['chess', '国际象棋复盘'],
     ]),
   ],
 };
@@ -214,7 +233,7 @@ for (const task of FUN_TASKS)
     .find((g) => g.id === task.group)
     .items.push([task.id, task.title]);
 for (const task of FILE_TASKS)
-  definitions.media.find((g) => g.id === 'files').items.push([task.id, task.title]);
+  definitions.media.find((g) => g.id === task.group).items.push([task.id, task.title]);
 for (const task of FORENSICS_TASKS)
   definitions.media.find((g) => g.id === task.group).items.push([task.id, task.title]);
 for (const task of PRACTICAL_TASKS)
@@ -264,27 +283,20 @@ const groupIcons = {
   sky: 'astronomy',
   matter: 'chemistry',
   'characters-reference': 'unicode',
-  colors: 'colors',
-  calendar: 'calendar',
-  geology: 'geology',
-  traditions: 'iching',
   technical: 'it-reference',
-  sequences: 'mathlab',
   'language-reference': 'hanzi',
-  'culture-reference': 'knowledge',
+  'image-stego': 'analysis',
   image: 'image',
-  fragments: 'fragments',
   files: 'file',
+  'file-compression': 'file',
   audio: 'audio',
   video: 'video',
-  models: 'model',
   boards: 'go',
   logic: 'paper',
   simulation: 'life',
   programming: 'code',
   maths: 'mathlab',
   'unit-conversion': 'mathlab',
-  'sequence-processing': 'sequence',
   'coordinates-time': 'coordinates',
   network: 'networklab',
   pipeline: 'cyberchef',

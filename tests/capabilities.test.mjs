@@ -4,10 +4,12 @@ import { readFile } from 'node:fs/promises';
 import {
   capabilityCategories,
   capabilityGroupDefinitions,
+  resolveBrowseGroup,
   toolGroups,
   toolPages,
 } from '../public/navigation.js';
 import {
+  representativePreferences,
   CHEF_OPERATION_PAIRS,
   createRegistry,
   searchEntries,
@@ -28,6 +30,120 @@ const registry = createRegistry(catalogue);
 const entry = (id) => registry.byId.get(id);
 const resolved = (id) => resolveCapability(registry, id).entry;
 const classified = classifyCatalogue(catalogue);
+
+test('代表工具必须是本组可见的规范 ID，分组顺序和成员数量稳定', () => {
+  const expected = {
+    codec: [
+      ['cipher-analysis', 5],
+      ['characters', 12],
+      ['encoding', 17],
+      ['classical', 24],
+      ['communication', 14],
+      ['modern', 23],
+      ['authentication', 14],
+      ['text-language', 21],
+      ['formats', 14],
+    ],
+    reference: [
+      ['world', 7],
+      ['characters-reference', 4],
+      ['technical', 5],
+      ['matter', 8],
+      ['sky', 5],
+      ['language-reference', 6],
+    ],
+    media: [
+      ['image-stego', 12],
+      ['image', 13],
+      ['files', 19],
+      ['audio', 8],
+      ['file-compression', 5],
+      ['video', 3],
+    ],
+    other: [
+      ['pipeline', 1],
+      ['programming', 2],
+      ['logic', 2],
+      ['coordinates-time', 10],
+      ['network', 5],
+      ['maths', 19],
+      ['unit-conversion', 8],
+      ['simulation', 3],
+      ['boards', 2],
+    ],
+  };
+  assert.deepEqual(
+    new Set(Object.keys(representativePreferences)),
+    new Set(
+      Object.values(expected)
+        .flat()
+        .map(([id]) => id),
+    ),
+  );
+  for (const [cat, groups] of Object.entries(expected)) {
+    assert.deepEqual(
+      registry.groups.filter((g) => g.category === cat).map((g) => [g.id, g.count]),
+      groups,
+    );
+  }
+  for (const [group, ids] of Object.entries(representativePreferences)) {
+    assert.equal(new Set(ids).size, ids.length, group);
+    assert.deepEqual(
+      registry.groups.find((g) => g.id === group).representatives.slice(0, ids.length),
+      ids,
+    );
+    for (const id of ids) {
+      assert.equal(registry.byId.get(id)?.group, group, id);
+      assert.notEqual(registry.byId.get(id).listed, false, id);
+    }
+  }
+});
+
+test('媒体拆组保留准确的成员集合，合并前的目录书签仍可打开', () => {
+  for (const [group, members] of Object.entries({
+    'image-stego': [
+      'native:forensics-image-survey',
+      'native:image-steg',
+      'native:image-planes',
+      'native:forensics-zsteg',
+      'native:forensics-stegoveritas',
+      'topic:png-inspection',
+      'topic:image-pixels',
+      'native:forensics-identify',
+      'native:forensics-jsteg',
+      'native:forensics-outguess',
+      'native:forensics-jpseek',
+      'native:forensics-openstego',
+    ],
+    'file-compression': [
+      'topic:compression',
+      'op:Unzip',
+      'topic:hash-digests',
+      'topic:checksums',
+      'topic:fuzzy-hashes',
+    ],
+  })) {
+    assert.deepEqual(
+      new Set(registry.groups.find((g) => g.id === group).entryIds),
+      new Set(members),
+    );
+  }
+  for (const [category, before, after] of [
+    ['media', 'fragments', 'image'],
+    ['media', 'models', 'video'],
+    ['other', 'sequence-processing', 'maths'],
+    ['reference', 'sequences', 'technical'],
+    ['reference', 'colors', 'characters-reference'],
+    ['reference', 'calendar', 'world'],
+    ['reference', 'geology', 'sky'],
+    ['reference', 'traditions', 'language-reference'],
+    ['reference', 'culture-reference', 'language-reference'],
+    ['reference', 'music-reference', 'language-reference'],
+  ]) {
+    assert.equal(resolveBrowseGroup(category, before), after);
+    assert.ok(registry.groups.some((g) => g.id === after && g.category === category));
+  }
+});
 
 test('capabilities: retired selected reference databases have no discovery or learning entry', () => {
   for (const route of [
@@ -330,8 +446,9 @@ test('capabilities: exact names stay visible in bounded search without changing 
     sameRank.map((item) => item.id),
     visible
       .filter((item) => sameRank.some((result) => result.id === item.id))
+      .sort((a, b) => a.representativeRank - b.representativeRank)
       .map((item) => item.id),
-    'broad-vocabulary ties retain deterministic inventory order',
+    'broad-vocabulary ties use representative position, then deterministic inventory order',
   );
   assert.deepEqual(
     registry.entries.map((item) => item.id),
@@ -773,4 +890,42 @@ test('capabilities: loader retries a rejected resource and caches only a complet
   } finally {
     globalThis.fetch = original;
   }
+});
+
+test('专职算法、代表工具和玩家线索按用途排序', () => {
+  const results = (q) => searchEntries(registry, q).map((entry) => entry.id);
+  for (const [queries, first] of [
+    [['凯撒', '凯撒密码', 'Caesar', 'Caesar Cipher'], ['topic:rot']],
+    [['佛曰', '新佛曰', '与佛论禅'], ['native:buddha-codec']],
+    [
+      ['拆帧', 'GIF拆帧', 'APNG拆帧', '动图拆帧', '每一帧'],
+      ['topic:video', 'native:forensics-image-survey'],
+    ],
+    [
+      ['逻辑谜题', '纸笔谜题', '网格谜题', 'Slitherlink', 'Nurikabe', 'Akari'],
+      ['topic:paper-puzzles'],
+    ],
+    [['sstv'], ['native:audio-sstv']],
+    [
+      ['ZIP', '解压'],
+      ['topic:compression', 'op:Unzip'],
+    ],
+    [
+      ['隐写', '图片隐写', 'lsb'],
+      ['native:forensics-image-survey', 'native:image-steg'],
+    ],
+    [
+      ['不知道是什么编码', '未知密文', '一串乱码', '看不懂文字'],
+      ['native:cipher-detect', 'op:Magic'],
+    ],
+    [['未知编码', '密码识别', '线索分析'], ['native:cipher-detect']],
+    [['文件里藏了文件', '分离文件', '夹带文件'], ['topic:embedded-files']],
+    [['音频里藏了图', '声音看图'], ['topic:audio-spectrogram']],
+  ])
+    for (const query of queries)
+      assert.deepEqual(results(query).slice(0, first.length), first, query);
+  assert.ok(results('自动识别').slice(0, 2).includes('native:cipher-detect'));
+  assert.equal(searchEntries(registry, '每一帧')[0].preferredVariant, 'native:video-animation');
+  const locked = createRegistry(catalogue, { includeLocked: false });
+  assert.equal(searchEntries(locked, '不知道是什么编码')[0].id, 'op:Magic');
 });

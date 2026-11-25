@@ -92,7 +92,14 @@ export function consolidateTopics(source, definitions, recipeOnly = []) {
           byOperation.get(op).sourceModes?.[byOperation.get(op).sourceOperationIds.indexOf(op)] ||
           byOperation.get(op).mode,
       ),
-      aliases: [...new Set(members.flatMap((member) => [member.title, ...member.aliases]))],
+      coreNames: definition.coreNames || [],
+      aliases: [
+        ...new Set([
+          ...(definition.coreNames || []),
+          ...(definition.aliases || []),
+          ...members.flatMap((member) => [member.title, ...member.aliases]),
+        ]),
+      ],
       memberIds: members.map((member) => member.id),
       variants,
       actions,

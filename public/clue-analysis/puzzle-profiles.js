@@ -134,7 +134,9 @@ for (let rails = 2; rails <= 12; rails++)
     'native:rail',
     'engine',
     { id: 'rail', rails },
-    (text) => alpha(text) && text.length > rails,
+    (text) =>
+      text.length > rails &&
+      (alpha(text) || (text.length <= 512 && /^[\x20-\x7e\r\n\t]+$/.test(text))),
     { exploratory: true },
   );
 for (const mapping of KEYBOARD_MAPPINGS.filter(
@@ -216,7 +218,30 @@ add(
   'native:beast-codec',
   'fun',
   { task: 'beast-codec', alphabet: '嗷呜啊~' },
-  (text) => /^[嗷呜啊~]+$/.test(text),
+  (text) => beastPayload(text, '嗷呜啊~'),
+  { exactText: true },
+);
+function beastPayload(text, alphabet) {
+  const symbols = [...alphabet];
+  if (symbols.length !== 4 || new Set(symbols).size !== 4 || /[\uD800-\uDFFF]/u.test(alphabet))
+    return false;
+  const chars = [...text];
+  if (!chars.length || !chars.every((c) => symbols.includes(c))) return false;
+  return (
+    chars.length % 8 === 0 ||
+    (chars.length % 8 === 4 &&
+      text.startsWith(symbols[3] + symbols[1] + symbols[0]) &&
+      text.endsWith(symbols[2]))
+  );
+}
+add(
+  'beast-keyed',
+  '兽音译者 · 自定义字典',
+  'native:beast-codec',
+  'fun',
+  { task: 'beast-codec' },
+  (text, key = '') => key !== '嗷呜啊~' && beastPayload(text, key),
+  { exactText: true, needsKey: true, keyField: 'alphabet' },
 );
 add(
   'buddha',
@@ -254,8 +279,49 @@ for (const representation of ['angle', 'clock'])
     { task: 'semaphore-batch', representation },
     (text) => /^[\d.,，\s;；]+$/.test(text) && /\d\s*[,，]\s*\d/.test(text),
   );
-add('prussian', '普鲁士光学报码', 'native:prussian', 'completion', { task: 'prussian' }, (text) =>
-  /^(?:[abc][1-6])+(?:\s+(?:[abc][1-6])+)*$/i.test(text),
+add(
+  'prussian',
+  '普鲁士光学电报 · 姿态',
+  'native:prussian',
+  'completion',
+  { task: 'prussian', direction: 'visual' },
+  (text) => /^(?:[abc][1-6]){1,6}(?:\s+(?:[abc][1-6]){1,6})*$/i.test(text),
+);
+add(
+  'prussian-code',
+  '普鲁士光学电报 · 数字报码',
+  'native:prussian',
+  'completion',
+  { task: 'prussian' },
+  (text) => text.split(/\s+/).every((code) => /^\d(?:\.\d)?\d(?:\.\d)?\d(?:\.\d)?$/.test(code)),
+);
+add(
+  'marine',
+  '海事组合信号旗',
+  'native:marine-signals',
+  'marine',
+  {},
+  (text) =>
+    /^(?:[a-z\d.]|code|r[123])(?:[\s/]+(?:[a-z\d.]|code|r[123]))+$/i.test(text) ||
+    /^code$/i.test(text),
+);
+add(
+  'elements',
+  '元素符号拼词',
+  'native:element-spelling',
+  'elements',
+  { caseSensitive: true },
+  (text) => text.length <= 160 && /[a-z]/.test(text) && /^(?:[A-Z][a-z]?){2,}$/.test(text),
+  { exploratory: true, terminal: true },
+);
+add(
+  'character-table',
+  '文字系统与数字符号',
+  'native:character-tables',
+  'character-table',
+  {},
+  (text) => text.length <= 256 && /[^\x00-\x7f]/.test(text) && /[\p{L}\p{N}]/u.test(text),
+  { exploratory: true, terminal: true },
 );
 add('gs8', 'GS8 八点盲文', 'native:gs8', 'completion', { task: 'gs8', syntax: 'text' }, (text) =>
   /^[\u2800-\u28ff\s]+$/.test(text),
@@ -442,8 +508,8 @@ export function puzzleOptions(profile, key = '', supplied = {}) {
   )
     fail('INPUT_INVALID', '不支持的原工具参数。');
   return {
-    ...profile.options,
     direction: ['classical', 'mapping'].includes(profile.engine) ? 'decrypt' : 'decode',
+    ...profile.options,
     ...(profile.keyField && key ? { [profile.keyField]: key } : {}),
     ...(profile.passwordField ? { [profile.passwordField]: key } : {}),
     ...supplied,

@@ -1,4 +1,3 @@
-export const IMAGE_SURVEY = 'image-survey';
 export const STEGOVERITAS_SOURCE = 'https://github.com/bannsec/stegoVeritas';
 export const STEGOVERITAS_OPTIONS = [
   {

@@ -243,10 +243,13 @@ test('五项工具均有独立入口、完整公式、帮助、逐项科普与�
     assert(PRACTICAL_HELP[id].tip.length > 20);
     const article = ARTICLES.find((a) => a.capabilityIds.includes('native:' + id));
     assert(article);
-    assert(article.preface.length);
-    assert(article.sections.some((s) => s.examples.length));
+    assert.equal(article.preface, undefined);
+    assert.equal(article.sections[0].title, '介绍');
+    assert(article.sections.length >= 5);
+    assert(article.sections.flatMap((section) => section.examples).length >= 3);
     assert(d.formula && d.symbols && d.limits);
     assert(d.sources.length);
+    assert(d.sources.some((source) => article.sources.some((entry) => entry.url === source.url)));
     for (const s of d.sources) {
       assert(s.locator && s.publisher);
       assert(s.url.startsWith('https://'));

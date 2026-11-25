@@ -70,16 +70,13 @@ test('five capability categories distinguish tool operations, fixed references a
   );
   assert.deepEqual(
     toolGroups.map((g) => g.sections.length),
-    [9, 13, 6, 10, 4],
+    [9, 6, 6, 9, 4],
   );
   assert.deepEqual(
-    toolGroups[1].sections.find((section) => section.id === 'music-reference').items,
+    toolGroups[1].sections
+      .find((section) => section.id === 'language-reference')
+      .items.filter(([route]) => route === 'classical-music'),
     [['classical-music', '古典音乐资料']],
-  );
-  assert.deepEqual(
-    toolGroups[1].sections.find((section) => section.id === 'sequences').items,
-    [['oeis', 'OEIS 数列在线查询']],
-    'the new online service owns a populated group without restoring the retired curated catalogue',
   );
   assert.ok(
     !toolGroups.some((group) =>
@@ -101,6 +98,7 @@ test('five capability categories distinguish tool operations, fixed references a
   );
   assert.deepEqual(toolGroups[1].sections.find((section) => section.id === 'technical').items, [
     ['it-reference', 'IT 固定资料'],
+    ['oeis', 'OEIS 数列在线查询'],
   ]);
   const sections = toolGroups[0].sections;
   for (const name of [

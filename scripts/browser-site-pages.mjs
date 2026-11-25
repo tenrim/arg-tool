@@ -428,10 +428,7 @@ try {
     assert.equal(await currentVersion.isVisible(), false);
     await versionSummary.click();
     await currentVersion.waitFor({ state: 'visible' });
-    assert.equal(
-      await currentVersion.textContent(),
-      `${APP_VERSION} · 文本线索分析提速`,
-    );
+    assert.equal(await currentVersion.textContent(), `${APP_VERSION} · 文本线索分析提速`);
     assert.equal(
       await versions.locator('[data-release-version="V1.0"]').count(),
       1,

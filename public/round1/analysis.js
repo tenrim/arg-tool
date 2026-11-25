@@ -45,6 +45,7 @@ const names = (edge) =>
         : puzzleNames[edge.step.adapter] ||
           {
             'affine-search': '仿射密码',
+            'xor-key-report': '短密钥 XOR 试解结果',
             'braille-tables': '多语言盲文 ' + (edge.step.params.table || ''),
           }[edge.step.adapter] ||
           adapterNames[edge.step.adapter] ||
@@ -80,6 +81,9 @@ export function initAnalysis() {
       element('summary', { text: '分析范围与限制' }),
       element('p', {
         text: '默认最多 10 分钟、8192 次尝试、4096 个结果；持续分析不限制尝试次数、单项候选数和总时间，并允许多层泛用试解。两种模式均保留转换层数、单项超时、16384 个节点上限和 64 MB 结果内存保护。输入最多 64 KB。',
+      }),
+      element('p', {
+        text: '短线索默认还会尝试 2–4 栏栅栏的不同起点。持续分析会扩大到 32 栏，并对短文本尝试可打印字符移位，对短文本和字节尝试单字节 XOR。已知密钥、栏数或偏移时，可以直接填写下方的已知条件。',
       }),
     ],
   });
@@ -465,6 +469,8 @@ export function initAnalysis() {
         return;
       }
       const items = textCandidates(report);
+      if (seed && report.nodes[report.resultId]?.observation)
+        items.sort((a, b) => Number(b.id === report.resultId) - Number(a.id === report.resultId));
       list.finish(items);
       updateStatus(
         view.status,

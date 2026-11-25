@@ -1,0 +1,17 @@
+{
+  "version": "V2.3.5",
+  "source_base": "8fdaeff66de29b5b2f9c2f4fea9084867c9f82d3",
+  "gitee_main": "7657f180fb7156c8c074ad3ee54c26dd09ff66e7",
+  "source_delivery": "2026-11-25 正式客户端打包与网页更新",
+  "delivery_android_sha256": "03125d0e41a36c57ec9ac32836826dfab5a8cfec5639ae326e83226119866955",
+  "delivered_public_updates": 82,
+  "retained_open_distribution_sources": [
+    "public/deployment.js",
+    "public/feedback/ui.js",
+    "public/runtime-profile.js",
+    "public/site-shell.js"
+  ],
+  "markdown_sources": 552,
+  "android_revision": 3,
+  "windows_release_revision": 2
+}

@@ -203,19 +203,11 @@ try {
     );
     assert.equal(JSON.parse(exported).preferences.searchKnowledge, true);
     await go('home');
-    await page.locator('#home-search').fill('复利');
-    const home = page.locator('#panel-home .capability-search-list');
-    await home.locator('[data-capability^="learn:"]').first().waitFor({ state: 'visible' });
+    await headerSearch(true);
     await page.evaluate(async () =>
       (await import('/preferences.js')).setPreferences({ searchKnowledge: false }),
     );
-    assert.equal(await home.locator('[data-capability^="learn:"]').count(), 0);
-    assert(await home.locator('[data-capability="native:interest-growth"]').isVisible());
-    await page.locator('#panel-home [data-category=knowledge]').click();
-    assert(
-      await home.locator('[data-capability^="learn:"]').first().isVisible(),
-      'explicit knowledge category remains searchable',
-    );
+    await headerSearch(false);
     await go('browse');
     await page.locator('#overview-search').fill('复利');
     const overview = page.locator('#panel-browse .capability-search-list');
@@ -232,13 +224,9 @@ try {
     if (width === 320)
       await page.getByRole('button', { name: '切换工具侧栏', exact: true }).click();
     const rail = page.locator('#workbench-sidebar');
-    await rail.getByPlaceholder('筛选工具', { exact: true }).fill('复利');
-    const railResults = rail.locator('.rail-search-results');
-    assert.equal(await railResults.locator('[data-category=knowledge]').count(), 0);
     await page.evaluate(async () =>
       (await import('/preferences.js')).setPreferences({ searchKnowledge: true }),
     );
-    await railResults.locator('[data-category=knowledge]').first().waitFor({ state: 'visible' });
     await rail.getByRole('button', { name: /全部工具/ }).click();
     const directory = page.locator('dialog.tool-directory');
     await directory.waitFor({ state: 'visible' });
@@ -270,7 +258,7 @@ try {
       width,
       calculators: process.env.TRAVEL_FINANCE_SCOPE === 'search' ? 0 : 5,
       completeSchedule: process.env.TRAVEL_FINANCE_SCOPE !== 'search',
-      searchSurfaces: 5,
+      searchSurfaces: 3,
       preferencePersistence: true,
     });
     await context.close();

@@ -303,6 +303,14 @@ export function mountImage(host, meta) {
   overlay.control.addEventListener('change', sync);
   direction.control.addEventListener('change', sync);
   sync();
-  if (meta.id === 'file-image')
+  if (meta.id === 'file-image') {
     variantDrafts(direction.control, [kind.control, text, filename], [upload], sync);
+    return (file) => {
+      if (direction.control.value !== 'decode') {
+        direction.control.value = 'decode';
+        direction.control.dispatchEvent(new Event('change'));
+      }
+      upload.set(file);
+    };
+  }
 }

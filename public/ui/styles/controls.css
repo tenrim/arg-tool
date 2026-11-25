@@ -429,12 +429,6 @@
   font-size: 12px;
   color: var(--cyan);
 }
-.site-ui.workbench-app .rail-match-location {
-  display: block;
-  margin-top: 2px;
-  font: 11px/1.6 var(--body);
-  color: var(--muted);
-}
 :root[data-ui-text='large'] {
   --ui-font-scale: 1.2;
 }

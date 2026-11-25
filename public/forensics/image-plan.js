@@ -1,6 +1,6 @@
 import { rasterFormat } from './image-format.js';
 
-export { IMAGE_SURVEY } from './stegoveritas-catalog.js';
+export { IMAGE_SURVEY } from './catalog.js';
 export const imageSteps = [
   { engine: 'file' },
   { engine: 'exiftool' },

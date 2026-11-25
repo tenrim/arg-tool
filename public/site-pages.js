@@ -34,8 +34,11 @@ const byRoute = new Map(toolPages.map((p) => [p.route, p]));
 const releaseNotes = [
   {
     version: APP_VERSION,
-    title: '文本线索分析提速',
+    title: '工具目录与搜索优化、文本线索分析提速',
     changes: [
+      '11 月 25 日更新：291 项工具整理为 30 个分组。首页可直接打开图片隐写综合分析、嵌入文件检查与提取，以及 CyberChef 完整处理链。收藏和旧目录书签仍然可用。',
+      '搜索“凯撒”“佛曰”“SSTV”会优先找到对应工具；搜“拆帧”可直接进入视频处理的逐帧分析。也可以输入“文件里藏了文件”“声音看图”这样的线索。',
+      '左侧目录保留分类浏览。按名称找工具可用页面顶栏（Ctrl／⌘+K），也可在“全部工具”里限定分类搜索。科普结果仍可在设置中单独开启。',
       '候选结果会随分析进度陆续显示。看到有用的内容就能选中、查看或复制，其余分支继续运行。',
       '词典替换和英文查词共用同一份完整词库。首次下载从 6.65 MB 压缩到约 0.99 MB，后续分支可以直接复用。',
       '正式站用同一样本测试默认三层，三次首次点击后，首个候选出现时间的中位数为 0.42 秒，跑完的中位数从 35.10 秒缩短到 12.59 秒。三次都得到 1,150 个候选。',
@@ -557,20 +560,58 @@ export function mountSitePages(main, { navigate, notebook }) {
       }),
     ],
   });
-  const source = Card({
-    id: 'about-source',
-    title: '源码与部署',
+  const author = Card({
+    id: 'about-author',
+    title: '作者与支持',
     children: [
+      Box({ tag: 'h3', text: 'musicraft' }),
       Box({
         tag: 'p',
-        text: '迷雾工具箱原创程序代码按 GPL-3.0-or-later 提供，第三方代码、数据和素材保留各自许可。依赖与对应源码可通过仓库的固定清单自动安装。',
+        text: '迷雾工具箱的整理与维护者。希望把散落各处的解谜工具和资料放在一起，让玩家少花一些寻找工具的时间，多留一些精力给线索本身。',
       }),
       Box({
         tag: 'p',
-        text: '这是可自行部署的独立源码版。常规工具在本机运行；服务器文件分析、扩展代码运行和邮件反馈需要部署者另外配置。',
+        text: '项目的绝大多数功能来自现有工具、开源仓库和公开资料的整合。感谢原作者与社区的贡献，具体来源和许可证可在本页下方及各工具页末查看。',
       }),
-      Toolbar({ children: [externalLink('源码与部署说明', 'https://github.com/tenrim/arg-tool')] }),
+      Box({
+        tag: 'p',
+        text: '如果工具箱帮到了你，欢迎通过爱发电支持后续维护。反馈问题、补充资料，或分享给其他玩家，也都是支持。',
+      }),
+      Box({
+        tag: 'p',
+        text: '相关讨论 QQ 群：1130428292。欢迎交流解谜思路、反馈工具问题和提出建议。',
+      }),
+      Toolbar({ children: [externalLink('在爱发电支持作者', 'https://afdian.com/a/musicraft')] }),
     ],
+  });
+  const related = Card({
+    id: 'about-related',
+    title: '相关网站与资料',
+    children: [
+      [
+        'ARG 编年史',
+        'https://chronicle.mistarg.cn/index.html',
+        '按时间线浏览 ARG 项目与发展记录，寻找经典案例和进一步阅读的入口。',
+      ],
+      [
+        '迷雾论坛',
+        'https://www.mistarg.cn/',
+        '交流正在追踪的 ARG、分享解谜思路和创作作品，也可以提问、讨论，结识其他玩家。',
+      ],
+      [
+        '迷雾 Wiki',
+        'https://wiki.mistarg.cn/index.php/首页',
+        '由社区协作整理 ARG 项目档案、常用术语和相关科普。可以查阅背景资料，也欢迎参与补充与修订。',
+      ],
+    ].map(([title, href, text]) =>
+      Box({
+        tag: 'section',
+        children: [
+          Box({ tag: 'h3', children: [externalLink(title, href)] }),
+          Box({ tag: 'p', text }),
+        ],
+      }),
+    ),
   });
   const privacy = Card({
     title: '数据与隐私',
@@ -598,7 +639,7 @@ export function mountSitePages(main, { navigate, notebook }) {
       }),
       Box({
         tag: 'p',
-        text: '独立源码版默认在本机生成问题报告，可复制或下载。启用同源反馈服务后才发送报告和主动选择的附件。设置、收藏、笔记及图稿保存在当前浏览器。可选的工具参数记忆仅保存受支持的选项、数值参数和操作方向，不保存工具输入、文件、密码或密钥。最近使用可关闭记录；开启时仅记录在当前会话，仅选择“上次使用的工具”作为启动页时额外保存一个工具 ID。',
+        text: '“报告问题”会发送你预览并确认的报告和主动选择的附件。设置、收藏、笔记及图稿保存在当前浏览器。可选的工具参数记忆仅保存受支持的选项、数值参数和操作方向，不保存工具输入、文件、密码或密钥。最近使用可关闭记录；开启时仅记录在当前会话，仅选择“上次使用的工具”作为启动页时额外保存一个工具 ID。',
       }),
       Box({
         tag: 'p',
@@ -629,7 +670,7 @@ export function mountSitePages(main, { navigate, notebook }) {
   });
   about.append(
     intro,
-    source,
+    Box({ className: 'site-info-grid', children: [author, related] }),
     versionHistory(),
     Box({ className: 'site-info-grid', children: [privacy, limitations] }),
     credits,

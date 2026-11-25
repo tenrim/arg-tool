@@ -89,7 +89,7 @@ browserSuites.push('clue-analysis', 'clue-stream', 'worker-reuse');
 browserSuites.push('analysis-unlock');
 browserSuites.push('fun-tools');
 browserSuites.push('fun-tools-advanced');
-browserSuites.push('forensics');
+browserSuites.push('forensics', 'image-survey-local');
 browserSuites.push('stegoveritas', 'image-survey', 'image-survey-tools', 'page-preparation');
 browserSuites.push('coderunner-server', 'novice-workflow', 'homepage', 'disclosure-motion');
 // Explicit integration checks require the isolated server image and synthetic fixtures.
@@ -104,6 +104,17 @@ export const browserFile = (name) =>
 // First matching rule owns a file. Narrow rules precede folder defaults.
 // Unit test import dependencies are added automatically, including re-exports.
 export const rules = [
+  [
+    /^public\/forensics\/(?:local-image-[\w-]+|hideinfo|image-result(?:s|-card)?)\.js$|^scripts\/browser-image-survey-local\.mjs$|^tests\/image-survey\.test\.mjs$/,
+    ['image-survey-local', 'image-survey-tools'],
+    ['image-survey'],
+  ],
+  [
+    /^public\/forensics\/page\.js$/,
+    ['forensics', 'image-survey-local', 'image-survey-tools'],
+    ['forensics', 'image-survey'],
+  ],
+  [/^public\/barcode-reader\.js$/, ['hunt-media-smoke', 'image-survey-local'], []],
   [/^desktop\//, [], ['desktop-assets', 'desktop-services']],
   [/^android-test\//, [], ['android-clients']],
   [/^public\/runtime-profile\.js$/, ['deployment', 'function-plot'], ['desktop-assets']],

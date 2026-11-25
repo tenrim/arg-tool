@@ -312,11 +312,12 @@ let pending;
 export function getCatalogue(signal) {
   if (signal?.aborted) return Promise.reject(signal.reason);
   if (pending) return pending;
-  const request = fetch(new URL('../vendor/cyberchef/catalogue.json', import.meta.url), { signal })
-    .then((r) => {
-      if (!r.ok) throw Error('功能目录加载失败，请重试。');
-      return r.json();
-    });
+  const request = fetch(new URL('../vendor/cyberchef/catalogue.json', import.meta.url), {
+    signal,
+  }).then((r) => {
+    if (!r.ok) throw Error('功能目录加载失败，请重试。');
+    return r.json();
+  });
   // A task with its own cancellation signal must not own a shared in-flight request.
   if (signal)
     return request.then((catalogue) => {
