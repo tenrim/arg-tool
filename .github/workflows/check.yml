@@ -65,6 +65,12 @@ jobs:
           npm ci --ignore-scripts --prefix test-tools
           npx --prefix test-tools playwright install --with-deps chromium
           echo "CHROMIUM_PATH=$(node -e "console.log(require('./test-tools/node_modules/playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
+      - name: Install pinned reference packages for selected tests
+        if: steps.dependencies.outputs.ready == 'true'
+        run: |
+          if [ "${{ steps.plan.outputs.full }}" = true ] || node -e "const p=require('/tmp/arg-plan.json');process.exit(p.checks.some(c=>c.id==='unit:tests/fun-tools.test.mjs')?0:1)"; then
+            npm ci --ignore-scripts --prefix upstream/fun-tools
+          fi
       - name: Prepare static output for selected deployment smoke
         if: steps.plan.outputs.full != 'true' && steps.plan.outputs.source != 'true' && steps.plan.outputs.browser == 'true'
         run: |
