@@ -463,6 +463,7 @@ export const rules = [
     ['workspace', 'sidebar-routing', 'task-lifecycle', 'notebook-dock', 'notebook-launcher'],
   ],
   [/^public\/(?:site-pages|preferences)\.js$/, ['site-pages', 'settings']],
+  [/^public\/site-pages\.js$/, ['deployment']],
   [/^public\/(?:site-shell|tool-help)\.js$/, ['workspace', 'ui-layout']],
   [
     /^public\/(?:project-sources|project-source-contracts|project-licenses)\.js$/,

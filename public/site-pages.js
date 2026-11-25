@@ -613,6 +613,21 @@ export function mountSitePages(main, { navigate, notebook }) {
       }),
     ),
   });
+  const source = Card({
+    id: 'about-source',
+    title: '源码与部署',
+    children: [
+      Box({
+        tag: 'p',
+        text: '迷雾工具箱原创程序代码按 GPL-3.0-or-later 提供，第三方代码、数据和素材保留各自许可。依赖与对应源码可通过仓库的固定清单自动安装。',
+      }),
+      Box({
+        tag: 'p',
+        text: '这是可自行部署的独立源码版。常规工具在本机运行；服务器文件分析、扩展代码运行和邮件反馈需要部署者另外配置。',
+      }),
+      Toolbar({ children: [externalLink('源码与部署说明', 'https://github.com/tenrim/arg-tool')] }),
+    ],
+  });
   const privacy = Card({
     title: '数据与隐私',
     className: 'surface',
@@ -639,7 +654,7 @@ export function mountSitePages(main, { navigate, notebook }) {
       }),
       Box({
         tag: 'p',
-        text: '“报告问题”会发送你预览并确认的报告和主动选择的附件。设置、收藏、笔记及图稿保存在当前浏览器。可选的工具参数记忆仅保存受支持的选项、数值参数和操作方向，不保存工具输入、文件、密码或密钥。最近使用可关闭记录；开启时仅记录在当前会话，仅选择“上次使用的工具”作为启动页时额外保存一个工具 ID。',
+        text: '独立源码版默认在本机生成问题报告，可复制或下载。启用同源反馈服务后才发送报告和主动选择的附件。设置、收藏、笔记及图稿保存在当前浏览器。可选的工具参数记忆仅保存受支持的选项、数值参数和操作方向，不保存工具输入、文件、密码或密钥。最近使用可关闭记录；开启时仅记录在当前会话，仅选择“上次使用的工具”作为启动页时额外保存一个工具 ID。',
       }),
       Box({
         tag: 'p',
@@ -671,6 +686,7 @@ export function mountSitePages(main, { navigate, notebook }) {
   about.append(
     intro,
     Box({ className: 'site-info-grid', children: [author, related] }),
+    source,
     versionHistory(),
     Box({ className: 'site-info-grid', children: [privacy, limitations] }),
     credits,
