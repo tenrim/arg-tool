@@ -462,8 +462,8 @@ export const rules = [
     /^public\/(?:app|workbench-shell|workspace)\.js$/,
     ['workspace', 'sidebar-routing', 'task-lifecycle', 'notebook-dock', 'notebook-launcher'],
   ],
-  [/^public\/(?:site-pages|preferences)\.js$/, ['site-pages', 'settings']],
-  [/^public\/site-pages\.js$/, ['deployment']],
+  [/^public\/site-pages\.js$/, ['site-pages', 'settings', 'deployment']],
+  [/^public\/preferences\.js$/, ['site-pages', 'settings']],
   [/^public\/(?:site-shell|tool-help)\.js$/, ['workspace', 'ui-layout']],
   [
     /^public\/(?:project-sources|project-source-contracts|project-licenses)\.js$/,
